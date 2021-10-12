@@ -1,0 +1,17 @@
+{
+  "MAX_PLAYERS" : 5,
+  "MIN_PLAYERS" : 2,
+  "PLAYER_DECK_CAPACITY" : 48,
+  "START" : {
+    "DECK_COUNT" : 5
+  },
+  "ROAD" : {
+    "DECK_COUNT" : 5
+  },
+  "FIELD" : {
+    "DECK_COUNT" : 5
+  },
+  "TOWN_CHUNK" : {
+    "DECK_COUNT" : 5
+  }
+}
