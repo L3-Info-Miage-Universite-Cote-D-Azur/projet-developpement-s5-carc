@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class GameConfig {
     public class TileConfig {
-        private TileType TYPE;
         private int DECK_COUNT;
     }
 

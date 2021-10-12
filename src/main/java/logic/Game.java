@@ -14,6 +14,15 @@ public class Game {
     public Game(GameConfig config){
 
     }
+    public void start(){
+
+    }
+    public void update(){
+
+    }
+    public boolean isGameFinished(){
+        return false;
+    }
 
     public void addPlayer(Player player){
 
