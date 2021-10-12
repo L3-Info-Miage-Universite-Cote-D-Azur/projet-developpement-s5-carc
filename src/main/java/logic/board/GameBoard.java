@@ -1,25 +1,30 @@
 package logic.board;
 
-import logic.math.Vecteur2;
+import logic.math.Vector2;
 import logic.tile.Tile;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameBoard {
-    ArrayList<Tile> tiles;
+    private final HashMap<Vector2, Tile> tiles;
 
     public GameBoard(){
-
-    }
-    public void place(Tile tile){
-
+        this.tiles = new HashMap<>();
     }
 
-    public Tile getTileAt(Vecteur2 Vector2){
-        return null;
+    public void place(Tile tile) {
+        if (hasTileAt(tile.getPosition())) {
+            throw new IllegalArgumentException("Try to place a tile on another.");
+        }
+
+        tiles.put(tile.getPosition(), tile);
     }
 
-    public boolean hasTileAt(Vecteur2 Vector2){
-        return false;
+    public Tile getTileAt(Vector2 position) {
+        return tiles.getOrDefault(position, null);
+    }
+
+    public boolean hasTileAt(Vector2 position){
+        return tiles.containsKey(position);
     }
 }

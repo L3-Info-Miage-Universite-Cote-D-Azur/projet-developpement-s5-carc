@@ -2,6 +2,7 @@ package logic;
 
 import input.ai.SimpleAI;
 import logic.config.GameConfig;
+import logic.exception.TooManyPlayerException;
 import logic.player.Player;
 import logic.player.PlayerInfo;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class GameTest {
     }
 
     @Test
-    void testPlayer(){
+    void testPlayer() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
@@ -54,8 +55,8 @@ class GameTest {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
-        assertTrue(game.isGameFinished());
+        assertTrue(game.isFinished());
         game.start();
-        assertFalse(game.isGameFinished());
+        assertFalse(game.isFinished());
     }
 }
