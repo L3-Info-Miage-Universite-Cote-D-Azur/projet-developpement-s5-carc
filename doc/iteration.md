@@ -36,20 +36,17 @@ Voici nos super itérations pour notre super projet !
  - Livraison 4
    - Ajout de fonctionnalités de jeu
      - Zone fermée
-     - Récupération des Meeples
+     - Ajout des Meeples
+     - Statistique de jeu
     - Mise à jour de l'IA primitive
       - Placement des tuiles ville et abbaye
 
   - Livraison 5
     - Ajout de fonctionnalités de jeu
-      - Ajout des Meeples
-      - Implémentation de la pioche aléatoire
-    - Mise à jour de l'IA Primitive
-      - Placement des Meeples
-
+      - Récupération des Meeples
+ 
   - Livraison 6
     - Ajout de fonctionnalités de jeu
-      - Ajout des statistiques
       - Ajout du comptage de point pour les zones de jeu
 
   - Livraison 7
