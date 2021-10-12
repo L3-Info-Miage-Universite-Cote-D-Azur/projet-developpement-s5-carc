@@ -37,7 +37,7 @@ Voici nos super itérations pour notre super projet !
    - Ajout de fonctionnalités de jeu
      - Zone fermée
      - Ajout des Meeples
-     - Statistique de jeu
+     - Statistiques de jeu
     - Mise à jour de l'IA primitive
       - Placement des tuiles ville et abbaye
 
