@@ -1,5 +1,7 @@
 package logic.board;
 
+import logic.tile.Tile;
+
 import java.util.ArrayList;
 
 public class GameBoard {
@@ -13,10 +15,10 @@ public class GameBoard {
     }
 
     public Tile getTileAt(Vecteur Vector2){
-        return new Tile;
+        return null;
     }
 
     public boolean hasTileAt(Vecteur Vector2){
-        return new Tile;
+        return false;
     }
 }
