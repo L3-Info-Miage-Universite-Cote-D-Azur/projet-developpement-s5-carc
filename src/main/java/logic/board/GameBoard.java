@@ -3,12 +3,12 @@ package logic.board;
 import java.util.ArrayList;
 
 public class GameBoard {
-    ArrayList tiles;
+    ArrayList<Tile> tiles;
 
     public GameBoard(){
 
     }
-    public void place(Tile){
+    public void place(Tile tile){
 
     }
 
@@ -16,7 +16,7 @@ public class GameBoard {
         return new Tile;
     }
 
-    public Tile hasTileAt(Vecteur Vector2){
+    public boolean hasTileAt(Vecteur Vector2){
         return new Tile;
     }
 }
