@@ -18,6 +18,17 @@ public class Game {
     public void addPlayer(Player player){
 
     }
-
+    public GameConfig getGameConfig(){
+        return null;
+    }
+    public int getPlayerCount(){
+        return 0;
+    }
+    public Player getPlayer(int player){
+        return null;
+    }
+    public GameBoard getGameBoard(){
+        return null;
+    }
 
 }
