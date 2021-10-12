@@ -1,5 +1,7 @@
 package input.ai;
 
-abstract class AI {
+import input.PlayerInput;
+
+abstract class AI extends PlayerInput {
     abstract void onTurn();
 }
