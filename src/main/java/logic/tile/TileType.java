@@ -4,5 +4,6 @@ public enum TileType {
     START,
     ROAD,
     FIELD,
-    TOWN_CHUNK
+    TOWN_CHUNK,
+    RIVER
 }
