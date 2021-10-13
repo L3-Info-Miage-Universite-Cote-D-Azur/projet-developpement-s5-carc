@@ -1,11 +1,20 @@
 package logic.tile;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class TileStack {
-    public int getNumTiles() {
-        return 0;
+    private final Queue<TileData> tiles;
+
+    public TileStack() {
+        this.tiles = new PriorityQueue<>();
     }
 
-    public TileType pick() {
-        throw new IllegalStateException("stack is empty");
+    public int getNumTiles() {
+        return tiles.size();
+    }
+
+    public TileData pick() {
+        return tiles.remove();
     }
 }

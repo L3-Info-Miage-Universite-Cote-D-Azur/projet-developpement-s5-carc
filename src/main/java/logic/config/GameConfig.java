@@ -1,10 +1,8 @@
 package logic.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import logic.tile.TileType;
 
-import java.io.File;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +15,9 @@ public class GameConfig {
     public int MIN_PLAYERS = 2;
     public int MAX_PLAYERS = 5;
     public int PLAYER_DECK_CAPACITY;
-    public HashMap<TileType, TileConfig> TILES;
+    public HashMap<TileType, TileConfig> TILES = new HashMap<>() {{
+        // TODO
+    }};
 
     public boolean validate() {
         if (MIN_PLAYERS < 0 || MIN_PLAYERS > MAX_PLAYERS)
