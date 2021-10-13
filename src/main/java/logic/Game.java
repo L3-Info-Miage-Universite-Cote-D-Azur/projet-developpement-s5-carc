@@ -6,11 +6,13 @@ import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
+import logic.tile.TileStack;
 
 public class Game {
     private final GameConfig config;
     private final GameBoard board;
     private final GameTurn turn;
+    private final TileStack stack;
     private final ArrayList<Player> players;
 
     private boolean started;
@@ -19,6 +21,7 @@ public class Game {
         this.config = config;
         this.board = new GameBoard();
         this.turn = new GameTurn(this);
+        this.stack = new TileStack();
         this.players = new ArrayList<>(config.MAX_PLAYERS);
     }
 
@@ -48,7 +51,7 @@ public class Game {
     }
 
     public boolean isFinished(){
-        return false;
+        return this.stack.getNumTiles() == 0;
     }
 
     public void addPlayer(Player player) {
