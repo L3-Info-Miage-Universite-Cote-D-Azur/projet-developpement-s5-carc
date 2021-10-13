@@ -7,10 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class TileTypeTest {
     @Test
     void TileTypeTest() {
-        assertEquals(4, TileType.values().length);
-        assertNotNull(TileType.valueOf("START"));
-        assertNotNull(TileType.valueOf("ROAD"));
-        assertNotNull(TileType.valueOf("FIELD"));
-        assertNotNull(TileType.valueOf("TOWN_CHUNK"));
+        String[] types = {"START", "ROAD", "FIELD", "TOWN_CHUNK", "RIVER"};
+        assertEquals(types.length, TileType.values().length);
+        for (String type : types)
+            assertNotNull(TileType.valueOf(type));
     }
 }
