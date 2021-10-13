@@ -9,9 +9,9 @@
     - Gestion des joueurs (Issue #7)
     - Ajout d'une IA primitive simulant le comportement d'un joueur via un choix booléen aléatoire (Issue #3)
     
-- # En terme de tests
-    -
-    -
+- # En terme de tests (en charge : Sébastien Aglae)
+    - tests unitaires réalisés
+    - chargement des configurations réalisés 
     
 - # En terme d'organisation de code
     - création d'un répertoire input contenant :
@@ -21,6 +21,5 @@
     
 - # En terme d'organisation du travail (qui a fait quoi)
     - Assignation de chaque collaboratuers aux Issues sur GitHub
-
-
-- Les issues pour l'itération suivante doivent être prêtes.
+    - Mike Chiappe s'occupe de la gestion du projet et de driver les collaborateurs
+    - Nathan Rihet a lu les règles en détails et listé les points importants pour le code
