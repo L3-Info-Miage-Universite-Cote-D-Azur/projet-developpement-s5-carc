@@ -7,7 +7,7 @@ Voici nos super itérations pour notre super projet !
   - Ajout des composants de base du jeu
     - Ajout d'une classe abstraite de Tuile
     - Ajout du plateau de jeu (primitif avec seulement la liste des tuiles)
-    - Ajout du plateau de score (primitif)
+    - Ajout de les cartes dans la main du joueur (deck)
     - Ajout des fonctionnalités de tours de jeu (primitif avec seulement le compteur de tour et à quel joueur est le tour)
     - Ajout d'une pioche (primitive sans tuile)
   - Gestion des joueurs
