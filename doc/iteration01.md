@@ -10,14 +10,14 @@
     - Ajout d'une IA primitive simulant le comportement d'un joueur via un choix booléen aléatoire (Issue #3)
     
 - # En terme de tests (en charge : Sébastien Aglae)
-    - tests unitaires réalisés
-    - chargement des configurations réalisés 
+    - Tests unitaires réalisés
+    - Chargement des configurations réalisés 
     
 - # En terme d'organisation de code
-    - création d'un répertoire input contenant :
-      - les fichiers qui gère l'utilisateur 
-    - création d'un répertoire logic contenant :
-      - les fichiers qui gère les configurations, les maths, les tuiles, la planche de jeu et toutes les exceptions
+    - Création d'un répertoire input contenant :
+      - Les fichiers qui gère l'utilisateur 
+    - Création d'un répertoire logic contenant :
+      - Les fichiers qui gère les configurations, les maths, les tuiles, la planche de jeu et toutes les exceptions
     
 - # En terme d'organisation du travail (qui a fait quoi)
     - Assignation de chaque collaboratuers aux Issues sur GitHub
