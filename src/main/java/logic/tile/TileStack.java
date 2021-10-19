@@ -17,4 +17,7 @@ public class TileStack {
     public TileData pick() {
         return tiles.remove();
     }
+    public boolean addTileData(TileData data){
+        return tiles.add(data);
+    }
 }
