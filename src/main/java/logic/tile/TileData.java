@@ -6,4 +6,8 @@ public final class TileData {
     public TileData(TileType type) {
         this.type = type;
     }
+
+    public TileType getType() {
+        return type;
+    }
 }

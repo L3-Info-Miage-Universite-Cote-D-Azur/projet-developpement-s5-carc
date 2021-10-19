@@ -3,17 +3,18 @@ package logic.player;
 import input.PlayerInput;
 import logic.Game;
 
-public abstract class Player {
+public class Player {
     private final PlayerInfo info;
     private final PlayerInput input;
     private final Game game;
     private int score;
 
+
     public Player(PlayerInfo info, PlayerInput input, Game game) {
         this.info = info;
         this.input = input;
         this.game = game;
-        this.score = score;
+        this.input.setGame(game);
     }
 
     public void onTurn() {
@@ -24,8 +25,7 @@ public abstract class Player {
         return score;
     }
 
-    public int addScore() {
-        this.score = score;
-        return score;
+    public void addScore(int value) {
+        this.score += value;
     }
 }

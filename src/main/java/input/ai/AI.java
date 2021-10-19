@@ -2,17 +2,17 @@ package input.ai;
 
 import input.PlayerInput;
 import logic.Game;
-import logic.board.GameBoard;
 import logic.tile.TileData;
 
 public abstract class AI implements PlayerInput {
-    private Game game;
+    protected Game game;
 
     @Override
     public void onTurn() {
-        TileData tilePicked = pickFromStack();
-
-        placeTile(tilePicked, game.getGameBoard());
+        TileData tilePicked;
+        do {
+            tilePicked = pickFromStack();
+        } while (!placeTile(tilePicked));
     }
 
     @Override
@@ -20,7 +20,7 @@ public abstract class AI implements PlayerInput {
         this.game = game;
     }
 
-    public abstract void placeTile(TileData data, GameBoard board);
+    public abstract boolean placeTile(TileData data);
 
     public TileData pickFromStack() {
         return game.getStack().pick();
