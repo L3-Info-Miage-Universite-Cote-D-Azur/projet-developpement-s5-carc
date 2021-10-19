@@ -3,8 +3,8 @@ package logic.tile;
 import logic.math.Vector2;
 
 public class StartingTile extends Tile {
-    public StartingTile(Vector2 position) {
-        super(position);
+    public StartingTile(TileData data, Vector2 position) {
+        super(data, position);
     }
 
     @Override

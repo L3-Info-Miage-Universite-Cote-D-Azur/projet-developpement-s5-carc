@@ -3,9 +3,8 @@ package logic.tile;
 import logic.math.Vector2;
 
 public class RoadTile extends Tile{
-    
-    public RoadTile(Vector2 position) {
-        super(position);
+    public RoadTile(TileData data, Vector2 position) {
+        super(data, position);
     }
 
     @Override

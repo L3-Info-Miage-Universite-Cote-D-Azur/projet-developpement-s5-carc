@@ -31,4 +31,20 @@ public final class Vector2 {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public Vector2 add(int x, int y) {
+        return new Vector2(this.x + x, this.y + y);
+    }
+
+    public Vector2 add(Vector2 vector) {
+        return new Vector2(this.x + vector.x, this.y + vector.y);
+    }
+
+    @Override
+    public String toString() {
+        return "Vector2{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
