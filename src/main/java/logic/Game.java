@@ -53,8 +53,13 @@ public class Game {
     }
 
     public boolean isFinished(){
-        // Check if one of player has 279 or more points. If it's true game is Finished
-        return this.stack.getNumTiles() == 0;
+        boolean check = false;
+        for (Player player : players) {
+            if (player.getScore() >= 279 || this.stack.getNumTiles() == 0 ) {
+                check = true;
+            }
+        }
+        return check;
     }
 
     public void createPlayer(PlayerInfo info, PlayerInput input) {
