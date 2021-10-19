@@ -42,9 +42,10 @@ public class Game {
             throw new IllegalStateException("Game should be started at this point.");
         }
 
-        Logger.info(String.format("[GAME] Turn %d", turn.getCount() + 1));
-
         turn.startNext();
+
+        Logger.info(String.format("[GAME] Turn %d -> Player %d", turn.getCount(), turn.getPlayer().getInfo().getId()));
+
         turn.getPlayer().onTurn();
 
         if (isFinished()) {
@@ -54,6 +55,7 @@ public class Game {
 
     public void onEnd() {
         Logger.info("[GAME] Game over");
+        Logger.info("[STATS] Winner is Player %d !", getWinner().getInfo().getId());
     }
 
     public boolean isFinished() {
@@ -62,7 +64,7 @@ public class Game {
                 return true;
             }
         }
-        
+
         return this.stack.getNumTiles() == 0;
     }
 
@@ -72,6 +74,24 @@ public class Game {
         }
 
         players.add(new Player(info, input, this));
+    }
+
+    public Player getWinner() {
+        if (!isFinished()) {
+            throw new IllegalStateException("getWinner() must be called if the game is finished.");
+        }
+
+        Player winner = null;
+        int winnerScore = -1;
+
+        for (Player p : players) {
+            if (p.getScore() > winnerScore) {
+                winnerScore = p.getScore();
+                winner = p;
+            }
+        }
+
+        return winner;
     }
 
     public GameConfig getConfig() {
