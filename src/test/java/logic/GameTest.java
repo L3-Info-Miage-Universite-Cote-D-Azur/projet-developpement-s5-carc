@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import input.ai.SimpleAI;
 import logic.config.GameConfig;
 import logic.exception.TooManyPlayerException;
-import logic.player.Player;
 import logic.player.PlayerInfo;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    private static final String config0 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":3,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
+    private static final String config0 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":3,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
 
     @Test
     void testGame(){
@@ -24,9 +23,9 @@ class GameTest {
         assertEquals(gameConfig, game.getGameConfig());
         assertEquals(0, game.getPlayerCount());
         assertNotNull(game.getGameBoard());
+        assertNotNull(game.getStack());
     }
 
-    @Disabled
     @Test
     void testPlayer() {
         GameConfig gameConfig0 = null;
@@ -41,32 +40,44 @@ class GameTest {
 
         assertEquals(0, game.getPlayerCount());
 
-        PlayerInfo playerInfo = new PlayerInfo(0);
+        PlayerInfo playerInfo0 = new PlayerInfo(500);
+        PlayerInfo playerInfo1 = new PlayerInfo(501);
+        PlayerInfo playerInfo2 = new PlayerInfo(502);
+        PlayerInfo playerInfo3 = new PlayerInfo(503);
         SimpleAI simpleAI = new SimpleAI();
-        Player player = new Player(playerInfo, simpleAI);
-        game.addPlayer(player);
+        game.createPlayer(playerInfo0, simpleAI);
 
         assertEquals(1, game.getPlayerCount());
-        assertEquals(player, game.getPlayer(0));
+        //assertEquals(player, game.getPlayer(0)); TODO Test player info
 
-        game.addPlayer(player);
-        game.addPlayer(player);
+        game.createPlayer(playerInfo1, simpleAI);
+        game.createPlayer(playerInfo2, simpleAI);
+        assertEquals(3, game.getPlayerCount());
+        assertNotNull(game.getPlayer(0));
+        assertNotNull(game.getPlayer(1));
+        assertNotNull(game.getPlayer(2));
         assertThrows(TooManyPlayerException.class, () -> {
-            game.addPlayer(player);
+            game.createPlayer(playerInfo3, simpleAI);
         });
     }
 
-    @Test
+    @Test @Disabled
     void testUpdate(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
         PlayerInfo playerInfo = new PlayerInfo(0);
         SimpleAI simpleAI = new SimpleAI();
-        Player player = new Player(playerInfo, simpleAI);
-        game.addPlayer(player);
+        game.createPlayer(playerInfo, simpleAI);
         assertThrows(IllegalStateException.class, game::update);
-        game.start();
-        assertDoesNotThrow(game::update);
+
+        GameConfig gameConfig1 = new GameConfig();
+        Game game1 = new Game(gameConfig1);
+        PlayerInfo playerInfo1 = new PlayerInfo(0);
+        SimpleAI simpleAI1 = new SimpleAI();
+        simpleAI1.setGame(game);
+        game1.createPlayer(playerInfo1, simpleAI1);
+        game1.start();
+        assertDoesNotThrow(game1::update);
     }
 
     @Test @Disabled
