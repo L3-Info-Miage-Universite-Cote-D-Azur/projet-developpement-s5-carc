@@ -11,10 +11,13 @@
 
 
 - # En terme de tests (en charge : Sébastien Aglae)
-
+    - z
+    - a
 
 - # En terme d'organisation de code
-
+    - Ajout de tasks et de subtasks
+    - Création de milestones
 
 - # En terme d'organisation du travail (qui a fait quoi)
-
+    - Assignation de chaque collaborateurs aux Issues sur GitHub
+    - Mike Chiappe s'occupe de la gestion du projet et de driver les collaborateurs

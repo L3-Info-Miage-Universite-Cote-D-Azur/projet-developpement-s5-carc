@@ -20,6 +20,6 @@
       - Les fichiers qui gère les configurations, les maths, les tuiles, la planche de jeu et toutes les exceptions
     
 - # En terme d'organisation du travail (qui a fait quoi)
-    - Assignation de chaque collaboratuers aux Issues sur GitHub
+    - Assignation de chaque collaborateurs aux Issues sur GitHub
     - Mike Chiappe s'occupe de la gestion du projet et de driver les collaborateurs
     - Nathan Rihet a lu les règles en détails et listé les points importants pour le code
