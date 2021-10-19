@@ -24,7 +24,6 @@ public class GameConfig {
             return false;
         List<TileType> tileTypes = new ArrayList<>(List.of(TileType.values()));
         for (Map.Entry<TileType, TileConfig> tile : TILES.entrySet()) {
-            System.out.println(tileTypes);
             if (tileTypes.contains(tile.getKey()))
                 tileTypes.remove(tile.getKey());
             else
