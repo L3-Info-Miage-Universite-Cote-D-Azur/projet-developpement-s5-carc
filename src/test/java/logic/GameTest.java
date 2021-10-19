@@ -26,6 +26,7 @@ class GameTest {
         assertNotNull(game.getGameBoard());
     }
 
+    @Disabled
     @Test
     void testPlayer() {
         GameConfig gameConfig0 = null;
