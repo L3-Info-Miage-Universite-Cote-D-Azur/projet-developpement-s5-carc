@@ -11,17 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameTurnTest {
     @Test
     void testGameTurn() {
-        // TODO LOAD A SPECIFIC CONFIG
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
         GameTurn gameTurn = new GameTurn(game);
 
-        assertEquals(-1, gameTurn.getCount());
+        assertEquals(0, gameTurn.getCount());
     }
 
     @Test
     void testStart() {
-        // TODO LOAD A SPECIFIC CONFIG
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
         GameTurn gameTurn = new GameTurn(game);
@@ -53,7 +51,7 @@ class GameTurnTest {
         for (int i = 0; i < 15; i++)
             gameTurn.startNext();
 
-        assertEquals(16, gameTurn.getCount());
+        assertEquals(17, gameTurn.getCount());
         assertEquals(1, gameTurn.getPlayerIndex());
     }
 }
