@@ -35,12 +35,11 @@ class GameTurnTest {
         // TODO LOAD A SPECIFIC CONFIG 3 PLAYER MIN
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
-        Player player0 = new Player(new PlayerInfo(0), new SimpleAI());
-        Player player1 = new Player(new PlayerInfo(1), new SimpleAI());
-        Player player2 = new Player(new PlayerInfo(2), new SimpleAI());
-        game.addPlayer(player0);
-        game.addPlayer(player1);
-        game.addPlayer(player2);
+
+        game.createPlayer(new PlayerInfo(0), new SimpleAI());
+        game.createPlayer(new PlayerInfo(1), new SimpleAI());
+        game.createPlayer(new PlayerInfo(2), new SimpleAI());
+
         GameTurn gameTurn = new GameTurn(game);
 
         assertEquals(-1, gameTurn.getPlayerIndex());

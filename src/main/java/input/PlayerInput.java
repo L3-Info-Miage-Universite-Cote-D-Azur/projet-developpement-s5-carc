@@ -1,5 +1,8 @@
 package input;
 
-public abstract class PlayerInput {
-    public abstract void onTurn();
+import logic.Game;
+
+public interface PlayerInput {
+    void onTurn();
+    void setGame(Game game);
 }

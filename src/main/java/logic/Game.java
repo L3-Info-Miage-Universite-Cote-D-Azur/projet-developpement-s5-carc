@@ -2,10 +2,12 @@ package logic;
 
 import java.util.ArrayList;
 
+import input.PlayerInput;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
+import logic.player.PlayerInfo;
 import logic.tile.TileStack;
 
 public class Game {
@@ -54,12 +56,12 @@ public class Game {
         return this.stack.getNumTiles() == 0;
     }
 
-    public void addPlayer(Player player) {
+    public void createPlayer(PlayerInfo info, PlayerInput input) {
         if (getPlayerCount() >= config.MAX_PLAYERS) {
             throw new TooManyPlayerException();
         }
 
-        players.add(player);
+        players.add(new Player(info, input, this));
     }
 
     public GameConfig getGameConfig() {
@@ -74,7 +76,11 @@ public class Game {
         return players.get(player);
     }
 
-    public GameBoard getGameBoard(){
+    public GameBoard getGameBoard() {
         return board;
+    }
+
+    public TileStack getStack() {
+        return stack;
     }
 }
