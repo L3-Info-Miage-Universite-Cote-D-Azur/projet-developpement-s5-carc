@@ -7,7 +7,7 @@ public class PlayerInfo {
         this.playerId = playerId;
     }
 
-    public int getPlayerId(){
+    public int getId(){
         return playerId;
     }
 }

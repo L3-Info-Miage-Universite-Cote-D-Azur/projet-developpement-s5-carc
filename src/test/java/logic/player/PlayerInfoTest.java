@@ -10,6 +10,6 @@ public class PlayerInfoTest {
         int id = 568;
         PlayerInfo playerInfo = new PlayerInfo(id);
 
-        assertEquals(id, playerInfo.getPlayerId());
+        assertEquals(id, playerInfo.getId());
     }
 }

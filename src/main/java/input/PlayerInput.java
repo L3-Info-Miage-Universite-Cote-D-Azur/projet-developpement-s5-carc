@@ -1,8 +1,8 @@
 package input;
 
-import logic.Game;
+import logic.player.Player;
 
 public interface PlayerInput {
     void onTurn();
-    void setGame(Game game);
+    void setPlayer(Player player);
 }

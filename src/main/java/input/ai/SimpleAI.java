@@ -19,7 +19,7 @@ public class SimpleAI extends AI {
 
     @Override
     public boolean placeTile(TileData data) {
-        GameBoard board = game.getGameBoard();
+        GameBoard board = player.getGame().getGameBoard();
         Vector2 position;
 
         if (board.isEmpty()) {
@@ -34,14 +34,14 @@ public class SimpleAI extends AI {
             }
         }
 
-        Logger.info(String.format("[AI] Place tile %s to %s", data.getType(), position));
+        Logger.info(String.format("[AI] Player %d places the tile %s to %s", player.getInfo().getId(), data.getType(), position));
 
         board.place(TileFactory.create(data, position));
         return true;
     }
 
     private Vector2 findRandomPluggablePoint() {
-        GameBoard board = game.getGameBoard();
+        GameBoard board = player.getGame().getGameBoard();
 
         if (board.isEmpty()) {
             return null;

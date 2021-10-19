@@ -14,7 +14,7 @@ public class Player {
         this.info = info;
         this.input = input;
         this.game = game;
-        this.input.setGame(game);
+        this.input.setPlayer(this);
     }
 
     public void onTurn() {
@@ -27,5 +27,13 @@ public class Player {
 
     public void addScore(int value) {
         this.score += value;
+    }
+
+    public PlayerInfo getInfo() {
+        return info;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }
