@@ -53,6 +53,7 @@ public class Game {
     }
 
     public boolean isFinished(){
+        // Check if one of player has 279 or more points. If it's true game is Finished
         return this.stack.getNumTiles() == 0;
     }
 
