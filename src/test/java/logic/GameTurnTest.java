@@ -2,7 +2,6 @@ package logic;
 
 import input.ai.SimpleAI;
 import logic.config.GameConfig;
-import logic.player.Player;
 import logic.player.PlayerInfo;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,6 @@ class GameTurnTest {
 
     @Test
     void testGetPlayerIndex() {
-        // TODO LOAD A SPECIFIC CONFIG 3 PLAYER MIN
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 

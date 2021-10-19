@@ -74,7 +74,6 @@ class GameTest {
         Game game1 = new Game(gameConfig1);
         PlayerInfo playerInfo1 = new PlayerInfo(0);
         SimpleAI simpleAI1 = new SimpleAI();
-        simpleAI1.setGame(game);
         game1.createPlayer(playerInfo1, simpleAI1);
         game1.start();
         assertDoesNotThrow(game1::update);

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class VectorTest {
+class VectorTest {
     @Test
     void testVector() {
         int n = 10;

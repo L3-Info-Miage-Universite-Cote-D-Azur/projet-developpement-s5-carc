@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerInfoTest {
+class PlayerInfoTest {
     @Test
     void testPlayerInfo() {
         int id = 568;
