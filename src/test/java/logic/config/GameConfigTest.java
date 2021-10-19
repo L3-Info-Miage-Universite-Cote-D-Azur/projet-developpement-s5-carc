@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameConfigTest {
-    private static final String config0 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config1 = "{\"MIN_PLAYERS\":-5,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config2 = "{\"MIN_PLAYERS\":5,\"MAX_PLAYERS\":3,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config3 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":-1,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config4 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"WHAT\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config5 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"ROAD\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-    private static final String config6 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": -1 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
+    private static final String config0 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config1 = "{\"MIN_PLAYERS\":-5,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config2 = "{\"MIN_PLAYERS\":5,\"MAX_PLAYERS\":3,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config3 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":-1,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config4 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"WHAT\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config5 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"ROAD\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
+    private static final String config6 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": -1 }, \"FIELD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
 
     @Test
     void testGameConfig() {
@@ -28,8 +28,10 @@ class GameConfigTest {
         assertEquals(2, config.MIN_PLAYERS);
         assertEquals(5, config.MAX_PLAYERS);
         assertEquals(25, config.PLAYER_DECK_CAPACITY);
-        assertEquals(5, config.TILES.get(TileType.FIELD).DECK_COUNT);
+        assertEquals(5, config.TILES.get(TileType.START).DECK_COUNT);
+        assertEquals(5, config.TILES.get(TileType.RIVER).DECK_COUNT);
         assertEquals(5, config.TILES.get(TileType.ROAD).DECK_COUNT);
+        assertEquals(5, config.TILES.get(TileType.TOWN_CHUNK).DECK_COUNT);
     }
 
     @Test
