@@ -17,7 +17,6 @@ Voici nos super itérations pour notre super projet !
   - Ajout de tuiles
     - Tuile de départ
     - Tuile de route
-    - Tuile de champ
   - Mise à jour de l'IA primitive
     - Placement de la tuile de départ pour le joueur de départ
   - Mise à jour des composants de jeu
