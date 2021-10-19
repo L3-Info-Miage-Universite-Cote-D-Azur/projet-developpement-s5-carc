@@ -56,16 +56,14 @@ public class Game {
         Logger.info("[GAME] Game over");
     }
 
-    public boolean isFinished(){
-        boolean check = false;
-
+    public boolean isFinished() {
         for (Player player : players) {
-            if (player.getScore() >= 279 || this.stack.getNumTiles() == 0 ) {
-                check = true;
+            if (player.getScore() >= 279) {
+                return true;
             }
         }
-
-        return check;
+        
+        return this.stack.getNumTiles() == 0;
     }
 
     public void createPlayer(PlayerInfo info, PlayerInput input) {
