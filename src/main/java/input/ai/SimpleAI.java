@@ -19,7 +19,7 @@ public class SimpleAI extends AI {
 
     @Override
     public boolean placeTile(TileData data) {
-        GameBoard board = player.getGame().getGameBoard();
+        GameBoard board = player.getGame().getBoard();
         Vector2 position;
 
         if (board.isEmpty()) {
@@ -41,7 +41,7 @@ public class SimpleAI extends AI {
     }
 
     private Vector2 findRandomPluggablePoint() {
-        GameBoard board = player.getGame().getGameBoard();
+        GameBoard board = player.getGame().getBoard();
 
         if (board.isEmpty()) {
             return null;

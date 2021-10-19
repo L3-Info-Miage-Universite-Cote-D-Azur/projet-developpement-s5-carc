@@ -19,10 +19,10 @@ class GameTest {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
-        assertNotNull(game.getGameConfig());
-        assertEquals(gameConfig, game.getGameConfig());
+        assertNotNull(game.getConfig());
+        assertEquals(gameConfig, game.getConfig());
         assertEquals(0, game.getPlayerCount());
-        assertNotNull(game.getGameBoard());
+        assertNotNull(game.getBoard());
         assertNotNull(game.getStack());
     }
 

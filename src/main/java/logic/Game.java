@@ -58,11 +58,13 @@ public class Game {
 
     public boolean isFinished(){
         boolean check = false;
+
         for (Player player : players) {
             if (player.getScore() >= 279 || this.stack.getNumTiles() == 0 ) {
                 check = true;
             }
         }
+
         return check;
     }
 
@@ -74,23 +76,23 @@ public class Game {
         players.add(new Player(info, input, this));
     }
 
-    public GameConfig getGameConfig() {
+    public GameConfig getConfig() {
         return config;
     }
 
-    public int getPlayerCount() {
-        return players.size();
+    public GameBoard getBoard() {
+        return board;
+    }
+
+    public TileStack getStack() {
+        return stack;
     }
 
     public Player getPlayer(int player){
         return players.get(player);
     }
 
-    public GameBoard getGameBoard() {
-        return board;
-    }
-
-    public TileStack getStack() {
-        return stack;
+    public int getPlayerCount() {
+        return players.size();
     }
 }
