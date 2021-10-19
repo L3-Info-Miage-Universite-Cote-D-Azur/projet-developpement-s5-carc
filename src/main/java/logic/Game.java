@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 
 import input.PlayerInput;
+import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.TooManyPlayerException;
@@ -32,6 +33,7 @@ public class Game {
             throw new IllegalStateException("Game can be started only once.");
         }
 
+        stack.fill(config);
         started = true;
     }
 
@@ -39,6 +41,8 @@ public class Game {
         if (!started) {
             throw new IllegalStateException("Game should be started at this point.");
         }
+
+        Logger.info(String.format("[GAME] Turn %d", turn.getCount() + 1));
 
         turn.startNext();
         turn.getPlayer().onTurn();
@@ -49,7 +53,7 @@ public class Game {
     }
 
     public void onEnd() {
-
+        Logger.info("[GAME] Game over");
     }
 
     public boolean isFinished(){
