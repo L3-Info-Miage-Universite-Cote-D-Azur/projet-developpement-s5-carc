@@ -30,7 +30,7 @@ Voici nos super itérations pour notre super projet !
   - Ajout de composants de jeu
     - Système de pile de Tuile (mélange + tirage)
   - Mise à jour de l'IA  primitive
-    - Placement des tuiles route et champ aléatoirement
+    - Placement des tuiles de type route
  
  - Livraison 4
    - Ajout de fonctionnalités de jeu
