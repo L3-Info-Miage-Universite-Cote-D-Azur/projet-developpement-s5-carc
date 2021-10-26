@@ -26,20 +26,34 @@ class TileStackTest {
 
     }
 
-    @Test @Disabled
+    @Test
     void testShuffle(){ // If the shuffle works properly
+        TileStack tiles = new TileStack();
+        TileStack tiles_shuffle = new TileStack();
+        tiles.fill(null);
+        tiles_shuffle.fill(null);
+        tiles_shuffle.shuffle();
+        int cpt = 0;
+        for (int i = 0; i < tiles.getNumTiles(); i++) {
+            if (tiles_shuffle.pick() == tiles.pick()){
+                cpt++;
+            }
+        }
+        assertNotEquals(tiles.getNumTiles(),cpt);
+
+
 
     }
 
     @Test @Disabled
     void testIsFirstTileIsStartTile(){ // If the first tile is the starting tile
         TileType tileType = TileType.START;
-        assertEquals(tileType, roadTile.getType());
+       // assertEquals(tileType, roadTile.getType());
     }
 
     @Test @Disabled
     void testInitConfig(){ // If the initialization for the config works properly
-        GameConfig config =
+        GameConfig config = null;
         Game game = new Game(config);
         assertEquals(config, config.validate());
     }
