@@ -97,4 +97,13 @@ class GameTest {
         game.start();
         assertThrows(IllegalStateException.class, game::start);
     }
+    @Test
+    void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
+        GameConfig gameConfig = new GameConfig();
+        Game game = new Game(gameConfig);
+
+        assertTrue(game.isFinished());
+        game.start();
+        assertThrows(IllegalStateException.class, game::getWinner);
+    }
 }
