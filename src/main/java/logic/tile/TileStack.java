@@ -6,13 +6,13 @@ import logic.config.TileConfig;
 import java.util.*;
 
 public class TileStack {
-    private final LinkedList<TileData> tiles;
+    private final LinkedList<Tile> tiles;
 
     public TileStack() {
         this.tiles = new LinkedList<>();
     }
 
-    public void fill(ArrayList<TileData> tiles) {
+    public void fill(ArrayList<Tile> tiles) {
         this.tiles.addAll(tiles);
     }
 
@@ -22,7 +22,7 @@ public class TileStack {
             TileConfig tileConfig = e.getValue();
 
             for (int i = tileConfig.DECK_COUNT; i > 0; i--) {
-                tiles.add(new TileData(tileType));
+                tiles.add(TileFactory.createByType(tileType));
             }
         }
     }
@@ -31,11 +31,15 @@ public class TileStack {
         return tiles.size();
     }
 
-    public TileData remove() {
+    public boolean isEmpty() {
+        return getNumTiles() == 0;
+    }
+
+    public Tile remove() {
         return tiles.remove();
     }
 
-    public TileData peek() {
+    public Tile peek() {
         return tiles.peek();
     }
 
@@ -43,7 +47,7 @@ public class TileStack {
         Collections.shuffle(tiles);
 
         if (tiles.removeIf(t -> t.getType() == TileType.START)) {
-            tiles.addFirst(new TileData(TileType.START));
+            tiles.addFirst(new StartingTile());
         }
     }
 }

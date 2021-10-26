@@ -1,12 +1,12 @@
 package logic.tile;
 
-import logic.math.Vector2;
-
 public class TileFactory {
-    public static Tile create(TileData data, Vector2 position) {
-        return switch (data.getType()) {
-            case START -> new StartingTile(data, position);
-            case ROAD -> new RoadTile(data, position);
+    public static Tile createByType(TileType type) {
+        return switch (type) {
+            case START -> new StartingTile();
+            case ROAD -> new RoadTile();
+            case TOWN_CHUNK -> new TownChunkTile();
+            case ABBEY -> new AbbeyTile();
             default -> throw new IllegalArgumentException("data");
         };
     }

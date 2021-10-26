@@ -3,6 +3,8 @@ package logic.math;
 import java.util.Objects;
 
 public final class Vector2 {
+    public static final Vector2 ZERO = new Vector2(0, 0);
+
     private final int x;
     private final int y;
 

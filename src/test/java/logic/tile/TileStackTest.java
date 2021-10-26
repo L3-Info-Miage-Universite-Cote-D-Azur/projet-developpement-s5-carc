@@ -15,16 +15,16 @@ class TileStackTest {
     private static final String config1 = "{\"MIN_PLAYERS\":-5,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
 
     @Test
-    void testPick() {
+    void testRemove() {
         TileStack tileStack = new TileStack();
-        TileData tileData = new TileData(TileType.ROAD);
+        RoadTile roadTile = new RoadTile();
 
         tileStack.fill(new ArrayList<>() {{
-            add(tileData);
+            add(roadTile);
         }});
 
         assertEquals(1, tileStack.getNumTiles());
-        assertEquals(tileData, tileStack.remove());
+        assertEquals(roadTile, tileStack.remove());
     }
 
     @Test
@@ -77,7 +77,7 @@ class TileStackTest {
 
         stack.fill(config);
 
-        ArrayList<TileData> originalTilesPicked = new ArrayList<>();
+        ArrayList<Tile> originalTilesPicked = new ArrayList<>();
 
         while (stack.getNumTiles() >= 1) {
             originalTilesPicked.add(stack.remove());
@@ -86,7 +86,7 @@ class TileStackTest {
         stack.fill(originalTilesPicked);
         stack.shuffle();
 
-        ArrayList<TileData> shuffledTilesPicked = new ArrayList<>();
+        ArrayList<Tile> shuffledTilesPicked = new ArrayList<>();
 
         while (stack.getNumTiles() >= 1) {
             shuffledTilesPicked.add(stack.remove());
@@ -111,11 +111,11 @@ class TileStackTest {
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
         TileStack stack = new TileStack();
         stack.fill(new ArrayList<>() {{
-            add(new TileData(TileType.ROAD));
-            add(new TileData(TileType.ROAD));
-            add(new TileData(TileType.START));
-            add(new TileData(TileType.ROAD));
-            add(new TileData(TileType.ROAD));
+            add(new RoadTile());
+            add(new RoadTile());
+            add(new StartingTile());
+            add(new RoadTile());
+            add(new RoadTile());
         }});
         stack.shuffle();
 

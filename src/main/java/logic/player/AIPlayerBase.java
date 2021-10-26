@@ -2,8 +2,7 @@ package logic.player;
 
 import logic.board.GameBoard;
 import logic.math.Vector2;
-import logic.tile.TileData;
-import logic.tile.TileFactory;
+import logic.tile.Tile;
 
 public abstract class AIPlayerBase extends PlayerBase {
     public AIPlayerBase(int id) {
@@ -12,23 +11,24 @@ public abstract class AIPlayerBase extends PlayerBase {
 
     @Override
     public void onTurn() {
-        TileData tilePicked;
+        Tile tilePicked;
         do {
             tilePicked = game.getStack().remove();
         } while (!tryPlaceTile(tilePicked));
     }
 
-    private boolean tryPlaceTile(TileData tileData) {
+    private boolean tryPlaceTile(Tile tile) {
         GameBoard board = game.getBoard();
-        Vector2 position = findFreePositionForTile(tileData);
+        Vector2 position = findFreePositionForTile(tile);
 
         if (position == null) {
             return false;
         }
 
-        board.place(TileFactory.create(tileData, position));
+        tile.setPosition(position);
+        board.place(tile);
         return true;
     }
 
-    public abstract Vector2 findFreePositionForTile(TileData tile);
+    public abstract Vector2 findFreePositionForTile(Tile tile);
 }
