@@ -13,8 +13,6 @@ public class TileStack {
     }
 
     public void fill(GameConfig config) {
-        tiles.add(new TileData(TileType.START));
-
         for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
             TileType tileType = e.getKey();
             TileConfig tileConfig = e.getValue();
@@ -37,6 +35,7 @@ public class TileStack {
         List<TileData> tileShuffle = new ArrayList<>(tiles);
         Collections.shuffle(tileShuffle);
         tiles.clear();
+        tiles.add(new TileData(TileType.START));
         tiles.addAll(tileShuffle);
     }
 }
