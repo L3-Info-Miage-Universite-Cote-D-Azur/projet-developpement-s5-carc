@@ -21,4 +21,10 @@ class TileStackTest {
     void testFill(){
 
     }
+
+    @Test
+    void testShuffle(){
+
+    }
+    
 }
