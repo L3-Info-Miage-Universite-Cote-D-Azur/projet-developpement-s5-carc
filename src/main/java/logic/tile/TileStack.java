@@ -2,9 +2,8 @@ package logic.tile;
 
 import logic.config.GameConfig;
 
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class TileStack {
     private final Queue<TileData> tiles;
@@ -28,5 +27,12 @@ public class TileStack {
 
     public TileData pick() {
         return tiles.remove();
+    }
+
+    public void shuffle() {
+        List<TileData> tileShuffle = tiles.stream().toList();
+        Collections.shuffle(tileShuffle);
+        tiles.clear();
+        tiles.addAll(tileShuffle);
     }
 }
