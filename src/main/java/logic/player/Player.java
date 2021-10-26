@@ -33,6 +33,10 @@ public class Player {
         return info;
     }
 
+    public PlayerInput getInput() {
+        return input;
+    }
+
     public Game getGame() {
         return game;
     }

@@ -7,10 +7,6 @@ import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-class TileConfig {
-    public int DECK_COUNT;
-}
-
 public class GameConfig {
     public int MIN_PLAYERS = 2;
     public int MAX_PLAYERS = 5;

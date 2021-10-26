@@ -39,7 +39,7 @@ public class SimpleAI extends AI {
         return true;
     }
 
-    private Vector2 findRandomFreePoint() {
+    public final Vector2 findRandomFreePoint() {
         GameBoard board = player.getGame().getBoard();
         ArrayList<Vector2> freePoints = board.findFreePoints();
 
