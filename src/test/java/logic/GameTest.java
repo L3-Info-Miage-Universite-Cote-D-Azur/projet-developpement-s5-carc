@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import input.ai.SimpleAI;
 import logic.config.GameConfig;
+import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.PlayerInfo;
 import org.junit.jupiter.api.Disabled;
@@ -114,5 +115,38 @@ class GameTest {
         game.start();
         assertThrows(IllegalStateException.class, game::getWinner);
     }
+    @Test
+    void testWinner(){
+        GameConfig gameConfig = new GameConfig();
+        Game game = new Game(gameConfig);
+        PlayerInfo playerInfo1 = new PlayerInfo(501);
+        PlayerInfo playerInfo2 = new PlayerInfo(502);
+        SimpleAI simpleAI = new SimpleAI();
+        game.createPlayer(playerInfo1, simpleAI);
+        game.createPlayer(playerInfo2, simpleAI);
 
+        assertTrue(game.isFinished());
+        game.start();
+        while(!game.isFinished()){
+            game.update();
+        }
+        assertNotNull(game.getWinner());
+    }
+
+    @Test
+    void testIfThrowExceptionWhenNotEnoughPlayers() {
+        GameConfig config = new GameConfig();
+        config.MIN_PLAYERS = 1;
+        config.MAX_PLAYERS = 1;
+
+        Game game = new Game(config);
+
+        assertThrows(NotEnoughPlayerException.class, () -> {
+            game.start();
+        });
+        assertDoesNotThrow(() -> {
+            game.createPlayer(new PlayerInfo(1), new SimpleAI());
+            game.start();
+        });
+    }
 }
