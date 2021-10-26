@@ -1,9 +1,12 @@
 package logic.tile;
 
-import logic.Game;
 import logic.config.GameConfig;
-import org.junit.jupiter.api.Disabled;
+import logic.config.TileConfig;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,56 +15,143 @@ class TileStackTest {
     private static final String config1 = "{\"MIN_PLAYERS\":-5,\"MAX_PLAYERS\":5,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }}}";
 
     @Test
-    @Disabled
     void testPick() {
         TileStack tileStack = new TileStack();
-        assertEquals(0, tileStack.getNumTiles());
         TileData tileData = new TileData(TileType.ROAD);
 
-        // TODO Need to fill from config
+        tileStack.fill(new ArrayList<>() {{
+            add(tileData);
+        }});
+
         assertEquals(1, tileStack.getNumTiles());
         assertEquals(tileData, tileStack.pick());
     }
 
     @Test
-    @Disabled
     void testFill() {
-        TileStack tiles = new TileStack();
-        tiles.fill(null);
-        assertNotEquals(tiles, null);
-    }
+        GameConfig config = new GameConfig() {{
+            TILES = new HashMap<>() {{
+                put(TileType.ROAD, new TileConfig() {{
+                    DECK_COUNT = 1000;
+                }});
+                put(TileType.ABBEY, new TileConfig() {{
+                    DECK_COUNT = 1000;
+                }});
+            }};
+        }};
 
-    @Test
-    @Disabled
-    void testShuffle() { // If the shuffle works properly
-        TileStack tiles = new TileStack();
-        TileStack tiles_shuffle = new TileStack();
-        tiles.fill(null);
-        tiles_shuffle.fill(null);
-        tiles_shuffle.shuffle();
-        int cpt = 0;
-        for (int i = 0; i < tiles.getNumTiles(); i++) {
-            if (tiles_shuffle.pick() == tiles.pick()) {
-                cpt++;
+        TileStack stack = new TileStack();
+        stack.fill(config);
+
+        HashMap<TileType, Integer> tileCountByType = new HashMap<>();
+
+        while (stack.getNumTiles() >= 1) {
+            TileType tileType = stack.pick().getType();
+
+            if (tileCountByType.containsKey(tileType)) {
+                tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);
+            } else {
+                tileCountByType.put(tileType, 1);
             }
         }
-        assertNotEquals(tiles.getNumTiles(), cpt);
+
+        for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
+            assertEquals(e.getValue().DECK_COUNT, tileCountByType.getOrDefault(e.getKey(), 0));
+        }
     }
 
     @Test
-    @Disabled
+    void testShuffle() { // If the shuffle works properly
+        GameConfig config = new GameConfig() {{
+            TILES = new HashMap<>() {{
+                put(TileType.ROAD, new TileConfig() {{
+                    DECK_COUNT = 1000;
+                }});
+                put(TileType.ABBEY, new TileConfig() {{
+                    DECK_COUNT = 1000;
+                }});
+            }};
+        }};
+
+        TileStack stack = new TileStack();
+
+        stack.fill(config);
+
+        ArrayList<TileData> originalTilesPicked = new ArrayList<>();
+
+        while (stack.getNumTiles() >= 1) {
+            originalTilesPicked.add(stack.pick());
+        }
+
+        stack.fill(originalTilesPicked);
+        stack.shuffle();
+
+        ArrayList<TileData> shuffledTilesPicked = new ArrayList<>();
+
+        while (stack.getNumTiles() >= 1) {
+            shuffledTilesPicked.add(stack.pick());
+        }
+
+        assertEquals(shuffledTilesPicked.size(),originalTilesPicked.size());
+
+        int matchCount = 0;
+
+        for (int i = 0; i < shuffledTilesPicked.size() ; i++) {
+            if(shuffledTilesPicked.get(i) == originalTilesPicked.get(i)) {
+                matchCount++;
+            }
+        }
+
+        double matchPercentage = 100.0 * matchCount / originalTilesPicked.size();
+
+        assertTrue(matchPercentage < 10);
+    }
+
+    @Test
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
-        TileStack tiles = new TileStack();
-        tiles.fill(null);
-        TileType tileType = TileType.START;
-        assertEquals(tiles.pick().getType(), tileType);
+        TileStack stack = new TileStack();
+        stack.fill(new ArrayList<>() {{
+            add(new TileData(TileType.ROAD));
+            add(new TileData(TileType.ROAD));
+            add(new TileData(TileType.START));
+            add(new TileData(TileType.ROAD));
+            add(new TileData(TileType.ROAD));
+        }});
+        stack.shuffle();
+
+        assertEquals(stack.pick().getType(), TileType.START);
     }
 
     @Test
-    @Disabled
     void testInitConfig() { // If the initialization for the config works properly
-        GameConfig config = null;
-        Game game = new Game(config);
-        assertEquals(config, config.validate());
+        GameConfig config = new GameConfig() {{
+            TILES = new HashMap<>() {{
+               put(TileType.ROAD, new TileConfig() {{
+                   DECK_COUNT = 1000;
+               }});
+               put(TileType.ABBEY, new TileConfig() {{
+                   DECK_COUNT = 1000;
+               }});
+            }};
+        }};
+
+        TileStack stack = new TileStack();
+        stack.fill(config);
+
+        HashMap<TileType, Integer> tileCountByType = new HashMap<>();
+
+        while (stack.getNumTiles() >= 1) {
+            TileType tileType = stack.pick().getType();
+
+            if (tileCountByType.containsKey(tileType)) {
+                tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);
+            } else {
+                tileCountByType.put(tileType, 1);
+            }
+        }
+
+        for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
+            assertEquals(e.getValue().DECK_COUNT, tileCountByType.getOrDefault(e.getKey(), 0));
+        }
     }
 }

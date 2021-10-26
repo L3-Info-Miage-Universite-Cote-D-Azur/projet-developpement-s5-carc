@@ -12,6 +12,10 @@ public class TileStack {
         this.tiles = new LinkedList<>();
     }
 
+    public void fill(ArrayList<TileData> tiles) {
+        this.tiles.addAll(tiles);
+    }
+
     public void fill(GameConfig config) {
         for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
             TileType tileType = e.getKey();
