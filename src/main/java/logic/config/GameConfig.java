@@ -11,7 +11,10 @@ public class GameConfig {
     public int MIN_PLAYERS = 2;
     public int MAX_PLAYERS = 5;
     public int PLAYER_DECK_CAPACITY;
-    public HashMap<TileType, TileConfig> TILES = new HashMap<>();
+    public HashMap<TileType, TileConfig> TILES = new HashMap<>() {{
+        put(TileType.START, new TileConfig() {{ DECK_COUNT = 1; }});
+        put(TileType.ROAD, new TileConfig() {{ DECK_COUNT = 10; }});
+    }};
 
     public boolean validate() {
         if (MIN_PLAYERS < 0 || MIN_PLAYERS > MAX_PLAYERS)

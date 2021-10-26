@@ -6,7 +6,7 @@ import logic.config.TileConfig;
 import java.util.*;
 
 public class TileStack {
-    private final Queue<TileData> tiles;
+    private final LinkedList<TileData> tiles;
 
     public TileStack() {
         this.tiles = new LinkedList<>();
@@ -32,10 +32,10 @@ public class TileStack {
     }
 
     public void shuffle() {
-        List<TileData> tileShuffle = new ArrayList<>(tiles);
-        Collections.shuffle(tileShuffle);
-        tiles.clear();
-        tiles.add(new TileData(TileType.START));
-        tiles.addAll(tileShuffle);
+        Collections.shuffle(tiles);
+
+        if (tiles.removeIf(t -> t.getType() == TileType.START)) {
+            tiles.addFirst(new TileData(TileType.START));
+        }
     }
 }
