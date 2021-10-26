@@ -26,7 +26,9 @@ class TileStackTest {
     @Test
     @Disabled
     void testFill() {
-
+        TileStack tiles = new TileStack();
+        tiles.fill(null);
+        assertNotEquals(tiles, null);
     }
 
     @Test
@@ -49,8 +51,10 @@ class TileStackTest {
     @Test
     @Disabled
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
+        TileStack tiles = new TileStack();
+        tiles.fill(null);
         TileType tileType = TileType.START;
-        // assertEquals(tileType, roadTile.getType());
+        assertEquals(tiles.pick().getType(), tileType);
     }
 
     @Test

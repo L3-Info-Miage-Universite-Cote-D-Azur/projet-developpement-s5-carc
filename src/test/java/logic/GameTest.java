@@ -89,6 +89,14 @@ class GameTest {
         assertFalse(game.isFinished());
     }
     @Test
+    void testIfThrowExceptionIfUpdateCalledBeforeStart(){
+        GameConfig gameConfig = new GameConfig();
+        Game game = new Game(gameConfig);
+
+        assertTrue(game.isFinished());
+        assertThrows(IllegalStateException.class, game::update);
+    }
+    @Test
     void testIfThrowExceptionIfStartCalledSeveralTimes(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
@@ -106,4 +114,5 @@ class GameTest {
         game.start();
         assertThrows(IllegalStateException.class, game::getWinner);
     }
+
 }
