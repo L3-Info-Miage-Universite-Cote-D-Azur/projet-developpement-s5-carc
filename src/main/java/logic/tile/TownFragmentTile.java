@@ -10,7 +10,7 @@ public class TownFragmentTile extends Tile {
 
     @Override
     public TileType getType() {
-        return null;
+        return TileType.TOWN;
     }
 
 }
