@@ -1,9 +1,9 @@
 package logic.tile;
 
 import logic.config.GameConfig;
+import logic.config.TileConfig;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class TileStack {
     private final Queue<TileData> tiles;
@@ -14,11 +14,15 @@ public class TileStack {
 
     public void fill(GameConfig config) {
         tiles.add(new TileData(TileType.START));
-        tiles.add(new TileData(TileType.ROAD));
-        tiles.add(new TileData(TileType.ROAD));
-        tiles.add(new TileData(TileType.ROAD));
-        tiles.add(new TileData(TileType.ROAD));
-        tiles.add(new TileData(TileType.ROAD));
+
+        for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
+            TileType tileType = e.getKey();
+            TileConfig tileConfig = e.getValue();
+
+            for (int i = tileConfig.DECK_COUNT; i > 0; i--) {
+                tiles.add(new TileData(tileType));
+            }
+        }
     }
 
     public int getNumTiles() {
