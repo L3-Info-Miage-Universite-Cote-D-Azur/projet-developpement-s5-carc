@@ -30,7 +30,7 @@ public class TileStack {
     }
 
     public void shuffle() {
-        List<TileData> tileShuffle = tiles.stream().toList();
+        List<TileData> tileShuffle = new ArrayList<>(tiles);
         Collections.shuffle(tileShuffle);
         tiles.clear();
         tiles.addAll(tileShuffle);
