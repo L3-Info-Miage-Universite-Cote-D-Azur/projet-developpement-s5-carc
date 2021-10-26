@@ -61,7 +61,7 @@ class GameTest {
         });
     }
 
-    @Test @Disabled
+    @Test
     void testUpdate(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
@@ -80,12 +80,21 @@ class GameTest {
     }
 
     @Test @Disabled
-    void testIsGameFinished(){
+    void testIsGameFinished() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
         assertTrue(game.isFinished());
         game.start();
         assertFalse(game.isFinished());
+    }
+    @Test
+    void testIfThrowExceptionIfStartCalledSeveralTimes(){
+        GameConfig gameConfig = new GameConfig();
+        Game game = new Game(gameConfig);
+
+        assertTrue(game.isFinished());
+        game.start();
+        assertThrows(IllegalStateException.class, game::start);
     }
 }
