@@ -26,7 +26,9 @@ class TileStackTest {
     @Test
     @Disabled
     void testFill() {
-
+        TileStack tiles = new TileStack();
+        tiles.fill(null);
+        assertNotEquals(tiles, null);
     }
 
     @Test
