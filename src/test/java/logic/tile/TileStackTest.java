@@ -22,9 +22,18 @@ class TileStackTest {
 
     }
 
-    @Test
-    void testShuffle(){
+    @Test @Disabled
+    void testShuffle(){ // If the shuffle works properly
 
     }
-    
+
+    @Test @Disabled
+    void testIsFirstTileIsStartTile(){ // If the first tile is the starting tile
+
+    }
+
+    @Test @Disabled
+    void testInitConfig(){ // If the initialization for the config works properly
+
+    }
 }
