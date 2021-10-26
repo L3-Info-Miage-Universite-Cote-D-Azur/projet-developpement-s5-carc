@@ -32,13 +32,19 @@ public class GameBoard {
     public Tile getTileAt(Vector2 position) {
         return tiles.getOrDefault(position, null);
     }
-    public Tile getStartingTile() { return tiles.getOrDefault(STARTING_TILE_POSITION, null); }
+    public Tile getStartingTile() {
+        return tiles.getOrDefault(STARTING_TILE_POSITION, null);
+    }
+
+    public int getTileCount() {
+        return tiles.size();
+    }
 
     public boolean hasTileAt(Vector2 position){
         return tiles.containsKey(position);
     }
     public boolean isEmpty() {
-        return tiles.size() == 0;
+        return getTileCount() == 0;
     }
 
     public ArrayList<Vector2> findFreePoints() {

@@ -46,7 +46,7 @@ public class SimpleAI extends AI {
         if (freePoints.isEmpty()) {
             return null;
         }
-        
+
         return freePoints.get(random.nextInt(freePoints.size()));
     }
 }
