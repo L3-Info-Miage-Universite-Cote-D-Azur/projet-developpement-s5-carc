@@ -11,8 +11,8 @@
 
 
 - # En terme de tests (en charge : Sébastien Aglae)
-    - z
-    - a
+    - Mise à jour des anciens tests pour tester les nouvelles possibilités
+    - Ajout de nouveaux tests pour vérifier la bonne implémentation des nouvlles fonctionnalités
 
 - # En terme d'organisation de code
     - Ajout de tasks et de subtasks

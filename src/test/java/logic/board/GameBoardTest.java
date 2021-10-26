@@ -20,7 +20,7 @@ class GameBoardTest {
         RoadTile tile1 = new RoadTile(new TileData(TileType.RIVER), vector2);
         assertEquals(tile0, gameBoard.getTileAt(vector2));
         assertTrue(gameBoard.hasTileAt(vector2));
-        assertEquals(1, gameBoard.getTiles().size()); // TODO UNSAFE
+        assertEquals(1, gameBoard.getTileCount()); // TODO UNSAFE
         Vector2 vector0 = new Vector2(35, 15);
         assertFalse(gameBoard.hasTileAt(vector0));
         assertThrows(IllegalArgumentException.class, () -> {
