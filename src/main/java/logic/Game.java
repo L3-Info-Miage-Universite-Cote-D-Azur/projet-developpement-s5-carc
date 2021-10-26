@@ -34,6 +34,7 @@ public class Game {
         }
 
         stack.fill(config);
+        stack.shuffle();
         started = true;
     }
 
