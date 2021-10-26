@@ -127,10 +127,13 @@ class GameTest {
 
         assertTrue(game.isFinished());
         game.start();
+        game.getPlayer(0).addScore(279);
         while(!game.isFinished()){
             game.update();
         }
         assertNotNull(game.getWinner());
+        assertEquals(game.getWinner(), game.getPlayer(0));
+
     }
 
     @Test
