@@ -16,7 +16,7 @@
   - 
 
 - # En terme d'organisation de code
-  - Création de nouvelles Classes (TownFramentTile, AbbeyTile)
+  - Création de nouvelles Classes (TownFragmentTile, AbbeyTile)
   - Nouvelles tasks et subtasks
 
 
