@@ -1,4 +1,16 @@
 package logic.tile;
 
-public class AbbeyTile {
+import logic.math.Vector2;
+
+public class AbbeyTile extends Tile{
+
+
+    public AbbeyTile(TileData data, Vector2 position) {
+        super(data, position);
+    }
+
+    @Override
+    public TileType getType() {
+        return null;
+    }
 }
