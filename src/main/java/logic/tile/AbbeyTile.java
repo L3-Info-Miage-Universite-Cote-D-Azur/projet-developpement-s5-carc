@@ -11,6 +11,6 @@ public class AbbeyTile extends Tile{
 
     @Override
     public TileType getType() {
-        return null;
+        return TileType.ABBEY;
     }
 }
