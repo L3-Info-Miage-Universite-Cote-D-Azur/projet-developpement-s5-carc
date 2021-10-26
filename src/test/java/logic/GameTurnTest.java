@@ -1,8 +1,7 @@
 package logic;
 
-import input.ai.SimpleAI;
 import logic.config.GameConfig;
-import logic.player.PlayerInfo;
+import logic.player.SimpleAIPlayer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,9 +31,9 @@ class GameTurnTest {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
-        game.createPlayer(new PlayerInfo(0), new SimpleAI());
-        game.createPlayer(new PlayerInfo(1), new SimpleAI());
-        game.createPlayer(new PlayerInfo(2), new SimpleAI());
+        game.createPlayer(new SimpleAIPlayer(1));
+        game.createPlayer(new SimpleAIPlayer(1));
+        game.createPlayer(new SimpleAIPlayer(1));
 
         GameTurn gameTurn = new GameTurn(game);
 

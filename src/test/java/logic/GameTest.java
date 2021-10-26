@@ -1,20 +1,15 @@
 package logic;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import input.ai.SimpleAI;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
-import logic.player.PlayerInfo;
+import logic.player.SimpleAIPlayer;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    private static final String config0 = "{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":3,\"PLAYER_DECK_CAPACITY\":25,\"TILES\":{\"START\": { \"DECK_COUNT\": 5 }, \"ROAD\": { \"DECK_COUNT\": 5 }, \"TOWN_CHUNK\": { \"DECK_COUNT\": 5 }, \"RIVER\": { \"DECK_COUNT\": 5 } }}";
-
     @Test
     void testGame(){
         GameConfig gameConfig = new GameConfig();
@@ -28,67 +23,50 @@ class GameTest {
     }
 
     @Test
-    void testPlayer() {
-        GameConfig gameConfig0 = null;
+    void testAddPlayer() {
+        GameConfig gameConfig = new GameConfig() {{
+            MIN_PLAYERS = 1;
+            MAX_PLAYERS = 3;
+        }};
 
-        try {
-            gameConfig0 = new ObjectMapper().readValue(config0, GameConfig.class);
-        } catch (JsonProcessingException ignored) {
-        }
-
-        assertNotNull(gameConfig0);
-        Game game = new Game(gameConfig0);
+        assertNotNull(gameConfig);
+        Game game = new Game(gameConfig);
 
         assertEquals(0, game.getPlayerCount());
 
-        PlayerInfo playerInfo0 = new PlayerInfo(500);
-        PlayerInfo playerInfo1 = new PlayerInfo(501);
-        PlayerInfo playerInfo2 = new PlayerInfo(502);
-        PlayerInfo playerInfo3 = new PlayerInfo(503);
-        SimpleAI simpleAI = new SimpleAI();
-        game.createPlayer(playerInfo0, simpleAI);
-
+        game.createPlayer(new SimpleAIPlayer(1));
         assertEquals(1, game.getPlayerCount());
-        //assertEquals(player, game.getPlayer(0)); TODO Test player info
 
-        game.createPlayer(playerInfo1, simpleAI);
-        game.createPlayer(playerInfo2, simpleAI);
+        game.createPlayer(new SimpleAIPlayer(2));
+        game.createPlayer(new SimpleAIPlayer(3));
         assertEquals(3, game.getPlayerCount());
+
         assertNotNull(game.getPlayer(0));
         assertNotNull(game.getPlayer(1));
         assertNotNull(game.getPlayer(2));
+
         assertThrows(TooManyPlayerException.class, () -> {
-            game.createPlayer(playerInfo3, simpleAI);
+            game.createPlayer(new SimpleAIPlayer(4));
         });
     }
 
     @Test
-    void testUpdate(){
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
-        PlayerInfo playerInfo = new PlayerInfo(0);
-        SimpleAI simpleAI = new SimpleAI();
-        game.createPlayer(playerInfo, simpleAI);
-        assertThrows(IllegalStateException.class, game::update);
-
-        GameConfig gameConfig1 = new GameConfig();
-        Game game1 = new Game(gameConfig1);
-        PlayerInfo playerInfo1 = new PlayerInfo(0);
-        SimpleAI simpleAI1 = new SimpleAI();
-        game1.createPlayer(playerInfo1, simpleAI1);
-        game1.start();
-        assertDoesNotThrow(game1::update);
-    }
-
-    @Test @Disabled
     void testIsGameFinished() {
-        GameConfig gameConfig = new GameConfig();
+        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
 
         assertTrue(game.isFinished());
+
+        game.createPlayer(new SimpleAIPlayer(1));
         game.start();
+
         assertFalse(game.isFinished());
+
+        game.getPlayer(0).addScore(99999);
+
+        assertTrue(game.isFinished());
     }
+
     @Test
     void testIfThrowExceptionIfUpdateCalledBeforeStart(){
         GameConfig gameConfig = new GameConfig();
@@ -98,42 +76,43 @@ class GameTest {
         assertThrows(IllegalStateException.class, game::update);
     }
     @Test
-    void testIfThrowExceptionIfStartCalledSeveralTimes(){
-        GameConfig gameConfig = new GameConfig();
+    void testIfThrowExceptionIfStartCalledSeveralTimes() {
+        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
 
-        assertTrue(game.isFinished());
+        game.createPlayer(new SimpleAIPlayer(1));
         game.start();
         assertThrows(IllegalStateException.class, game::start);
     }
     @Test
     void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
-        GameConfig gameConfig = new GameConfig();
+        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
 
-        assertTrue(game.isFinished());
+        game.createPlayer(new SimpleAIPlayer(1));
         game.start();
+
+        assertEquals(false, game.isFinished());
         assertThrows(IllegalStateException.class, game::getWinner);
     }
     @Test
     void testWinner(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
-        PlayerInfo playerInfo1 = new PlayerInfo(501);
-        PlayerInfo playerInfo2 = new PlayerInfo(502);
-        SimpleAI simpleAI = new SimpleAI();
-        game.createPlayer(playerInfo1, simpleAI);
-        game.createPlayer(playerInfo2, simpleAI);
+        game.createPlayer(new SimpleAIPlayer(501));
+        game.createPlayer(new SimpleAIPlayer(502));
 
         assertTrue(game.isFinished());
+
         game.start();
         game.getPlayer(0).addScore(279);
+
         while(!game.isFinished()){
             game.update();
         }
+
         assertNotNull(game.getWinner());
         assertEquals(game.getWinner(), game.getPlayer(0));
-
     }
 
     @Test
@@ -148,7 +127,7 @@ class GameTest {
             game.start();
         });
         assertDoesNotThrow(() -> {
-            game.createPlayer(new PlayerInfo(1), new SimpleAI());
+            game.createPlayer(new SimpleAIPlayer(1));
             game.start();
         });
     }

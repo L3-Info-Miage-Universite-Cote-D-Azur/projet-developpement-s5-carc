@@ -2,14 +2,12 @@ package logic;
 
 import java.util.ArrayList;
 
-import input.PlayerInput;
 import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
-import logic.player.Player;
-import logic.player.PlayerInfo;
+import logic.player.PlayerBase;
 import logic.tile.TileStack;
 
 public class Game {
@@ -17,7 +15,7 @@ public class Game {
     private final GameBoard board;
     private final GameTurn turn;
     private final TileStack stack;
-    private final ArrayList<Player> players;
+    private final ArrayList<PlayerBase> players;
 
     private boolean started;
 
@@ -50,7 +48,7 @@ public class Game {
 
         turn.startNext();
 
-        Logger.info(String.format("[GAME] Turn %d -> Player %d", turn.getCount(), turn.getPlayer().getInfo().getId()));
+        Logger.info(String.format("[GAME] Turn %d -> Player %d", turn.getCount(), turn.getPlayer().getId()));
 
         turn.getPlayer().onTurn();
 
@@ -61,11 +59,11 @@ public class Game {
 
     public void onEnd() {
         Logger.info("[GAME] Game over");
-        Logger.info("[STATS] Winner is Player %d !", getWinner().getInfo().getId());
+        Logger.info("[STATS] Winner is Player %d !", getWinner().getId());
     }
 
     public boolean isFinished() {
-        for (Player player : players) {
+        for (PlayerBase player : players) {
             if (player.getScore() >= 279) {
                 return true;
             }
@@ -74,23 +72,24 @@ public class Game {
         return this.stack.getNumTiles() == 0;
     }
 
-    public void createPlayer(PlayerInfo info, PlayerInput input) {
+    public void createPlayer(PlayerBase player) {
         if (getPlayerCount() >= config.MAX_PLAYERS) {
             throw new TooManyPlayerException();
         }
 
-        players.add(new Player(info, input, this));
+        players.add(player);
+        player.setGame(this);
     }
 
-    public Player getWinner() {
+    public PlayerBase getWinner() {
         if (!isFinished()) {
             throw new IllegalStateException("getWinner() must be called if the game is finished.");
         }
 
-        Player winner = null;
+        PlayerBase winner = null;
         int winnerScore = -1;
 
-        for (Player p : players) {
+        for (PlayerBase p : players) {
             if (p.getScore() > winnerScore) {
                 winnerScore = p.getScore();
                 winner = p;
@@ -112,7 +111,7 @@ public class Game {
         return stack;
     }
 
-    public Player getPlayer(int player){
+    public PlayerBase getPlayer(int player){
         return players.get(player);
     }
 

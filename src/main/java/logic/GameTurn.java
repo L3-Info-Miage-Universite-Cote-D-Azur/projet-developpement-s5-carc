@@ -1,6 +1,6 @@
 package logic;
 
-import logic.player.Player;
+import logic.player.PlayerBase;
 
 public class GameTurn {
     private final Game game;
@@ -19,7 +19,7 @@ public class GameTurn {
         return (this.id - 1) % game.getPlayerCount();
     }
 
-    public Player getPlayer() {
+    public PlayerBase getPlayer() {
         return game.getPlayer(getPlayerIndex());
     }
 

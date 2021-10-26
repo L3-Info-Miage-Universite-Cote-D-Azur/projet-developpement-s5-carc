@@ -1,22 +1,19 @@
-package input;
+package logic.math;
 
-import input.ai.SimpleAI;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
-import logic.math.Vector2;
-import logic.player.PlayerInfo;
+import logic.player.SimpleAIPlayer;
 import logic.tile.Tile;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class SimpleAITest {
+class SimpleAIPlayerTest {
     @Test
     void testOnceTilePlacementPerTurn() {
         for (int i = 1000; i > 0; i--) {
@@ -46,7 +43,7 @@ class SimpleAITest {
         GameBoard board = game.getBoard();
 
         while (!game.isFinished()) {
-            ArrayList<Vector2> freePoints = game.getBoard().findFreePoints();
+            ArrayList<Vector2> freePoints = game.getBoard().findFreePoints(game.getStack().peek());
             game.update();
 
             if (board.getTileCount() >= 2) {
@@ -71,15 +68,15 @@ class SimpleAITest {
 
         game.update();
 
-        SimpleAI ai = (SimpleAI) game.getPlayer(0).getInput();
+        SimpleAIPlayer player = (SimpleAIPlayer) game.getPlayer(0);
 
-        ArrayList<Vector2> freePoints = board.findFreePoints();
+        ArrayList<Vector2> freePoints = board.findFreePoints(game.getStack().peek());
         int[] freePointPickedCount = new int[freePoints.size()];
 
         int testCount = 100000;
 
         for (int i = testCount; i > 0; i--) {
-            int freePointPickedIndex = freePoints.indexOf(ai.findRandomFreePoint());
+            int freePointPickedIndex = freePoints.indexOf(player.findFreePositionForTile(game.getStack().peek()));
             assertNotEquals(freePointPickedIndex, -1);
             freePointPickedCount[freePointPickedIndex]++;
         }
@@ -103,7 +100,8 @@ class SimpleAITest {
     private static Game createSinglePlayerGameEnv(GameConfig config) {
         Game game = new Game(config);
 
-        game.createPlayer(new PlayerInfo(1), new SimpleAI());
+        game.createPlayer(new SimpleAIPlayer(1));
+        game.createPlayer(new SimpleAIPlayer(2));
         game.start();
 
         return game;

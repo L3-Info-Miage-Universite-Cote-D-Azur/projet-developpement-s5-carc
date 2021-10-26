@@ -35,6 +35,10 @@ public class TileStack {
         return tiles.remove();
     }
 
+    public TileData peek() {
+        return tiles.peek();
+    }
+
     public void shuffle() {
         Collections.shuffle(tiles);
 

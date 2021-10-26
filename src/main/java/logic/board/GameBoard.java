@@ -2,6 +2,8 @@ package logic.board;
 
 import logic.math.Vector2;
 import logic.tile.Tile;
+import logic.tile.TileData;
+import logic.tile.TileType;
 
 import java.util.*;
 
@@ -47,18 +49,24 @@ public class GameBoard {
         return getTileCount() == 0;
     }
 
-    public ArrayList<Vector2> findFreePoints() {
+    public ArrayList<Vector2> findFreePoints(TileData tileData) {
+        if (tileData == null) {
+            throw new IllegalArgumentException("Tile data must be not null.");
+        }
+
         Tile startingTile = getStartingTile();
         ArrayList<Vector2> freePoints = new ArrayList<>();
 
         if (startingTile != null) {
-            findFreePointsFromNode(startingTile, new HashSet<>(), freePoints);
+            findFreePointsFromNode(startingTile, tileData, new HashSet<>(), freePoints);
+        } else if (tileData.getType() == TileType.START) {
+            return new ArrayList<>() {{ add(STARTING_TILE_POSITION); }};
         }
 
         return freePoints;
     }
 
-    private void findFreePointsFromNode(Tile node, HashSet<Tile> parentNodes, ArrayList<Vector2> freePoints) {
+    private void findFreePointsFromNode(Tile node, TileData tileData, HashSet<Tile> parentNodes, ArrayList<Vector2> freePoints) {
         Vector2 tilePosition = node.getPosition();
 
         for (Vector2 edgeOffset : TILE_EDGE_OFFSETS) {
@@ -69,7 +77,7 @@ public class GameBoard {
 
                 if (!parentNodes.contains(subNode)) {
                     parentNodes.add(subNode);
-                    findFreePointsFromNode(subNode, parentNodes, freePoints);
+                    findFreePointsFromNode(subNode, tileData, parentNodes, freePoints);
                 }
             } else {
                 freePoints.add(edgePos);
