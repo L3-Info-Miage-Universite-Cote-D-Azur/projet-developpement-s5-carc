@@ -17,4 +17,9 @@ public abstract class Tile {
     public void setPosition(Vector2 position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        return "Tile{}";
+    }
 }

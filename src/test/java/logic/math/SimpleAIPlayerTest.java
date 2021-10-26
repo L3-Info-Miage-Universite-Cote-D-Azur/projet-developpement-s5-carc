@@ -77,7 +77,7 @@ class SimpleAIPlayerTest {
         int testCount = 100000;
 
         for (int i = testCount; i > 0; i--) {
-            int freePointPickedIndex = freePoints.indexOf(player.findFreePositionForTile(tile));
+            int freePointPickedIndex = freePoints.indexOf(player.findPositionForTile(tile));
             assertNotEquals(freePointPickedIndex, -1);
             freePointPickedCount[freePointPickedIndex]++;
         }

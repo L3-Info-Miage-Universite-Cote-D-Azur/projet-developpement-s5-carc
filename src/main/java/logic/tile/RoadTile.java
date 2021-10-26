@@ -5,4 +5,9 @@ public class RoadTile extends Tile{
     public TileType getType() {
         return TileType.ROAD;
     }
+
+    @Override
+    public String toString() {
+        return "RoadTile{}";
+    }
 }

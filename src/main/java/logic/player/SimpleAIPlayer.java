@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SimpleAIPlayer extends AIPlayerBase {
-    private Random random;
+    private final Random random;
 
     public SimpleAIPlayer(int id) {
         super(id);
@@ -16,7 +16,7 @@ public class SimpleAIPlayer extends AIPlayerBase {
     }
 
     @Override
-    public Vector2 findFreePositionForTile(Tile tile) {
+    public Vector2 findPositionForTile(Tile tile) {
         GameBoard board = game.getBoard();
         ArrayList<Vector2> freePoints = board.findFreePlaceForTile(tile);
 

@@ -5,4 +5,9 @@ public class AbbeyTile extends Tile{
     public TileType getType() {
         return TileType.ABBEY;
     }
+
+    @Override
+    public String toString() {
+        return "AbbeyTile{}";
+    }
 }

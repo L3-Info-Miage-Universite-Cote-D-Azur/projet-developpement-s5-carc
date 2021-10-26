@@ -5,4 +5,9 @@ public class TownChunkTile extends Tile {
     public TileType getType() {
         return TileType.TOWN_CHUNK;
     }
+
+    @Override
+    public String toString() {
+        return "TownChunkTile{}";
+    }
 }
