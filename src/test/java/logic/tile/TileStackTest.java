@@ -24,7 +24,7 @@ class TileStackTest {
         }});
 
         assertEquals(1, tileStack.getNumTiles());
-        assertEquals(tileData, tileStack.pick());
+        assertEquals(tileData, tileStack.remove());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TileStackTest {
         HashMap<TileType, Integer> tileCountByType = new HashMap<>();
 
         while (stack.getNumTiles() >= 1) {
-            TileType tileType = stack.pick().getType();
+            TileType tileType = stack.remove().getType();
 
             if (tileCountByType.containsKey(tileType)) {
                 tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);
@@ -80,7 +80,7 @@ class TileStackTest {
         ArrayList<TileData> originalTilesPicked = new ArrayList<>();
 
         while (stack.getNumTiles() >= 1) {
-            originalTilesPicked.add(stack.pick());
+            originalTilesPicked.add(stack.remove());
         }
 
         stack.fill(originalTilesPicked);
@@ -89,7 +89,7 @@ class TileStackTest {
         ArrayList<TileData> shuffledTilesPicked = new ArrayList<>();
 
         while (stack.getNumTiles() >= 1) {
-            shuffledTilesPicked.add(stack.pick());
+            shuffledTilesPicked.add(stack.remove());
         }
 
         assertEquals(shuffledTilesPicked.size(),originalTilesPicked.size());
@@ -119,7 +119,7 @@ class TileStackTest {
         }});
         stack.shuffle();
 
-        assertEquals(stack.pick().getType(), TileType.START);
+        assertEquals(stack.remove().getType(), TileType.START);
     }
 
     @Test
@@ -141,7 +141,7 @@ class TileStackTest {
         HashMap<TileType, Integer> tileCountByType = new HashMap<>();
 
         while (stack.getNumTiles() >= 1) {
-            TileType tileType = stack.pick().getType();
+            TileType tileType = stack.remove().getType();
 
             if (tileCountByType.containsKey(tileType)) {
                 tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);

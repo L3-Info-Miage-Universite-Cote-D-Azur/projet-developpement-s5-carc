@@ -6,6 +6,7 @@ import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
 import logic.tile.Tile;
 
+import logic.tile.TileData;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -70,13 +71,14 @@ class SimpleAIPlayerTest {
 
         SimpleAIPlayer player = (SimpleAIPlayer) game.getPlayer(0);
 
-        ArrayList<Vector2> freePoints = board.findFreePoints(game.getStack().peek());
+        TileData tile = game.getStack().peek();
+        ArrayList<Vector2> freePoints = board.findFreePoints(tile);
         int[] freePointPickedCount = new int[freePoints.size()];
 
         int testCount = 100000;
 
         for (int i = testCount; i > 0; i--) {
-            int freePointPickedIndex = freePoints.indexOf(player.findFreePositionForTile(game.getStack().peek()));
+            int freePointPickedIndex = freePoints.indexOf(player.findFreePositionForTile(tile));
             assertNotEquals(freePointPickedIndex, -1);
             freePointPickedCount[freePointPickedIndex]++;
         }

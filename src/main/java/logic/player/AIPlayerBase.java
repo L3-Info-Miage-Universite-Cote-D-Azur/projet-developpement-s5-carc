@@ -2,7 +2,6 @@ package logic.player;
 
 import logic.board.GameBoard;
 import logic.math.Vector2;
-import logic.tile.Tile;
 import logic.tile.TileData;
 import logic.tile.TileFactory;
 
@@ -15,7 +14,7 @@ public abstract class AIPlayerBase extends PlayerBase {
     public void onTurn() {
         TileData tilePicked;
         do {
-            tilePicked = game.getStack().pick();
+            tilePicked = game.getStack().remove();
         } while (!tryPlaceTile(tilePicked));
     }
 

@@ -4,18 +4,16 @@ import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.SimpleAIPlayer;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
-    void testGame(){
+    void testInitialState(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
-        assertNotNull(game.getConfig());
         assertEquals(gameConfig, game.getConfig());
         assertEquals(0, game.getPlayerCount());
         assertNotNull(game.getBoard());

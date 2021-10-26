@@ -13,18 +13,24 @@ class GameBoardTest {
     void testPlace() {
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
-        Vector2 vector2 = new Vector2(10, 15);
-        RoadTile tile0 = new RoadTile(new TileData(TileType.ROAD), vector2);
-        gameBoard.place(tile0);
+
+        RoadTile tile = new RoadTile(new TileData(TileType.ROAD), new Vector2(10, 15));
+        gameBoard.place(tile);
         assertFalse(gameBoard.isEmpty());
-        RoadTile tile1 = new RoadTile(new TileData(TileType.RIVER), vector2);
-        assertEquals(tile0, gameBoard.getTileAt(vector2));
-        assertTrue(gameBoard.hasTileAt(vector2));
-        assertEquals(1, gameBoard.getTileCount()); // TODO UNSAFE
-        Vector2 vector0 = new Vector2(35, 15);
-        assertFalse(gameBoard.hasTileAt(vector0));
+        assertTrue(gameBoard.hasTileAt(tile.getPosition()));
+        assertEquals(tile, gameBoard.getTileAt(tile.getPosition()));
+    }
+
+    @Test
+    void testPlaceThrowIfOverlap() {
+        GameBoard gameBoard = new GameBoard();
+        assertTrue(gameBoard.isEmpty());
+
+        Vector2 overlapPosition = new Vector2(10, 15);
+        gameBoard.place(new RoadTile(new TileData(TileType.ROAD), overlapPosition));
+
         assertThrows(IllegalArgumentException.class, () -> {
-            gameBoard.place(tile1);
+            gameBoard.place(new RoadTile(new TileData(TileType.RIVER), overlapPosition));
         });
     }
 }

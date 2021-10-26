@@ -31,7 +31,7 @@ public class TileStack {
         return tiles.size();
     }
 
-    public TileData pick() {
+    public TileData remove() {
         return tiles.remove();
     }
 

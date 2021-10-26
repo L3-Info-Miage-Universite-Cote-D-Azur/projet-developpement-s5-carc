@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTurnTest {
     @Test
-    void testGameTurn() {
+    void testInitialState() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
         GameTurn gameTurn = new GameTurn(game);
@@ -32,8 +32,8 @@ class GameTurnTest {
         Game game = new Game(gameConfig);
 
         game.createPlayer(new SimpleAIPlayer(1));
-        game.createPlayer(new SimpleAIPlayer(1));
-        game.createPlayer(new SimpleAIPlayer(1));
+        game.createPlayer(new SimpleAIPlayer(2));
+        game.createPlayer(new SimpleAIPlayer(3));
 
         GameTurn gameTurn = new GameTurn(game);
 
