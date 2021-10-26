@@ -6,6 +6,7 @@ import input.PlayerInput;
 import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
+import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
 import logic.player.PlayerInfo;
@@ -31,6 +32,10 @@ public class Game {
     public void start() {
         if (started) {
             throw new IllegalStateException("Game can be started only once.");
+        }
+
+        if (getPlayerCount() < config.MIN_PLAYERS) {
+            throw new NotEnoughPlayerException(getPlayerCount(), config.MIN_PLAYERS);
         }
 
         stack.fill(config);
