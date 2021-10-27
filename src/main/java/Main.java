@@ -1,5 +1,6 @@
 import logic.Game;
 import logic.config.GameConfig;
+import logic.player.PlayerBase;
 import logic.player.SimpleAIPlayer;
 
 public class Main {
@@ -13,9 +14,19 @@ public class Main {
         game.createPlayer(new SimpleAIPlayer(5));
 
         game.start();
+        /*for (int i = 0; i < game.getPlayerCount(); i++) {
+           game.getPlayer(i).addScore(100);
+        }
+
+        game.getPlayer(2).addScore(20);
+        game.getPlayer(1).addScore(20);*/
 
         while (!game.isFinished()) {
             game.update();
         }
+        /*for (int i = 0; i < game.getPlayerCount(); i++) {
+            PlayerBase playerBase = game.getPlayer(i);
+            System.out.println("Player score " + playerBase.getId() + " : " + playerBase.getScore());
+        }*/
     }
 }

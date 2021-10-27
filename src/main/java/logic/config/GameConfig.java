@@ -14,6 +14,8 @@ public class GameConfig {
     public HashMap<TileType, TileConfig> TILES = new HashMap<>() {{
         put(TileType.START, new TileConfig() {{ DECK_COUNT = 1; }});
         put(TileType.ROAD, new TileConfig() {{ DECK_COUNT = 10; }});
+        put(TileType.TOWN_CHUNK, new TileConfig() {{DECK_COUNT = 10; }});
+        put(TileType.ABBEY, new TileConfig() {{DECK_COUNT = 6; }});
     }};
 
     public boolean validate() {
