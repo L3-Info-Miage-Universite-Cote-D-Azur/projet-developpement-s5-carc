@@ -31,22 +31,24 @@ Voici nos super itérations pour notre super projet !
     - Système de pile de Tuile (mélange + tirage)
   - Mise à jour de l'IA  primitive
     - Placement des tuiles de type route
+    - Placement des tuiles ville
+    - Placement des tuiles abbaye
  
  - Livraison 4
    - Ajout de fonctionnalités de jeu
-     - Zone fermée
+     - Contrainte de placement
      - Ajout des Meeples
      - Statistiques de jeu
-    - Mise à jour de l'IA primitive
-      - Placement des tuiles ville et abbaye
 
   - Livraison 5
     - Ajout de fonctionnalités de jeu
+      - Zone fermée
       - Récupération des Meeples
     - Ajout des 500 parties de test
  
   - Livraison 6
     - Ajout de fonctionnalités de jeu
+      - Rotation des tuiles
       - Ajout du comptage de point pour les zones de jeu
 
   - Livraison 7
