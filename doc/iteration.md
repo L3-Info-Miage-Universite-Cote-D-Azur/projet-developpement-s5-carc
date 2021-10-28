@@ -36,7 +36,7 @@ Voici nos super itérations pour notre super projet !
  
  - Livraison 4
    - Ajout de fonctionnalités de jeu
-     - Contrainte de placement
+     - Contrainte de placement pour les tuiles
      - Ajout des Meeples
      - Statistiques de jeu
 
@@ -49,6 +49,7 @@ Voici nos super itérations pour notre super projet !
   - Livraison 6
     - Ajout de fonctionnalités de jeu
       - Rotation des tuiles
+      - Contrainte de placement pour les meeples
       - Ajout du comptage de point pour les zones de jeu
 
   - Livraison 7
