@@ -3,7 +3,10 @@ import logic.config.GameConfig;
 import logic.player.PlayerBase;
 import logic.player.SimpleAIPlayer;
 
+import static java.lang.System.*;
+
 public class Main {
+
     public static void main(String[] arg) {
         Game game = new Game(new GameConfig());
 
@@ -23,6 +26,7 @@ public class Main {
 
         while (!game.isFinished()) {
             game.update();
+            out.println(game.getBoard().toString());
         }
         /*for (int i = 0; i < game.getPlayerCount(); i++) {
             PlayerBase playerBase = game.getPlayer(i);

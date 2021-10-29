@@ -12,7 +12,7 @@ public class GameBoard {
 
     private final HashMap<Vector2, Tile> tiles;
 
-    public GameBoard(){
+    public GameBoard() {
         this.tiles = new HashMap<>();
     }
 
@@ -41,6 +41,7 @@ public class GameBoard {
     public Tile getTileAt(Vector2 position) {
         return tiles.getOrDefault(position, null);
     }
+
     public Tile getStartingTile() {
         return tiles.getOrDefault(STARTING_TILE_POSITION, null);
     }
@@ -49,9 +50,10 @@ public class GameBoard {
         return tiles.size();
     }
 
-    public boolean hasTileAt(Vector2 position){
+    public boolean hasTileAt(Vector2 position) {
         return tiles.containsKey(position);
     }
+
     public boolean isEmpty() {
         return getTileCount() == 0;
     }
@@ -92,5 +94,29 @@ public class GameBoard {
                 freePoints.add(edgePos);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder state = new StringBuilder();
+        int sizeMax = 0;
+        for (Map.Entry<Vector2, Tile> tile : tiles.entrySet()) {
+            Vector2 tilePos = tile.getValue().getPosition();
+            sizeMax = Math.max(sizeMax, Math.max(Math.abs(tilePos.getX()), Math.abs(tilePos.getY())));
+        }
+        for (int i = -sizeMax; i <= sizeMax; i++) {
+            for (int j = -sizeMax; j <= sizeMax; j++) {
+                Vector2 actualPos = new Vector2(i, j);
+                if (hasTileAt(actualPos)) {
+                    TileType type = getTileAt(actualPos).getType();
+                    state.append("\033[0;3").append(type.ordinal() + 1).append("m").append(type.name().charAt(0)).append("  ");
+                } else
+                    state.append("\033[0;37m•  ");
+            }
+            state.append("\033[0;0m•\n");
+        }
+        state.append("\033[0;0m"); // Color Reset
+
+        return state.toString();
     }
 }
