@@ -2,6 +2,8 @@ package logic.tile;
 
 import logic.math.Vector2;
 
+import java.util.Arrays;
+
 public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
@@ -47,5 +49,14 @@ public class Tile {
 
     public void setChunk(ChunkOffset offset, Chunk chunk) {
         chunks[offset.value] = chunk;
+    }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "position=" + position +
+                ", chunks=" + Arrays.toString(chunks) +
+                ", isStartingTile=" + isStartingTile +
+                '}';
     }
 }

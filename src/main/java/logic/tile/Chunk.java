@@ -10,4 +10,11 @@ public class Chunk {
     public ChunkType getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Chunk{" +
+                "type=" + type +
+                '}';
+    }
 }

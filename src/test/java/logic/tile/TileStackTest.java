@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*class TileStackTest {
+class TileStackTest {
     @Test
     void testRemove() {
         TileStack tileStack = new TileStack();
@@ -26,44 +27,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testFill() {
-        GameConfig config = new GameConfig() {{
-            TILES = new ArrayList<>() {{
-
-            }};
-        }};
+        GameConfig config = new GameConfig();
 
         TileStack stack = new TileStack();
         stack.fill(config);
 
-        HashMap<TileType, Integer> tileCountByType = new HashMap<>();
-
-        while (stack.getNumTiles() >= 1) {
-            TileType tileType = stack.remove().getType();
-
-            if (tileCountByType.containsKey(tileType)) {
-                tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);
-            } else {
-                tileCountByType.put(tileType, 1);
-            }
-        }
-
-        for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
-            assertEquals(e.getValue().DECK_COUNT, tileCountByType.getOrDefault(e.getKey(), 0));
-        }
+        // TODO
     }
 
     @Test
     void testShuffle() { // If the shuffle works properly
-        GameConfig config = new GameConfig() {{
-            TILES = new HashMap<>() {{
-                put(TileType.ROAD, new TileConfig() {{
-                    DECK_COUNT = 1000;
-                }});
-                put(TileType.ABBEY, new TileConfig() {{
-                    DECK_COUNT = 1000;
-                }});
-            }};
-        }};
+        GameConfig config = new GameConfig();
 
         TileStack stack = new TileStack();
 
@@ -103,47 +77,15 @@ import static org.junit.jupiter.api.Assertions.*;
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
         TileStack stack = new TileStack();
         stack.fill(new ArrayList<>() {{
-            add(new RoadTile());
-            add(new RoadTile());
-            add(new StartingTile());
-            add(new RoadTile());
-            add(new RoadTile());
+            add(new Tile(true));
+            add(new Tile(false));
+            add(new Tile(false));
+            add(new Tile(false));
+            add(new Tile(false));
+            add(new Tile(false));
         }});
         stack.shuffle();
 
-        assertEquals(stack.remove().getType(), TileType.START);
+        assertTrue(stack.remove().isStartingTile());
     }
-
-    @Test
-    void testInitConfig() { // If the initialization for the config works properly
-        GameConfig config = new GameConfig() {{
-            TILES = new HashMap<>() {{
-               put(TileType.ROAD, new TileConfig() {{
-                   DECK_COUNT = 1000;
-               }});
-               put(TileType.ABBEY, new TileConfig() {{
-                   DECK_COUNT = 1000;
-               }});
-            }};
-        }};
-
-        TileStack stack = new TileStack();
-        stack.fill(config);
-
-        HashMap<TileType, Integer> tileCountByType = new HashMap<>();
-
-        while (stack.getNumTiles() >= 1) {
-            TileType tileType = stack.remove().getType();
-
-            if (tileCountByType.containsKey(tileType)) {
-                tileCountByType.replace(tileType, tileCountByType.get(tileType) + 1);
-            } else {
-                tileCountByType.put(tileType, 1);
-            }
-        }
-
-        for (Map.Entry<TileType, TileConfig> e : config.TILES.entrySet()) {
-            assertEquals(e.getValue().DECK_COUNT, tileCountByType.getOrDefault(e.getKey(), 0));
-        }
-    }
-}*/
+}
