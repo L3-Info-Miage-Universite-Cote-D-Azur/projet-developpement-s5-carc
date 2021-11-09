@@ -1,5 +1,6 @@
 package logic.tile;
 
+import logic.config.ChunkConfig;
 import logic.config.GameConfig;
 import logic.config.TileConfig;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,18 @@ class TileStackTest {
     @Test
     void testShuffle() { // If the shuffle works properly
         GameConfig config = new GameConfig();
+
+        config.TILES = new ArrayList<>();
+
+        for (int i = 0; i < 1000; i++) {
+            config.TILES.add(new TileConfig() {{
+                center = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+                up = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+                down = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+                left = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+                right = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+            }});
+        }
 
         TileStack stack = new TileStack();
 
