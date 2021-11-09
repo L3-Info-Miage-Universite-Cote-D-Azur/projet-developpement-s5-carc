@@ -1,6 +1,8 @@
 package logic.board;
 
 import logic.math.Vector2;
+import logic.tile.Tile;
+import logic.tile.TileEdge;
 
 import java.util.*;
 
@@ -23,7 +25,7 @@ public class GameBoard {
         }
 
         if (getStartingTile() == null) {
-            if (tile.getType() != TileType.START) {
+            if (!tile.isStartingTile()) {
                 throw new IllegalArgumentException("Starting tile must be placed before another tile can be placed.");
             }
 
@@ -64,10 +66,10 @@ public class GameBoard {
         Tile startingTile = getStartingTile();
 
         if (startingTile == null) {
-            if (tileToPlace.getType() == TileType.START) {
+            if (tileToPlace.isStartingTile()) {
                 freePoints.add(STARTING_TILE_POSITION);
             }
-        } else if (tileToPlace.getType() != TileType.START) {
+        } else if (!tileToPlace.isStartingTile()) {
             findFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>(), freePoints);
         }
 
@@ -93,7 +95,7 @@ public class GameBoard {
         }
     }
 
-    @Override
+    /*@Override
     public String toString() {
         StringBuilder state = new StringBuilder();
         int sizeMax = 0;
@@ -115,5 +117,5 @@ public class GameBoard {
         state.append("\033[0;0m"); // Color Reset
 
         return state.toString();
-    }
+    }*/
 }

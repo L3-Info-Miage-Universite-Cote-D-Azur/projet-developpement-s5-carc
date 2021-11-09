@@ -1,6 +1,7 @@
 package logic.board;
 
 import logic.math.Vector2;
+import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +12,7 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
-        StartingTile tile = new StartingTile();
+        Tile tile = new Tile();
         tile.setPosition(new Vector2(0, 0));
 
         gameBoard.place(tile);
@@ -27,12 +28,12 @@ class GameBoardTest {
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);
-        gameBoard.place(new StartingTile() {{
+        gameBoard.place(new Tile() {{
             setPosition(overlapPosition);
         }});
 
         assertThrows(IllegalArgumentException.class, () -> {
-            gameBoard.place(new RoadTile() {{
+            gameBoard.place(new Tile() {{
                 setPosition(overlapPosition);
             }});
         });
