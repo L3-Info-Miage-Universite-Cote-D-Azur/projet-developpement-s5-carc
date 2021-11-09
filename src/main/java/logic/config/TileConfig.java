@@ -9,6 +9,7 @@ public class TileConfig {
     public ChunkConfig right;
     public ChunkConfig up;
     public ChunkConfig down;
+    public boolean isStartingTile;
 
     public TileConfig() {
     }
@@ -30,6 +31,6 @@ public class TileConfig {
                 right.createChunk(),
                 up.createChunk(),
                 down.createChunk()
-        });
+        }, isStartingTile);
     }
 }

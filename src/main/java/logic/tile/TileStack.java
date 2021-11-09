@@ -43,7 +43,7 @@ public class TileStack {
 
     public void shuffle() {
         Collections.shuffle(tiles);
-        Tile startingTile = tiles.stream().filter(f -> f.isStartingTile()).findFirst().get();
+        Tile startingTile = tiles.stream().filter(f -> f.isStartingTile()).findAny().orElse(null);
 
         if (startingTile != null) {
             tiles.remove(startingTile);

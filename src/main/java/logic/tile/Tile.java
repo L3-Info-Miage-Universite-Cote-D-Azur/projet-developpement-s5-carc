@@ -9,6 +9,15 @@ public class Tile {
 
     public Tile() {
         chunks = new Chunk[ChunkOffset.values().length];
+        chunks[0] = new Chunk(ChunkType.FIELD);
+        chunks[1] = new Chunk(ChunkType.FIELD);
+        chunks[2] = new Chunk(ChunkType.FIELD);
+        chunks[3] = new Chunk(ChunkType.FIELD);
+        chunks[4] = new Chunk(ChunkType.FIELD);
+    }
+
+    public Tile(boolean isStartingTile) {
+        this.isStartingTile = isStartingTile;
     }
 
     public Tile(Chunk[] chunks, boolean isStartingTile) {
