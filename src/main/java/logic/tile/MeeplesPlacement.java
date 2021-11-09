@@ -9,5 +9,11 @@ meeple.yellow = 0
 meeple.red = 1
 meeple.green = 0
 
+
+
+récuperer vecteur 1 du tile
+
+
+récuperer vecteur 2 du coté du tile
  */
 }
