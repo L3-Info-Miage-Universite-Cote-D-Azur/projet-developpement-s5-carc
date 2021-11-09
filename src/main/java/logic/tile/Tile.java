@@ -1,25 +1,22 @@
 package logic.tile;
 
 import logic.math.Vector2;
+import logic.tile.components.Component;
 
-public abstract class Tile {
+import java.util.ArrayList;
+
+public class Tile {
     private Vector2 position;
+    private ArrayList<Component> components;
 
-    public abstract TileType getType();
-
-    public boolean canBePlaced(Tile tile, TileEdge edge) {
-        return true;
+    public Tile() {
     }
 
     public Vector2 getPosition() {
         return position;
     }
+
     public void setPosition(Vector2 position) {
         this.position = position;
-    }
-
-    @Override
-    public String toString() {
-        return "Tile{}";
     }
 }

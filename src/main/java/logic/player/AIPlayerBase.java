@@ -3,7 +3,6 @@ package logic.player;
 import logger.Logger;
 import logic.board.GameBoard;
 import logic.math.Vector2;
-import logic.tile.Tile;
 
 public abstract class AIPlayerBase extends PlayerBase {
     public AIPlayerBase(int id) {

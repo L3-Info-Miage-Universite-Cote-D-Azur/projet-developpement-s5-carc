@@ -1,9 +1,6 @@
 package logic.board;
 
 import logic.math.Vector2;
-import logic.tile.RoadTile;
-import logic.tile.StartingTile;
-import logic.tile.TileType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

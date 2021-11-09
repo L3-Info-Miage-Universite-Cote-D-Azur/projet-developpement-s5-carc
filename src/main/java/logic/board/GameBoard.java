@@ -1,9 +1,6 @@
 package logic.board;
 
 import logic.math.Vector2;
-import logic.tile.Tile;
-import logic.tile.TileEdge;
-import logic.tile.TileType;
 
 import java.util.*;
 

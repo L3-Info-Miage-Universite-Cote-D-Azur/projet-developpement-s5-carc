@@ -2,7 +2,6 @@ package logic.player;
 
 import logic.board.GameBoard;
 import logic.math.Vector2;
-import logic.tile.Tile;
 
 import java.util.ArrayList;
 import java.util.Random;

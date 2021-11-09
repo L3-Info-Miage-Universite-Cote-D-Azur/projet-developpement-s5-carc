@@ -4,7 +4,6 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
-import logic.tile.Tile;
 
 import org.junit.jupiter.api.Test;
 

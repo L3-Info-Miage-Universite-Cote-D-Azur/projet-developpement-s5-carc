@@ -1,7 +1,6 @@
 package logic.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import logic.tile.TileType;
 
 import java.util.*;
 
