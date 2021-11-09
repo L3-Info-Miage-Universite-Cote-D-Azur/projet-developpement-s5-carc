@@ -1,14 +1,27 @@
 package logic.tile;
 
 import logic.math.Vector2;
-import logic.tile.components.Component;
 
 public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
+    private boolean isStartingTile;
 
     public Tile() {
         chunks = new Chunk[ChunkOffset.values().length];
+    }
+
+    public Tile(Chunk[] chunks, boolean isStartingTile) {
+        if (chunks.length != ChunkOffset.values().length) {
+            throw new IllegalArgumentException("chunks");
+        }
+
+        this.chunks = chunks;
+        this.isStartingTile = isStartingTile;
+    }
+
+    public boolean isStartingTile() {
+        return isStartingTile;
     }
 
     public Vector2 getPosition() {
