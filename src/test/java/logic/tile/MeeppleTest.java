@@ -3,8 +3,10 @@ package logic.tile;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
+import logic.math.Vector2;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MeeppleTest {
