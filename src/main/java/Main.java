@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] arg) throws ConfigurationException {
         GameConfig config = loadConfigFromFile("config.json");
 
-        if (!config.validate()) {
+        if (config == null || !config.validate()) {
             throw new ConfigurationException("Configuration is not valid.");
         }
 
