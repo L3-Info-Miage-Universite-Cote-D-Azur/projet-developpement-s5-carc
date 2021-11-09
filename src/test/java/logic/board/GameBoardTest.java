@@ -12,7 +12,7 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
-        Tile tile = new Tile();
+        Tile tile = new Tile(true);
         tile.setPosition(new Vector2(0, 0));
 
         gameBoard.place(tile);
@@ -28,7 +28,7 @@ class GameBoardTest {
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);
-        gameBoard.place(new Tile() {{
+        gameBoard.place(new Tile(true) {{
             setPosition(overlapPosition);
         }});
 
