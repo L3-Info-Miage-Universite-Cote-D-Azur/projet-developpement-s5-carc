@@ -13,10 +13,11 @@ public class MeeplesPlacement {
         this.player = player;
     }
 
-    public boolean getMeeple { return meeple; }
+    public boolean getMeeple() { return meeple; }
 
-    public Chunk getChunk { return chunk; }
-    public PlayerBase getPlayer { return player; }
+    public Chunk getChunk() { return chunk; }
+    
+    public PlayerBase getPlayer() { return player; }
 
 
 /*
