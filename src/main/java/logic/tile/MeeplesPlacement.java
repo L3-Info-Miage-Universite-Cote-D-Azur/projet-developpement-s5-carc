@@ -1,6 +1,15 @@
 package logic.tile;
 
 public class MeeplesPlacement {
+    private boolean meeple;
+    private Chunk chunk;
+
+    public MeeplesPlacement(boolean meeple, Chunk chunk){
+        this.meeple = meeple;
+        this.chunk = chunk;
+}
+
+
 /*
 Verifier présence de tuile avec l'utilisation des vecteurs
 
