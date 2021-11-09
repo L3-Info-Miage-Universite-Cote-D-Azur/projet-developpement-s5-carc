@@ -6,7 +6,11 @@ import logic.tile.TileEdge;
 
 import java.util.*;
 
+/** Gameboard
+ *
+ */
 public class GameBoard {
+
     public static final Vector2 STARTING_TILE_POSITION = new Vector2(0, 0);
 
     private final HashMap<Vector2, Tile> tiles;
@@ -15,6 +19,11 @@ public class GameBoard {
         this.tiles = new HashMap<>();
     }
 
+    /**
+     * Place a tile
+     *
+     * @param tile the tile to place
+     */
     public void place(Tile tile) {
         if (tile.getPosition() == null) {
             throw new IllegalArgumentException("Try to place a tile without position.");
@@ -37,6 +46,12 @@ public class GameBoard {
         tiles.put(tile.getPosition(), tile);
     }
 
+    /**
+     * Get tile to position
+     *
+     * @param position
+     * @return
+     */
     public Tile getTileAt(Vector2 position) {
         return tiles.getOrDefault(position, null);
     }
