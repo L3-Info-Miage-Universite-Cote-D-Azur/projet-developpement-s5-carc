@@ -1,7 +1,6 @@
 package logic.tile;
 
 import logic.config.GameConfig;
-import logic.config.TileConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
