@@ -101,8 +101,8 @@ class SimpleAIPlayerTest {
     private static Game createSinglePlayerGameEnv(GameConfig config) {
         Game game = new Game(config);
 
-        game.createPlayer(new SimpleAIPlayer(1));
-        game.createPlayer(new SimpleAIPlayer(2));
+        game.addPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new SimpleAIPlayer(2));
         game.start();
 
         return game;

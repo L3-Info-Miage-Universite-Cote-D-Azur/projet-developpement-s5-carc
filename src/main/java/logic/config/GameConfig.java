@@ -5,28 +5,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import logic.tile.Chunk;
 import logic.tile.ChunkType;
-import logic.tile.Tile;
 
 public class GameConfig {
     public int MIN_PLAYERS = 2;
     public int MAX_PLAYERS = 5;
     public ArrayList<TileConfig> TILES = new ArrayList<>() {{
         add(new TileConfig() {{
-            center = new ChunkConfig() {{ type = ChunkType.ROAD; }};
-            left = new ChunkConfig() {{ type = ChunkType.ROAD; }};
-            right = new ChunkConfig() {{ type = ChunkType.ROAD; }};
-            up = new ChunkConfig() {{ type = ChunkType.TOWN; }};
-            down = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+            center = ChunkType.ROAD;
+            left = ChunkType.ROAD;
+            right = ChunkType.ROAD;
+            up = ChunkType.TOWN;
+            down = ChunkType.FIELD;
             isStartingTile = true;
         }});
         add(new TileConfig() {{
-            center = new ChunkConfig() {{ type = ChunkType.ROAD; }};
-            left = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-            right = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-            up = new ChunkConfig() {{ type = ChunkType.ROAD; }};
-            down = new ChunkConfig() {{ type = ChunkType.ROAD; }};
+            center = ChunkType.ROAD;
+            left = ChunkType.FIELD;
+            right = ChunkType.FIELD;
+            up = ChunkType.ROAD;
+            down = ChunkType.ROAD;
         }});
     }};
 

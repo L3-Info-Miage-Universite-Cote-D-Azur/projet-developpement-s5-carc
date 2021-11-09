@@ -1,14 +1,10 @@
 package logic.tile;
 
-import logic.config.ChunkConfig;
 import logic.config.GameConfig;
 import logic.config.TileConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -44,11 +40,11 @@ class TileStackTest {
 
         for (int i = 0; i < 1000; i++) {
             config.TILES.add(new TileConfig() {{
-                center = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-                up = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-                down = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-                left = new ChunkConfig() {{ type = ChunkType.FIELD; }};
-                right = new ChunkConfig() {{ type = ChunkType.FIELD; }};
+                center = ChunkType.FIELD;
+                up = ChunkType.FIELD;
+                down = ChunkType.FIELD;
+                left = ChunkType.FIELD;
+                right = ChunkType.FIELD;
             }});
         }
 

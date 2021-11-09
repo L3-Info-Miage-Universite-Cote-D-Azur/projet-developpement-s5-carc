@@ -28,12 +28,13 @@ public class Game {
     }
 
     public void start() {
-        if (started) {
-            throw new IllegalStateException("Game can be started only once.");
-        }
-
         if (getPlayerCount() < config.MIN_PLAYERS) {
             throw new NotEnoughPlayerException(getPlayerCount(), config.MIN_PLAYERS);
+        }
+
+        if (started) {
+            board.clear();
+            turn.reset();
         }
 
         stack.fill(config);
@@ -46,14 +47,16 @@ public class Game {
             throw new IllegalStateException("Game should be started at this point.");
         }
 
-        turn.startNext();
-
-        Logger.info(String.format("[GAME] Turn %d -> Player %d", turn.getCount(), turn.getPlayer().getId()));
-
-        turn.getPlayer().onTurn();
+        turn.playTurn();
 
         if (isFinished()) {
             onEnd();
+        }
+    }
+
+    public void updateToEnd() {
+        while (!isFinished()) {
+            update();
         }
     }
 
@@ -72,7 +75,7 @@ public class Game {
         return this.stack.getNumTiles() == 0;
     }
 
-    public void createPlayer(PlayerBase player) {
+    public void addPlayer(PlayerBase player) {
         if (getPlayerCount() >= config.MAX_PLAYERS) {
             throw new TooManyPlayerException();
         }

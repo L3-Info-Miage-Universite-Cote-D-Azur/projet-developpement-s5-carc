@@ -1,5 +1,6 @@
 package logic;
 
+import logger.Logger;
 import logic.player.PlayerBase;
 
 public class GameTurn {
@@ -11,8 +12,14 @@ public class GameTurn {
         this.id = 0;
     }
 
-    public void startNext() {
+    public void reset() {
+        id = 0;
+    }
+
+    public void playTurn() {
         this.id++;
+        Logger.info(String.format("[GAME] Turn %d -> Player %d", id, getPlayer().getId()));
+        this.getPlayer().onTurn();
     }
 
     public int getPlayerIndex() {

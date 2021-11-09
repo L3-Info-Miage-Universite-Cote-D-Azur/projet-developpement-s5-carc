@@ -1,6 +1,7 @@
 package logic;
 
 import logic.config.GameConfig;
+import logic.player.PlayerBase;
 import logic.player.SimpleAIPlayer;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +21,10 @@ class GameTurnTest {
     void testStart() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
+        game.addPlayer(createFakePlayer(0));
         GameTurn gameTurn = new GameTurn(game);
         assertEquals(0, gameTurn.getCount());
-        gameTurn.startNext();
+        gameTurn.playTurn();
         assertEquals(1, gameTurn.getCount());
     }
 
@@ -31,24 +33,33 @@ class GameTurnTest {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
-        game.createPlayer(new SimpleAIPlayer(1));
-        game.createPlayer(new SimpleAIPlayer(2));
-        game.createPlayer(new SimpleAIPlayer(3));
+        game.addPlayer(createFakePlayer(1));
+        game.addPlayer(createFakePlayer(2));
+        game.addPlayer(createFakePlayer(3));
 
         GameTurn gameTurn = new GameTurn(game);
 
         assertEquals(-1, gameTurn.getPlayerIndex());
-        gameTurn.startNext();
+        gameTurn.playTurn();
 
         assertEquals(0, gameTurn.getPlayerIndex());
-        gameTurn.startNext();
+        gameTurn.playTurn();
 
         assertEquals(1, gameTurn.getPlayerIndex());
 
         for (int i = 0; i < 15; i++)
-            gameTurn.startNext();
+            gameTurn.playTurn();
 
         assertEquals(17, gameTurn.getCount());
         assertEquals(1, gameTurn.getPlayerIndex());
+    }
+
+    private static PlayerBase createFakePlayer(int id) {
+        return new PlayerBase(id) {
+            @Override
+            public void onTurn() {
+
+            }
+        };
     }
 }

@@ -19,6 +19,10 @@ public class GameBoard {
         this.tiles = new HashMap<>();
     }
 
+    public void clear() {
+        this.tiles.clear();
+    }
+
     /**
      * Place a tile
      *

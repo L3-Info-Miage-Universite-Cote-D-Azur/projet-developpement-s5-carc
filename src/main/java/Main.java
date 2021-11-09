@@ -1,36 +1,55 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.Game;
 import logic.config.GameConfig;
-import logic.player.PlayerBase;
 import logic.player.SimpleAIPlayer;
 
-import static java.lang.System.*;
+import javax.naming.ConfigurationException;
+import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Main {
 
-    public static void main(String[] arg) {
-        Game game = new Game(new GameConfig());
+    public static void main(String[] arg) throws ConfigurationException {
+        GameConfig config = loadConfigFromFile("config.json");
 
-        game.createPlayer(new SimpleAIPlayer(1));
-        game.createPlayer(new SimpleAIPlayer(2));
-        game.createPlayer(new SimpleAIPlayer(3));
-        game.createPlayer(new SimpleAIPlayer(4));
-        game.createPlayer(new SimpleAIPlayer(5));
+        if (!config.validate()) {
+            throw new ConfigurationException("Configuration is not valid.");
+        }
+
+        playSingleGame(config, 5);
+        // playMultipleGames(config, 5, 2);
+    }
+
+    private static GameConfig loadConfigFromFile(String filename) {
+        try {
+            return new ObjectMapper().readValue(Paths.get(filename).toFile(), GameConfig.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void playSingleGame(GameConfig config, int numPlayers) {
+        Game game = new Game(config);
+
+        for (int i = 0; i < numPlayers; i++) {
+            game.addPlayer(new SimpleAIPlayer(i + 1));
+        }
 
         game.start();
-        /*for (int i = 0; i < game.getPlayerCount(); i++) {
-           game.getPlayer(i).addScore(100);
+        game.updateToEnd();
+    }
+
+    private static void playMultipleGames(GameConfig config, int numPlayers, int gameCount) {
+        Game game = new Game(config);
+
+        for (int i = 0; i < numPlayers; i++) {
+            game.addPlayer(new SimpleAIPlayer(i + 1));
         }
 
-        game.getPlayer(2).addScore(20);
-        game.getPlayer(1).addScore(20);*/
-
-        while (!game.isFinished()) {
-            game.update();
-            out.println(game.getBoard().toString());
+        for (int i = 0; i < gameCount; i++) {
+            game.start();
+            game.updateToEnd();
         }
-        /*for (int i = 0; i < game.getPlayerCount(); i++) {
-            PlayerBase playerBase = game.getPlayer(i);
-            System.out.println("Player score " + playerBase.getId() + " : " + playerBase.getScore());
-        }*/
     }
 }

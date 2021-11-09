@@ -1,14 +1,15 @@
 package logic.config;
 
 import logic.tile.Chunk;
+import logic.tile.ChunkType;
 import logic.tile.Tile;
 
 public class TileConfig {
-    public ChunkConfig center;
-    public ChunkConfig left;
-    public ChunkConfig right;
-    public ChunkConfig up;
-    public ChunkConfig down;
+    public ChunkType center;
+    public ChunkType left;
+    public ChunkType right;
+    public ChunkType up;
+    public ChunkType down;
     public boolean isStartingTile;
 
     public TileConfig() {
@@ -26,11 +27,11 @@ public class TileConfig {
 
     public Tile createTile() {
         return new Tile(new Chunk[]{
-                center.createChunk(),
-                left.createChunk(),
-                right.createChunk(),
-                up.createChunk(),
-                down.createChunk()
+                new Chunk(center),
+                new Chunk(left),
+                new Chunk(right),
+                new Chunk(up),
+                new Chunk(down)
         }, isStartingTile);
     }
 }

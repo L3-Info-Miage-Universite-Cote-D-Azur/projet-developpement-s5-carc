@@ -32,11 +32,11 @@ class GameTest {
 
         assertEquals(0, game.getPlayerCount());
 
-        game.createPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new SimpleAIPlayer(1));
         assertEquals(1, game.getPlayerCount());
 
-        game.createPlayer(new SimpleAIPlayer(2));
-        game.createPlayer(new SimpleAIPlayer(3));
+        game.addPlayer(new SimpleAIPlayer(2));
+        game.addPlayer(new SimpleAIPlayer(3));
         assertEquals(3, game.getPlayerCount());
 
         assertNotNull(game.getPlayer(0));
@@ -44,7 +44,7 @@ class GameTest {
         assertNotNull(game.getPlayer(2));
 
         assertThrows(TooManyPlayerException.class, () -> {
-            game.createPlayer(new SimpleAIPlayer(4));
+            game.addPlayer(new SimpleAIPlayer(4));
         });
     }
 
@@ -55,7 +55,7 @@ class GameTest {
 
         assertTrue(game.isFinished());
 
-        game.createPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new SimpleAIPlayer(1));
         game.start();
 
         assertFalse(game.isFinished());
@@ -78,7 +78,7 @@ class GameTest {
         GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
 
-        game.createPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new SimpleAIPlayer(1));
         game.start();
         assertThrows(IllegalStateException.class, game::start);
     }
@@ -87,7 +87,7 @@ class GameTest {
         GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
 
-        game.createPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new SimpleAIPlayer(1));
         game.start();
 
         assertEquals(false, game.isFinished());
@@ -97,8 +97,8 @@ class GameTest {
     void testWinner(){
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
-        game.createPlayer(new SimpleAIPlayer(501));
-        game.createPlayer(new SimpleAIPlayer(502));
+        game.addPlayer(new SimpleAIPlayer(501));
+        game.addPlayer(new SimpleAIPlayer(502));
 
         assertTrue(game.isFinished());
 
@@ -125,7 +125,7 @@ class GameTest {
             game.start();
         });
         assertDoesNotThrow(() -> {
-            game.createPlayer(new SimpleAIPlayer(1));
+            game.addPlayer(new SimpleAIPlayer(1));
             game.start();
         });
     }
