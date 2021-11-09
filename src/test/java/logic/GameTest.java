@@ -74,15 +74,6 @@ class GameTest {
         assertThrows(IllegalStateException.class, game::update);
     }
     @Test
-    void testIfThrowExceptionIfStartCalledSeveralTimes() {
-        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
-        Game game = new Game(gameConfig);
-
-        game.addPlayer(new SimpleAIPlayer(1));
-        game.start();
-        assertThrows(IllegalStateException.class, game::start);
-    }
-    @Test
     void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
         GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
         Game game = new Game(gameConfig);
