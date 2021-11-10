@@ -10,8 +10,11 @@
     - Faire un placement "intelligent" (Issue #37)
 
 
-- # En terme de tests (en charge : Mike Chiappe)
-  - # (à remplir)
+- # En terme de tests (en charge : Lucas Blanc)
+  - Meeple
+    - Deux meeples sur une tuile
+  - Joueur
+    - Score différent selon chunk du meeple
 
 - # En terme d'organisation de code
   - Suppression des classes : AbbeyTile, RoadTile, StartingTile, TileFactory, TileType, TownChunkTile
@@ -21,6 +24,6 @@
 - # En terme d'organisation du travail (qui a fait quoi)
   - Mike Chiappe et Loïc Le Contel se sont occupés de l'issue #42
   - Sebastien Aglae s'est occupé des statistiques de partie de l'issue #39
-  - Nathan Rihet s'est occupé du placement des meeples de l'issue #38 
+  - Nathan Rihet et Lucas Blanc se s'ont occupé du placement des meeples de l'issue #38 
   - Loïc Le Contel s'est occupé de remplir iteration04.md et de la user story
   - Mike Chiappe s'occupe de la gestion du projet et de driver les collaborateurs
