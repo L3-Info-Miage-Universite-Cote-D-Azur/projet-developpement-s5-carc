@@ -12,6 +12,8 @@ import logic.tile.ChunkType;
 public class GameConfig {
     public int MIN_PLAYERS = 2;
     public int MAX_PLAYERS = 5;
+    public int PLAYER_MEEPLE_COUNT = 7;
+
     public ArrayList<TileConfig> TILES = new ArrayList<>();
 
     public boolean validate() {

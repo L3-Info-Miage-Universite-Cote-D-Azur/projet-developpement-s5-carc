@@ -33,7 +33,7 @@ public class PlaceMeepleCommand implements ICommand {
             return false;
         }
 
-        Logger.info("Player %d places meeple at tile %s, chunk %d", tile.getPosition(), chunkOffset);
+        Logger.info("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkOffset);
 
         chunk.setMeeple(new Meeple(executor));
         executor.removeRemainingMeepleCount();

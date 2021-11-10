@@ -40,6 +40,10 @@ public class Game {
             turn.reset();
         }
 
+        for (PlayerBase player : players) {
+            player.init();
+        }
+
         stack.fill(config);
         stack.shuffle();
         started = true;

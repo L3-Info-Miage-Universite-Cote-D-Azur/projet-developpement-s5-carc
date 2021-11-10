@@ -23,6 +23,14 @@ public abstract class PlayerBase implements Comparable {
         this.id = id;
     }
 
+    public void init() {
+        roadScore = 0;
+        townScore = 0;
+        abbeyScore = 0;
+        fieldScore = 0;
+        remainingMeepleCount = game.getConfig().PLAYER_MEEPLE_COUNT;
+    }
+
     public final int getId() {
         return id;
     }

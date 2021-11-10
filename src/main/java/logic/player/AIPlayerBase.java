@@ -19,7 +19,10 @@ public abstract class AIPlayerBase extends PlayerBase {
             tilePicked = game.getStack().remove();
             tilePosition = findPositionForTile(tilePicked);
         } while (tilePosition == null || !new PlaceTileCommand(tilePicked, tilePosition).execute(game));
+
+        placeMeepleIfNeeded();
     }
 
     public abstract Vector2 findPositionForTile(Tile tile);
+    public abstract void placeMeepleIfNeeded();
 }
