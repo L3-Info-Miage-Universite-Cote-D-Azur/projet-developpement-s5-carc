@@ -2,6 +2,8 @@ package logic.tile;
 
 import logic.meeple.Meeple;
 
+import java.util.Arrays;
+
 public class Chunk {
     private final Tile parent;
     private final ChunkType type;
@@ -23,10 +25,13 @@ public class Chunk {
         return meeple;
     }
 
+    
+
     @Override
     public String toString() {
         return "Chunk{" +
                 "type=" + type +
+                ", meeple=" + meeple +
                 '}';
     }
 }
