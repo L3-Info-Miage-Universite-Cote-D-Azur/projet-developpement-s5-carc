@@ -107,10 +107,355 @@
         ]
       },
       "details": {
-        "model": "B",
-        "count": 4,
+        "model": "C",
+        "count": 1,
         "expansion": "default",
-        "flags": ["SHIELD"]
+        "flags": [
+          "SHIELD"
+        ]
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "left": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "right": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "D",
+        "count": 1,
+        "expansion": "default",
+        "flags": [
+          "STARTING"
+        ]
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "left": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "right": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "D",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "FIELD",
+        "relations": [
+          "RIGHT",
+          "DOWN",
+          "LEFT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "RIGHT",
+          "CENTER",
+          "LEFT"
+        ]
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": [
+          "RIGHT",
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "right": {
+        "type": "FIELD",
+        "relations": [
+          "LEFT",
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "details": {
+        "model": "E",
+        "count": 5,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN",
+        "relations": [
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "down": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "left": {
+        "type": "TOWN",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "right": {
+        "type": "TOWN",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "F",
+        "count": 2,
+        "expansion": "default",
+        "flags": [
+          "SHIELD"
+        ]
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN",
+        "relations": [
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "down": {
+        "type": "TOWN_WALL",
+        "relations": []
+      },
+      "left": {
+        "type": "TOWN",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "right": {
+        "type": "TOWN",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "G",
+        "count": 1,
+        "expansion": "default",
+        "flags": [
+        ]
+      }
+    },
+    {
+      "center": {
+        "type": "FIELD",
+        "relations": [
+          "UP",
+          "DOWN"
+        ]
+      },
+      "up": {
+        "type": "FIELD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "left": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "right": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "details": {
+        "model": "H",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "FIELD",
+        "relations": [
+          "RIGHT",
+          "DOWN"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "left": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "right": {
+        "type": "FIELD",
+        "relations": [
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "details": {
+        "model": "I",
+        "count": 2,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "RIGHT",
+          "DOWN"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "down": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "left": {
+        "type": "FILED",
+        "relations": [
+        ]
+      },
+      "right": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "details": {
+        "model": "J",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "RIGHT",
+          "DOWN"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "down": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "left": {
+        "type": "FILED",
+        "relations": [
+        ]
+      },
+      "right": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "details": {
+        "model": "J",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
       }
     }
   ]
