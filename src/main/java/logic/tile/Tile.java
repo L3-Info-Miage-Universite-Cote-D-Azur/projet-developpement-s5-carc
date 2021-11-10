@@ -52,15 +52,21 @@ public class Tile {
     }
 
     public boolean canBePlacedAt(Vector2 position, GameBoard board) {
+        boolean hasContactWithTile = false;
+
         for (TileEdge edge : TileEdge.values()) {
             Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
 
-            if (edgeTile != null && !checkChunkCompatibility(edgeTile, edge)) {
-                return false;
+            if (edgeTile != null) {
+                hasContactWithTile = true;
+
+                if (!checkChunkCompatibility(edgeTile, edge)) {
+                    return false;
+                }
             }
         }
 
-        return true;
+        return hasContactWithTile;
     }
 
     public TileData getData() {
