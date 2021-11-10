@@ -109,7 +109,7 @@ public class GameBoard {
                     parentNodes.add(subNode);
                     findFreePlaceForTileFromNode(subNode, tileToPlace, parentNodes, freePoints);
                 }
-            } else {
+            } else if (tileToPlace.isPlaceableAt(edgePos, this)) {
                 freePoints.add(edgePos);
             }
         }

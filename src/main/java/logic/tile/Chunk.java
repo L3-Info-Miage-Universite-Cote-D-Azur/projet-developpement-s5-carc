@@ -25,7 +25,9 @@ public class Chunk {
         return meeple;
     }
 
-    
+    public boolean isCompatibleWith(Chunk chunk) {
+        return this.type.isCompatibleWith(chunk.type);
+    }
 
     @Override
     public String toString() {
