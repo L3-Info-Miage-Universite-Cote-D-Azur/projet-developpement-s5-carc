@@ -6,9 +6,8 @@ public class Chunk {
     private final ChunkType type;
     private Meeple meeple;
 
-    public Chunk(ChunkType type, Meeple meeple) {
+    public Chunk(ChunkType type) {
         this.type = type;
-        this.meeple = meeple;
     }
 
     public ChunkType getType() {

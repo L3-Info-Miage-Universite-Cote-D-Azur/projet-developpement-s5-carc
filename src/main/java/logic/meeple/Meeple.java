@@ -9,7 +9,7 @@ public class Meeple {
         this.owner = owner;
     }
 
-    public PlayerBase getOwner() { 
+    public PlayerBase getOwner() {
         return owner;
     }
 }
