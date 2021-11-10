@@ -14,18 +14,18 @@ public interface GameBoardUtils {
             sizeMax = Math.max(sizeMax, Math.abs(tile.getPosition().getY()));
         }
 
-        return sizeMax;
+        return sizeMax * 2;
     }
 
     static Vector2 getCoordinateImage(Vector2 position, int finalSize, int imgSize) {
         int x = position.getX() * imgSize + finalSize / 2 - imgSize / 2;
-        int y = position.getY() * imgSize + finalSize / 2 - imgSize / 2;
+        int y = -position.getY() * imgSize + finalSize / 2 - imgSize / 2;
         return new Vector2(x, y);
     }
 
     static Vector2 getCoordinateImageNoCenter(Vector2 position, int finalSize, int imgSize) {
         int x = position.getX() * imgSize + finalSize / 2;
-        int y = position.getY() * imgSize + finalSize / 2;
+        int y = -position.getY() * imgSize + finalSize / 2;
         return new Vector2(x, y);
     }
 }

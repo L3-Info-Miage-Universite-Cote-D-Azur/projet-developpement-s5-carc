@@ -65,6 +65,7 @@ public interface OutputUtils {
                 Logger.error(e.getMessage());
                 return;
             }
+
             Vector2 positionOnImage = GameBoardUtils.getCoordinateImage(tile.getPosition(), finalSize, imgSize);
             g2d.drawImage(img, positionOnImage.getX(), positionOnImage.getY(), null);
             Vector2 positionOnImageNoCenter = GameBoardUtils.getCoordinateImageNoCenter(tile.getPosition(), finalSize, imgSize);
