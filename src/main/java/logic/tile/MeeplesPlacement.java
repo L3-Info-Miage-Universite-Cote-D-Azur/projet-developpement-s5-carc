@@ -6,6 +6,8 @@ public class MeeplesPlacement {
     private boolean meeple;
     private Chunk chunk;
     private PlayerBase player;
+    private Tile tile;
+
 
     public MeeplesPlacement(boolean meeple, Chunk chunk, PlayerBase player) {
         this.meeple = meeple;
@@ -14,6 +16,12 @@ public class MeeplesPlacement {
     }
 
     public boolean getMeeple() { return meeple; }
+
+    public void setMeeple(boolean meeple, Tile tile, Chunk chunk) {
+        this.tile = tile;
+        this.chunk = chunk;
+        this.meeple = meeple;
+    }
 
     public Chunk getChunk() { return chunk; }
 
