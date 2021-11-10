@@ -1,7 +1,9 @@
 package logic.board;
 
+import logic.config.GameConfig;
 import logic.math.Vector2;
 import logic.tile.Tile;
+import logic.tile.TileFlags;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +14,9 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
-        Tile tile = new Tile(true);
+        Tile tile = new Tile();
+
+        tile.setFlags(TileFlags.STARTING, true);
         tile.setPosition(new Vector2(0, 0));
 
         gameBoard.place(tile);
@@ -28,7 +32,8 @@ class GameBoardTest {
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);
-        gameBoard.place(new Tile(true) {{
+        gameBoard.place(new Tile() {{
+            setFlags(TileFlags.STARTING, true);
             setPosition(overlapPosition);
         }});
 

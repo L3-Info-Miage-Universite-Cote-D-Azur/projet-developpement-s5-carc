@@ -21,7 +21,9 @@ public class TileStack {
 
     public void fill(GameConfig config) {
         for (TileConfig tile : config.TILES) {
-            tiles.add(tile.createTile());
+            for (int i = 0; i < tile.details.count; i++) {
+                tiles.add(tile.createTile());
+            }
         }
     }
 
@@ -43,7 +45,7 @@ public class TileStack {
 
     public void shuffle() {
         Collections.shuffle(tiles);
-        Tile startingTile = tiles.stream().filter(f -> f.isStartingTile()).findAny().orElse(null);
+        Tile startingTile = tiles.stream().filter(f -> f.hasFlags(TileFlags.STARTING)).findAny().orElse(null);
 
         if (startingTile != null) {
             tiles.remove(startingTile);

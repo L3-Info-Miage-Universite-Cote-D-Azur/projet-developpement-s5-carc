@@ -3,6 +3,7 @@ package logic.board;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
+import logic.tile.TileFlags;
 
 import java.util.*;
 
@@ -38,7 +39,7 @@ public class GameBoard {
         }
 
         if (getStartingTile() == null) {
-            if (!tile.isStartingTile()) {
+            if (!tile.hasFlags(TileFlags.STARTING)) {
                 throw new IllegalArgumentException("Starting tile must be placed before another tile can be placed.");
             }
 
@@ -85,10 +86,10 @@ public class GameBoard {
         Tile startingTile = getStartingTile();
 
         if (startingTile == null) {
-            if (tileToPlace.isStartingTile()) {
+            if (tileToPlace.hasFlags(TileFlags.STARTING)) {
                 freePoints.add(STARTING_TILE_POSITION);
             }
-        } else if (!tileToPlace.isStartingTile()) {
+        } else if (!tileToPlace.hasFlags(TileFlags.STARTING)) {
             findFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>(), freePoints);
         }
 

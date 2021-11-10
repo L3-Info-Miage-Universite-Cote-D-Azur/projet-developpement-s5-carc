@@ -3,36 +3,16 @@ package logic.tile;
 import logic.math.Vector2;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 
 public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
-    private boolean isStartingTile;
+    private EnumSet<TileFlags> flags;
 
     public Tile() {
         chunks = new Chunk[ChunkOffset.values().length];
-        chunks[0] = new Chunk(ChunkType.FIELD);
-        chunks[1] = new Chunk(ChunkType.FIELD);
-        chunks[2] = new Chunk(ChunkType.FIELD);
-        chunks[3] = new Chunk(ChunkType.FIELD);
-        chunks[4] = new Chunk(ChunkType.FIELD);
-    }
-
-    public Tile(boolean isStartingTile) {
-        this.isStartingTile = isStartingTile;
-    }
-
-    public Tile(Chunk[] chunks, boolean isStartingTile) {
-        if (chunks.length != ChunkOffset.values().length) {
-            throw new IllegalArgumentException("chunks");
-        }
-
-        this.chunks = chunks;
-        this.isStartingTile = isStartingTile;
-    }
-
-    public boolean isStartingTile() {
-        return isStartingTile;
+        flags = EnumSet.noneOf(TileFlags.class);
     }
 
     public Vector2 getPosition() {
@@ -51,12 +31,25 @@ public class Tile {
         chunks[offset.value] = chunk;
     }
 
+    public boolean hasFlags(TileFlags flag) {
+        return flags.contains(flag);
+    }
+
+    public void setFlags(TileFlags flag, boolean value) {
+        if (value) {
+            if (!hasFlags(flag)) {
+                flags.add(flag);
+            }
+        } else {
+            flags.remove(flag);
+        }
+    }
+
     @Override
     public String toString() {
         return "Tile{" +
-                "position=" + position +
-                ", chunks=" + Arrays.toString(chunks) +
-                ", isStartingTile=" + isStartingTile +
+                "chunks=" + Arrays.toString(chunks) +
+                ", flags=" + flags +
                 '}';
     }
 }
