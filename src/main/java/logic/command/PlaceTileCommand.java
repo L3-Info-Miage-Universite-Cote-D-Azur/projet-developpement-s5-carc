@@ -39,6 +39,11 @@ public class PlaceTileCommand implements ICommand {
                 Logger.warning("Try to place two starting tile!");
                 return false;
             }
+
+            if (tile.isPlaceableAt(position, board)) {
+                Logger.warning("Tile cannot be placed here.");
+                return false;
+            }
         }
 
         if (board.hasTileAt(position)) {
