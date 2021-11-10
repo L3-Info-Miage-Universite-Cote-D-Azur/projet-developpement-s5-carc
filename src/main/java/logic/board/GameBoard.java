@@ -38,16 +38,6 @@ public class GameBoard {
             throw new IllegalArgumentException("Try to place a tile on another.");
         }
 
-        if (getStartingTile() == null) {
-            if (!tile.hasFlags(TileFlags.STARTING)) {
-                throw new IllegalArgumentException("Starting tile must be placed before another tile can be placed.");
-            }
-
-            if (!tile.getPosition().equals(STARTING_TILE_POSITION)) {
-                throw new IllegalArgumentException("Starting tile must be at 0,0.");
-            }
-        }
-
         tiles.put(tile.getPosition(), tile);
     }
 
