@@ -2,10 +2,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.Game;
 import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
+import logic.tile.ChunkType;
 
 import javax.naming.ConfigurationException;
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import static java.lang.System.*;
 
 public class Main {
 
@@ -38,6 +41,7 @@ public class Main {
 
         game.start();
         game.updateToEnd();
+        out.println(game.getStat(20));
     }
 
     private static void playMultipleGames(GameConfig config, int numPlayers, int gameCount) {
@@ -51,5 +55,6 @@ public class Main {
             game.start();
             game.updateToEnd();
         }
+        out.println(game.getStat(20));
     }
 }
