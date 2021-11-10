@@ -1,21 +1,117 @@
 {
-  "MIN_PLAYERS" : 2,
-  "MAX_PLAYERS" : 5,
+  "MIN_PLAYERS": 2,
+  "MAX_PLAYERS": 5,
   "TILES": [
     {
-      "center": "ROAD",
-      "left": "ROAD",
-      "right": "ROAD",
-      "up": "TOWN",
-      "down": "FIELD",
-      "isStartingTile": true
+      "center": {
+        "type": "ABBEY",
+        "relations": []
+      },
+      "up": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "down": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER"
+        ]
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "right": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "details": {
+        "model": "A",
+        "count": 2,
+        "expansion": "default",
+        "flags": []
+      }
     },
     {
-      "center": "ROAD",
-      "left": "FIELD",
-      "right": "FIELD",
-      "up": "ROAD",
-      "down": "ROAD"
+      "center": {
+        "type": "ABBEY",
+        "relations": []
+      },
+      "up": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "right": {
+        "type": "FIELD",
+        "relations": []
+      },
+      "details": {
+        "model": "B",
+        "count": 4,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN",
+        "relations": [
+          "UP",
+          "DOWN",
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN",
+        "relations": [
+          "CENTER",
+          "DOWN",
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "down": {
+        "type": "TOWN",
+        "relations": [
+          "UP",
+          "CENTER",
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "left": {
+        "type": "TOWN",
+        "relations": [
+          "UP",
+          "DOWN",
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "right": {
+        "type": "TOWN",
+        "relations": [
+          "UP",
+          "DOWN",
+          "LEFT",
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "B",
+        "count": 4,
+        "expansion": "default",
+        "flags": ["SHIELD"]
+      }
     }
   ]
 }
