@@ -40,7 +40,7 @@ public class PlaceTileCommand implements ICommand {
                 return false;
             }
 
-            if (tile.isPlaceableAt(position, board)) {
+            if (tile.canBePlacedAt(position, board)) {
                 Logger.warning("Tile cannot be placed here.");
                 return false;
             }

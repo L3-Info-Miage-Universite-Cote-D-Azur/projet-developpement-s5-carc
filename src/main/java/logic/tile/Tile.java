@@ -51,7 +51,7 @@ public class Tile {
         return getChuckPluggedWith(edgeConnection).isCompatibleWith(tile.getChuckPluggedWith(edgeConnection.negate()));
     }
 
-    public boolean isPlaceableAt(Vector2 position, GameBoard board) {
+    public boolean canBePlacedAt(Vector2 position, GameBoard board) {
         for (TileEdge edge : TileEdge.values()) {
             Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
 
