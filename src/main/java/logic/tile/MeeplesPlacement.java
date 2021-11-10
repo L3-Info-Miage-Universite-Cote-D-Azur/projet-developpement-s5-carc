@@ -16,7 +16,7 @@ public class MeeplesPlacement {
     public boolean getMeeple() { return meeple; }
 
     public Chunk getChunk() { return chunk; }
-    
+
     public PlayerBase getPlayer() { return player; }
 
 
