@@ -20,6 +20,19 @@ class PlaceTileCommandTest {
         assertFalse(new PlaceTileCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
     }
 
+    @Test
+    void testNoStartingTilePlacement() {
+        Game game = createGameEnv();
+        assertFalse(new PlaceTileCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
+    }
+
+    @Test
+    void testOverlapTilePlacement() {
+        Game game = createGameEnv();
+        assertTrue(new PlaceTileCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION).execute(game));
+        assertFalse(new PlaceTileCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION).execute(game));
+    }
+
     private static Game createGameEnv() {
         Game game = new Game(config);
 
