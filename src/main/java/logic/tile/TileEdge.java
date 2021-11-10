@@ -17,4 +17,13 @@ public enum TileEdge {
     public Vector2 getValue() {
         return value;
     }
+
+    public TileEdge negate() {
+        return switch (this) {
+            case UP -> DOWN;
+            case DOWN -> UP;
+            case LEFT -> RIGHT;
+            case RIGHT -> LEFT;
+        };
+    }
 }

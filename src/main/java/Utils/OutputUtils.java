@@ -53,6 +53,8 @@ public interface OutputUtils {
     }
 
     static void gameToImage(Game game) {
+        System.out.print("Generate output...");
+
         int imgSize = 160;
         int finalSize = imgSize * GameBoardUtils.maxSizeBoard(game.getBoard());
         BufferedImage bufferedImage = new BufferedImage(finalSize, finalSize, BufferedImage.TYPE_INT_RGB);
@@ -83,5 +85,7 @@ public interface OutputUtils {
             Logger.error(e.getMessage());
             return;
         }
+
+        System.out.println(" Done.");
     }
 }

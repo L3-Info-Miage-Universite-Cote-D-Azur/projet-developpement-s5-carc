@@ -7,11 +7,12 @@ public enum ChunkOffset {
     UP(3),
     DOWN(4);
 
-    int value;
+    public final int value;
 
     ChunkOffset(int value) {
         this.value = value;
     }
+
     @Override
     public String toString() {
         return this.name();

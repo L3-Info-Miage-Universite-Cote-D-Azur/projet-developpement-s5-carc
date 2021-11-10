@@ -14,7 +14,6 @@
       "down": {
         "type": "ROAD",
         "relations": [
-          "CENTER"
         ]
       },
       "left": {
@@ -74,7 +73,6 @@
         "type": "TOWN",
         "relations": [
           "CENTER",
-          "DOWN",
           "LEFT",
           "RIGHT"
         ]
@@ -82,7 +80,6 @@
       "down": {
         "type": "TOWN",
         "relations": [
-          "UP",
           "CENTER",
           "LEFT",
           "RIGHT"
@@ -93,8 +90,7 @@
         "relations": [
           "UP",
           "DOWN",
-          "CENTER",
-          "RIGHT"
+          "CENTER"
         ]
       },
       "right": {
@@ -102,7 +98,6 @@
         "relations": [
           "UP",
           "DOWN",
-          "LEFT",
           "CENTER"
         ]
       },
@@ -240,11 +235,11 @@
         ]
       },
       "up": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": []
       },
       "down": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": []
       },
       "left": {
@@ -277,11 +272,11 @@
         ]
       },
       "up": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": []
       },
       "down": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": []
       },
       "left": {
@@ -728,7 +723,7 @@
         ]
       },
       "down": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": [
         ]
       },
@@ -775,7 +770,7 @@
         ]
       },
       "down": {
-        "type": "TOWN_WALL",
+        "type": "FIELD",
         "relations": [
         ]
       },

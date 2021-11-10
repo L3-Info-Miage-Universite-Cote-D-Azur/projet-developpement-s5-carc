@@ -37,14 +37,18 @@ public class Tile {
         return data.flags.contains(flag);
     }
 
-    public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
+    public Chunk getChuckPluggedWith(TileEdge edgeConnection) {
         return switch (edgeConnection) {
-            case UP -> tile.getChunk(ChunkOffset.DOWN).isCompatibleWith(getChunk(ChunkOffset.UP));
-            case DOWN -> tile.getChunk(ChunkOffset.UP).isCompatibleWith(getChunk(ChunkOffset.DOWN));
-            case LEFT -> tile.getChunk(ChunkOffset.RIGHT).isCompatibleWith(getChunk(ChunkOffset.LEFT));
-            case RIGHT -> tile.getChunk(ChunkOffset.LEFT).isCompatibleWith(getChunk(ChunkOffset.RIGHT));
+            case UP -> getChunk(ChunkOffset.UP);
+            case DOWN -> getChunk(ChunkOffset.DOWN);
+            case LEFT -> getChunk(ChunkOffset.LEFT);
+            case RIGHT -> getChunk(ChunkOffset.RIGHT);
             default -> throw new IllegalArgumentException("Illegal edge connection");
         };
+    }
+
+    public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
+        return getChuckPluggedWith(edgeConnection).isCompatibleWith(tile.getChuckPluggedWith(edgeConnection.negate()));
     }
 
     public boolean isPlaceableAt(Vector2 position, GameBoard board) {
