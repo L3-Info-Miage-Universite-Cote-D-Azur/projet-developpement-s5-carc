@@ -1,7 +1,9 @@
 package logic.tile;
 
+import logic.config.ChunkConfig;
 import logic.config.GameConfig;
 import logic.config.TileConfig;
+import logic.config.TileDetails;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileStackTest {
+    private static final GameConfig config = GameConfig.loadFromJSON("{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"TILES\":[{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":1,\"expansion\":\"default\",\"flags\":[\"STARTING\"]}},{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":3,\"expansion\":\"default\",\"flags\":[]}}]}");
+
     @Test
     void testRemove() {
         TileStack tileStack = new TileStack();
@@ -24,11 +28,8 @@ class TileStackTest {
 
     @Test
     void testFill() {
-        GameConfig config = new GameConfig();
-
         TileStack stack = new TileStack();
         stack.fill(config);
-
         // TODO
     }
 
@@ -40,11 +41,12 @@ class TileStackTest {
 
         for (int i = 0; i < 1000; i++) {
             config.TILES.add(new TileConfig() {{
-                center = ChunkType.FIELD;
-                up = ChunkType.FIELD;
-                down = ChunkType.FIELD;
-                left = ChunkType.FIELD;
-                right = ChunkType.FIELD;
+                center = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                up = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                down = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                left = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                right = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                details = new TileDetails("A", 100, "default", new TileFlags[0]);
             }});
         }
 
@@ -86,15 +88,17 @@ class TileStackTest {
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
         TileStack stack = new TileStack();
         stack.fill(new ArrayList<>() {{
-            add(new Tile(true));
-            add(new Tile(false));
-            add(new Tile(false));
-            add(new Tile(false));
-            add(new Tile(false));
-            add(new Tile(false));
+            add(new Tile() {{
+                setFlags(TileFlags.STARTING, true);
+            }});
+            add(new Tile());
+            add(new Tile());
+            add(new Tile());
+            add(new Tile());
+            add(new Tile());
         }});
         stack.shuffle();
 
-        assertTrue(stack.remove().isStartingTile());
+        assertTrue(stack.remove().hasFlags(TileFlags.STARTING));
     }
 }

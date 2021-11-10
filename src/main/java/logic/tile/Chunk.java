@@ -3,11 +3,16 @@ package logic.tile;
 import logic.meeple.Meeple;
 
 public class Chunk {
+    private final Tile parent;
     private final ChunkType type;
+    private final ChunkOffset[] relations;
+
     private Meeple meeple;
 
-    public Chunk(ChunkType type) {
+    public Chunk(Tile parent, ChunkType type, ChunkOffset[] relations) {
+        this.parent = parent;
         this.type = type;
+        this.relations = relations;
     }
 
     public ChunkType getType() {

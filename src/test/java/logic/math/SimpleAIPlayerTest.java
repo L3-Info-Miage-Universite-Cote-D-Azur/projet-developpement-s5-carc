@@ -14,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class SimpleAIPlayerTest {
+    private static final GameConfig config = GameConfig.loadFromJSON("{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"TILES\":[{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":1,\"expansion\":\"default\",\"flags\":[\"STARTING\"]}},{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":3,\"expansion\":\"default\",\"flags\":[]}}]}");
+
     @Test
     void testOnceTilePlacementPerTurn() {
         for (int i = 1000; i > 0; i--) {
-            Game game = createSinglePlayerGameEnv(new GameConfig());
+            Game game = createSinglePlayerGameEnv();
 
             for (int attemptedTileCount = 0; !game.isFinished(); attemptedTileCount++) {
                 assertEquals(game.getBoard().getTileCount(), attemptedTileCount);
@@ -28,7 +30,7 @@ class SimpleAIPlayerTest {
 
     @Test
     void testStartingTilePlacement() {
-        Game game = createSinglePlayerGameEnv(new GameConfig());
+        Game game = createSinglePlayerGameEnv();
         game.update();
 
         Tile startingTile = game.getBoard().getStartingTile();
@@ -39,7 +41,7 @@ class SimpleAIPlayerTest {
 
     @Test
     void testTilePlacedToFreePointPlacement() {
-        Game game = createSinglePlayerGameEnv(new GameConfig());
+        Game game = createSinglePlayerGameEnv();
         GameBoard board = game.getBoard();
 
         while (!game.isFinished()) {
@@ -63,7 +65,7 @@ class SimpleAIPlayerTest {
 
     @Test
     void testTilePlacedToRandomFreePointPlacement() {
-        Game game = createSinglePlayerGameEnv(new GameConfig());
+        Game game = createSinglePlayerGameEnv();
         GameBoard board = game.getBoard();
 
         game.update();
@@ -98,7 +100,7 @@ class SimpleAIPlayerTest {
         }
     }
 
-    private static Game createSinglePlayerGameEnv(GameConfig config) {
+    private static Game createSinglePlayerGameEnv() {
         Game game = new Game(config);
 
         game.addPlayer(new SimpleAIPlayer(1));

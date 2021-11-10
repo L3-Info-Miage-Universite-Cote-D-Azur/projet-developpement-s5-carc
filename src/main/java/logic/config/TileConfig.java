@@ -1,16 +1,17 @@
 package logic.config;
 
-import logic.tile.Chunk;
-import logic.tile.ChunkType;
+import logic.tile.ChunkOffset;
 import logic.tile.Tile;
+import logic.tile.TileFlags;
 
 public class TileConfig {
-    public ChunkType center;
-    public ChunkType left;
-    public ChunkType right;
-    public ChunkType up;
-    public ChunkType down;
-    public boolean isStartingTile;
+    public ChunkConfig center;
+    public ChunkConfig left;
+    public ChunkConfig right;
+    public ChunkConfig up;
+    public ChunkConfig down;
+    public TileDetails details;
+
 
     public TileConfig() {
     }
@@ -26,12 +27,18 @@ public class TileConfig {
     }
 
     public Tile createTile() {
-        return new Tile(new Chunk[]{
-                new Chunk(center),
-                new Chunk(left),
-                new Chunk(right),
-                new Chunk(up),
-                new Chunk(down)
-        }, isStartingTile);
+        Tile tile = new Tile();
+
+        tile.setChunk(ChunkOffset.CENTER, center.createChunk(tile));
+        tile.setChunk(ChunkOffset.UP, up.createChunk(tile));
+        tile.setChunk(ChunkOffset.DOWN, down.createChunk(tile));
+        tile.setChunk(ChunkOffset.LEFT, left.createChunk(tile));
+        tile.setChunk(ChunkOffset.RIGHT, right.createChunk(tile));
+
+        for (TileFlags flag : details.flags) {
+            tile.setFlags(flag, true);
+        }
+
+        return tile;
     }
 }
