@@ -401,7 +401,7 @@
         ]
       },
       "left": {
-        "type": "FILED",
+        "type": "FIELD",
         "relations": [
         ]
       },
@@ -440,7 +440,7 @@
         ]
       },
       "left": {
-        "type": "FILED",
+        "type": "FIELD",
         "relations": [
         ]
       },
@@ -454,6 +454,213 @@
       "details": {
         "model": "J",
         "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "DOWN"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "down": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "LEFT"
+        ]
+      },
+      "left": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "DOWN"
+        ]
+      },
+      "right": {
+        "type": "FIELD",
+        "relations": [
+        ]
+      },
+      "details": {
+        "model": "K",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "DOWN",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+        ]
+      },
+      "down": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "left": {
+        "type": "ROAD",
+        "relations": [
+          "CENTER",
+          "DOWN",
+          "RIGHT"
+        ]
+      },
+      "right": {
+        "type": "ROAD",
+        "relations": [
+          "LEFT",
+          "DOWN",
+          "CENTER"
+        ]
+      },
+      "details": {
+        "model": "L",
+        "count": 3,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "UP",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "LEFT"
+        ]
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": [
+          "DOWN"
+        ]
+      },
+      "right": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "UP"
+        ]
+      },
+      "details": {
+        "model": "M",
+        "count": 2,
+        "expansion": "default",
+        "flags": ["SHIELD"]
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "UP",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "LEFT"
+        ]
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": [
+          "DOWN"
+        ]
+      },
+      "right": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "UP"
+        ]
+      },
+      "details": {
+        "model": "N",
+        "count": 2,
+        "expansion": "default",
+        "flags": []
+      }
+    },
+    {
+      "center": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "UP",
+          "RIGHT"
+        ]
+      },
+      "up": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "RIGHT"
+        ]
+      },
+      "down": {
+        "type": "FIELD",
+        "relations": [
+          "LEFT"
+        ]
+      },
+      "left": {
+        "type": "FIELD",
+        "relations": [
+          "DOWN"
+        ]
+      },
+      "right": {
+        "type": "TOWN_WALL",
+        "relations": [
+          "CENTER",
+          "UP"
+        ]
+      },
+      "details": {
+        "model": "N",
+        "count": 2,
         "expansion": "default",
         "flags": []
       }
