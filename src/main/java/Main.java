@@ -1,4 +1,4 @@
-import Utils.OutputUtils;
+import utils.OutputUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logger.Logger;
 import logic.Game;

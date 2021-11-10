@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import Utils.OutputUtils;
+import utils.OutputUtils;
 import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;

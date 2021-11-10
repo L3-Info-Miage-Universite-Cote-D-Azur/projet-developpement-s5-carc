@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import logic.board.GameBoard;
 import logic.math.Vector2;

@@ -1,8 +1,7 @@
-package Utils;
+package utils;
 
 import logger.Logger;
 import logic.Game;
-import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.tile.Tile;
 
