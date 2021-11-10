@@ -1,7 +1,10 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import Utils.OutputUtils;
 import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
@@ -102,6 +105,61 @@ public class Game {
         return winner;
     }
 
+    public String getStat(int cellSize) {
+        StringBuilder stat = new StringBuilder("| Statistics |\n");
+
+        // Sort the player list by the score
+        ArrayList<PlayerBase> playersSort = new ArrayList<>(players);
+        playersSort.sort(PlayerBase::compareTo);
+        Collections.reverse(playersSort);
+
+        // Player Name
+        List<String> playerName = new ArrayList<>();
+        playersSort.forEach(p -> playerName.add("Player " + p.getId()));
+        OutputUtils.toArrayLine("PLAYER", cellSize, playerName, stat);
+
+        // Total Score
+        List<String> playerResult = new ArrayList<>();
+        final int[] i = {1};
+        playersSort.forEach(p -> {
+            playerResult.add(i[0] + "e(" + p.getScore() + ")");
+            i[0]++;
+        });
+        OutputUtils.toArrayLine("RESULTS (score)", cellSize, playerResult, stat);
+
+        // Road points
+        List<String> playerRoadPoints = new ArrayList<>();
+        playersSort.forEach(p -> playerRoadPoints.add(String.valueOf(p.getRoadPoints())));
+        OutputUtils.toArrayLine("ROAD POINTS", cellSize, playerRoadPoints, stat);
+
+        // Town points
+        List<String> playerTownPoints = new ArrayList<>();
+        playersSort.forEach(p -> playerTownPoints.add(String.valueOf(p.getTownPoints())));
+        OutputUtils.toArrayLine("TOWN POINTS", cellSize, playerTownPoints, stat);
+
+        // Abbey points
+        List<String> playerAbbeyPoints = new ArrayList<>();
+        playersSort.forEach(p -> playerAbbeyPoints.add(String.valueOf(p.getAbbeyPoints())));
+        OutputUtils.toArrayLine("ABBEY POINTS", cellSize, playerAbbeyPoints, stat);
+
+        // Field points
+        List<String> playerFieldPoints = new ArrayList<>();
+        playersSort.forEach(p -> playerFieldPoints.add(String.valueOf(p.getFieldPoints())));
+        OutputUtils.toArrayLine("FIELD POINTS", cellSize, playerFieldPoints, stat);
+
+        // Partisans played
+        List<String> playerPartisansPlayed = new ArrayList<>();
+        playersSort.forEach(p -> playerPartisansPlayed.add(String.valueOf(p.getPartisansPlayed())));
+        OutputUtils.toArrayLine("PARTISANS PLAYED", cellSize, playerPartisansPlayed, stat);
+
+        // Partisans remained
+        List<String> playerPartisansRemained = new ArrayList<>();
+        playersSort.forEach(p -> playerPartisansRemained.add(String.valueOf(p.getPartisansRemained())));
+        OutputUtils.toArrayLine("PARTISANS REMAINED", cellSize, playerPartisansRemained, stat);
+
+        return stat.toString();
+    }
+
     public GameConfig getConfig() {
         return config;
     }
@@ -114,7 +172,7 @@ public class Game {
         return stack;
     }
 
-    public PlayerBase getPlayer(int player){
+    public PlayerBase getPlayer(int player) {
         return players.get(player);
     }
 

@@ -4,13 +4,14 @@ import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.SimpleAIPlayer;
+import logic.tile.ChunkType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
-    void testInitialState(){
+    void testInitialState() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
@@ -50,7 +51,9 @@ class GameTest {
 
     @Test
     void testIsGameFinished() {
-        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
+        GameConfig gameConfig = new GameConfig() {{
+            MIN_PLAYERS = 1;
+        }};
         Game game = new Game(gameConfig);
 
         assertTrue(game.isFinished());
@@ -60,22 +63,25 @@ class GameTest {
 
         assertFalse(game.isFinished());
 
-        game.getPlayer(0).addScore(99999);
+        game.getPlayer(0).addScore(99999, ChunkType.ROAD);
 
         assertTrue(game.isFinished());
     }
 
     @Test
-    void testIfThrowExceptionIfUpdateCalledBeforeStart(){
+    void testIfThrowExceptionIfUpdateCalledBeforeStart() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
 
         assertTrue(game.isFinished());
         assertThrows(IllegalStateException.class, game::update);
     }
+
     @Test
-    void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
-        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; }};
+    void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished() {
+        GameConfig gameConfig = new GameConfig() {{
+            MIN_PLAYERS = 1;
+        }};
         Game game = new Game(gameConfig);
 
         game.addPlayer(new SimpleAIPlayer(1));
@@ -84,8 +90,9 @@ class GameTest {
         assertEquals(false, game.isFinished());
         assertThrows(IllegalStateException.class, game::getWinner);
     }
+
     @Test
-    void testWinner(){
+    void testWinner() {
         GameConfig gameConfig = new GameConfig();
         Game game = new Game(gameConfig);
         game.addPlayer(new SimpleAIPlayer(501));
@@ -94,9 +101,9 @@ class GameTest {
         assertTrue(game.isFinished());
 
         game.start();
-        game.getPlayer(0).addScore(279);
+        game.getPlayer(0).addScore(279, ChunkType.TOWN);
 
-        while(!game.isFinished()){
+        while (!game.isFinished()) {
             game.update();
         }
 

@@ -1,4 +1,5 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
+import logger.Logger;
 import logic.Game;
 import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
@@ -7,14 +8,18 @@ import javax.naming.ConfigurationException;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import static java.lang.System.*;
+
 public class Main {
 
     public static void main(String[] arg) throws ConfigurationException {
+        Logger.enable();
         GameConfig config = loadConfigFromFile("config.json");
 
         if (config == null || !config.validate()) {
             throw new ConfigurationException("Configuration is not valid.");
         }
+
 
         playSingleGame(config, 5);
         // playMultipleGames(config, 5, 2);
@@ -38,6 +43,7 @@ public class Main {
 
         game.start();
         game.updateToEnd();
+        out.println(game.getStat(20));
     }
 
     private static void playMultipleGames(GameConfig config, int numPlayers, int gameCount) {
@@ -51,5 +57,6 @@ public class Main {
             game.start();
             game.updateToEnd();
         }
+        out.println(game.getStat(20));
     }
 }

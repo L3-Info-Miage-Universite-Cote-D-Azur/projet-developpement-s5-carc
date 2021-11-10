@@ -1,5 +1,6 @@
 package logic.player;
 
+import logic.tile.ChunkType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,13 +14,29 @@ class PlayerTest {
             }
         };
 
-        assertEquals(0, player.score);
-        player.addScore(100);
-        assertEquals(100, player.score);
-        player.addScore(100);
-        assertEquals(200, player.score);
+        assertEquals(0, player.getScore());
+        player.addScore(100, ChunkType.ABBEY);
+        assertEquals(100, player.getScore());
+        assertEquals(100, player.getAbbeyPoints());
+
+        player.addScore(100, ChunkType.ROAD);
+        assertEquals(200, player.getScore());
+        assertEquals(100, player.getRoadPoints());
+
+        player.addScore(100, ChunkType.FIELD);
+        assertEquals(300, player.getScore());
+        assertEquals(100, player.getFieldPoints());
+
+        player.addScore(100, ChunkType.TOWN);
+        assertEquals(400, player.getScore());
+        assertEquals(100, player.getTownPoints());
+
         assertThrows(IllegalArgumentException.class, () -> {
-           player.addScore(-1);
+           player.addScore(-1, ChunkType.ABBEY);
+        });
+
+        assertThrows(IllegalStateException.class, () -> {
+            player.addScore(10, ChunkType.RIVER);
         });
     }
 }
