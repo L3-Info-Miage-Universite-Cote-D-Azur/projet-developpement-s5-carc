@@ -10,7 +10,7 @@ public class TileConfig {
     public ChunkConfig right;
     public ChunkConfig up;
     public ChunkConfig down;
-    public TileDetails details;
+    public TileData details;
 
 
     public TileConfig() {
@@ -27,17 +27,13 @@ public class TileConfig {
     }
 
     public Tile createTile() {
-        Tile tile = new Tile();
+        Tile tile = new Tile(details);
 
         tile.setChunk(ChunkOffset.CENTER, center.createChunk(tile));
         tile.setChunk(ChunkOffset.UP, up.createChunk(tile));
         tile.setChunk(ChunkOffset.DOWN, down.createChunk(tile));
         tile.setChunk(ChunkOffset.LEFT, left.createChunk(tile));
         tile.setChunk(ChunkOffset.RIGHT, right.createChunk(tile));
-
-        for (TileFlags flag : details.flags) {
-            tile.setFlags(flag, true);
-        }
 
         return tile;
     }

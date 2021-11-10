@@ -2,16 +2,18 @@ package logic.config;
 
 import logic.tile.TileFlags;
 
-public final class TileDetails {
-    public String model;
-    public int count;
-    public String expansion;
-    public TileFlags[] flags;
+import java.util.EnumSet;
 
-    public TileDetails() {
+public final class TileData {
+    public String model;
+    public String expansion;
+    public EnumSet<TileFlags> flags;
+    public int count;
+
+    public TileData() {
     }
 
-    public TileDetails(String model, int count, String expansion, TileFlags[] flags) {
+    public TileData(String model, int count, String expansion, EnumSet<TileFlags> flags) {
         this.model = model;
         this.count = count;
         this.expansion = expansion;

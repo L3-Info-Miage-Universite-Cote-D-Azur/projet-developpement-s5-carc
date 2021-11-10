@@ -1,6 +1,7 @@
 package logic.tile;
 
 import logic.board.GameBoard;
+import logic.config.TileData;
 import logic.math.Vector2;
 
 import java.util.Arrays;
@@ -9,11 +10,11 @@ import java.util.EnumSet;
 public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
-    private EnumSet<TileFlags> flags;
+    private TileData data;
 
-    public Tile() {
+    public Tile(TileData data) {
+        this.data = data;
         chunks = new Chunk[ChunkOffset.values().length];
-        flags = EnumSet.noneOf(TileFlags.class);
     }
 
     public Vector2 getPosition() {
@@ -33,17 +34,7 @@ public class Tile {
     }
 
     public boolean hasFlags(TileFlags flag) {
-        return flags.contains(flag);
-    }
-
-    public void setFlags(TileFlags flag, boolean value) {
-        if (value) {
-            if (!hasFlags(flag)) {
-                flags.add(flag);
-            }
-        } else {
-            flags.remove(flag);
-        }
+        return data.flags.contains(flag);
     }
 
     public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
@@ -68,11 +59,15 @@ public class Tile {
         return true;
     }
 
+    public TileData getData() {
+        return data;
+    }
+
     @Override
     public String toString() {
         return "Tile{" +
                 "chunks=" + Arrays.toString(chunks) +
-                ", flags=" + flags +
+                ", flags=" + data.flags +
                 '}';
     }
 }

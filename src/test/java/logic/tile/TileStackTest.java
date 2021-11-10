@@ -3,10 +3,11 @@ package logic.tile;
 import logic.config.ChunkConfig;
 import logic.config.GameConfig;
 import logic.config.TileConfig;
-import logic.config.TileDetails;
+import logic.config.TileData;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +17,7 @@ class TileStackTest {
     @Test
     void testRemove() {
         TileStack tileStack = new TileStack();
-        Tile testTile = new Tile();
+        Tile testTile = new Tile(new TileData("A", 1, "default", EnumSet.noneOf(TileFlags.class)));
 
         tileStack.fill(new ArrayList<>() {{
             add(testTile);
@@ -46,7 +47,7 @@ class TileStackTest {
                 down = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 left = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 right = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
-                details = new TileDetails("A", 100, "default", new TileFlags[0]);
+                details = new TileData("A", 100, "default", EnumSet.noneOf(TileFlags.class));
             }});
         }
 
@@ -88,14 +89,10 @@ class TileStackTest {
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
         TileStack stack = new TileStack();
         stack.fill(new ArrayList<>() {{
-            add(new Tile() {{
-                setFlags(TileFlags.STARTING, true);
-            }});
-            add(new Tile());
-            add(new Tile());
-            add(new Tile());
-            add(new Tile());
-            add(new Tile());
+            add(new Tile(new TileData("A", 1, "default", EnumSet.noneOf(TileFlags.class))));
+            add(new Tile(new TileData("A", 1, "default", EnumSet.of(TileFlags.STARTING))));
+            add(new Tile(new TileData("A", 1, "default", EnumSet.noneOf(TileFlags.class))));
+            add(new Tile(new TileData("A", 1, "default", EnumSet.noneOf(TileFlags.class))));
         }});
         stack.shuffle();
 
