@@ -25,6 +25,14 @@ public class Chunk {
         return meeple;
     }
 
+    public void setMeeple(Meeple meeple) {
+        this.meeple = meeple;
+    }
+
+    public boolean hasMeeple() {
+        return meeple != null;
+    }
+
     public boolean isCompatibleWith(Chunk chunk) {
         return this.type.isCompatibleWith(chunk.type);
     }

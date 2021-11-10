@@ -12,4 +12,8 @@ public enum ChunkOffset {
     ChunkOffset(int value) {
         this.value = value;
     }
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

@@ -12,6 +12,7 @@ public abstract class PlayerBase implements Comparable {
     protected int townScore;
     protected int abbeyScore;
     protected int fieldScore;
+    protected int remainingMeepleCount;
 
     protected Game game;
 
@@ -92,6 +93,14 @@ public abstract class PlayerBase implements Comparable {
 
     public int getFieldPoints() {
         return fieldScore;
+    }
+
+    public int getRemainingMeepleCount() {
+        return remainingMeepleCount;
+    }
+
+    public void removeRemainingMeepleCount() {
+        remainingMeepleCount--;
     }
 
     public int getPartisansPlayed() {

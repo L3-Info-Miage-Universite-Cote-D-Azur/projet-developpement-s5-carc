@@ -23,9 +23,9 @@
 
 - # En terme d'organisation du travail (qui a fait quoi)
   - Mike Chiappe et Loïc Le Contel se sont occupés de l'issue #42
-  - Mike Chiappe et Loïc Le Contel ont réfléchie au restrictions de placement de tuiles sur papier.
+  - Mike Chiappe et Loïc Le Contel ont réfléchie au restrictions de placement de tuiles sur papier. (issue #43)
   - Sebastien Aglae s'est occupé des statistiques de partie de l'issue #39
   - Nathan Rihet et Lucas Blanc se s'ont occupé du placement des meeples de l'issue #38
-  - Nathan Rihet s'est occupé d'ajouter toutes les tuiles du jeu de base dans un document JSON 
+  - Nathan Rihet s'est occupé d'ajouter toutes les tuiles du jeu de base dans un document JSON (issue #44)
   - Loïc Le Contel s'est occupé de remplir iteration04.md et de la user story
   - Mike Chiappe s'occupe de la gestion du projet et de driver les collaborateurs
