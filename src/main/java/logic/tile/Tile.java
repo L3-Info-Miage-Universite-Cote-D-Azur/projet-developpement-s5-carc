@@ -44,4 +44,12 @@ public class Tile {
             flags.remove(flag);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "chunks=" + Arrays.toString(chunks) +
+                ", flags=" + flags +
+                '}';
+    }
 }
