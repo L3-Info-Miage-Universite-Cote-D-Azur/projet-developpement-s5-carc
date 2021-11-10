@@ -69,10 +69,10 @@ public interface OutputUtils {
             Vector2 positionOnImage = GameBoardUtils.getCoordinateImage(tile.getPosition(), finalSize, imgSize);
             g2d.drawImage(img, positionOnImage.getX(), positionOnImage.getY(), null);
             Vector2 positionOnImageNoCenter = GameBoardUtils.getCoordinateImageNoCenter(tile.getPosition(), finalSize, imgSize);
-            Font myFont = new Font ("Courier New", 1, 35);
-            g2d.setFont (myFont);
-            g2d.setColor(Color.black);
-            g2d.drawString(tile.getPosition().getX() + " " + tile.getPosition().getY(), positionOnImageNoCenter.getX() ,positionOnImageNoCenter.getY());
+            Font myFont = new Font("Courier New", Font.BOLD, 25);
+            g2d.setFont(myFont);
+            g2d.setColor(Color.red);
+            g2d.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), positionOnImageNoCenter.getX(), positionOnImageNoCenter.getY());
         }
 
         g2d.dispose();
