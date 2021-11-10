@@ -28,7 +28,7 @@ Afin d'ajouter ces fonctionnalités, nous avons du revoir nos itérations futurs
     - Ajout du comptage de point pour les zones de jeu
   - Finition de la séparation code client/serveur
 
-- Livrasion 7
+- Livraison 7
   - Ajout de fonctionnalités de jeu
     - Ajout des princesses
     - Ajout des nouvelles tuiles "Abbaye dans la ville", "Tunnel" et "Portail Magique"
