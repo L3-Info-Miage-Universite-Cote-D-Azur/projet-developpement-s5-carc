@@ -21,19 +21,20 @@ public class MeepleTest {
     }
 
     /* check if 2 meeples are on the same tile*/
+    @Disabled
     @Test
     void MeeplesTiles(){
-        
 
 
     }
 
     /* check if the tile is already on the board before placing a meeple on it*/
+    @Disabled
     @Test
     void TilesCreated(){
 
     }
-
+    
 
 
 }
