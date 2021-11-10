@@ -1,5 +1,16 @@
 package Utils;
 
+import logger.Logger;
+import logic.Game;
+import logic.board.GameBoard;
+import logic.math.Vector2;
+import logic.tile.Tile;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,5 +50,37 @@ public interface OutputUtils {
         for (String value : values)
             stringBuilder.append(OutputUtils.alignToCenter(value, cellSize));
         stringBuilder.append("\n");
+    }
+
+    static void gameToImage(Game game) {
+        int imgSize = 160;
+        int finalSize = imgSize * GameBoardUtils.maxSizeBoard(game.getBoard());
+        BufferedImage bufferedImage = new BufferedImage(finalSize, finalSize, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        BufferedImage img = null;
+        for (Tile tile : game.getBoard().getTiles()) {
+            try {
+                img = ImageIO.read(new File("models/" + tile.getData().model + ".png"));
+            } catch (IOException e) {
+                Logger.error(e.getMessage());
+                return;
+            }
+            Vector2 positionOnImage = GameBoardUtils.getCoordinateImage(tile.getPosition(), finalSize, imgSize);
+            g2d.drawImage(img, positionOnImage.getX(), positionOnImage.getY(), null);
+            Vector2 positionOnImageNoCenter = GameBoardUtils.getCoordinateImageNoCenter(tile.getPosition(), finalSize, imgSize);
+            Font myFont = new Font ("Courier New", 1, 35);
+            g2d.setFont (myFont);
+            g2d.setColor(Color.black);
+            g2d.drawString(tile.getPosition().getX() + " " + tile.getPosition().getY(), positionOnImageNoCenter.getX() ,positionOnImageNoCenter.getY());
+        }
+
+        g2d.dispose();
+        File file = new File("GameState.png");
+        try {
+            ImageIO.write(bufferedImage, "png", file);
+        } catch (IOException e) {
+            Logger.error(e.getMessage());
+            return;
+        }
     }
 }

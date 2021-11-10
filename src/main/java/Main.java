@@ -1,3 +1,4 @@
+import Utils.OutputUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logger.Logger;
 import logic.Game;
@@ -44,6 +45,7 @@ public class Main {
         game.start();
         game.updateToEnd();
         out.println(game.getStat(20));
+        OutputUtils.gameToImage(game);
     }
 
     private static void playMultipleGames(GameConfig config, int numPlayers, int gameCount) {

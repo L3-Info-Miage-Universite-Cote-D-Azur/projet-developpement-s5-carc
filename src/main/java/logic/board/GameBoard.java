@@ -7,8 +7,8 @@ import logic.tile.TileFlags;
 
 import java.util.*;
 
-/** Gameboard
- *
+/**
+ * Gameboard
  */
 public class GameBoard {
 
@@ -103,6 +103,10 @@ public class GameBoard {
                 freePoints.add(edgePos);
             }
         }
+    }
+
+    public List<Tile> getTiles() {
+        return new ArrayList<>(tiles.values());
     }
 
     /*@Override
