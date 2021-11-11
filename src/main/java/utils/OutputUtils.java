@@ -3,6 +3,7 @@ package utils;
 import logger.Logger;
 import logic.Game;
 import logic.math.Vector2;
+import logic.tile.ChunkOffset;
 import logic.tile.Tile;
 
 import javax.imageio.ImageIO;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,27 +54,30 @@ public interface OutputUtils {
     }
 
     static void gameToImage(Game game) {
-        System.out.print("Generate output...");
+        Logger.info("Generate output...");
+        long actualGenerationTime = System.currentTimeMillis();
 
         int imgSize = 160;
         int finalSize = imgSize * GameBoardUtils.maxSizeBoard(game.getBoard());
         BufferedImage bufferedImage = new BufferedImage(finalSize, finalSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = bufferedImage.createGraphics();
-        BufferedImage img = null;
-        for (Tile tile : game.getBoard().getTiles()) {
-            try {
-                img = ImageIO.read(new File("models/" + tile.getData().model + ".png"));
-            } catch (IOException e) {
-                Logger.error(e.getMessage());
-                return;
-            }
+        Logger.info("Loading image in memory...");
+        long actualCacheTime = System.currentTimeMillis();
+        HashMap<String, BufferedImage> cache = getCacheImage();
+        Logger.info("Loading image in memory done (" + (System.currentTimeMillis() - actualCacheTime) + "ms).");
 
+        g2d.setFont(new Font("Courier New", Font.BOLD, 25));
+        g2d.setColor(Color.red);
+
+        for (Tile tile : game.getBoard().getTiles()) {
             Vector2 positionOnImage = GameBoardUtils.getCoordinateImage(tile.getPosition(), finalSize, imgSize);
-            g2d.drawImage(img, positionOnImage.getX(), positionOnImage.getY(), null);
+            g2d.drawImage(cache.get(tile.getData().model), positionOnImage.getX(), positionOnImage.getY(), null);
+
+            for (ChunkOffset chunkOffset : ChunkOffset.values())
+                if (tile.getChunk(chunkOffset).hasMeeple())
+                    g2d.drawImage(cache.get((tile.getChunk(chunkOffset).getMeeple().getOwner().getId() - 1) + ""), positionOnImage.getX(), positionOnImage.getY(), null);
+
             Vector2 positionOnImageNoCenter = GameBoardUtils.getCoordinateImageNoCenter(tile.getPosition(), finalSize, imgSize);
-            Font myFont = new Font("Courier New", Font.BOLD, 25);
-            g2d.setFont(myFont);
-            g2d.setColor(Color.red);
             g2d.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), positionOnImageNoCenter.getX(), positionOnImageNoCenter.getY());
         }
 
@@ -85,6 +90,22 @@ public interface OutputUtils {
             return;
         }
 
-        System.out.println(" Done.");
+        System.out.println(" Done(" + (System.currentTimeMillis() - actualGenerationTime) + "ms).");
+    }
+
+    static HashMap<String, BufferedImage> getCacheImage() {
+        HashMap<String, BufferedImage> cache = new HashMap<>();
+        for (File img : new File("models").listFiles()) {
+            BufferedImage buffer = null;
+            try {
+                buffer = ImageIO.read(new File("models/" + img.getName()));
+            } catch (IOException e) {
+                Logger.warning("Cannot load " + img.getName());
+                continue;
+            }
+            cache.put(img.getName().replaceAll(".png", ""), buffer);
+        }
+
+        return cache;
     }
 }
