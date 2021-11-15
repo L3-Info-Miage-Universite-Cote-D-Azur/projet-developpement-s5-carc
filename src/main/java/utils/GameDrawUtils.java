@@ -67,7 +67,7 @@ public class GameDrawUtils {
      * @param board The board to calculate the bounds for.
      * @return The bounds of the board.
      */
-    private static Bounds calculateBoardBounds(GameBoard board) {
+    public static Bounds calculateBoardBounds(GameBoard board) {
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxX = 0;
@@ -130,16 +130,33 @@ public class GameDrawUtils {
      * @return The image layer representing the specified game instance.
      */
     public static BufferedImage createLayer(Game game, Bounds boardBounds) {
-        loadImageDatabaseIfNeeded();
-
         long startTime = System.currentTimeMillis();
 
         Bounds layerBounds = boardBounds.scale(tileWidth, tileHeight).reverseY();
         BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D layerGraphics = layer.createGraphics();
 
-        layerGraphics.setFont(new Font("Courier New", Font.CENTER_BASELINE | Font.BOLD, 25));
-        layerGraphics.setColor(Color.blue);
+        Graphics2D layerGraphics = layer.createGraphics();
+        render(game, layerGraphics, layerBounds);
+        layerGraphics.dispose();
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("Time to create image: " + (endTime - startTime) + "ms");
+
+        return layer;
+    }
+
+    /**
+     * Renders the specified game instance to the specified graphics context.
+     * @param game The game instance to render.
+     * @param graphics The graphics context to render to.
+     * @param layerBounds The bounds of the layer to render.
+     */
+    public static void render(Game game, Graphics graphics, Bounds layerBounds) {
+        loadImageDatabaseIfNeeded();
+
+        graphics.setFont(new Font("Courier New", Font.CENTER_BASELINE | Font.BOLD, 25));
+        graphics.setColor(Color.blue);
 
         for (Tile tile : game.getBoard().getTiles()) {
             Vector2 tileImagePosition = getTilePosition(tile).reverseY().subtract(layerBounds.start);
@@ -148,8 +165,8 @@ public class GameDrawUtils {
             assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
             assert tileImagePosition.getX() + tileWidth <= layerBounds.getWidth() && tileImagePosition.getY() + tileHeight <= layerBounds.getHeight();
 
-            layerGraphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
-            layerGraphics.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
+            graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
+            graphics.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
 
             for (ChunkOffset chunkOffset : ChunkOffset.values()) {
                 Chunk chunk = tile.getChunk(chunkOffset);
@@ -158,17 +175,9 @@ public class GameDrawUtils {
                     Meeple meeple = chunk.getMeeple();
                     BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(meeple.getOwner()));
 
-                    layerGraphics.drawImage(meepleImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
+                    graphics.drawImage(meepleImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
                 }
             }
         }
-
-        layerGraphics.dispose();
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("Time to create image: " + (endTime - startTime) + "ms");
-
-        return layer;
     }
 }
