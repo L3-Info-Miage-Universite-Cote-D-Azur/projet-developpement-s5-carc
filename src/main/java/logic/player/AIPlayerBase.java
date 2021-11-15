@@ -1,7 +1,5 @@
 package logic.player;
 
-import logger.Logger;
-import logic.board.GameBoard;
 import logic.command.PlaceTileCommand;
 import logic.math.Vector2;
 import logic.tile.Tile;
@@ -16,6 +14,10 @@ public abstract class AIPlayerBase extends PlayerBase {
         Tile tilePicked;
         Vector2 tilePosition;
         do {
+            if (game.getStack().isEmpty()) {
+                break;
+            }
+
             tilePicked = game.getStack().remove();
             tilePosition = findPositionForTile(tilePicked);
         } while (tilePosition == null || !new PlaceTileCommand(tilePicked, tilePosition).execute(game));
