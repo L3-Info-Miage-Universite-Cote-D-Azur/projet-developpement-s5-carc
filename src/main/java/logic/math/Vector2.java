@@ -42,6 +42,26 @@ public final class Vector2 {
         return new Vector2(this.x + vector.x, this.y + vector.y);
     }
 
+    public Vector2 subtract(int x, int y) {
+        return new Vector2(this.x - x, this.y - y);
+    }
+
+    public Vector2 subtract(Vector2 vector) {
+        return new Vector2(this.x - vector.x, this.y - vector.y);
+    }
+
+    public Vector2 multiply(int x, int y) {
+        return new Vector2(this.x * x, this.y * y);
+    }
+
+    public Vector2 reverseX() {
+        return new Vector2(-x, y);
+    }
+
+    public Vector2 reverseY() {
+        return new Vector2(x, -y);
+    }
+
     @Override
     public String toString() {
         return "Vector2{" +

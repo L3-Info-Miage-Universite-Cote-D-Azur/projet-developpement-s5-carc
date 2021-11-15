@@ -1,10 +1,13 @@
-import utils.OutputUtils;
+import utils.Bounds;
+import utils.GameDrawUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logger.Logger;
 import logic.Game;
 import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
+import utils.GameScoreUtils;
 
+import javax.imageio.ImageIO;
 import javax.naming.ConfigurationException;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -12,7 +15,6 @@ import java.nio.file.Paths;
 import static java.lang.System.*;
 
 public class Main {
-
     public static void main(String[] arg) throws ConfigurationException {
         Logger.enable();
         GameConfig config = loadConfigFromFile("config.json");
@@ -44,8 +46,13 @@ public class Main {
 
         game.start();
         game.updateToEnd();
-        out.println(game.getStat(20));
-        OutputUtils.gameToImage(game);
+        out.println(GameScoreUtils.createScoreTable(game, 20));
+
+        try {
+            ImageIO.write(GameDrawUtils.createLayer(game), "png", new java.io.File("game.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void playMultipleGames(GameConfig config, int numPlayers, int gameCount) {
@@ -59,6 +66,6 @@ public class Main {
             game.start();
             game.updateToEnd();
         }
-        out.println(game.getStat(20));
+        out.println(GameScoreUtils.createScoreTable(game, 20));
     }
 }

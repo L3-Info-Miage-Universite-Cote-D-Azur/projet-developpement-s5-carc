@@ -5,7 +5,6 @@ import logic.config.TileData;
 import logic.math.Vector2;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 
 public class Tile {
     private Vector2 position;
