@@ -31,6 +31,10 @@ class PlayerTest {
         assertEquals(400, player.getScore());
         assertEquals(100, player.getTownPoints());
 
+        assertEquals(0, player.getRemainingMeepleCount());
+        assertEquals(0, player.getPartisansPlayed());
+        assertEquals(0, player.getPartisansRemained());
+
         assertThrows(IllegalArgumentException.class, () -> {
            player.addScore(-1, ChunkType.ABBEY);
         });
