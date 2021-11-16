@@ -1,15 +1,12 @@
 package logic.config.excel;
 
-import excel.ExcelDocument;
+import excel.ExcelNode;
 import logic.tile.ChunkId;
 import logic.tile.ChunkType;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TileExcelConfig {
@@ -27,16 +24,17 @@ public class TileExcelConfig {
         this.count = count;
     }
 
-    public TileExcelConfig(ExcelDocument reader) {
-        ExcelDocument tileChunkMapExcel = reader.getDocument("chunks");
-        ExcelDocument tileChunkReferenceExcel = reader.getDocument("references");
-        ExcelDocument tileDetailsExcel = reader.getDocument("data");
+    public TileExcelConfig(ExcelNode node) {
+        ExcelNode chunkExcel = node.getChild("Chunks");
+        ExcelNode chunkTypesExcel = chunkExcel.getChild("Types");
+        ExcelNode chunkReferencesExcel = chunkExcel.getChild("References");
+        ExcelNode dataExcel = node.getChild("Data");
 
-        loadChunks(tileChunkMapExcel, tileChunkReferenceExcel);
-        loadDetails(tileDetailsExcel);
+        loadChunks(chunkTypesExcel, chunkReferencesExcel);
+        loadDetails(dataExcel);
     }
 
-    private void loadChunks(ExcelDocument mapDocument, ExcelDocument referenceDocument) {
+    private void loadChunks(ExcelNode mapDocument, ExcelNode referenceDocument) {
         ChunkType[] chunkTypes = new ChunkType[ChunkId.values().length];
         ChunkId[][] chunkReferences = new ChunkId[ChunkId.values().length][];
 
@@ -60,6 +58,14 @@ public class TileExcelConfig {
             chunkTypes[chunkId.ordinal()] = type;
         }
 
+        for (Map.Entry<String, ArrayList<ChunkId>> group : chunkGroups.entrySet()) {
+            ArrayList<ChunkId> ids = group.getValue();
+
+            for (ChunkId id : ids) {
+                chunkReferences[id.ordinal()] = Arrays.stream(id.getNeighbours()).filter(ids::contains).toArray(ChunkId[]::new);
+            }
+        }
+
         chunks = new TileChunkExcelConfig[ChunkId.values().length];
 
         for (ChunkId chunkId : ChunkId.values()) {
@@ -70,10 +76,10 @@ public class TileExcelConfig {
         }
     }
 
-    private void loadDetails(ExcelDocument document) {
-        model = document.getCell("Model", "Value");
-        expansion = document.getCell("Expansion", "Value");
-        flags = Arrays.stream(document.getCell("Flags", "Value").split(",")).map(TileFlags::valueOf).collect(Collectors.toCollection(() -> EnumSet.allOf(TileFlags.class)));
+    private void loadDetails(ExcelNode node) {
+        model = node.getRow("Model").getValue("Value");
+        expansion = node.getRow("Expansion").getValue("Value");
+        flags = Arrays.stream(node.getRow("Flags").getValue("Value").split(",")).filter(v -> !v.isEmpty()).map(TileFlags::valueOf).collect(Collectors.toCollection(() -> EnumSet.allOf(TileFlags.class)));
     }
 
     public Tile createTile() {
@@ -86,7 +92,7 @@ public class TileExcelConfig {
         return tile;
     }
 
-    private static String getCellValue(ExcelDocument document, ChunkId chunkId) {
+    private static String getCellValue(ExcelNode node, ChunkId chunkId) {
         int row;
         int column;
 
@@ -147,6 +153,6 @@ public class TileExcelConfig {
                 throw new IllegalArgumentException("Invalid chunk id: " + chunkId);
         }
 
-        return document.getCell(row, column);
+        return node.getRowAt(row).getValueAt(column);
     }
 }

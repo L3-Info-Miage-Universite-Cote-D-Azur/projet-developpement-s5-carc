@@ -1,6 +1,6 @@
 package logic.config;
 
-import excel.ExcelDocument;
+import excel.ExcelNode;
 import logic.config.excel.TileExcelConfig;
 
 import java.io.File;
@@ -38,12 +38,12 @@ public class GameConfig {
 
     public static GameConfig loadFromDirectory(String path) {
         ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(path, "tiles").toString());
-        ExcelDocument gameConfigDocument = new ExcelDocument(Paths.get(path, "game.txt").toFile());
+        ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(path, "game.txt"));
 
         return new GameConfig(tiles,
-                Integer.parseInt(gameConfigDocument.getCell("minPlayers", "value")),
-                Integer.parseInt(gameConfigDocument.getCell("maxPlayers", "value")),
-                Integer.parseInt(gameConfigDocument.getCell("startingMeepleCount", "value")));
+                Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue("Value")),
+                Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue("Value")),
+                Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
     }
 
     private static ArrayList<TileExcelConfig> loadTilesFromDirectory(String path) {
@@ -57,7 +57,7 @@ public class GameConfig {
 
         for (File file : root.listFiles()) {
             if (!file.isDirectory()) {
-                tiles.add(new TileExcelConfig(new ExcelDocument(file)));
+                tiles.add(new TileExcelConfig(ExcelNode.load(file.toPath())));
             }
         }
 
