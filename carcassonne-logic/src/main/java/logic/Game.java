@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.ArrayList;
-
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
@@ -10,6 +8,8 @@ import logic.player.PlayerBase;
 import logic.tile.Chunk;
 import logic.tile.Tile;
 import logic.tile.TileStack;
+
+import java.util.ArrayList;
 
 public class Game {
     private final GameConfig config;

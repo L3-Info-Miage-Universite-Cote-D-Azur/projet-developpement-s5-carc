@@ -1,0 +1,19 @@
+CHUNKS							
+		FIELD	FIELD	FIELD			
+	FIELD				FIELD		
+	FIELD		ABBEY		FIELD		
+	FIELD				FIELD		
+		FIELD	ROAD	FIELD			
+REFERENCES							
+		A	A	A			
+	A				A		
+	A		C		A		
+	A				A		
+		A	B	A			
+							
+DATA							
+	NAME	VALUE					
+	MODEL	A					
+	EXPANSION	NONE					
+	FLAGS	"STARTING,SHIELD"					
+	COUNT	999					

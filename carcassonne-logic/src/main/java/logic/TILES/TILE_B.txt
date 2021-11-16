@@ -1,0 +1,19 @@
+CHUNKS							
+		FIELD	FIELD	FIELD			
+	FIELD				FIELD		
+	FIELD		ABBEY		FIELD		
+	FIELD				FIELD		
+		FIELD	FIELD	FIELD			
+REFERENCES							
+		A	A	A			
+	A				A		
+	A		C		A		
+	A				A		
+		A	A	A			
+							
+DATA							
+	NAME	VALUE					
+	MODEL	B					
+	EXPANSION	NONE					
+	FLAGS	NONE					
+	COUNT	4					
