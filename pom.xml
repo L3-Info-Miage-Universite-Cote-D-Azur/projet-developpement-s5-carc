@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>carcasonne-server</module>
+        <module>carcassonne-server</module>
         <module>carcassonne-client</module>
         <module>carcassonne-logic</module>
         <module>carcassonne-server</module>
