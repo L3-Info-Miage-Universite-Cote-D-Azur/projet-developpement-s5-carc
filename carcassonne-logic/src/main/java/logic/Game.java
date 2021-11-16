@@ -26,7 +26,7 @@ public class Game {
         this.board = new GameBoard();
         this.turn = new GameTurn(this);
         this.stack = new TileStack();
-        this.players = new ArrayList<>(config.MAX_PLAYERS);
+        this.players = new ArrayList<>(config.maxPlayers);
         this.listener = new IGameListener() {
             @Override
             public void onTurnStarted(int id) {
@@ -59,8 +59,8 @@ public class Game {
     }
 
     public void start() {
-        if (getPlayerCount() < config.MIN_PLAYERS) {
-            throw new NotEnoughPlayerException(getPlayerCount(), config.MIN_PLAYERS);
+        if (getPlayerCount() < config.minPlayers) {
+            throw new NotEnoughPlayerException(getPlayerCount(), config.minPlayers);
         }
 
         if (started) {
@@ -112,7 +112,7 @@ public class Game {
     }
 
     public void addPlayer(PlayerBase player) {
-        if (getPlayerCount() >= config.MAX_PLAYERS) {
+        if (getPlayerCount() >= config.maxPlayers) {
             throw new TooManyPlayerException();
         }
 

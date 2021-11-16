@@ -1,9 +1,5 @@
 package logic.tile;
 
-import logic.config.ChunkConfig;
-import logic.config.GameConfig;
-import logic.config.TileConfig;
-import logic.config.TileData;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package logic.board;
 
-import logic.config.GameConfig;
-import logic.config.TileData;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileFlags;

@@ -29,10 +29,10 @@ public enum TileEdge {
 
     public ChunkId[] getChunkIds() {
         return switch (this) {
-            case TOP -> new ChunkId[] { ChunkId.TOP_LEFT, ChunkId.TOP_CENTER, ChunkId.TOP_RIGHT };
-            case BOTTOM -> new ChunkId[] { ChunkId.BOTTOM_LEFT, ChunkId.BOTTOM_CENTER, ChunkId.BOTTOM_RIGHT };
-            case LEFT -> new ChunkId[] { ChunkId.TOP_LEFT, ChunkId.MIDDLE_LEFT, ChunkId.BOTTOM_LEFT };
-            case RIGHT -> new ChunkId[] { ChunkId.TOP_RIGHT, ChunkId.MIDDLE_RIGHT, ChunkId.BOTTOM_RIGHT };
+            case TOP -> new ChunkId[]{ChunkId.NORTH_LEFT, ChunkId.NORTH_MIDDLE, ChunkId.NORTH_RIGHT};
+            case BOTTOM -> new ChunkId[]{ChunkId.SOUTH_LEFT, ChunkId.SOUTH_MIDDLE, ChunkId.SOUTH_RIGHT};
+            case LEFT -> new ChunkId[]{ChunkId.WEST_TOP, ChunkId.WEST_MIDDLE, ChunkId.WEST_BOTTOM};
+            case RIGHT -> new ChunkId[]{ChunkId.EAST_TOP, ChunkId.EAST_MIDDLE, ChunkId.EAST_BOTTOM};
         };
     }
 }

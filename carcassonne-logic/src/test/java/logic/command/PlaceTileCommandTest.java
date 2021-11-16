@@ -2,7 +2,6 @@ package logic.command;
 
 import logic.Game;
 import logic.board.GameBoard;
-import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
 import org.junit.jupiter.api.Test;
 

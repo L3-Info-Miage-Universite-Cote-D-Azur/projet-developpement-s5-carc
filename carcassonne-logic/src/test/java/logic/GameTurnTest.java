@@ -1,8 +1,6 @@
 package logic;
 
-import logic.config.GameConfig;
 import logic.player.PlayerBase;
-import logic.player.SimpleAIPlayer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

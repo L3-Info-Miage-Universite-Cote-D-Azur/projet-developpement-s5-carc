@@ -2,7 +2,6 @@ package logic.math;
 
 import logic.Game;
 import logic.board.GameBoard;
-import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
 
 import logic.tile.Tile;

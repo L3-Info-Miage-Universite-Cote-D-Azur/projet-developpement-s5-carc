@@ -14,24 +14,14 @@ import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] arg) throws ConfigurationException {
-        GameConfig config = loadConfigFromFile("config.json");
+        GameConfig config = GameConfig.loadFromDirectory("config");
 
         if (config == null || !config.validate()) {
             throw new ConfigurationException("Configuration is not valid.");
         }
 
-
         playSingleGame(config, 5);
         // playMultipleGames(config, 5, 2);
-    }
-
-    private static GameConfig loadConfigFromFile(String filename) {
-        try {
-            return new ObjectMapper().readValue(Paths.get(filename).toFile(), GameConfig.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private static void playSingleGame(GameConfig config, int numPlayers) {

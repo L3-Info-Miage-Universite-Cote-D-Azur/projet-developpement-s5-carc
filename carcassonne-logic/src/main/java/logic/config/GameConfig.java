@@ -1,59 +1,66 @@
 package logic.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import excel.ExcelDocument;
+import logic.config.excel.TileExcelConfig;
 
-import java.io.IOException;
+import java.io.File;
 import java.nio.file.Paths;
-import java.util.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import logic.tile.ChunkType;
+import java.util.ArrayList;
 
 public class GameConfig {
-    public int MIN_PLAYERS = 2;
-    public int MAX_PLAYERS = 5;
-    public int PLAYER_MEEPLE_COUNT = 7;
+    public ArrayList<TileExcelConfig> tiles;
+    public int minPlayers;
+    public int maxPlayers;
+    public int startingMeepleCount;
 
-    public ArrayList<TileConfig> TILES = new ArrayList<>();
+    public GameConfig(ArrayList<TileExcelConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
+        this.tiles = tiles;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
+        this.startingMeepleCount = startingMeepleCount;
+    }
 
     public boolean validate() {
-        if (MIN_PLAYERS < 0 || MIN_PLAYERS > MAX_PLAYERS)
+        if (minPlayers < 1) {
             return false;
+        }
 
-        for (TileConfig tile : TILES) {
-            if (!tile.validate()) {
-                return false;
-            }
+        if (minPlayers > maxPlayers) {
+            return false;
+        }
+
+        if (startingMeepleCount < 1) {
+            return false;
         }
 
         return true;
     }
 
-    @Override
-    public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static GameConfig loadFromDirectory(String path) {
+        ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(path, "tiles").toString());
+        ExcelDocument gameConfigDocument = new ExcelDocument(Paths.get(path, "game.txt").toFile());
+
+        return new GameConfig(tiles,
+                Integer.parseInt(gameConfigDocument.getCell("minPlayers", "value")),
+                Integer.parseInt(gameConfigDocument.getCell("maxPlayers", "value")),
+                Integer.parseInt(gameConfigDocument.getCell("startingMeepleCount", "value")));
     }
 
-    public static GameConfig loadFromJSON(String json) {
-        try {
-            return new ObjectMapper().readValue(json, GameConfig.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    private static ArrayList<TileExcelConfig> loadTilesFromDirectory(String path) {
+        File root = new File(path);
 
-    public static GameConfig loadFromFile(String path) {
-        try {
-            return new ObjectMapper().readValue(Paths.get(path).toFile(), GameConfig.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        if (!root.isDirectory()) {
+            throw new IllegalArgumentException("Path is not a directory");
         }
+
+        ArrayList<TileExcelConfig> tiles = new ArrayList<>();
+
+        for (File file : root.listFiles()) {
+            if (!file.isDirectory()) {
+                tiles.add(new TileExcelConfig(new ExcelDocument(file)));
+            }
+        }
+
+        return tiles;
     }
 }

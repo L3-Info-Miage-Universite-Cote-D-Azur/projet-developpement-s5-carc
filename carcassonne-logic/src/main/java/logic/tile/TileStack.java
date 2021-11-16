@@ -1,12 +1,11 @@
 package logic.tile;
 
 import logic.config.GameConfig;
-import logic.config.TileConfig;
+import logic.config.excel.TileExcelConfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class TileStack {
     private final LinkedList<Tile> tiles;
@@ -20,9 +19,9 @@ public class TileStack {
     }
 
     public void fill(GameConfig config) {
-        for (TileConfig tile : config.TILES) {
-            for (int i = 0; i < tile.details.count; i++) {
-                tiles.add(tile.createTile());
+        for (TileExcelConfig tileConfig : config.tiles) {
+            for (int i = 0; i < tileConfig.count; i++) {
+                tiles.add(tileConfig.createTile());
             }
         }
     }

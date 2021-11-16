@@ -1,7 +1,7 @@
 package logic.tile;
 
 import logic.board.GameBoard;
-import logic.config.TileData;
+import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
 
 import java.util.Arrays;
@@ -9,10 +9,10 @@ import java.util.Arrays;
 public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
-    private TileData data;
+    private TileExcelConfig config;
 
-    public Tile(TileData data) {
-        this.data = data;
+    public Tile(TileExcelConfig config) {
+        this.config = config;
         chunks = new Chunk[ChunkId.values().length];
 
         for (ChunkId chunkId : ChunkId.values()) {
@@ -37,15 +37,18 @@ public class Tile {
     }
 
     public boolean hasFlags(TileFlags flag) {
-        return data.flags.contains(flag);
+        return config.flags.contains(flag);
     }
 
     public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
-        for (ChunkId chunkId : edgeConnection.getChunkIds()) {
-            Chunk ownChunk = getChunk(chunkId);
-            Chunk oppositeChunk = tile.getChunk(chunkId.getOpposite());
+        ChunkId[] ownChunkIds = edgeConnection.getChunkIds();
+        ChunkId[] oppositeChunkIds = edgeConnection.negate().getChunkIds();
 
-            if (!ownChunk.isCompatibleWith(oppositeChunk)) {
+        for (int i = 0; i < ownChunkIds.length; i++) {
+            ChunkId ownChunkId = ownChunkIds[i];
+            ChunkId oppositeChunkId = oppositeChunkIds[i];
+
+            if (!getChunk(ownChunkId).isCompatibleWith(tile.getChunk(oppositeChunkId))) {
                 return false;
             }
         }
@@ -71,15 +74,15 @@ public class Tile {
         return hasContactWithTile;
     }
 
-    public TileData getData() {
-        return data;
+    public TileExcelConfig getConfig() {
+        return config;
     }
 
     @Override
     public String toString() {
         return "Tile{" +
                 "chunks=" + Arrays.toString(chunks) +
-                ", flags=" + data.flags +
+                ", flags=" + config.flags +
                 '}';
     }
 }

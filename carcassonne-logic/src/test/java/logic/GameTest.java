@@ -1,6 +1,5 @@
 package logic;
 
-import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.SimpleAIPlayer;

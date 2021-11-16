@@ -4,6 +4,17 @@
   "PLAYER_MEEPLE_COUNT": 7,
   "TILES": [
     {
+      "chunks": {
+
+        "TOP": {
+          "TOP": {
+            "type": "FIELD",
+            "relations": []
+          },
+          ""
+        },
+
+      },
       "center": {
         "type": "ABBEY",
         "relations": []
