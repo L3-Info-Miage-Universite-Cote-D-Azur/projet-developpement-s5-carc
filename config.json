@@ -8,11 +8,11 @@
         "type": "ABBEY",
         "relations": []
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
         ]
@@ -37,11 +37,11 @@
         "type": "ABBEY",
         "relations": []
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": []
       },
@@ -64,13 +64,13 @@
       "center": {
         "type": "TOWN",
         "relations": [
-          "UP",
-          "DOWN",
+          "top",
+          "bot",
           "LEFT",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN",
         "relations": [
           "CENTER",
@@ -78,7 +78,7 @@
           "RIGHT"
         ]
       },
-      "down": {
+      "bot": {
         "type": "TOWN",
         "relations": [
           "CENTER",
@@ -89,16 +89,16 @@
       "left": {
         "type": "TOWN",
         "relations": [
-          "UP",
-          "DOWN",
+          "top",
+          "bot",
           "CENTER"
         ]
       },
       "right": {
         "type": "TOWN",
         "relations": [
-          "UP",
-          "DOWN",
+          "top",
+          "bot",
           "CENTER"
         ]
       },
@@ -119,11 +119,11 @@
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": []
       },
@@ -156,11 +156,11 @@
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": []
       },
@@ -188,15 +188,15 @@
         "type": "FIELD",
         "relations": [
           "RIGHT",
-          "DOWN",
+          "bot",
           "LEFT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
           "RIGHT",
@@ -209,7 +209,7 @@
         "relations": [
           "RIGHT",
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
@@ -217,7 +217,7 @@
         "relations": [
           "LEFT",
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -235,11 +235,11 @@
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": []
       },
@@ -272,11 +272,11 @@
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": []
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": []
       },
@@ -304,17 +304,17 @@
       "center": {
         "type": "FIELD",
         "relations": [
-          "UP",
-          "DOWN"
+          "top",
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": [
           "CENTER"
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
           "CENTER"
@@ -342,15 +342,15 @@
         "type": "FIELD",
         "relations": [
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
           "CENTER",
@@ -366,7 +366,7 @@
         "type": "FIELD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -381,15 +381,15 @@
         "type": "ROAD",
         "relations": [
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER",
@@ -405,7 +405,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -420,15 +420,15 @@
         "type": "ROAD",
         "relations": [
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER",
@@ -444,7 +444,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -459,15 +459,15 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER",
@@ -478,7 +478,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
@@ -498,16 +498,16 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN",
+          "bot",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "LEFT",
@@ -519,7 +519,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN",
+          "bot",
           "RIGHT"
         ]
       },
@@ -527,7 +527,7 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN",
+          "bot",
           "CENTER"
         ]
       },
@@ -542,18 +542,18 @@
       "center": {
         "type": "TOWN_WALL",
         "relations": [
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
           "RIGHT"
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
           "LEFT"
@@ -562,14 +562,14 @@
       "left": {
         "type": "FIELD",
         "relations": [
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
-          "UP"
+          "top"
         ]
       },
       "details": {
@@ -585,18 +585,18 @@
       "center": {
         "type": "TOWN_WALL",
         "relations": [
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
           "RIGHT"
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
           "LEFT"
@@ -605,14 +605,14 @@
       "left": {
         "type": "FIELD",
         "relations": [
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
-          "UP"
+          "top"
         ]
       },
       "details": {
@@ -626,18 +626,18 @@
       "center": {
         "type": "TOWN_WALL",
         "relations": [
-          "UP",
+          "top",
           "LEFT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
           "LEFT"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "RIGHT"
@@ -647,13 +647,13 @@
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
-          "UP"
+          "top"
         ]
       },
       "right": {
         "type": "ROAD",
         "relations": [
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -669,18 +669,18 @@
       "center": {
         "type": "TOWN_WALL",
         "relations": [
-          "UP",
+          "top",
           "LEFT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
           "LEFT"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "RIGHT"
@@ -690,13 +690,13 @@
         "type": "TOWN_WALL",
         "relations": [
           "CENTER",
-          "UP"
+          "top"
         ]
       },
       "right": {
         "type": "ROAD",
         "relations": [
-          "DOWN"
+          "bot"
         ]
       },
       "details": {
@@ -711,11 +711,11 @@
         "type": "TOWN_WALL",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN",
         "relations": [
           "LEFT",
@@ -723,7 +723,7 @@
           "CENTER"
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
         ]
@@ -731,7 +731,7 @@
       "left": {
         "type": "TOWN",
         "relations": [
-          "UP",
+          "top",
           "RIGHT",
           "CENTER"
         ]
@@ -740,7 +740,7 @@
         "type": "TOWN",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "CENTER"
         ]
       },
@@ -758,11 +758,11 @@
         "type": "TOWN_WALL",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN",
         "relations": [
           "LEFT",
@@ -770,7 +770,7 @@
           "CENTER"
         ]
       },
-      "down": {
+      "bot": {
         "type": "FIELD",
         "relations": [
         ]
@@ -778,7 +778,7 @@
       "left": {
         "type": "TOWN",
         "relations": [
-          "UP",
+          "top",
           "RIGHT",
           "CENTER"
         ]
@@ -787,7 +787,7 @@
         "type": "TOWN",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "CENTER"
         ]
       },
@@ -804,11 +804,11 @@
         "type": "TOWN_WALL",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN",
         "relations": [
           "LEFT",
@@ -816,7 +816,7 @@
           "CENTER"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER"
@@ -825,7 +825,7 @@
       "left": {
         "type": "TOWN",
         "relations": [
-          "UP",
+          "top",
           "RIGHT",
           "CENTER"
         ]
@@ -834,7 +834,7 @@
         "type": "TOWN",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "CENTER"
         ]
       },
@@ -852,11 +852,11 @@
         "type": "TOWN_WALL",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "TOWN",
         "relations": [
           "LEFT",
@@ -864,7 +864,7 @@
           "CENTER"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER"
@@ -873,7 +873,7 @@
       "left": {
         "type": "TOWN",
         "relations": [
-          "UP",
+          "top",
           "RIGHT",
           "CENTER"
         ]
@@ -882,7 +882,7 @@
         "type": "TOWN",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "CENTER"
         ]
       },
@@ -898,22 +898,22 @@
       "center": {
         "type": "ROAD",
         "relations": [
-          "UP",
-          "DOWN"
+          "top",
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "UP"
+          "top"
         ]
       },
       "left": {
@@ -939,17 +939,17 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "CENTER",
@@ -960,7 +960,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
@@ -981,16 +981,16 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN",
+          "bot",
           "RIGHT"
         ]
       },
-      "up": {
+      "top": {
         "type": "FIELD",
         "relations": [
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "LEFT",
@@ -1002,7 +1002,7 @@
         "type": "ROAD",
         "relations": [
           "CENTER",
-          "DOWN",
+          "bot",
           "RIGHT"
         ]
       },
@@ -1010,7 +1010,7 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "DOWN",
+          "bot",
           "CENTER"
         ]
       },
@@ -1027,36 +1027,36 @@
         "type": "ROAD",
         "relations": [
           "LEFT",
-          "UP",
+          "top",
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
-      "up": {
+      "top": {
         "type": "ROAD",
         "relations": [
           "LEFT",
           "CENTER",
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
-      "down": {
+      "bot": {
         "type": "ROAD",
         "relations": [
           "LEFT",
           "CENTER",
           "RIGHT",
-          "UP"
+          "top"
         ]
       },
       "left": {
         "type": "ROAD",
         "relations": [
-          "UP",
+          "top",
           "CENTER",
           "RIGHT",
-          "DOWN"
+          "bot"
         ]
       },
       "right": {
@@ -1064,8 +1064,8 @@
         "relations": [
           "LEFT",
           "CENTER",
-          "UP",
-          "DOWN"
+          "top",
+          "bot"
         ]
       },
       "details": {

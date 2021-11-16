@@ -12,7 +12,7 @@ import java.util.EnumSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileStackTest {
-    private static final GameConfig config = GameConfig.loadFromJSON("{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"TILES\":[{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":1,\"expansion\":\"default\",\"flags\":[\"STARTING\"]}},{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"up\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":3,\"expansion\":\"default\",\"flags\":[]}}]}");
+    private static final GameConfig config = GameConfig.loadFromJSON("{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"TILES\":[{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"top\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"down\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":1,\"expansion\":\"default\",\"flags\":[\"STARTING\"]}},{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"top\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"bot\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":3,\"expansion\":\"default\",\"flags\":[]}}]}");
 
     @Test
     void testRemove() {
@@ -43,8 +43,8 @@ class TileStackTest {
         for (int i = 0; i < 1000; i++) {
             config.TILES.add(new TileConfig() {{
                 center = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
-                up = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
-                down = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                top = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                bot = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 left = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 right = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 details = new TileData("A", 100, "default", EnumSet.noneOf(TileFlags.class));

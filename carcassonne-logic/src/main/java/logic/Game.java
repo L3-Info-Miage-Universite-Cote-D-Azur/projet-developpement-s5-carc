@@ -18,8 +18,7 @@ public class Game {
     private final TileStack stack;
     private final ArrayList<PlayerBase> players;
 
-    private IGameListener listener;
-
+    private IGameListener listener
     private boolean started;
 
     public Game(GameConfig config) {
