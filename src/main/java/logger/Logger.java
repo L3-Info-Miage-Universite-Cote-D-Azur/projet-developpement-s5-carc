@@ -1,5 +1,7 @@
 package logger;
 
+import utils.ColorUtils;
+
 import static java.lang.System.*;
 
 /**
@@ -30,7 +32,7 @@ public final class Logger {
      */
     public static void info(String message, Object... params) {
         if (isEnabled)
-            out.println(String.format(message, params));
+            out.println(ColorUtils.WHITE_BACKGROUND + ColorUtils.ANSI_BLACK  + String.format(message, params) + ColorUtils.ANSI_RESET);
     }
 
     /**
