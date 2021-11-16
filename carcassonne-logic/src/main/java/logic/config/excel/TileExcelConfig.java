@@ -31,7 +31,7 @@ public class TileExcelConfig {
         ExcelNode dataExcel = node.getChild("Data");
 
         loadChunks(chunkTypesExcel, chunkReferencesExcel);
-        loadDetails(dataExcel);
+        loadData(dataExcel);
     }
 
     private void loadChunks(ExcelNode mapDocument, ExcelNode referenceDocument) {
@@ -76,10 +76,18 @@ public class TileExcelConfig {
         }
     }
 
-    private void loadDetails(ExcelNode node) {
+    private void loadData(ExcelNode node) {
         model = node.getRow("Model").getValue("Value");
         expansion = node.getRow("Expansion").getValue("Value");
-        flags = Arrays.stream(node.getRow("Flags").getValue("Value").split(",")).filter(v -> !v.isEmpty()).map(TileFlags::valueOf).collect(Collectors.toCollection(() -> EnumSet.allOf(TileFlags.class)));
+        flags = EnumSet.noneOf(TileFlags.class);
+
+        for (String flag : node.getRow("Flags").getValue("Value").split(",")) {
+            if (flag.length() != 0) {
+                flags.add(TileFlags.valueOf(flag));
+            }
+        }
+
+        count = Integer.parseInt(node.getRow("Count").getValue("Value"));
     }
 
     public Tile createTile() {

@@ -67,9 +67,49 @@ public class GameBoard {
         return getTileCount() == 0;
     }
 
+    public boolean hasFreePlaceForTile(Tile tileToPlace) {
+        if (tileToPlace == null) {
+            throw new IllegalArgumentException("Tile must be not null.");
+        }
+
+        Tile startingTile = getStartingTile();
+
+        if (startingTile == null) {
+            return tileToPlace.hasFlags(TileFlags.STARTING);
+        } else if (tileToPlace.hasFlags(TileFlags.STARTING)) {
+            return false;
+        } else {
+            return hasFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>());
+        }
+    }
+
+    private boolean hasFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes) {
+        Vector2 tilePosition = node.getPosition();
+
+        for (TileEdge edge : TileEdge.values()) {
+            Vector2 edgePos = tilePosition.add(edge.getValue());
+
+            if (hasTileAt(edgePos)) {
+                Tile subNode = getTileAt(edgePos);
+
+                if (!parentNodes.contains(subNode)) {
+                    parentNodes.add(subNode);
+
+                    if (hasFreePlaceForTileFromNode(subNode, tileToPlace, parentNodes)) {
+                        return true;
+                    }
+                }
+            } else if (tileToPlace.canBePlacedAt(edgePos, this)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public ArrayList<Vector2> findFreePlaceForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
-            throw new IllegalArgumentException("Tile data must be not null.");
+            throw new IllegalArgumentException("Tile must be not null.");
         }
 
         ArrayList<Vector2> freePoints = new ArrayList<>();
@@ -108,28 +148,4 @@ public class GameBoard {
     public List<Tile> getTiles() {
         return new ArrayList<>(tiles.values());
     }
-
-    /*@Override
-    public String toString() {
-        StringBuilder state = new StringBuilder();
-        int sizeMax = 0;
-        for (Map.Entry<Vector2, Tile> tile : tiles.entrySet()) {
-            Vector2 tilePos = tile.getValue().getPosition();
-            sizeMax = Math.max(sizeMax, Math.max(Math.abs(tilePos.getX()), Math.abs(tilePos.getY())));
-        }
-        for (int i = -sizeMax; i <= sizeMax; i++) {
-            for (int j = -sizeMax; j <= sizeMax; j++) {
-                Vector2 actualPos = new Vector2(i, j);
-                if (hasTileAt(actualPos)) {
-                    TileType type = getTileAt(actualPos).getType();
-                    state.append("\033[0;3").append(type.ordinal() + 1).append("m").append(type.name().charAt(0)).append("  ");
-                } else
-                    state.append("\033[0;37m•  ");
-            }
-            state.append("\033[0;0m•\n");
-        }
-        state.append("\033[0;0m"); // Color Reset
-
-        return state.toString();
-    }*/
 }

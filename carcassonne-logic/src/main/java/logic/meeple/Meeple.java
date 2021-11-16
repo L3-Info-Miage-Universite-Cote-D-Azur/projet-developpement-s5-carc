@@ -1,15 +1,15 @@
 package logic.meeple;
 
-import logic.player.PlayerBase;
+import logic.player.Player;
 
 public class Meeple {
-    private final PlayerBase owner;
+    private final Player owner;
 
-    public Meeple(PlayerBase owner) {
+    public Meeple(Player owner) {
         this.owner = owner;
     }
 
-    public PlayerBase getOwner() {
+    public Player getOwner() {
         return owner;
     }
 }

@@ -4,7 +4,7 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
-import logic.player.PlayerBase;
+import logic.player.Player;
 import logic.tile.Chunk;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
@@ -108,7 +108,7 @@ public class GameDrawUtils {
      * @param player The player to get the sprite model for.
      * @return The sprite model to use for the specified player's meeple.
      */
-    private static String getOwnMeepleSpriteModel(PlayerBase player) {
+    private static String getOwnMeepleSpriteModel(Player player) {
         return Integer.toString(player.getId() - 1);
     }
 

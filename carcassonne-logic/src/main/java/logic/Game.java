@@ -4,8 +4,8 @@ import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
-import logic.player.PlayerBase;
-import logic.tile.Chunk;
+import logic.player.Player;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 
@@ -16,10 +16,12 @@ public class Game {
     private final GameBoard board;
     private final GameTurn turn;
     private final TileStack stack;
-    private final ArrayList<PlayerBase> players;
+    private final ArrayList<Player> players;
 
     private IGameListener listener;
+
     private boolean started;
+    private boolean ended;
 
     public Game(GameConfig config) {
         this.config = config;
@@ -33,11 +35,15 @@ public class Game {
             }
 
             @Override
+            public void onTurnEnded(int id) {
+            }
+
+            @Override
             public void onTilePlaced(Tile tile) {
             }
 
             @Override
-            public void onMeeplePlaced(Chunk chunk) {
+            public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
             }
 
             @Override
@@ -49,11 +55,13 @@ public class Game {
             }
 
             @Override
-            public void logWarning(String message) {
+            public void onCommandFailed(String reason) {
+
             }
 
             @Override
-            public void logWarning(String message, Object... args) {
+            public void onCommandFailed(String reason, Object... args) {
+
             }
         };
     }
@@ -68,50 +76,49 @@ public class Game {
             turn.reset();
         }
 
-        for (PlayerBase player : players) {
+        for (Player player : players) {
             player.init();
         }
 
         stack.fill(config);
         stack.shuffle();
         started = true;
+
+        listener.onStart();
     }
 
     public void update() {
         if (!started) {
-            throw new IllegalStateException("Game should be started at this point.");
+            throw new IllegalStateException("Game is not started yet.");
         }
 
-        turn.playTurn();
+        if (ended) {
+            throw new IllegalStateException("Game is already finished.");
+        }
 
-        if (isFinished()) {
-            onEnd();
+        if (turn.isOver()) {
+            if (!turn.playTurn()) {
+                onEnd();
+            }
         }
     }
 
     public void updateToEnd() {
-        while (!isFinished()) {
+        while (!isOver()) {
             update();
         }
     }
 
     public void onEnd() {
-        if (listener != null) {
-            listener.onEnd();
-        }
+        listener.onEnd();
+        ended = true;
     }
 
-    public boolean isFinished() {
-        for (PlayerBase player : players) {
-            if (player.getScore() >= 279) {
-                return true;
-            }
-        }
-
-        return this.stack.getNumTiles() == 0;
+    public boolean isOver() {
+        return ended;
     }
 
-    public void addPlayer(PlayerBase player) {
+    public void addPlayer(Player player) {
         if (getPlayerCount() >= config.maxPlayers) {
             throw new TooManyPlayerException();
         }
@@ -120,15 +127,15 @@ public class Game {
         player.setGame(this);
     }
 
-    public PlayerBase getWinner() {
-        if (!isFinished()) {
+    public Player getWinner() {
+        if (!isOver()) {
             throw new IllegalStateException("getWinner() must be called if the game is finished.");
         }
 
-        PlayerBase winner = null;
+        Player winner = null;
         int winnerScore = -1;
 
-        for (PlayerBase p : players) {
+        for (Player p : players) {
             if (p.getScore() > winnerScore) {
                 winnerScore = p.getScore();
                 winner = p;
@@ -150,7 +157,11 @@ public class Game {
         return stack;
     }
 
-    public PlayerBase getPlayer(int player) {
+    public GameTurn getTurn() {
+        return turn;
+    }
+
+    public Player getPlayer(int player) {
         return players.get(player);
     }
 

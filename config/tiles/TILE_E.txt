@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			FIELD	FIELD	FIELD	
+		TOWN				TOWN
+		TOWN		TOWN		TOWN
+		TOWN				TOWN
+			FIELD	FIELD	FIELD	
+	References					
+		Name				
+			D	D	D	
+		A				A
+		A		A		A
+		A				A
+			A	A	A	
+Data						
+	Name	Value				
+	Model	E				
+	Expansion					
+	Flags					
+	Count	5				

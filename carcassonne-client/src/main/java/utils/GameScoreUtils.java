@@ -1,7 +1,7 @@
 package utils;
 
 import logic.Game;
-import logic.player.PlayerBase;
+import logic.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,13 +21,13 @@ public class GameScoreUtils {
         StringBuilder stat = new StringBuilder("| Statistics |\n");
 
         // Sort the player list by the score
-        ArrayList<PlayerBase> playersSort = new ArrayList<>(game.getPlayerCount());
+        ArrayList<Player> playersSort = new ArrayList<>(game.getPlayerCount());
 
         for (int i = 0; i < game.getPlayerCount(); i++) {
             playersSort.add(game.getPlayer(i));
         }
 
-        playersSort.sort(PlayerBase::compareTo);
+        playersSort.sort(Player::compareTo);
         Collections.reverse(playersSort);
 
         // Player Name

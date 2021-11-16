@@ -1,15 +1,18 @@
 package logic;
 
-import logic.tile.Chunk;
+import logic.player.Player;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
 
 public interface IGameListener {
     void onTurnStarted(int id);
+    void onTurnEnded(int id);
+
     void onTilePlaced(Tile tile);
-    void onMeeplePlaced(Chunk chunk);
+    void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId);
     void onStart();
     void onEnd();
 
-    void logWarning(String message);
-    void logWarning(String message, Object... args);
+    void onCommandFailed(String reason);
+    void onCommandFailed(String reason, Object... args);
 }

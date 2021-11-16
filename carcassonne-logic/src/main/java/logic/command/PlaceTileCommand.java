@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.GameTurn;
 import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.tile.Tile;
@@ -21,37 +22,45 @@ public class PlaceTileCommand implements ICommand {
             return false;
         }
 
+        GameTurn turn = game.getTurn();
+
+        if (turn.hasPlacedTile()) {
+            game.getListener().onCommandFailed("You can only place one tile per turn.");
+            return false;
+        }
+
         GameBoard board = game.getBoard();
 
         if (board.getStartingTile() == null) {
             if (!tile.hasFlags(TileFlags.STARTING)) {
-                game.getListener().logWarning("Starting tile must be placed before another tile can be placed.");
+                game.getListener().onCommandFailed("Starting tile must be placed before another tile can be placed.");
                 return false;
             }
 
             if (!position.equals(GameBoard.STARTING_TILE_POSITION)) {
-                game.getListener().logWarning("Starting tile must be at 0,0.");
+                game.getListener().onCommandFailed("Starting tile must be at 0,0.");
                 return false;
             }
         } else {
             if (tile.hasFlags(TileFlags.STARTING)) {
-                game.getListener().logWarning("Try to place two starting tile!");
+                game.getListener().onCommandFailed("Try to place two starting tile!");
                 return false;
             }
 
             if (!tile.canBePlacedAt(position, board)) {
-                game.getListener().logWarning("Tile cannot be placed here.");
+                game.getListener().onCommandFailed("Tile cannot be placed here.");
                 return false;
             }
         }
 
         if (board.hasTileAt(position)) {
-            game.getListener().logWarning("Try to place a tile on another.");
+            game.getListener().onCommandFailed("Try to place a tile on another.");
             return false;
         }
 
         tile.setPosition(position);
         board.place(tile);
+        turn.setTilePlaced();
         game.getListener().onTilePlaced(tile);
 
         return true;

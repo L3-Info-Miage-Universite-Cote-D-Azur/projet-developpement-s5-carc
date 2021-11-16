@@ -1,41 +1,63 @@
 package logic.command;
 
 import logic.Game;
+import logic.GameTurn;
 import logic.meeple.Meeple;
-import logic.player.PlayerBase;
+import logic.player.Player;
 import logic.tile.Chunk;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
 
+/**
+ * Command to place a meeple on a tile.
+ */
 public class PlaceMeepleCommand implements ICommand {
     private final Tile tile;
     private final ChunkId chunkId;
-    private final PlayerBase executor;
 
-    public PlaceMeepleCommand(Tile tile, ChunkId chunkId, PlayerBase executor) {
+    public PlaceMeepleCommand(Tile tile, ChunkId chunkId) {
         this.tile = tile;
         this.chunkId = chunkId;
-        this.executor = executor;
     }
 
+    /**
+     * Executes the command.
+     * @param game the game context
+     * @return true if the meeple was placed, false otherwise
+     */
     @Override
     public boolean execute(Game game) {
-        if (executor.getRemainingMeepleCount() < 1) {
-            game.getListener().logWarning("Player %d has no meeple to place.", executor.getId());
+        Player player = game.getTurn().getPlayer();
+
+        if (player.getRemainingMeepleCount() < 1) {
+            game.getListener().onCommandFailed("Player has no meeple left.");
             return false;
         }
 
         Chunk chunk = tile.getChunk(chunkId);
 
         if (chunk.hasMeeple()) {
-            game.getListener().logWarning("Try to place meeple on a chunk that already have meeple.");
+            game.getListener().onCommandFailed("Chunk %s already has a meeple.", chunkId);
             return false;
         }
 
-        game.getListener().logWarning("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkId);
+        GameTurn turn = game.getTurn();
 
-        chunk.setMeeple(new Meeple(executor));
-        executor.removeRemainingMeepleCount();
+        if (!turn.hasPlacedTile()) {
+            game.getListener().onCommandFailed("Player has not placed a tile yet.");
+            return false;
+        }
+
+        if (turn.hasPlacedMeeple()) {
+            game.getListener().onCommandFailed("Player has already placed a meeple.");
+            return false;
+        }
+
+        chunk.setMeeple(new Meeple(player));
+        player.removeRemainingMeepleCount();
+        turn.setMeeplePlaced();
+
+        game.getListener().onMeeplePlaced(player, tile, chunkId);
 
         return true;
     }
