@@ -4,17 +4,17 @@ import logic.Game;
 import logic.meeple.Meeple;
 import logic.player.PlayerBase;
 import logic.tile.Chunk;
-import logic.tile.ChunkOffset;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
 
 public class PlaceMeepleCommand implements ICommand {
     private final Tile tile;
-    private final ChunkOffset chunkOffset;
+    private final ChunkId chunkId;
     private final PlayerBase executor;
 
-    public PlaceMeepleCommand(Tile tile, ChunkOffset offset, PlayerBase executor) {
+    public PlaceMeepleCommand(Tile tile, ChunkId chunkId, PlayerBase executor) {
         this.tile = tile;
-        this.chunkOffset = offset;
+        this.chunkId = chunkId;
         this.executor = executor;
     }
 
@@ -25,14 +25,14 @@ public class PlaceMeepleCommand implements ICommand {
             return false;
         }
 
-        Chunk chunk = tile.getChunk(chunkOffset);
+        Chunk chunk = tile.getChunk(chunkId);
 
         if (chunk.hasMeeple()) {
             game.getListener().logWarning("Try to place meeple on a chunk that already have meeple.");
             return false;
         }
 
-        game.getListener().logWarning("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkOffset);
+        game.getListener().logWarning("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkId);
 
         chunk.setMeeple(new Meeple(executor));
         executor.removeRemainingMeepleCount();

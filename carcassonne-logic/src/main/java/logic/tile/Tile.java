@@ -13,7 +13,11 @@ public class Tile {
 
     public Tile(TileData data) {
         this.data = data;
-        chunks = new Chunk[ChunkOffset.values().length];
+        chunks = new Chunk[ChunkId.values().length];
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            chunks[chunkId.ordinal()] = new Chunk(this, ChunkType.FIELD, new ChunkId[0]);
+        }
     }
 
     public Vector2 getPosition() {
@@ -24,30 +28,29 @@ public class Tile {
         this.position = position;
     }
 
-    public Chunk getChunk(ChunkOffset offset) {
-        return chunks[offset.value];
+    public Chunk getChunk(ChunkId id) {
+        return chunks[id.ordinal()];
     }
 
-    public void setChunk(ChunkOffset offset, Chunk chunk) {
-        chunks[offset.value] = chunk;
+    public void setChunk(ChunkId id, Chunk chunk) {
+        chunks[id.ordinal()] = chunk;
     }
 
     public boolean hasFlags(TileFlags flag) {
         return data.flags.contains(flag);
     }
 
-    public Chunk getChuckPluggedWith(TileEdge edgeConnection) {
-        return switch (edgeConnection) {
-            case UP -> getChunk(ChunkOffset.UP);
-            case DOWN -> getChunk(ChunkOffset.DOWN);
-            case LEFT -> getChunk(ChunkOffset.LEFT);
-            case RIGHT -> getChunk(ChunkOffset.RIGHT);
-            default -> throw new IllegalArgumentException("Illegal edge connection");
-        };
-    }
-
     public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
-        return getChuckPluggedWith(edgeConnection).isCompatibleWith(tile.getChuckPluggedWith(edgeConnection.negate()));
+        for (ChunkId chunkId : edgeConnection.getChunkIds()) {
+            Chunk ownChunk = getChunk(chunkId);
+            Chunk oppositeChunk = tile.getChunk(chunkId.getOpposite());
+
+            if (!ownChunk.isCompatibleWith(oppositeChunk)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public boolean canBePlacedAt(Vector2 position, GameBoard board) {

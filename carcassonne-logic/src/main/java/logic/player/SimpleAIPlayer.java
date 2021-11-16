@@ -4,7 +4,7 @@ import logic.board.GameBoard;
 import logic.command.PlaceMeepleCommand;
 import logic.math.Vector2;
 import logic.tile.Chunk;
-import logic.tile.ChunkOffset;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
 
 import java.util.ArrayList;
@@ -29,11 +29,11 @@ public class SimpleAIPlayer extends AIPlayerBase {
                 GameBoard board = game.getBoard();
                 Tile tilePicked = board.getTiles().get(random.nextInt(board.getTileCount()));
 
-                ChunkOffset chunkOffset = ChunkOffset.values()[random.nextInt(ChunkOffset.values().length)];
-                Chunk chunkToPlaceMeeple = tilePicked.getChunk(chunkOffset);
+                ChunkId chunkId = ChunkId.values()[random.nextInt(ChunkId.values().length)];
+                Chunk chunkToPlaceMeeple = tilePicked.getChunk(chunkId);
 
                 if (!chunkToPlaceMeeple.hasMeeple()) {
-                    new PlaceMeepleCommand(tilePicked, chunkOffset, this).execute(game);
+                    new PlaceMeepleCommand(tilePicked, chunkId, this).execute(game);
                 }
             }
         }

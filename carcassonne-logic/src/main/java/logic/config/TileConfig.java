@@ -1,15 +1,13 @@
 package logic.config;
 
-import logic.tile.ChunkOffset;
+import logic.math.Direction;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
-import logic.tile.TileFlags;
+
+import java.util.Map;
 
 public class TileConfig {
-    public ChunkConfig center;
-    public ChunkConfig left;
-    public ChunkConfig right;
-    public ChunkConfig top;
-    public ChunkConfig bot;
+    public Map<Direction, Map<Direction, ChunkConfig>> chunks;
     public TileData details;
 
 
@@ -17,11 +15,15 @@ public class TileConfig {
     }
 
     public boolean validate() {
-        if (center == null) return false;
-        if (left == null) return false;
-        if (right == null) return false;
-        if (top == null) return false;
-        if (bot == null) return false;
+        if (chunks.size() != ChunkId.values().length) {
+            return false;
+        }
+
+        for (Map<Direction, ChunkConfig> chunk : chunks.values()) {
+            if (chunk.size() != Direction.values().length) {
+                return false;
+            }
+        }
 
         return true;
     }
@@ -29,11 +31,14 @@ public class TileConfig {
     public Tile createTile() {
         Tile tile = new Tile(details);
 
-        tile.setChunk(ChunkOffset.CENTER, center.createChunk(tile));
-        tile.setChunk(ChunkOffset.top, top.createChunk(tile));
-        tile.setChunk(ChunkOffset.bot, bot.createChunk(tile));
-        tile.setChunk(ChunkOffset.LEFT, left.createChunk(tile));
-        tile.setChunk(ChunkOffset.RIGHT, right.createChunk(tile));
+        for (Map.Entry<Direction, Map<Direction, ChunkConfig>> columnEntry : chunks.entrySet()) {
+            Direction directionColumn = columnEntry.getKey();
+
+            for (Map.Entry<Direction, ChunkConfig> rowEntry : columnEntry.getValue().entrySet()) {
+                Direction directionRow = rowEntry.getKey();
+                tile.setChunk(ChunkId.getChunkId(directionColumn, directionRow), rowEntry.getValue().createChunk(tile));
+            }
+        }
 
         return tile;
     }

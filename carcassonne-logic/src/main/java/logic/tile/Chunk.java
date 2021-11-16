@@ -7,11 +7,11 @@ import java.util.Arrays;
 public class Chunk {
     private final Tile parent;
     private final ChunkType type;
-    private final ChunkOffset[] relations;
+    private final ChunkId[] relations;
 
     private Meeple meeple;
 
-    public Chunk(Tile parent, ChunkType type, ChunkOffset[] relations) {
+    public Chunk(Tile parent, ChunkType type, ChunkId[] relations) {
         this.parent = parent;
         this.type = type;
         this.relations = relations;

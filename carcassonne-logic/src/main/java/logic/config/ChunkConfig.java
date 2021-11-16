@@ -1,18 +1,18 @@
 package logic.config;
 
 import logic.tile.Chunk;
-import logic.tile.ChunkOffset;
+import logic.tile.ChunkId;
 import logic.tile.ChunkType;
 import logic.tile.Tile;
 
 public class ChunkConfig {
     public ChunkType type;
-    public ChunkOffset[] relations;
+    public ChunkId[] relations;
 
     public ChunkConfig() {
     }
 
-    public ChunkConfig(ChunkType type, ChunkOffset[] relations) {
+    public ChunkConfig(ChunkType type, ChunkId[] relations) {
         this.type = type;
         this.relations = relations;
     }

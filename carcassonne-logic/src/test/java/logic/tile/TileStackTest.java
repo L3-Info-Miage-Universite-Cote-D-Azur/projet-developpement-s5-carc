@@ -42,11 +42,11 @@ class TileStackTest {
 
         for (int i = 0; i < 1000; i++) {
             config.TILES.add(new TileConfig() {{
-                center = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                /*center = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 top = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 bot = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
                 left = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
-                right = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);
+                right = new ChunkConfig(ChunkType.FIELD, new ChunkOffset[0]);*/
                 details = new TileData("A", 100, "default", EnumSet.noneOf(TileFlags.class));
             }});
         }

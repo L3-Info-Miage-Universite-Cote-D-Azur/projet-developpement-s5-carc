@@ -6,7 +6,7 @@ import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.PlayerBase;
 import logic.tile.Chunk;
-import logic.tile.ChunkOffset;
+import logic.tile.ChunkId;
 import logic.tile.Tile;
 
 import javax.imageio.ImageIO;
@@ -96,10 +96,10 @@ public class GameDrawUtils {
     /**
      * Gets the position where the meeple should be drawn.
      * @param tile The tile to get the position for.
-     * @param chunkOffset The chunk offset to get the position for.
+     * @param chunkId The chunk id to get the position for.
      * @return The position where the meeple should be drawn.
      */
-    private static Vector2 getMeeplePosition(Tile tile, ChunkOffset chunkOffset) {
+    private static Vector2 getMeeplePosition(Tile tile, ChunkId chunkId) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -166,8 +166,8 @@ public class GameDrawUtils {
             graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
             graphics.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
 
-            for (ChunkOffset chunkOffset : ChunkOffset.values()) {
-                Chunk chunk = tile.getChunk(chunkOffset);
+            for (ChunkId chunkId : ChunkId.values()) {
+                Chunk chunk = tile.getChunk(chunkId);
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
