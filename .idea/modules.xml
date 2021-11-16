@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/carcassonne-client/carcassonne-client.iml" filepath="$PROJECT_DIR$/carcassonne-client/carcassonne-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carcassonne-logic/carcassonne-logic.iml" filepath="$PROJECT_DIR$/carcassonne-logic/carcassonne-logic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/carcassonne-server/carcassonne-server.iml" filepath="$PROJECT_DIR$/carcassonne-server/carcassonne-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/projet-developpement-s5-blanc-chiappe-le-contel-rihet.iml" filepath="$PROJECT_DIR$/.idea/projet-developpement-s5-blanc-chiappe-le-contel-rihet.iml" />
     </modules>
   </component>

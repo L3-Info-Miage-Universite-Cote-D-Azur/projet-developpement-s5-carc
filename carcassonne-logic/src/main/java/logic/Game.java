@@ -1,16 +1,14 @@
 package logic;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import utils.GameDrawUtils;
-import logger.Logger;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.PlayerBase;
+import logic.tile.Chunk;
+import logic.tile.Tile;
 import logic.tile.TileStack;
 
 public class Game {
@@ -20,6 +18,8 @@ public class Game {
     private final TileStack stack;
     private final ArrayList<PlayerBase> players;
 
+    private IGameListener listener;
+
     private boolean started;
 
     public Game(GameConfig config) {
@@ -28,6 +28,35 @@ public class Game {
         this.turn = new GameTurn(this);
         this.stack = new TileStack();
         this.players = new ArrayList<>(config.MAX_PLAYERS);
+        this.listener = new IGameListener() {
+            @Override
+            public void onTurnStarted(int id) {
+            }
+
+            @Override
+            public void onTilePlaced(Tile tile) {
+            }
+
+            @Override
+            public void onMeeplePlaced(Chunk chunk) {
+            }
+
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onEnd() {
+            }
+
+            @Override
+            public void logWarning(String message) {
+            }
+
+            @Override
+            public void logWarning(String message, Object... args) {
+            }
+        };
     }
 
     public void start() {
@@ -68,8 +97,9 @@ public class Game {
     }
 
     public void onEnd() {
-        Logger.info("[GAME] Game over");
-        Logger.info("[STATS] Winner is Player %d !", getWinner().getId());
+        if (listener != null) {
+            listener.onEnd();
+        }
     }
 
     public boolean isFinished() {
@@ -127,5 +157,13 @@ public class Game {
 
     public int getPlayerCount() {
         return players.size();
+    }
+
+    public IGameListener getListener() {
+        return listener;
+    }
+
+    public void setListener(IGameListener listener) {
+        this.listener = listener;
     }
 }

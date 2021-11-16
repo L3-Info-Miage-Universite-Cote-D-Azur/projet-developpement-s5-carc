@@ -1,6 +1,5 @@
 package logic.command;
 
-import logger.Logger;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.math.Vector2;
@@ -26,35 +25,34 @@ public class PlaceTileCommand implements ICommand {
 
         if (board.getStartingTile() == null) {
             if (!tile.hasFlags(TileFlags.STARTING)) {
-                Logger.warning("Starting tile must be placed before another tile can be placed.");
+                game.getListener().logWarning("Starting tile must be placed before another tile can be placed.");
                 return false;
             }
 
             if (!position.equals(GameBoard.STARTING_TILE_POSITION)) {
-                Logger.warning("Starting tile must be at 0,0.");
+                game.getListener().logWarning("Starting tile must be at 0,0.");
                 return false;
             }
         } else {
             if (tile.hasFlags(TileFlags.STARTING)) {
-                Logger.warning("Try to place two starting tile!");
+                game.getListener().logWarning("Try to place two starting tile!");
                 return false;
             }
 
             if (!tile.canBePlacedAt(position, board)) {
-                Logger.warning("Tile cannot be placed here.");
+                game.getListener().logWarning("Tile cannot be placed here.");
                 return false;
             }
         }
 
         if (board.hasTileAt(position)) {
-            Logger.warning("Try to place a tile on another.");
+            game.getListener().logWarning("Try to place a tile on another.");
             return false;
         }
 
-        Logger.info(String.format("Place %s at %s", tile, position));
-
         tile.setPosition(position);
         board.place(tile);
+        game.getListener().onTilePlaced(tile);
 
         return true;
     }

@@ -1,9 +1,8 @@
-import utils.GameDrawUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import logger.Logger;
 import logic.Game;
 import logic.config.GameConfig;
 import logic.player.SimpleAIPlayer;
+import utils.GameDrawUtils;
 import utils.GameScoreUtils;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,6 @@ import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] arg) throws ConfigurationException {
-        Logger.enable();
         GameConfig config = loadConfigFromFile("config.json");
 
         if (config == null || !config.validate()) {

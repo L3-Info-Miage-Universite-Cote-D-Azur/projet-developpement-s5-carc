@@ -1,6 +1,5 @@
 package logic.command;
 
-import logger.Logger;
 import logic.Game;
 import logic.meeple.Meeple;
 import logic.player.PlayerBase;
@@ -22,18 +21,18 @@ public class PlaceMeepleCommand implements ICommand {
     @Override
     public boolean execute(Game game) {
         if (executor.getRemainingMeepleCount() < 1) {
-            Logger.warning("Player %d has no meeple to place.", executor.getId());
+            game.getListener().logWarning("Player %d has no meeple to place.", executor.getId());
             return false;
         }
 
         Chunk chunk = tile.getChunk(chunkOffset);
 
         if (chunk.hasMeeple()) {
-            Logger.warning("Try to place meeple on a chunk that already have meeple.");
+            game.getListener().logWarning("Try to place meeple on a chunk that already have meeple.");
             return false;
         }
 
-        Logger.info("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkOffset);
+        game.getListener().logWarning("Player %d places meeple at tile %s, chunk %s", executor.getId(), tile.getPosition(), chunkOffset);
 
         chunk.setMeeple(new Meeple(executor));
         executor.removeRemainingMeepleCount();

@@ -1,6 +1,5 @@
 package utils;
 
-import logger.Logger;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.math.Vector2;
@@ -15,7 +14,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Class for drawing the game.
