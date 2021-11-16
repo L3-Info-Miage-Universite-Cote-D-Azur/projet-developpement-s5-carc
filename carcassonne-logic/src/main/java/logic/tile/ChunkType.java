@@ -6,7 +6,8 @@ public enum ChunkType {
     TOWN_WALL(2, 1, 2),
     RIVER(3, 3),
     ABBEY(4, 4),
-    FIELD(5, 5);
+    FIELD(5, 5),
+    ROAD_END(6, 0);
 
     private final int type;
     private final int[] compatibleTypes;

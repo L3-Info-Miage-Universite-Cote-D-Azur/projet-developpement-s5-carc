@@ -1,19 +1,18 @@
 CHUNKS											
 		TOWN	TOWN	TOWN							
 	FIELD				FIELD						
-	ROAD		ROAD_END		ROAD
+	ROAD		ROAD		ROAD						
 	FIELD				FIELD						
-		FIELD	ROAD	FIELD							
+		FIELD	FIELD	FIELD							
 REFERENCES											
-		A	A	A							
+		D	D	D							
 	C				C						
-	B		Z		F						
-	D				G						
-		D	E	G							
-											
+	A		A		A						
+	B				B						
+		B	B	B
 DATA											
 	NAME	VALUE									
-	MODEL	L									
+	MODEL	D									
 	EXPANSION	NONE									
-	FLAGS	NONE									
-	COUNT	3									
+	FLAGS	START									
+	COUNT	4									

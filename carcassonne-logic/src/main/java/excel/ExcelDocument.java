@@ -15,7 +15,18 @@ public class ExcelDocument {
     public ExcelDocument(File file) {
         try {
             List<String> lines = Files.readAllLines(file.toPath());
-            cells = new String[lines.size()][];
+
+            for (int i = 0; i < lines.size(); i++) {
+                String line = lines.get(i);
+
+                if (line.trim().length() == 0) {
+                    lines.remove(i);
+                    i--;
+                }
+            }
+
+            rowCount = lines.size();
+            cells = new String[rowCount][];
 
             for (int i = 0; i < lines.size(); i++) {
                 cells[i] = lines.get(i).split("\t");
@@ -47,9 +58,9 @@ public class ExcelDocument {
     }
 
     public int getColumnIndex(String name) {
-        for (int i = 0; i < columns.length; i++) {
+        for (int i = columnIndex; i < columns.length; i++) {
             if (columns[i].equalsIgnoreCase(name)) {
-                return i;
+                return i - columnIndex;
             }
         }
 
@@ -73,6 +84,14 @@ public class ExcelDocument {
     }
 
     public String getCell(int row, int col) {
+        if (row < 0 || row >= rowCount) {
+            throw new IllegalArgumentException("Row is out of bounds");
+        }
+
+        if (col < 0 || col >= cells[rowIndex + row].length) {
+            throw new IllegalArgumentException("Col is out of bounds");
+        }
+
         return cells[rowIndex + row][columnIndex + col];
     }
 

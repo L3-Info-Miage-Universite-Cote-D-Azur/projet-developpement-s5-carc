@@ -1,0 +1,4 @@
+NAME    VALUE
+minPlayers  2
+maxPLayers  5
+startingMeepleCount 7

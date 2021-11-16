@@ -1,5 +1,7 @@
 package logic.board;
 
+import logic.config.excel.TileChunkExcelConfig;
+import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
@@ -15,7 +17,7 @@ class GameBoardTest {
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
-        Tile tile = new Tile(new TileData("A", 1, "default", EnumSet.of(TileFlags.STARTING)));
+        Tile tile = new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.of(TileFlags.STARTING), 1));
 
         tile.setPosition(new Vector2(0, 0));
 
@@ -32,12 +34,12 @@ class GameBoardTest {
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);
-        gameBoard.place(new Tile(new TileData("A", 1, "default", EnumSet.of(TileFlags.STARTING))) {{
+        gameBoard.place(new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.of(TileFlags.STARTING), 1)) {{
             setPosition(overlapPosition);
         }});
 
         assertThrows(IllegalArgumentException.class, () -> {
-            gameBoard.place(new Tile(new TileData("A", 1, "default", EnumSet.noneOf(TileFlags.class))) {{
+            gameBoard.place(new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.noneOf(TileFlags.class), 1)) {{
                 setPosition(overlapPosition);
             }});
         });

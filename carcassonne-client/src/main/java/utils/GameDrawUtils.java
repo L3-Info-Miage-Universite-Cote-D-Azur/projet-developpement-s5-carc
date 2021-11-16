@@ -158,13 +158,13 @@ public class GameDrawUtils {
 
         for (Tile tile : game.getBoard().getTiles()) {
             Vector2 tileImagePosition = getTilePosition(tile).reverseY().subtract(layerBounds.start);
-            BufferedImage tileImage = tileDatabase.get(tile.getData().model);
+            BufferedImage tileImage = tileDatabase.get(tile.getConfig().model);
 
             assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
             assert tileImagePosition.getX() + tileWidth <= layerBounds.getWidth() && tileImagePosition.getY() + tileHeight <= layerBounds.getHeight();
 
             graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
-            graphics.drawString(tile.getData().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
+            graphics.drawString(tile.getConfig().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
 
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);

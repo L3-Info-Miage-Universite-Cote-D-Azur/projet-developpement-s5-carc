@@ -19,10 +19,18 @@ public class TileExcelConfig {
     public EnumSet<TileFlags> flags;
     public int count;
 
+    public TileExcelConfig(TileChunkExcelConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
+        this.chunks = chunks;
+        this.model = model;
+        this.expansion = expansion;
+        this.flags = flags;
+        this.count = count;
+    }
+
     public TileExcelConfig(ExcelDocument reader) {
         ExcelDocument tileChunkMapExcel = reader.getDocument("chunks");
         ExcelDocument tileChunkReferenceExcel = reader.getDocument("references");
-        ExcelDocument tileDetailsExcel = reader.getDocument("details");
+        ExcelDocument tileDetailsExcel = reader.getDocument("data");
 
         loadChunks(tileChunkMapExcel, tileChunkReferenceExcel);
         loadDetails(tileDetailsExcel);
@@ -52,6 +60,8 @@ public class TileExcelConfig {
             chunkTypes[chunkId.ordinal()] = type;
         }
 
+        chunks = new TileChunkExcelConfig[ChunkId.values().length];
+
         for (ChunkId chunkId : ChunkId.values()) {
             ChunkType type = chunkTypes[chunkId.ordinal()];
             ChunkId[] references = chunkReferences[chunkId.ordinal()];
@@ -70,7 +80,7 @@ public class TileExcelConfig {
         Tile tile = new Tile(this);
 
         for (ChunkId chunkId : ChunkId.values()) {
-            tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk());
+            tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
         }
 
         return tile;

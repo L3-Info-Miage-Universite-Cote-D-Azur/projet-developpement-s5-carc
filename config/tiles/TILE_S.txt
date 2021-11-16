@@ -1,0 +1,19 @@
+CHUNKS											
+		TOWN	TOWN	TOWN							
+	TOWN				TOWN						
+	TOWN		TOWN		TOWN						
+	TOWN				TOWN						
+		FIELD	ROAD	FIELD							
+REFERENCES											
+		D	D	D							
+	D				D						
+	D		D		D						
+	D				D						
+		B	A	B							
+											
+DATA											
+	NAME	VALUE									
+	MODEL	S									
+	EXPANSION	NONE									
+	FLAGS	SHIELD									
+	COUNT	2									

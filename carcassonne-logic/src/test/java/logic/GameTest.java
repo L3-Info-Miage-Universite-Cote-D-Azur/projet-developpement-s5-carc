@@ -1,15 +1,18 @@
 package logic;
 
+import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.SimpleAIPlayer;
 import logic.tile.ChunkType;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    private static final GameConfig config = GameConfig.loadFromJSON("{\"MIN_PLAYERS\":2,\"MAX_PLAYERS\":5,\"TILES\":[{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"top\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"bot\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":1,\"expansion\":\"default\",\"flags\":[\"STARTING\"]}},{\"center\":{\"type\":\"ROAD\",\"relations\":[\"LEFT\",\"RIGHT\"]},\"top\":{\"type\":\"TOWN_WALL\",\"relations\":[]},\"bot\":{\"type\":\"FIELD\",\"relations\":[]},\"left\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"right\":{\"type\":\"ROAD\",\"relations\":[\"CENTER\"]},\"details\":{\"model\":\"D\",\"count\":3,\"expansion\":\"default\",\"flags\":[]}}]}");
+    private static final GameConfig config = GameConfig.loadFromDirectory("config");
 
     @Test
     void testInitialState(){
@@ -23,10 +26,7 @@ class GameTest {
 
     @Test
     void testAddPlayer() {
-        GameConfig gameConfig = new GameConfig() {{
-            MIN_PLAYERS = 1;
-            MAX_PLAYERS = 3;
-        }};
+        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, 7);
 
         assertNotNull(gameConfig);
         Game game = new Game(gameConfig);
@@ -51,7 +51,7 @@ class GameTest {
 
     @Test
     void testIsGameFinished() {
-        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; TILES = config.TILES; }};
+        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
         assertTrue(game.isFinished());
@@ -68,8 +68,7 @@ class GameTest {
 
     @Test
     void testIfThrowExceptionIfUpdateCalledBeforeStart() {
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
+        Game game = new Game(config);
 
         assertTrue(game.isFinished());
         assertThrows(IllegalStateException.class, game::update);
@@ -77,7 +76,7 @@ class GameTest {
 
     @Test
     void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
-        GameConfig gameConfig = new GameConfig() {{ MIN_PLAYERS = 1; TILES = config.TILES; }};
+        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
         game.addPlayer(new SimpleAIPlayer(1));
@@ -89,8 +88,7 @@ class GameTest {
 
     @Test
     void testWinner() {
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
+        Game game = new Game(config);
         game.addPlayer(new SimpleAIPlayer(501));
         game.addPlayer(new SimpleAIPlayer(502));
 
@@ -109,11 +107,7 @@ class GameTest {
 
     @Test
     void testIfThrowExceptionWhenNotEnoughPlayers() {
-        GameConfig config = new GameConfig();
-        config.MIN_PLAYERS = 1;
-        config.MAX_PLAYERS = 1;
-
-        Game game = new Game(config);
+        Game game = new Game(new GameConfig(config.tiles, 1, 1, config.startingMeepleCount));
 
         assertThrows(NotEnoughPlayerException.class, () -> {
             game.start();

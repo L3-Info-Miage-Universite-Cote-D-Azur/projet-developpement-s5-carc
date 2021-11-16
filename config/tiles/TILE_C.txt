@@ -1,0 +1,18 @@
+CHUNKS											
+		TOWN	TOWN	TOWN							
+	TOWN				TOWN						
+	TOWN		TOWN		TOWN						
+	TOWN				TOWN						
+		TOWN	TOWN	TOWN							
+REFERENCES											
+		A	A	A							
+	A				A						
+	A		A		A						
+	A				A						
+		A	A	A
+DATA											
+	NAME	VALUE									
+	MODEL	C									
+	EXPANSION	NONE									
+	FLAGS	SHIELD									
+	COUNT	1								

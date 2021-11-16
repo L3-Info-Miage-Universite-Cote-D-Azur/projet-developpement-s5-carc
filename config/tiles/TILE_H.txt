@@ -1,0 +1,19 @@
+CHUNKS											
+		FIELD	FIELD	FIELD							
+	TOWN				TOWN						
+	TOWN		FIELD		TOWN						
+	TOWN				TOWN						
+		FIELD	FIELD	FIELD							
+REFERENCES											
+		A	A	A							
+	B				C						
+	B		A		C						
+	B				C						
+		A	A	A							
+											
+DATA											
+	NAME	VALUE									
+	MODEL	H									
+	EXPANSION	NONE									
+	FLAGS	NONE									
+	COUNT	3									

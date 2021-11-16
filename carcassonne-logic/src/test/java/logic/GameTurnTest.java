@@ -1,15 +1,17 @@
 package logic;
 
+import logic.config.GameConfig;
 import logic.player.PlayerBase;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTurnTest {
+    private static GameConfig config = GameConfig.loadFromDirectory("config");
+
     @Test
     void testInitialState() {
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
+        Game game = new Game(config);
         GameTurn gameTurn = new GameTurn(game);
 
         assertEquals(0, gameTurn.getCount());
@@ -17,8 +19,7 @@ class GameTurnTest {
 
     @Test
     void testStart() {
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
+        Game game = new Game(config);
         game.addPlayer(createFakePlayer(0));
         GameTurn gameTurn = new GameTurn(game);
         assertEquals(0, gameTurn.getCount());
@@ -28,8 +29,7 @@ class GameTurnTest {
 
     @Test
     void testGetPlayerIndex() {
-        GameConfig gameConfig = new GameConfig();
-        Game game = new Game(gameConfig);
+        Game game = new Game(config);
 
         game.addPlayer(createFakePlayer(1));
         game.addPlayer(createFakePlayer(2));

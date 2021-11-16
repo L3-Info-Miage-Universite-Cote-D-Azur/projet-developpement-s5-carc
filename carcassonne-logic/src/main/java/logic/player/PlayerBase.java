@@ -28,7 +28,7 @@ public abstract class PlayerBase implements Comparable {
         townScore = 0;
         abbeyScore = 0;
         fieldScore = 0;
-        remainingMeepleCount = game.getConfig().PLAYER_MEEPLE_COUNT;
+        remainingMeepleCount = game.getConfig().startingMeepleCount;
     }
 
     public final int getId() {
