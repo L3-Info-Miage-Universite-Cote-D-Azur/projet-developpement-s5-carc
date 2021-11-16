@@ -9,6 +9,9 @@ import logic.tile.TileFlags;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a tile excel configuration.
+ */
 public class TileExcelConfig {
     public TileChunkExcelConfig[] chunks;
     public String model;
@@ -16,6 +19,14 @@ public class TileExcelConfig {
     public EnumSet<TileFlags> flags;
     public int count;
 
+    /**
+     * Creates a tile excel configuration from the given parameters.
+     * @param chunks The chunks configuration.
+     * @param model The model of tile.
+     * @param expansion The expansion of tile.
+     * @param flags The flags of tile.
+     * @param count The count of tile in the stack.
+     */
     public TileExcelConfig(TileChunkExcelConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
         this.chunks = chunks;
         this.model = model;
@@ -24,6 +35,10 @@ public class TileExcelConfig {
         this.count = count;
     }
 
+    /**
+     * Creates a tile excel configuration from the given excel node.
+     * @param node The excel node.
+     */
     public TileExcelConfig(ExcelNode node) {
         ExcelNode chunkExcel = node.getChild("Chunks");
         ExcelNode chunkTypesExcel = chunkExcel.getChild("Types");
@@ -34,15 +49,20 @@ public class TileExcelConfig {
         loadData(dataExcel);
     }
 
-    private void loadChunks(ExcelNode mapDocument, ExcelNode referenceDocument) {
+    /**
+     * Loads the chunks configuration from the given excel nodes.
+     * @param typeNode The chunk types excel node.
+     * @param referenceNode The chunk references excel node.
+     */
+    private void loadChunks(ExcelNode typeNode, ExcelNode referenceNode) {
         ChunkType[] chunkTypes = new ChunkType[ChunkId.values().length];
         ChunkId[][] chunkReferences = new ChunkId[ChunkId.values().length][];
 
         HashMap<String, ArrayList<ChunkId>> chunkGroups = new HashMap<>();
 
         for (ChunkId chunkId : ChunkId.values()) {
-            ChunkType type = ChunkType.valueOf(getCellValue(mapDocument, chunkId));
-            String reference = getCellValue(referenceDocument, chunkId);
+            ChunkType type = ChunkType.valueOf(getCellValue(typeNode, chunkId));
+            String reference = getCellValue(referenceNode, chunkId);
 
             if (reference.length() != 0) {
                 ArrayList<ChunkId> ids = chunkGroups.getOrDefault(reference, null);
@@ -76,6 +96,10 @@ public class TileExcelConfig {
         }
     }
 
+    /**
+     * Loads the tile data from the given excel node.
+     * @param node The excel node.
+     */
     private void loadData(ExcelNode node) {
         model = node.getRow("Model").getValue("Value");
         expansion = node.getRow("Expansion").getValue("Value");
@@ -90,6 +114,10 @@ public class TileExcelConfig {
         count = Integer.parseInt(node.getRow("Count").getValue("Value"));
     }
 
+    /**
+     * Instantiate a tile with the current configuration.
+     * @return The tile instantiated.
+     */
     public Tile createTile() {
         Tile tile = new Tile(this);
 

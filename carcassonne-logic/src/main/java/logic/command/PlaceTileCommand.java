@@ -16,6 +16,11 @@ public class PlaceTileCommand implements ICommand {
         this.position = position;
     }
 
+    /**
+     * Executes the command.
+     * @param game The game context
+     * @return True if the tile was placed, false otherwise
+     */
     @Override
     public boolean execute(Game game) {
         if (tile.getPosition() != null) {

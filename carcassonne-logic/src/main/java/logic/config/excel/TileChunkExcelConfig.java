@@ -5,6 +5,9 @@ import logic.tile.ChunkId;
 import logic.tile.ChunkType;
 import logic.tile.Tile;
 
+/**
+ * Represents a tile chunk excel configuration.
+ */
 public class TileChunkExcelConfig {
     public ChunkType type;
     public ChunkId[] references;

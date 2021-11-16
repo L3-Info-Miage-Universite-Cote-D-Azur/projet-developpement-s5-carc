@@ -4,7 +4,7 @@ import logic.Game;
 import logic.tile.ChunkType;
 
 /**
- * The base player
+ * The Player class represents the player in the game.
  */
 public class Player implements Comparable {
     protected final int id;

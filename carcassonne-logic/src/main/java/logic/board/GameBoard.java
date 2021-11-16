@@ -8,25 +8,34 @@ import logic.tile.TileFlags;
 import java.util.*;
 
 /**
- * Gameboard
+ * Class that represents the game board.
  */
 public class GameBoard {
-
+    /**
+     * The position where the board starts.
+     */
     public static final Vector2 STARTING_TILE_POSITION = new Vector2(0, 0);
 
+    /**
+     * Collection of all the tiles on the board.
+     */
     private final HashMap<Vector2, Tile> tiles;
 
     public GameBoard() {
         this.tiles = new HashMap<>();
     }
 
+    /**
+     * Clears the board.
+     */
     public void clear() {
         this.tiles.clear();
     }
 
     /**
-     * Place a tile
-     *
+     * Place a tile on the board.
+     * @throws IllegalArgumentException if the tile position is null.
+     * @throws IllegalArgumentException if the tile is already placed on the board.
      * @param tile the tile to place
      */
     public void place(Tile tile) {
@@ -42,31 +51,52 @@ public class GameBoard {
     }
 
     /**
-     * Get tile to position
-     *
-     * @param position
-     * @return
+     * Gets the tile at the specified position.
+     * @param position the position of the tile
+     * @return the tile at the specified position
      */
     public Tile getTileAt(Vector2 position) {
         return tiles.getOrDefault(position, null);
     }
 
+    /**
+     * Gets the starting tile.
+     * @return the starting tile
+     */
     public Tile getStartingTile() {
         return tiles.getOrDefault(STARTING_TILE_POSITION, null);
     }
 
+    /**
+     * Gets the number of tiles on the board.
+     * @return the number of tiles on the board
+     */
     public int getTileCount() {
         return tiles.size();
     }
 
+    /**
+     * Checks if the board has a tile at the specified position.
+     * @param position the position to check
+     * @return true if the board has a tile at the specified position, false otherwise
+     */
     public boolean hasTileAt(Vector2 position) {
         return tiles.containsKey(position);
     }
 
+    /**
+     * Determines if the board is empty.
+     * @return true if the board is empty, false otherwise
+     */
     public boolean isEmpty() {
         return getTileCount() == 0;
     }
 
+    /**
+     * Determines if the board has a free place for the specified tile.
+     * @param tileToPlace the tile to place
+     * @return true if the board has a free place for the specified tile, false otherwise
+     */
     public boolean hasFreePlaceForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
             throw new IllegalArgumentException("Tile must be not null.");
@@ -83,6 +113,13 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Determines if the board has a free place for the specified tile from the specified node.
+     * @param node the node to start from
+     * @param tileToPlace the tile to place
+     * @param parentNodes the nodes that have already been visited
+     * @return true if the board has a free place for the specified tile from the specified node, false otherwise
+     */
     private boolean hasFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes) {
         Vector2 tilePosition = node.getPosition();
 
@@ -107,6 +144,11 @@ public class GameBoard {
         return false;
     }
 
+    /**
+     * Finds all free places for the specified tile.
+     * @param tileToPlace the tile to place
+     * @return a list of free places for the specified tile
+     */
     public ArrayList<Vector2> findFreePlaceForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
             throw new IllegalArgumentException("Tile must be not null.");
@@ -126,6 +168,13 @@ public class GameBoard {
         return freePoints;
     }
 
+    /**
+     * Finds all free places for the specified tile from the specified node.
+     * @param node the node to start from
+     * @param tileToPlace the tile to place
+     * @param parentNodes the nodes that have already been visited
+     * @param freePoints the list of free points to add to
+     */
     private void findFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes, ArrayList<Vector2> freePoints) {
         Vector2 tilePosition = node.getPosition();
 
@@ -145,7 +194,11 @@ public class GameBoard {
         }
     }
 
-    public List<Tile> getTiles() {
-        return new ArrayList<>(tiles.values());
+    /**
+     * Gets all tiles on the board.
+     * @return
+     */
+    public Collection<Tile> getTiles() {
+        return tiles.values();
     }
 }

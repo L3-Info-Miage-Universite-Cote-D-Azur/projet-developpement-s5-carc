@@ -7,6 +7,9 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Represents the game configuration.
+ */
 public class GameConfig {
     public ArrayList<TileExcelConfig> tiles;
     public int minPlayers;
@@ -20,6 +23,10 @@ public class GameConfig {
         this.startingMeepleCount = startingMeepleCount;
     }
 
+    /**
+     * Validates the game configuration.
+     * @return true if the game configuration is valid, false otherwise
+     */
     public boolean validate() {
         if (minPlayers < 1) {
             return false;
@@ -36,6 +43,11 @@ public class GameConfig {
         return true;
     }
 
+    /**
+     * Loads the game configuration from the given path.
+     * @param path the path to the game configuration
+     * @return the game configuration
+     */
     public static GameConfig loadFromDirectory(String path) {
         ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(path, "tiles").toString());
         ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(path, "game.txt"));
@@ -46,6 +58,11 @@ public class GameConfig {
                 Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
     }
 
+    /**
+     * Loads the tiles from the given path.
+     * @param path the path to the tiles
+     * @return the tiles configuration
+     */
     private static ArrayList<TileExcelConfig> loadTilesFromDirectory(String path) {
         File root = new File(path);
 

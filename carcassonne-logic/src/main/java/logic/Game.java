@@ -11,6 +11,9 @@ import logic.tile.TileStack;
 
 import java.util.ArrayList;
 
+/**
+ * The Game class is the main class of the game. It contains all the logic of the game.
+ */
 public class Game {
     private final GameConfig config;
     private final GameBoard board;
