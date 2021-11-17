@@ -1,11 +1,15 @@
 package logic.player;
 
+import logic.Game;
+import logic.config.GameConfig;
 import logic.tile.ChunkType;
+import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    private static final GameConfig config = GameConfig.loadFromDirectory("config");
     @Test
     void testAddScore() {
         Player player = new Player(1);
@@ -39,4 +43,19 @@ class PlayerTest {
             player.addScore(10, ChunkType.RIVER);
         });
     }
+
+    @Test
+    void testGetId() {
+        Player player = new Player(8);
+        assertEquals(8, player.getId());
+    }
+
+    @Test
+    void testSetGame() {
+        Player player = new Player(8);
+        Game game = new Game(config);
+        player.setGame(game);
+        assertEquals(game, player.getGame());
+    }
+
 }
