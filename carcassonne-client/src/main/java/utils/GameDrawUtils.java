@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Class for drawing the game.
@@ -21,11 +22,27 @@ import java.io.IOException;
 public class GameDrawUtils {
     private static final int tileWidth = 160;
     private static final int tileHeight = 160;
-    private static final int meepleWidth = 40;
-    private static final int meepleHeight = 40;
+    private static final int meepleWidth = 27;
+    private static final int meepleHeight = 27;
 
     private static ImageDatabase tileDatabase;
     private static ImageDatabase meepleDatabase;
+
+    private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
+        put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
+        put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
+        put(ChunkId.NORTH_RIGHT, new Vector2(106, 0));
+        put(ChunkId.SOUTH_LEFT, new Vector2(27, 133));
+        put(ChunkId.SOUTH_MIDDLE, new Vector2(67, 124));
+        put(ChunkId.SOUTH_RIGHT, new Vector2(106, 133));
+        put(ChunkId.WEST_TOP, new Vector2(0, 27));
+        put(ChunkId.WEST_MIDDLE, new Vector2(18, 71));
+        put(ChunkId.WEST_BOTTOM, new Vector2(0, 106));
+        put(ChunkId.EAST_TOP, new Vector2(133, 27));
+        put(ChunkId.EAST_MIDDLE, new Vector2(124, 71));
+        put(ChunkId.EAST_BOTTOM, new Vector2(133, 106));
+        put(ChunkId.CENTER_MIDDLE, new Vector2(67, 67));
+    }};
 
     /**
      * Loads the images for the rendering and stores them in the image database.
@@ -62,6 +79,7 @@ public class GameDrawUtils {
 
     /**
      * Calculates the board bounds.
+     *
      * @param board The board to calculate the bounds for.
      * @return The bounds of the board.
      */
@@ -86,6 +104,7 @@ public class GameDrawUtils {
 
     /**
      * Gets the position where the tile should be drawn.
+     *
      * @param tile The tile to get the position for.
      * @return The position where the tile should be drawn.
      */
@@ -95,16 +114,18 @@ public class GameDrawUtils {
 
     /**
      * Gets the position where the meeple should be drawn.
-     * @param tile The tile to get the position for.
-     * @param chunkId The chunk id to get the position for.
+     *
+     * @param tilePosition The tile position to add the meeple position.
+     * @param chunkId      The chunk id to get the position for.
      * @return The position where the meeple should be drawn.
      */
-    private static Vector2 getMeeplePosition(Tile tile, ChunkId chunkId) {
-        throw new RuntimeException("Not implemented");
+    private static Vector2 getMeeplePosition(Vector2 tilePosition, ChunkId chunkId) {
+        return meepleOffset.get(chunkId).add(tilePosition);
     }
 
     /**
      * Gets the sprite model to use for the specified player.
+     *
      * @param player The player to get the sprite model for.
      * @return The sprite model to use for the specified player's meeple.
      */
@@ -114,6 +135,7 @@ public class GameDrawUtils {
 
     /**
      * Creates a new image layer representing the specified game instance.
+     *
      * @param game The game instance to create the image layer for.
      * @return The image layer representing the specified game instance.
      */
@@ -123,7 +145,8 @@ public class GameDrawUtils {
 
     /**
      * Creates a new image layer representing the specified game instance.
-     * @param game The game instance to create the image layer for.
+     *
+     * @param game        The game instance to create the image layer for.
      * @param boardBounds The bounds of the board.
      * @return The image layer representing the specified game instance.
      */
@@ -146,8 +169,9 @@ public class GameDrawUtils {
 
     /**
      * Renders the specified game instance to the specified graphics context.
-     * @param game The game instance to render.
-     * @param graphics The graphics context to render to.
+     *
+     * @param game        The game instance to render.
+     * @param graphics    The graphics context to render to.
      * @param layerBounds The bounds of the layer to render.
      */
     public static void render(Game game, Graphics graphics, Bounds layerBounds) {
@@ -171,9 +195,10 @@ public class GameDrawUtils {
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
+                    Vector2 meepleImagePosition = getMeeplePosition(tileImagePosition, chunkId);
                     BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(meeple.getOwner()));
-
-                    graphics.drawImage(meepleImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
+                    graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
+                    graphics.drawImage(meepleImage, meepleImagePosition.getX(), meepleImagePosition.getY(), null);
                 }
             }
         }
