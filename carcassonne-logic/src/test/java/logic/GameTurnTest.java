@@ -1,7 +1,7 @@
 package logic;
 
 import logic.config.GameConfig;
-import logic.player.PlayerBase;
+import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,12 +52,9 @@ class GameTurnTest {
         assertEquals(1, gameTurn.getPlayerIndex());
     }
 
-    private static PlayerBase createFakePlayer(int id) {
-        return new PlayerBase(id) {
-            @Override
-            public void onTurn() {
+    private static Player createFakePlayer(int id) {
+        return new Player(id) {
 
-            }
         };
     }
 }

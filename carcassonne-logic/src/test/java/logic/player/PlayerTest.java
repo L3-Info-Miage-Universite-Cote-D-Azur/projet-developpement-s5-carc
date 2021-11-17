@@ -8,11 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
     @Test
     void testAddScore() {
-        PlayerBase player = new PlayerBase(1) {
-            @Override
-            public void onTurn() {
-            }
-        };
+        Player player = new Player(1);
 
         assertEquals(0, player.getScore());
         player.addScore(100, ChunkType.ABBEY);

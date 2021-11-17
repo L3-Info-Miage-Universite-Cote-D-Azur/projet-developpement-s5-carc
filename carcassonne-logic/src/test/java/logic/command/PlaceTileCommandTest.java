@@ -3,7 +3,7 @@ package logic.command;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
-import logic.player.SimpleAIPlayer;
+import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,8 +35,8 @@ class PlaceTileCommandTest {
     private static Game createGameEnv() {
         Game game = new Game(config);
 
-        game.addPlayer(new SimpleAIPlayer(0));
-        game.addPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new Player(0));
+        game.addPlayer(new Player(1));
 
         game.start();
 
