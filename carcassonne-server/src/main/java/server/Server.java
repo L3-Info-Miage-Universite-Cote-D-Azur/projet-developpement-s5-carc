@@ -22,7 +22,7 @@ public class Server {
         instance = this;
         serverSocket = new TcpServerSocket(host, port);
         connectionManager = new TcpClientConnectionManager();
-        gameConfig = GameConfig.loadFromResources("config");
+        gameConfig = GameConfig.loadFromResources();
     }
 
     public void start() {
