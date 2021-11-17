@@ -34,6 +34,8 @@ public interface IGameListener {
      */
     void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId);
 
+    void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId);
+
     /**
      * Called when the game is started.
      */

@@ -131,6 +131,10 @@ public class Player implements Comparable {
     public void removeRemainingMeepleCount() {
         remainingMeepleCount--;
     }
+    public void addRemainingMeepleCount() {
+        remainingMeepleCount++;
+    }
+
 
     public int getPartisansPlayed() {
         return 0;

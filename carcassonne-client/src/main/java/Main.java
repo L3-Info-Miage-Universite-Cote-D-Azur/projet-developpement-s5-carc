@@ -61,6 +61,11 @@ public class Main {
             }
 
             @Override
+            public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
+                Logger.info("Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+            }
+
+            @Override
             public void onStart() {
                 Logger.info("--- GAME START ---");
             }
