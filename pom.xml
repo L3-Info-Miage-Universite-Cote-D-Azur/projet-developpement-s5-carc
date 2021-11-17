@@ -12,6 +12,7 @@
         <module>carcassonne-client</module>
         <module>carcassonne-logic</module>
         <module>carcassonne-server</module>
+        <module>carcassonne-network-common</module>
     </modules>
 
     <properties>

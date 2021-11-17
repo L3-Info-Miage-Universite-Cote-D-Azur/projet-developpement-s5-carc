@@ -6,14 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="carcassonne-logic" />
         <module name="carcassonne-client" />
         <module name="carcassonne-server" />
+        <module name="carcassonne-logic" />
+        <module name="carcassonne-network-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="carcassonne-client" target="16" />
       <module name="carcassonne-logic" target="16" />
+      <module name="carcassonne-network-common" target="16" />
       <module name="carcassonne-server" target="16" />
       <module name="projet-developpement-s5-blanc-chiappe-le-contel-rihet" target="16" />
     </bytecodeTargetLevel>
