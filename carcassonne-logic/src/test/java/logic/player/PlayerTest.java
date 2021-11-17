@@ -3,7 +3,6 @@ package logic.player;
 import logic.Game;
 import logic.config.GameConfig;
 import logic.tile.ChunkType;
-import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

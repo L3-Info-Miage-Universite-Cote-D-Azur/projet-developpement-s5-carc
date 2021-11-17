@@ -4,7 +4,7 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.math.Vector2;
-import logic.player.SimpleAIPlayer;
+import ai.SimpleAI;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class SimpleAIPlayerTest {
         for (int i = 1000; i > 0; i--) {
             Game game = createSinglePlayerGameEnv();
 
-            for (int attemptedTileCount = 0; !game.isFinished(); attemptedTileCount++) {
+            for (int attemptedTileCount = 0; !game.isOver(); attemptedTileCount++) {
                 assertEquals(game.getBoard().getTileCount(), attemptedTileCount);
                 game.update();
             }
@@ -44,7 +44,7 @@ class SimpleAIPlayerTest {
         Game game = createSinglePlayerGameEnv();
         GameBoard board = game.getBoard();
 
-        while (!game.isFinished()) {
+        while (!game.isOver()) {
             ArrayList<Vector2> freePoints = game.getBoard().findFreePlaceForTile(game.getStack().peek());
             game.update();
 
@@ -70,7 +70,7 @@ class SimpleAIPlayerTest {
 
         game.update();
 
-        SimpleAIPlayer player = (SimpleAIPlayer) game.getPlayer(0);
+        SimpleAI player = (SimpleAI) game.getPlayer(0);
 
         Tile tile = game.getStack().peek();
         ArrayList<Vector2> freePoints = board.findFreePlaceForTile(tile);
@@ -103,8 +103,8 @@ class SimpleAIPlayerTest {
     private static Game createSinglePlayerGameEnv() {
         Game game = new Game(config);
 
-        game.addPlayer(new SimpleAIPlayer(1));
-        game.addPlayer(new SimpleAIPlayer(2));
+        game.addPlayer(new SimpleAI(1));
+        game.addPlayer(new SimpleAI(2));
         game.start();
 
         return game;
