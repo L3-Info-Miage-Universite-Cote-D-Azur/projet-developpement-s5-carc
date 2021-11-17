@@ -2,6 +2,7 @@ package logic;
 
 import logic.config.GameConfig;
 import logic.player.Player;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
