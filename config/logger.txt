@@ -1,0 +1,5 @@
+Name	Value	Color
+Enable	True	
+Info		31m
+Warning		32m
+Error		33m
