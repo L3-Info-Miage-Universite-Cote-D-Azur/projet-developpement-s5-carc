@@ -19,6 +19,7 @@ Afin d'ajouter ces fonctionnalités, nous avons du revoir nos itérations futurs
     - Récupération des Meeples
   - Ajout des 500 parties
   - Début de la séparation code client/serveur
+  - Ajout de la partie connexion tcp sur le client et partie gestion tcp sur le serveur
   - Ajout de la personnalisation des couleurs du CLI
 
 - Livraison 6
