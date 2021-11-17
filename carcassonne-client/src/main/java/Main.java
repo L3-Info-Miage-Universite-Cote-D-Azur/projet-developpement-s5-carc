@@ -1,4 +1,5 @@
 import ai.SimpleAI;
+import config.LoggerConfig;
 import logger.Logger;
 import logic.Game;
 import logic.IGameListener;
@@ -12,11 +13,13 @@ import utils.GameScoreUtils;
 import javax.imageio.ImageIO;
 import javax.naming.ConfigurationException;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] arg) throws ConfigurationException {
+        Logger.setConfig(LoggerConfig.loadFromFile(Paths.get("config/logger.txt")));
         GameConfig config = GameConfig.loadFromDirectory("config");
 
         if (!config.validate()) {

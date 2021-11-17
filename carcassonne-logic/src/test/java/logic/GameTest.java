@@ -3,7 +3,7 @@ package logic;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
-import logic.player.SimpleAIPlayer;
+import logic.player.Player;
 import logic.tile.ChunkType;
 import org.junit.jupiter.api.Test;
 
@@ -33,11 +33,11 @@ class GameTest {
 
         assertEquals(0, game.getPlayerCount());
 
-        game.addPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new Player(1));
         assertEquals(1, game.getPlayerCount());
 
-        game.addPlayer(new SimpleAIPlayer(2));
-        game.addPlayer(new SimpleAIPlayer(3));
+        game.addPlayer(new Player(2));
+        game.addPlayer(new Player(3));
         assertEquals(3, game.getPlayerCount());
 
         assertNotNull(game.getPlayer(0));
@@ -45,7 +45,7 @@ class GameTest {
         assertNotNull(game.getPlayer(2));
 
         assertThrows(TooManyPlayerException.class, () -> {
-            game.addPlayer(new SimpleAIPlayer(4));
+            game.addPlayer(new Player(4));
         });
     }
 
@@ -54,23 +54,23 @@ class GameTest {
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
-        assertTrue(game.isFinished());
+        assertTrue(game.isOver());
 
-        game.addPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new Player(1));
         game.start();
 
-        assertFalse(game.isFinished());
+        assertFalse(game.isOver());
 
         game.getPlayer(0).addScore(99999, ChunkType.ROAD);
 
-        assertTrue(game.isFinished());
+        assertTrue(game.isOver());
     }
 
     @Test
     void testIfThrowExceptionIfUpdateCalledBeforeStart() {
         Game game = new Game(config);
 
-        assertTrue(game.isFinished());
+        assertTrue(game.isOver());
         assertThrows(IllegalStateException.class, game::update);
     }
 
@@ -79,25 +79,25 @@ class GameTest {
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
-        game.addPlayer(new SimpleAIPlayer(1));
+        game.addPlayer(new Player(1));
         game.start();
 
-        assertEquals(false, game.isFinished());
+        assertEquals(false, game.isOver());
         assertThrows(IllegalStateException.class, game::getWinner);
     }
 
     @Test
     void testWinner() {
         Game game = new Game(config);
-        game.addPlayer(new SimpleAIPlayer(501));
-        game.addPlayer(new SimpleAIPlayer(502));
+        game.addPlayer(new Player(501));
+        game.addPlayer(new Player(502));
 
-        assertTrue(game.isFinished());
+        assertTrue(game.isOver());
 
         game.start();
         game.getPlayer(0).addScore(279, ChunkType.TOWN);
 
-        while (!game.isFinished()) {
+        while (!game.isOver()) {
             game.update();
         }
 
@@ -113,7 +113,7 @@ class GameTest {
             game.start();
         });
         assertDoesNotThrow(() -> {
-            game.addPlayer(new SimpleAIPlayer(1));
+            game.addPlayer(new Player(1));
             game.start();
         });
     }
