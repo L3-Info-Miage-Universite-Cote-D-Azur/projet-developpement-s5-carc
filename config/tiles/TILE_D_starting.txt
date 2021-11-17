@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	D				
 	Expansion					
-	Flags	START				
+	Flags	STARTING
 	Count	1				
