@@ -25,7 +25,7 @@ public class GameCommandMessage extends Message {
 
     @Override
     public void encode(ByteOutputStream stream) {
-        stream.writeInt(command.getId());
+        stream.writeInt(command.getId().getId());
         command.encode(stream);
     }
 
