@@ -5,6 +5,7 @@ import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.math.Vector2;
 import ai.SimpleAI;
+import logic.player.Player;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -100,13 +101,4 @@ class SimpleAIPlayerTest {
         }
     }
 
-    private static Game createSinglePlayerGameEnv() {
-        Game game = new Game(config);
-
-        game.addPlayer(new SimpleAI(1));
-        game.addPlayer(new SimpleAI(2));
-        game.start();
-
-        return game;
-    }
 }
