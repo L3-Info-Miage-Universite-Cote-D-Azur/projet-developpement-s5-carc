@@ -68,7 +68,6 @@ public class GameConfig {
     private static ArrayList<TileExcelConfig> loadTilesFromDirectory(String path) {
         File root = new File(path);
 
-        System.out.println(path);
         if (!root.isDirectory()) {
             throw new IllegalArgumentException("Path is not a directory");
         }

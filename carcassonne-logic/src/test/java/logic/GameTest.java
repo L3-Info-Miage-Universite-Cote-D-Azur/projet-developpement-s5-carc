@@ -54,7 +54,7 @@ class GameTest {
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
-        assertTrue(game.isOver());
+        assertFalse(game.isOver());
 
         game.addPlayer(new Player(1));
         game.start();
@@ -63,14 +63,14 @@ class GameTest {
 
         game.getPlayer(0).addScore(99999, ChunkType.ROAD);
 
-        assertTrue(game.isOver());
+        assertFalse(game.isOver());
     }
 
     @Test
     void testIfThrowExceptionIfUpdateCalledBeforeStart() {
         Game game = new Game(config);
 
-        assertTrue(game.isOver());
+        assertFalse(game.isOver());
         assertThrows(IllegalStateException.class, game::update);
     }
 
@@ -92,14 +92,12 @@ class GameTest {
         game.addPlayer(new Player(501));
         game.addPlayer(new Player(502));
 
-        assertTrue(game.isOver());
+        assertFalse(game.isOver());
 
         game.start();
         game.getPlayer(0).addScore(279, ChunkType.TOWN);
 
-        while (!game.isOver()) {
-            game.update();
-        }
+        game.onEnd();
 
         assertNotNull(game.getWinner());
         assertEquals(game.getWinner(), game.getPlayer(0));
