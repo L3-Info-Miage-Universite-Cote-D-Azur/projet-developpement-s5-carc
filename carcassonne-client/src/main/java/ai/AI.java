@@ -25,7 +25,7 @@ public abstract class AI implements IPlayerListener {
         Tile tileToDraw = player.getGame().getTurn().getTileToDraw();
         Vector2 positionFound = findPositionForTile(tileToDraw);
 
-        new PlaceTileDrawnCommand(tileToDraw, positionFound).execute(player.getGame());
+        new PlaceTileDrawnCommand(positionFound).execute(player.getGame());
 
         placeMeepleIfNeeded();
 

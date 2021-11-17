@@ -20,7 +20,7 @@ import static java.lang.System.*;
 public class Main {
     public static void main(String[] arg) throws ConfigurationException {
         Logger.setConfig(LoggerConfig.loadFromFile(Paths.get("carcassonne-logic/src/main/resources/logic/config/logger.txt")));
-        GameConfig config = GameConfig.loadFromResources("config");
+        GameConfig config = GameConfig.loadFromResources();
 
         if (!config.validate()) {
             throw new ConfigurationException("Configuration is not valid.");

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    private static final GameConfig config = GameConfig.loadFromResources("config");
+    private static final GameConfig config = GameConfig.loadFromResources();
 
     @Test
     void testInitialState(){

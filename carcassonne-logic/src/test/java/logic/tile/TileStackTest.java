@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileStackTest {
-    private static final GameConfig config = GameConfig.loadFromResources("config");
+    private static final GameConfig config = GameConfig.loadFromResources();
 
     @Test
     void testRemove() {

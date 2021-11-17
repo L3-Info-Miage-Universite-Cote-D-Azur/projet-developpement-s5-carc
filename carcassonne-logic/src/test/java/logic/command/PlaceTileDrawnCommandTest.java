@@ -9,27 +9,38 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlaceTileDrawnCommandTest {
-    private static final GameConfig config = GameConfig.loadFromResources("config");
+    private static final GameConfig config = GameConfig.loadFromResources();
 
     @Test
     void testInvalidPosition() {
         Game game = createGameEnv();
+        game.update();
 
-        assertTrue(new PlaceTileDrawnCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION).execute(game));
-        assertFalse(new PlaceTileDrawnCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
+        assertTrue(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
+
+        game.update();
+
+        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
     }
 
     @Test
     void testNoStartingTilePlacement() {
         Game game = createGameEnv();
-        assertFalse(new PlaceTileDrawnCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
+        game.update();
+        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
     }
 
     @Test
     void testOverlapTilePlacement() {
         Game game = createGameEnv();
-        assertTrue(new PlaceTileDrawnCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION).execute(game));
-        assertFalse(new PlaceTileDrawnCommand(game.getStack().remove(), GameBoard.STARTING_TILE_POSITION).execute(game));
+
+        game.update();
+
+        assertTrue(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
+
+        game.update();
+
+        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
     }
 
     private static Game createGameEnv() {
