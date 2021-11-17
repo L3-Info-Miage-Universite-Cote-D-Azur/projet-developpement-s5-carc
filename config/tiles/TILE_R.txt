@@ -2,20 +2,20 @@ Chunks
 	Types					
 		Name				
 			TOWN	TOWN	TOWN	
-		FIELD				FIELD
-		FIELD		FIELD		FIELD
-		FIELD				FIELD
+		TOWN				TOWN
+		TOWN		TOWN		TOWN
+		TOWN				TOWN
 			FIELD	FIELD	FIELD	
 	References					
 		Name				
-			A	A	A	
-		B				B
-		B		B		B
-		B				B
+			D	D	D	
+		D				D
+		D		D		D
+		D				D
 			B	B	B	
 Data						
 	Name	Value				
-	Model	E				
+	Model	R				
 	Expansion					
 	Flags					
-	Count	5				
+	Count	3				

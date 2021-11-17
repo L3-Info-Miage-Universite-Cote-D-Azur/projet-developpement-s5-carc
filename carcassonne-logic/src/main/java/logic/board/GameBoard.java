@@ -198,7 +198,7 @@ public class GameBoard {
      * Gets all tiles on the board.
      * @return
      */
-    public Collection<Tile> getTiles() {
-        return tiles.values();
+    public List<Tile> getTiles() {
+        return tiles.values().stream().toList();
     }
 }
