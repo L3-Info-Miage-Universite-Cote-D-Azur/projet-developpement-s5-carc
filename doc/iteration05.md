@@ -7,7 +7,7 @@
   - Retirer meeple placé (Issue #54)
     - Possibilité de retirer les meeples lorsque les zones fermées seront traités (Issue #49)
   - Client Serveur (Issue #56)
-    - Code Server (Issue #51) 
+    - Code Server (Issue #51 et #59) 
     - Code Client (Issue #53)
 
 
@@ -46,6 +46,7 @@
   - Loïc Le Contel s'est occupé de modifier GameTurnTest et GameTest (Issue #58)
   - Mike Chiappe a modifié le fonctionnement des tiles (Issue #57)
   - Mike Chiappe a créé le code serveur (Issue #51)
+  - Mike Chiappe a ajouté le code permettant la connexion au serveur (Issue #59)
   - Mike Chiappe a ajouté un parser Excel pour lire les fichiers tile.txt
   - Mike Chiappe a ajouté la javadoc sur tout le code dans la partie logic
   - Loïc Le Contel s'est occupé de remplir iteration05.md et de la user story
