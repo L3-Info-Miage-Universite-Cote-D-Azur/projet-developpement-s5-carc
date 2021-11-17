@@ -1,19 +1,21 @@
-CHUNKS											
-		TOWN	TOWN	TOWN							
-	FIELD				FIELD						
-	FIELD		ROAD		ROAD						
-	FIELD				FIELD						
-		FIELD	ROAD	FIELD							
-REFERENCES											
-		A	A	A							
-	C				C						
-	C		B		B						
-	C				C						
-		C	B	C							
-											
-DATA											
-	NAME	VALUE									
-	MODEL	J									
-	EXPANSION	NONE									
-	FLAGS	NONE									
-	COUNT	3									
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		FIELD				FIELD
+		FIELD		ROAD		ROAD
+		FIELD				FIELD
+			FIELD	ROAD	FIELD	
+	References					
+		Name				
+			A	A	A	
+		C				C
+		C		B		B
+		C				C
+			C	B	C	
+Data						
+	Name	Value				
+	Model	J				
+	Expansion					
+	Flags					
+	Count	3				

@@ -1,19 +1,21 @@
-CHUNKS											
-		FIELD	ROAD	FIELD							
-	FIELD				FIELD						
-	ROAD		ROAD_END		ROAD
-	FIELD				FIELD						
-		FIELD	ROAD	FIELD							
-REFERENCES											
-		D	A	D							
-	D				D						
-	A		B		A						
-	D				D						
-		D	A	D							
-											
-DATA											
-	NAME	VALUE									
-	MODEL	X									
-	EXPANSION	NONE									
-	FLAGS	NONE									
-	COUNT	1									
+Chunks						
+	Types					
+		Name				
+			FIELD	ROAD	FIELD	
+		FIELD				FIELD
+		ROAD		ROAD_END		ROAD
+		FIELD				FIELD
+			FIELD	ROAD	FIELD	
+	References					
+		Name				
+			D	A	D	
+		D				D
+		A		B		A
+		D				D
+			D	A	D	
+Data						
+	Name	Value				
+	Model	W				
+	Expansion					
+	Flags					
+	Count	1				

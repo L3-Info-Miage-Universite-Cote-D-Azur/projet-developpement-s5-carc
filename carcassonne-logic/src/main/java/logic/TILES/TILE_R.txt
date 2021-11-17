@@ -1,19 +1,21 @@
-CHUNKS											
-		TOWN	TOWN	TOWN							
-	TOWN				TOWN						
-	TOWN		TOWN		TOWN						
-	TOWN				TOWN						
-		FIELD	FIELD	FIELD							
-REFERENCES											
-		D	D	D							
-	D				D						
-	D		D		D						
-	D				D						
-		B	B	B							
-											
-DATA											
-	NAME	VALUE									
-	MODEL	R									
-	EXPANSION	NONE									
-	FLAGS	NONE									
-	COUNT	3									
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		TOWN				TOWN
+		TOWN		TOWN		TOWN
+		TOWN				TOWN
+			FIELD	FIELD	FIELD	
+	References					
+		Name				
+			D	D	D	
+		D				D
+		D		D		D
+		D				D
+			B	B	B	
+Data						
+	Name	Value				
+	Model	R				
+	Expansion					
+	Flags					
+	Count	3				
