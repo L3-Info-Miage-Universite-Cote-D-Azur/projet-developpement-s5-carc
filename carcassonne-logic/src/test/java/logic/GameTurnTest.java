@@ -53,8 +53,6 @@ class GameTurnTest {
     }
 
     private static Player createFakePlayer(int id) {
-        return new Player(id) {
-
-        };
+        return new Player(id);
     }
 }
