@@ -50,6 +50,11 @@ public class Game {
             }
 
             @Override
+            public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
+                
+            }
+
+            @Override
             public void onStart() {
             }
 

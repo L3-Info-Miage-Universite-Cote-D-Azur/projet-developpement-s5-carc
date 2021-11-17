@@ -15,6 +15,7 @@ public class GameTurn {
 
     private boolean hasPlacedTile;
     private boolean hasPlacedMeeple;
+    private boolean hasTookMeeple;
     private boolean isOver;
 
     public GameTurn(Game game) {
@@ -99,11 +100,13 @@ public class GameTurn {
         return hasPlacedMeeple;
     }
 
+    public boolean hasTookMeeple(){ return hasTookMeeple();}
     /**
      * Sets the player who has placed a meeple during this turn.
      */
     public void setMeeplePlaced() {
         hasPlacedMeeple = true;
+        hasTookMeeple = false;
     }
 
     /**
