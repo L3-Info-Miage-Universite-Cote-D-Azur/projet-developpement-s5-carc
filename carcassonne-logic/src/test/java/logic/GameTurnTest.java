@@ -2,13 +2,12 @@ package logic;
 
 import logic.config.GameConfig;
 import logic.player.Player;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTurnTest {
-    private static GameConfig config = GameConfig.loadFromDirectory("config");
+    private static GameConfig config = GameConfig.loadFromResources("config");
 
     @Test
     void testInitialState() {

@@ -1,4 +1,6 @@
-package socket.events;
+package server.socket.handler;
+
+import server.Server;
 
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -19,7 +21,7 @@ public class TcpServerAcceptHandler implements CompletionHandler<AsynchronousSoc
 
 
         if (clientSocketChannel != null && clientSocketChannel.isOpen()) {
-
+            Server.getInstance().getConnectionManager().createConnection(clientSocketChannel);
         }
     }
 

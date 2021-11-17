@@ -1,8 +1,7 @@
 package ai;
 
-import logic.Game;
 import logic.command.EndTurnCommand;
-import logic.command.PlaceTileCommand;
+import logic.command.PlaceTileDrawnCommand;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
@@ -26,7 +25,7 @@ public abstract class AI implements IPlayerListener {
         Tile tileToDraw = player.getGame().getTurn().getTileToDraw();
         Vector2 positionFound = findPositionForTile(tileToDraw);
 
-        new PlaceTileCommand(tileToDraw, positionFound).execute(player.getGame());
+        new PlaceTileDrawnCommand(tileToDraw, positionFound).execute(player.getGame());
 
         placeMeepleIfNeeded();
 

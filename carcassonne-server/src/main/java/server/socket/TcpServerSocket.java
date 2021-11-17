@@ -1,6 +1,6 @@
-package socket;
+package server.socket;
 
-import socket.events.TcpServerAcceptHandler;
+import server.socket.handler.TcpServerAcceptHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -14,7 +14,15 @@ public class TcpServerSocket {
         serverSocketChannel.bind(new InetSocketAddress(host, port));
     }
 
-    public void run() {
+    public void start() {
         serverSocketChannel.accept(null, new TcpServerAcceptHandler(serverSocketChannel));
+    }
+
+    public void stop()  {
+        try {
+            serverSocketChannel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -4,13 +4,12 @@ import logic.config.GameConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileStackTest {
-    private static final GameConfig config = GameConfig.loadFromDirectory("config");
+    private static final GameConfig config = GameConfig.loadFromResources("config");
 
     @Test
     void testRemove() {

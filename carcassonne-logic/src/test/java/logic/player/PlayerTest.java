@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    private static final GameConfig config = GameConfig.loadFromDirectory("config");
+    private static final GameConfig config = GameConfig.loadFromResources("config");
     @Test
     void testAddScore() {
         Player player = new Player(1);

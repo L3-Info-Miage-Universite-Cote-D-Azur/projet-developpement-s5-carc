@@ -46,10 +46,9 @@ public class GameConfig {
 
     /**
      * Loads the game configuration from the given path.
-     * @param path the path to the game configuration
      * @return the game configuration
      */
-    public static GameConfig loadFromDirectory(String path) {
+    public static GameConfig loadFromResources() {
         String pathRessource = new File(GameConfig.class.getResource(".").getFile()).toPath().toString();
         ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(pathRessource+ "/tiles");
         ExcelNode gameConfigDocument = ExcelNode.load(Path.of(pathRessource + "/game.txt"));

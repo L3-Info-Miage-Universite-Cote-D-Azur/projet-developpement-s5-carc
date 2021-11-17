@@ -6,14 +6,30 @@ import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
-public class PlaceTileCommand implements ICommand {
-    private final Tile tile;
-    private final Vector2 position;
+public class PlaceTileDrawnCommand implements ICommand {
+    private Vector2 position;
 
-    public PlaceTileCommand(Tile tile, Vector2 position) {
-        this.tile = tile;
+    public PlaceTileDrawnCommand(Vector2 position) {
         this.position = position;
+    }
+
+    @Override
+    public CommandId getId() {
+        return CommandId.PLACE_TILE_DRAWN;
+    }
+
+    @Override
+    public void encode(ByteOutputStream stream) {
+        stream.writeInt(position.getX());
+        stream.writeInt(position.getY());
+    }
+
+    @Override
+    public void decode(ByteInputStream stream) {
+        position = new Vector2(stream.readInt(), stream.readInt());
     }
 
     /**
@@ -23,10 +39,6 @@ public class PlaceTileCommand implements ICommand {
      */
     @Override
     public boolean execute(Game game) {
-        if (tile.getPosition() != null) {
-            return false;
-        }
-
         GameTurn turn = game.getTurn();
 
         if (turn.hasPlacedTile()) {
@@ -34,6 +46,7 @@ public class PlaceTileCommand implements ICommand {
             return false;
         }
 
+        Tile tile = game.getTurn().getTileToDraw();
         GameBoard board = game.getBoard();
 
         if (board.getStartingTile() == null) {

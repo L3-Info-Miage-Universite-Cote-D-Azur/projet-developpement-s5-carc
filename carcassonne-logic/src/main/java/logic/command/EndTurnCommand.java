@@ -2,11 +2,26 @@ package logic.command;
 
 import logic.Game;
 import logic.GameTurn;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 /**
  * Command to end the turn.
  */
 public class EndTurnCommand implements ICommand {
+    @Override
+    public CommandId getId() {
+        return CommandId.END_TURN;
+    }
+
+    @Override
+    public void encode(ByteOutputStream stream) {
+    }
+
+    @Override
+    public void decode(ByteInputStream stream) {
+    }
+
     /**
      * Executes the command to end the turn.
      * @param game the game context

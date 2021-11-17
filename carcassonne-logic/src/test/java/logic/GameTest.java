@@ -7,12 +7,10 @@ import logic.player.Player;
 import logic.tile.ChunkType;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-    private static final GameConfig config = GameConfig.loadFromDirectory("config");
+    private static final GameConfig config = GameConfig.loadFromResources("config");
 
     @Test
     void testInitialState(){
