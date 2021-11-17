@@ -49,9 +49,10 @@ public class GameConfig {
      * @return the game configuration
      */
     public static GameConfig loadFromResources() {
-        String pathRessource = new File(GameConfig.class.getResource(".").getFile()).toPath().toString();
-        ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(pathRessource+ "/tiles");
-        ExcelNode gameConfigDocument = ExcelNode.load(Path.of(pathRessource + "/game.txt"));
+        String resourcePath = GameConfig.class.getResource(".").getPath();
+
+        ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
+        ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(resourcePath, "game.txt"));
 
         return new GameConfig(tiles,
                 Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue("Value")),
