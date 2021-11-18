@@ -15,15 +15,14 @@ Afin d'ajouter ces fonctionnalités, nous avons du revoir nos itérations futurs
 
 - Livraison 5
   - Ajout de fonctionnalités de jeu
-    - Zone fermée
     - Récupération des Meeples
   - Ajout des 500 parties
   - Début de la séparation code client/serveur
-  - Ajout de la partie connexion tcp sur le client et partie gestion tcp sur le serveur
   - Ajout de la personnalisation des couleurs du CLI
 
 - Livraison 6
   - Ajout de fonctionnalités de jeu
+    - Zone fermée
     - Rotation des tuiles
     - Contrainte de placement pour les meeples
     - Ajout du comptage de point pour les zones de jeu
