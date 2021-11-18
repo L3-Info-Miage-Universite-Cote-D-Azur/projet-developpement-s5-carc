@@ -24,16 +24,28 @@ public class MasterTurnStartedCommand implements ICommand {
         this.tileConfigIndex = game.getConfig().tiles.indexOf(tileToDraw.getConfig());
     }
 
+    /**
+     * Returns the command type.
+     * @return the command type
+     */
     @Override
     public CommandType getType() {
         return CommandType.MASTER_TURN_DATA;
     }
 
+    /**
+     * Encodes the command attributes to the output stream.
+     * @param stream the output stream
+     */
     @Override
     public void encode(ByteOutputStream stream) {
         stream.writeInt(tileConfigIndex);
     }
 
+    /**
+     * Decodes the command attributes from the input stream.
+     * @param stream the input stream
+     */
     @Override
     public void decode(ByteInputStream stream) {
         tileConfigIndex = stream.readInt();

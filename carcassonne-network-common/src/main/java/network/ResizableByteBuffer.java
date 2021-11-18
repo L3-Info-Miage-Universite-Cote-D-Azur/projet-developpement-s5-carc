@@ -1,7 +1,8 @@
 package network;
 
-import java.nio.ByteBuffer;
-
+/**
+ * A resizable byte buffer with an initial size and a maximum size.
+ */
 public class ResizableByteBuffer {
     private byte[] buffer;
     private int index;
@@ -13,14 +14,27 @@ public class ResizableByteBuffer {
         this.index = 0;
     }
 
+    /**
+     * Clears the buffer.
+     */
     public void clear() {
         this.index = 0;
     }
 
+    /**
+     * Puts the given byte array into the buffer.
+     * @param data The data to put into the buffer.
+     */
     public void put(byte[] data) {
         put(data, 0, data.length);
     }
 
+    /**
+     * Puts the given byte array into the buffer.
+     * @param data The data to put into the buffer.
+     * @param offset The offset to start putting the data at.
+     * @param length The length of the data to put.
+     */
     public void put(byte[] data, int offset, int length) {
         int remaining = this.buffer.length - this.index;
 
@@ -35,12 +49,20 @@ public class ResizableByteBuffer {
         this.index += length;
     }
 
+    /**
+     * Resizes the buffer to the given size.
+     * @param newSize The new size of the buffer.
+     */
     private void resize(int newSize) {
         byte[] newBuffer = new byte[newSize];
         System.arraycopy(this.buffer, 0, newBuffer, 0, this.index);
         this.buffer = newBuffer;
     }
 
+    /**
+     * Removes the given amount of bytes from the buffer.
+     * @param size The amount of bytes to remove.
+     */
     public void remove(int size) {
         if (size > this.index) {
             throw new IllegalArgumentException("Size is greater than buffer size");
@@ -49,10 +71,18 @@ public class ResizableByteBuffer {
         this.index -= size;
     }
 
+    /**
+     * Gets the buffer.
+     * @return The buffer.
+     */
     public byte[] getBuffer() {
         return this.buffer;
     }
 
+    /**
+     * Gets the number of bytes in the buffer.
+     * @return The number of bytes in the buffer.
+     */
     public int size() {
         return this.index;
     }

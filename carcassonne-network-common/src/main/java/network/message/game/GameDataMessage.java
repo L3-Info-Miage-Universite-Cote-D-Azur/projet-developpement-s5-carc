@@ -50,8 +50,8 @@ public class GameDataMessage extends Message {
     }
 
     /**
-     * Returns the serialized game data.
-     * @return the serialized game data
+     * Returns the serialized game slave data.
+     * @return the serialized game slave data
      */
     public byte[] getData() {
         return data;

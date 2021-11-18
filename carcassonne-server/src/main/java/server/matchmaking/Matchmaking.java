@@ -5,6 +5,9 @@ import server.session.ClientSession;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a matchmaking queue.
+ */
 public class Matchmaking {
     private ArrayList<ClientSession> queue;
     private int numPlayersRequired;
@@ -15,6 +18,10 @@ public class Matchmaking {
         queue = new ArrayList<>();
     }
 
+    /**
+     * Adds a client to the queue.
+     * @param client
+     */
     public void add(ClientSession client) {
         synchronized (this) {
             if (queue.indexOf(client) != -1) {
@@ -28,6 +35,10 @@ public class Matchmaking {
         }
     }
 
+    /**
+     * Removes a client from the queue.
+     * @param client
+     */
     public void remove(ClientSession client) {
         synchronized (this) {
             queue.remove(client);
@@ -35,6 +46,9 @@ public class Matchmaking {
         }
     }
 
+    /**
+     * Checks the queue for matches.
+     */
     private void checkQueue() {
         synchronized (this) {
             if (queue.size() >= numPlayersRequired) {
@@ -56,6 +70,9 @@ public class Matchmaking {
         }
     }
 
+    /**
+     * Notifies the clients of the matchmaking progress.
+     */
     private void notifyMatchmakingProgress() {
         synchronized (this) {
             for (ClientSession session : queue) {

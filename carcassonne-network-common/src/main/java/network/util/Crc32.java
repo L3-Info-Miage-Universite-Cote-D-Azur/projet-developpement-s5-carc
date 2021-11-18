@@ -21,6 +21,11 @@ public class Crc32 {
         }
     }
 
+    /**
+     * Calculates the CRC32 checksum of the given data.
+     * @param data the data to calculate the checksum for
+     * @return the checksum
+     */
     public static int getCrc(byte[] data) {
         int crc = 0xFFFFFFFF;
         for (int i = 0; i < data.length; i++) {
@@ -29,6 +34,13 @@ public class Crc32 {
         return crc ^ 0xFFFFFFFF;
     }
 
+    /**
+     * Calculates the CRC32 checksum of the given data.
+     * @param data the data to calculate the checksum for
+     * @param offset the offset to start at
+     * @param length the length to calculate the checksum for
+     * @return the checksum
+     */
     public static int getCrc(byte[] data, int offset, int length) {
         int crc = 0xFFFFFFFF;
         for (int i = offset; i < offset + length; i++) {

@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousServerSocketChannel;
 
+/**
+ * Represents a TCP server socket.
+ */
 public class TcpServerSocket {
     private AsynchronousServerSocketChannel serverSocketChannel;
 
@@ -14,10 +17,16 @@ public class TcpServerSocket {
         serverSocketChannel.bind(new InetSocketAddress(host, port));
     }
 
+    /**
+     * Starts the server socket to listen for incoming connections.
+     */
     public void start() {
         serverSocketChannel.accept(null, new TcpAcceptHandler(serverSocketChannel));
     }
 
+    /**
+     * Closes the server socket.
+     */
     public void stop()  {
         try {
             serverSocketChannel.close();

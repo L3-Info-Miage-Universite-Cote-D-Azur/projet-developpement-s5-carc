@@ -6,10 +6,13 @@ import logic.command.ICommandExecutorListener;
 import client.network.ServerConnection;
 import network.message.game.GameCommandRequestMessage;
 
-public class MasterCommandNotifier implements ICommandExecutorListener {
+/**
+ * Class that notifies the server of a command execution.
+ */
+public class MasterCommandExecutionNotifier implements ICommandExecutorListener {
     private final ServerConnection connection;
 
-    public MasterCommandNotifier(ServerConnection connection) {
+    public MasterCommandExecutionNotifier(ServerConnection connection) {
         this.connection = connection;
     }
 

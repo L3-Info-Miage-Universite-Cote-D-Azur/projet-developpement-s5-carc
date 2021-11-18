@@ -34,6 +34,7 @@ public class Packet {
 
     /**
      * The crc32 checksum of the message data.
+     * We use this to verify the integrity of the message.
      */
     private int checksum;
 

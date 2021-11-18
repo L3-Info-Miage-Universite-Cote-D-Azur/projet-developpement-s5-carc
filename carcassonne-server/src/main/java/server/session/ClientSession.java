@@ -4,6 +4,10 @@ import server.matchmaking.Match;
 import server.matchmaking.Matchmaking;
 import server.network.ClientConnection;
 
+/**
+ * Represents a client session.
+ * It is used to store information about the client connection.
+ */
 public class ClientSession {
     private final ClientConnection connection;
     private final int userId;
@@ -18,17 +22,24 @@ public class ClientSession {
         this.userId = userId;
     }
 
+    /**
+     * Destroys the client session.
+     */
     public void destroy() {
         synchronized (this) {
+            if (destroyed) {
+                return;
+            }
+
             destroyed = true;
+        }
 
-            if (currentMatchmaking != null) {
-                currentMatchmaking.remove(this);
-            }
+        if (currentMatchmaking != null) {
+            currentMatchmaking.remove(this);
+        }
 
-            if (currentMatch != null) {
-                currentMatch.removePlayer(this);
-            }
+        if (currentMatch != null) {
+            currentMatch.removePlayer(this);
         }
     }
 

@@ -42,6 +42,10 @@ public class GameResultMessage extends Message {
         data = stream.readBytes();
     }
 
+    /**
+     * Gets the serialized game master data.
+     * @return the serialized game master data
+     */
     public byte[] getData() {
         return data;
     }

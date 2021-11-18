@@ -5,7 +5,6 @@ import logic.GameTurn;
 import logic.IGameListener;
 import logic.command.*;
 import logic.config.GameConfig;
-import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
@@ -13,11 +12,14 @@ import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
-import server.command.MasterCommandExecutionNotifier;
+import server.command.SlaveCommandExecutionNotifier;
 import server.logger.Logger;
 import server.session.ClientSession;
 import stream.ByteOutputStream;
 
+/**
+ * Represents a game in the matchmaking system.
+ */
 public class Match implements IGameListener {
     private final int id;
     private final ClientSession[] sessions;
@@ -28,7 +30,7 @@ public class Match implements IGameListener {
         this.sessions = sessions;
         this.game = new Game(GameConfig.loadFromResources());
         game.setListener(this);
-        game.getCommandExecutor().setListener(new MasterCommandExecutionNotifier(this));
+        game.getCommandExecutor().setListener(new SlaveCommandExecutionNotifier(this));
 
         for (ClientSession session : sessions) {
             game.addPlayer(new Player(session.getUserId()));
