@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.TestUtils;
 import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.math.Vector2;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlaceMeepleCommandTest {
     @Test
     public void testPlacement() {
-        Game game = createGameEnv();
+        Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
@@ -22,7 +23,7 @@ public class PlaceMeepleCommandTest {
 
     @Test
     public void testPlacementOnOccupiedTile() {
-        Game game = createGameEnv();
+        Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
@@ -35,22 +36,11 @@ public class PlaceMeepleCommandTest {
 
     @Test
     public void testMultiplePlacementsOnSameTurn() {
-        Game game = createGameEnv();
+        Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
         assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
         assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
-    }
-
-    private static Game createGameEnv() {
-        Game game = new Game(GameConfig.loadFromResources());
-
-        game.addPlayer(new Player(0));
-        game.addPlayer(new Player(1));
-
-        game.start();
-
-        return game;
     }
 }

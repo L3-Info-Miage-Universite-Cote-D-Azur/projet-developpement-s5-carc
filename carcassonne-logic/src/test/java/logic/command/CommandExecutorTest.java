@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.TestUtils;
 import logic.command.CommandExecutor;
 import logic.command.CommandType;
 import logic.command.ICommand;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommandExecutorTest {
     @Test
     void testExecuteCommand() {
-        CommandExecutor executor = new CommandExecutor(null);
+        CommandExecutor executor = TestUtils.initGameEnv(2, false, false).getCommandExecutor();
 
         assertTrue(executor.execute(new FakeSuccessfulCommand()));
         assertFalse(executor.execute(new FakeFailingCommand()));
@@ -22,7 +23,7 @@ public class CommandExecutorTest {
 
     @Test
     void testListenerCallback() {
-        CommandExecutor executor = new CommandExecutor(null);
+        CommandExecutor executor = TestUtils.initGameEnv(2, false, false).getCommandExecutor();
 
         final boolean[] commandExecuted = {false};
         final boolean[] commandFailed = {false};
@@ -102,6 +103,7 @@ public class CommandExecutorTest {
 
         @Override
         public boolean canBeExecuted(Game game) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "rip");
             return false;
         }
 

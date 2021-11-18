@@ -28,7 +28,7 @@ class TileStackTest {
     void testFill() {
         TileStack stack = new TileStack();
         stack.fill(config);
-        // TODO
+        assertEquals(config.tiles.stream().map(t -> t.count).reduce((t1, t2) -> t1 + t2).get(), stack.getNumTiles());
     }
 
     @Test

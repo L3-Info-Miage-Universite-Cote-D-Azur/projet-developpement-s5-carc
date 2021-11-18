@@ -51,7 +51,7 @@ class GameTurnTest {
         assertEquals(17, gameTurn.getCount());
         assertEquals(1, gameTurn.getPlayerIndex());
     }
-
+    
     private static Player createFakePlayer(int id) {
         return new Player(id);
     }

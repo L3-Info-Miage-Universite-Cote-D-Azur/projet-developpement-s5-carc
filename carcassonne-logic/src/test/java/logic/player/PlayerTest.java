@@ -56,5 +56,4 @@ class PlayerTest {
         player.setGame(game);
         assertEquals(game, player.getGame());
     }
-
 }

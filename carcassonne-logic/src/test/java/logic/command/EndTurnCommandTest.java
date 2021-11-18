@@ -8,16 +8,17 @@ import logic.player.Player;
 import logic.tile.ChunkId;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class RemoveMeepleCommandTest {
-
+public class EndTurnCommandTest {
     @Test
-    public void testRemoveOnOccupiedTile() {
+    public void testEndTurn() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
+        assertFalse(game.getCommandExecutor().execute(new EndTurnCommand()));
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new RemoveMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+
+        assertEquals(game.getTurn().getCount(), 2);
     }
 }
