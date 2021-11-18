@@ -2,15 +2,12 @@ package logic.command;
 
 import logic.Game;
 import logic.TestUtils;
-import logic.command.CommandExecutor;
-import logic.command.CommandType;
-import logic.command.ICommand;
-import logic.command.ICommandExecutorListener;
 import org.junit.jupiter.api.Test;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CommandExecutorTest {
     @Test

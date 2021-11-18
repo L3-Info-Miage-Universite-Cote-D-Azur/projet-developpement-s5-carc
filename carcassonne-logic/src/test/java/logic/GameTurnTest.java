@@ -4,7 +4,7 @@ import logic.config.GameConfig;
 import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameTurnTest {
     private static GameConfig config = GameConfig.loadFromResources();

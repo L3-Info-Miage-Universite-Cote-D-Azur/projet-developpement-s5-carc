@@ -7,7 +7,6 @@ import network.message.matchmaking.JoinMatchmakingMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
 
 public class ServerSideGameMain {
     private static ArrayList<Client> clients = new ArrayList<>();

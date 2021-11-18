@@ -1,9 +1,9 @@
 package client.command;
 
 import client.logger.Logger;
+import client.network.ServerConnection;
 import logic.command.ICommand;
 import logic.command.ICommandExecutorListener;
-import client.network.ServerConnection;
 import network.message.game.GameCommandRequestMessage;
 
 /**

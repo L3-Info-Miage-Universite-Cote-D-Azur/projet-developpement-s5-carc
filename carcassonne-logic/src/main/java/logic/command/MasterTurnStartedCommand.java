@@ -1,7 +1,6 @@
 package logic.command;
 
 import logic.Game;
-import logic.GameTurn;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 import stream.ByteInputStream;

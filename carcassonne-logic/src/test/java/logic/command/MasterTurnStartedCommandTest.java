@@ -2,12 +2,11 @@ package logic.command;
 
 import logic.Game;
 import logic.TestUtils;
-import logic.config.GameConfig;
-import logic.player.Player;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MasterTurnStartedCommandTest {
     @Test

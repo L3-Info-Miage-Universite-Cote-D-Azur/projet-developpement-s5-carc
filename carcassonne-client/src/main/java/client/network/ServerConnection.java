@@ -2,13 +2,12 @@ package client.network;
 
 import client.logger.Logger;
 import client.message.MessageHandler;
+import client.network.socket.ITcpClientSocketListener;
+import client.network.socket.TcpClientSocket;
 import network.Packet;
 import network.ResizableByteBuffer;
 import network.message.Message;
 import network.message.connection.ClientHelloMessage;
-import client.network.socket.ITcpClientSocketListener;
-import client.network.socket.TcpClientSocket;
-import client.network.socket.handler.TcpSendHandler;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 

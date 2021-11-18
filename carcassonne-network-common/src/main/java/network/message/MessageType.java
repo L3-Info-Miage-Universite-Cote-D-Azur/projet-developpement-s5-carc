@@ -1,8 +1,15 @@
 package network.message;
 
-import network.message.connection.*;
-import network.message.game.*;
-import network.message.matchmaking.*;
+import network.message.connection.ClientHelloMessage;
+import network.message.connection.ServerHelloMessage;
+import network.message.game.GameCommandMessage;
+import network.message.game.GameCommandRequestMessage;
+import network.message.game.GameDataMessage;
+import network.message.game.GameResultMessage;
+import network.message.matchmaking.JoinMatchmakingMessage;
+import network.message.matchmaking.LeaveMatchmakingMessage;
+import network.message.matchmaking.MatchmakingDataMessage;
+import network.message.matchmaking.MatchmakingLeftMessage;
 
 /**
  * MessageType is an enumeration of all the message types.

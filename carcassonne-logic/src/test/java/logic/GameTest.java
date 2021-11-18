@@ -1,23 +1,15 @@
 package logic;
 
 import logic.board.GameBoard;
-import logic.command.EndTurnCommand;
-import logic.command.PlaceMeepleCommand;
-import logic.command.PlaceTileDrawnCommand;
 import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
-import logic.math.Vector2;
-import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.tile.Chunk;
 import logic.tile.ChunkId;
 import logic.tile.ChunkType;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 

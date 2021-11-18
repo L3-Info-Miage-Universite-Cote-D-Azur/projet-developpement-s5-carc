@@ -3,11 +3,10 @@ package logic.command;
 import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
-import logic.config.GameConfig;
-import logic.player.Player;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PlaceTileDrawnCommandTest {
     @Test

@@ -9,7 +9,6 @@ import network.message.matchmaking.LeaveMatchmakingMessage;
 import server.Server;
 import server.logger.Logger;
 import server.matchmaking.Match;
-import server.matchmaking.Matchmaking;
 import server.network.ClientConnection;
 import server.session.ClientSession;
 

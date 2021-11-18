@@ -5,14 +5,11 @@ import client.command.CommandLogger;
 import client.config.LoggerConfig;
 import client.listener.GameLogger;
 import client.logger.Logger;
-import logic.Game;
-import logic.IGameListener;
-import logic.config.GameConfig;
-import logic.player.Player;
-import logic.tile.ChunkId;
-import logic.tile.Tile;
 import client.utils.GameDrawUtils;
 import client.utils.GameScoreUtils;
+import logic.Game;
+import logic.config.GameConfig;
+import logic.player.Player;
 
 import javax.imageio.ImageIO;
 import javax.naming.ConfigurationException;

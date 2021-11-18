@@ -7,7 +7,6 @@ import logic.tile.Tile;
 import logic.tile.TileFlags;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Represents a tile excel configuration.

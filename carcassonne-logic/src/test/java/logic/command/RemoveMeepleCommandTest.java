@@ -3,8 +3,6 @@ package logic.command;
 import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
-import logic.config.GameConfig;
-import logic.player.Player;
 import logic.tile.ChunkId;
 import org.junit.jupiter.api.Test;
 

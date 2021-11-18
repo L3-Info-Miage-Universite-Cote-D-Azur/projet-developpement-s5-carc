@@ -4,7 +4,6 @@ import excel.ExcelNode;
 
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Represents the configuration of the logger.

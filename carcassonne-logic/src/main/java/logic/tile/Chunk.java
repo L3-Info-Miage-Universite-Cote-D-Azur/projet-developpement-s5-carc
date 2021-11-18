@@ -5,8 +5,6 @@ import logic.meeple.Meeple;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
-import java.util.Arrays;
-
 /**
  * Represents a chunk of tiles. A chunk is a part of tile grid.
  */
