@@ -7,8 +7,8 @@
   - Retirer meeple placé (Issue #54)
     - Possibilité de retirer les meeples lorsque les zones fermées seront traités (Issue #49)
   - Client Serveur (Issue #56)
-    - Code Server (Issue #51 et #59) 
-    - Code Client (Issue #53)
+    - Code Server (Issue #51, #59, #62 et #63) 
+    - Code Client (Issue #53, #62)
 
 
 - # En terme de tests (en charge : Lucas Blanc, Nathan Rihet, Loïc Le Contel, Mike Chiappe)
@@ -47,6 +47,8 @@
   - Mike Chiappe a modifié le fonctionnement des tiles (Issue #57)
   - Mike Chiappe a créé le code serveur (Issue #51)
   - Mike Chiappe a ajouté le code permettant la connexion au serveur (Issue #59)
+  - Mike Chiappe a ajouté le code pour communiquer avec le serveur (Issue #62)
+  - Mike Chiappe a ajouté le code permettant de simuler le jeu sur le serveur (Issue #61)
   - Mike Chiappe a ajouté un parser Excel pour lire les fichiers tile.txt
   - Mike Chiappe a ajouté la javadoc sur tout le code dans la partie logic
   - Loïc Le Contel s'est occupé de remplir iteration05.md et de la user story
