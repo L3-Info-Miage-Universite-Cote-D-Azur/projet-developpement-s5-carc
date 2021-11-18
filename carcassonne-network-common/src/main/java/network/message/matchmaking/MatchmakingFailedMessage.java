@@ -6,36 +6,33 @@ import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
 /**
- * Message sent by the client to leave the matchmaking queue.
+ * Message sent when a matchmaking request failed.
  */
-public class LeaveMatchmakingMessage extends Message {
+public class MatchmakingFailedMessage extends Message {
     /**
-     * Returns the message type.
-     * @return the message type
+     * Gets the message type of this message.
+     * @return The message type.
      */
     @Override
     public MessageType getType() {
-        return MessageType.LEAVE_MATCHMAKING;
+        return MessageType.MATCHMAKING_FAILED;
     }
 
     /**
-     * Encodes the message attributes to the output stream.
+     * Encodes the message into a byte stream.
      * @param stream the output stream
      */
     @Override
     public void encode(ByteOutputStream stream) {
+
     }
 
     /**
-     * Decodes the message attributes from the input stream.
+     * Decodes the message from a byte stream.
      * @param stream the input stream
      */
     @Override
     public void decode(ByteInputStream stream) {
-    }
 
-    @Override
-    public String toString() {
-        return "LEAVE_MATCHMAKING {}";
     }
 }

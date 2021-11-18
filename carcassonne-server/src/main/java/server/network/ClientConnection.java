@@ -216,7 +216,7 @@ public class ClientConnection {
                 return;
             }
 
-            Logger.debug("Connection %d: Received message %s", id, packet.getMessageType());
+            Logger.debug("Connection %d: Received message %s", id, packet.getMessage());
 
             bytesRead += read;
             messageHandler.handle(packet.getMessage());
@@ -230,13 +230,11 @@ public class ClientConnection {
      * Invoked when the connection was sent data.
      * @param length
      */
-    public void onSend(int length) {
-        synchronized (sendStream) {
-            sendStream.remove(length);
+    public synchronized void onSend(int length) {
+        sendStream.remove(length);
 
-            if (sendStream.size() != 0) {
-                channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
-            }
+        if (sendStream.size() != 0) {
+            channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
         }
     }
 
@@ -244,30 +242,26 @@ public class ClientConnection {
      * Sends the given message to the client.
      * @param message The message to send.
      */
-    public void send(Message message) {
-        synchronized (this) {
-            Logger.debug("Connection %d: Sending message %s", id, message.getType());
+    public synchronized void send(Message message) {
+        Logger.debug("Connection %d: Sending message %s", id, message);
 
-            Packet packet = Packet.create(message);
-            ByteOutputStream stream = new ByteOutputStream(64);
-            packet.encode(stream);
+        Packet packet = Packet.create(message);
+        ByteOutputStream stream = new ByteOutputStream(64);
+        packet.encode(stream);
 
-            send(stream.getBytes(), 0, stream.getLength());
-        }
+        send(stream.getBytes(), 0, stream.getLength());
     }
 
     /**
      * Sends the given data to the client.
      * @param buffer The data to send.
      */
-    private void send(byte[] buffer, int offset, int length) {
-        synchronized (this) {
-            if (sendStream.size() == 0) {
-                sendStream.put(buffer, offset, length);
-                channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
-            } else {
-                sendStream.put(buffer, offset, length);
-            }
+    private synchronized void send(byte[] buffer, int offset, int length) {
+        if (sendStream.size() == 0) {
+            sendStream.put(buffer, offset, length);
+            channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
+        } else {
+            sendStream.put(buffer, offset, length);
         }
     }
 

@@ -131,7 +131,7 @@ public class ServerConnection implements ITcpClientSocketListener {
                 return;
             }
 
-            Logger.info("Network: Received message " + packet.getMessageType());
+            Logger.debug("Network: Received message %s", packet.getMessage());
 
             bytesRead += read;
             messageHandler.handle(packet.getMessage());
@@ -145,13 +145,11 @@ public class ServerConnection implements ITcpClientSocketListener {
      * @param length
      */
     @Override
-    public void onSend(int length) {
-        synchronized (sendStream) {
-            sendStream.remove(length);
+    public synchronized void onSend(int length) {
+        sendStream.remove(length);
 
-            if (sendStream.size() != 0) {
-                clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
-            }
+        if (sendStream.size() != 0) {
+            clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
         }
     }
 
@@ -159,8 +157,8 @@ public class ServerConnection implements ITcpClientSocketListener {
      * Sends a message to the server.
      * @param message The message to send.
      */
-    public void send(Message message) {
-        Logger.info("Network: Sending message " + message.getType());
+    public synchronized void send(Message message) {
+        Logger.debug("Network: Sending message %s", message);
 
         ByteOutputStream stream = new ByteOutputStream(32);
         Packet packet = Packet.create(message);
@@ -173,14 +171,12 @@ public class ServerConnection implements ITcpClientSocketListener {
      * Sends the given data to the server.
      * @param buffer The data to send.
      */
-    private void send(byte[] buffer, int offset, int length) {
-        synchronized (this) {
-            if (sendStream.size() == 0) {
-                sendStream.put(buffer, offset, length);
-                clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
-            } else {
-                sendStream.put(buffer, offset, length);
-            }
+    private synchronized void send(byte[] buffer, int offset, int length) {
+        if (sendStream.size() == 0) {
+            sendStream.put(buffer, offset, length);
+            clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
+        } else {
+            sendStream.put(buffer, offset, length);
         }
     }
 

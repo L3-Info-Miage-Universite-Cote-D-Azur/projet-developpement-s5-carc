@@ -41,6 +41,17 @@ public class Match implements IGameListener {
     }
 
     /**
+     * Destroys the match.
+     */
+    public void destroy() {
+        for (ClientSession session : sessions) {
+            if (session != null) {
+                session.setMatch(null);
+            }
+        }
+    }
+
+    /**
      * Removes the player from the connected sessions.
      * @param session the session to remove
      */
@@ -182,12 +193,8 @@ public class Match implements IGameListener {
 
         ByteOutputStream stream = new ByteOutputStream(1000);
         game.encode(stream, true);
-        sendMessageToConnectedClients(new GameResultMessage(stream.toByteArray()));
 
-        for (ClientSession session : sessions) {
-            if (session != null) {
-                session.setMatch(null);
-            }
-        }
+        destroy();
+        sendMessageToConnectedClients(new GameResultMessage(stream.toByteArray()));
     }
 }

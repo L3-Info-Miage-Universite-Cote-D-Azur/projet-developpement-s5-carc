@@ -22,6 +22,7 @@ public class MasterCommandExecutionNotifier implements ICommandExecutorListener 
      */
     @Override
     public void onCommandExecuted(ICommand command) {
+        Logger.debug("Game: command executed: %s", command.getClass().getSimpleName());
         connection.send(new GameCommandRequestMessage(command));
     }
 

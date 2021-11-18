@@ -9,6 +9,15 @@ import stream.ByteOutputStream;
  * Message sent by the client to join the matchmaking queue.
  */
 public class JoinMatchmakingMessage extends Message {
+    private int matchCapacity;
+
+    public JoinMatchmakingMessage() {
+    }
+
+    public JoinMatchmakingMessage(int matchCapacity) {
+        this.matchCapacity = matchCapacity;
+    }
+
     /**
      * Returns the message type.
      * @return the message type
@@ -24,7 +33,7 @@ public class JoinMatchmakingMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-
+        stream.writeInt(matchCapacity);
     }
 
     /**
@@ -33,6 +42,19 @@ public class JoinMatchmakingMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
+        matchCapacity = stream.readInt();
+    }
 
+    @Override
+    public String toString() {
+        return "JOIN_MATCHMAKING {}";
+    }
+
+    /**
+     * Returns the match capacity.
+     * @return the match capacity
+     */
+    public int getMatchCapacity() {
+        return matchCapacity;
     }
 }

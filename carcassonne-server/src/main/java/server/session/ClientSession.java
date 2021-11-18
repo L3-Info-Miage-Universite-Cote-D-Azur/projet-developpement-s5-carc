@@ -25,21 +25,21 @@ public class ClientSession {
     /**
      * Destroys the client session.
      */
-    public void destroy() {
-        synchronized (this) {
-            if (destroyed) {
-                return;
-            }
-
-            destroyed = true;
+    public synchronized void destroy() {
+        if (destroyed) {
+            return;
         }
+
+        destroyed = true;
 
         if (currentMatchmaking != null) {
             currentMatchmaking.remove(this);
         }
 
         if (currentMatch != null) {
-            currentMatch.removePlayer(this);
+            synchronized (currentMatch) {
+                currentMatch.removePlayer(this);
+            }
         }
     }
 
@@ -55,15 +55,25 @@ public class ClientSession {
         return currentMatchmaking;
     }
 
-    public void setMatchmaking(Matchmaking matchmaking) {
-        this.currentMatchmaking = matchmaking;
+    public synchronized void setMatchmaking(Matchmaking matchmaking) {
+        if (destroyed) {
+            matchmaking.remove(this);
+        } else {
+            this.currentMatchmaking = matchmaking;
+        }
     }
 
     public Match getMatch() {
         return currentMatch;
     }
 
-    public void setMatch(Match currentMatch) {
-        this.currentMatch = currentMatch;
+    public synchronized void setMatch(Match currentMatch) {
+        if (destroyed) {
+            synchronized (currentMatch) {
+                currentMatch.removePlayer(this);
+            }
+        } else {
+            this.currentMatch = currentMatch;
+        }
     }
 }

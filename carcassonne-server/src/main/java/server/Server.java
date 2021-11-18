@@ -5,6 +5,8 @@ import server.matchmaking.Matchmaking;
 import server.network.ClientConnectionManager;
 import server.network.socket.TcpServerSocket;
 
+import java.util.HashMap;
+
 /**
  * The server class.
  */
@@ -13,7 +15,7 @@ public class Server {
 
     private final TcpServerSocket serverSocket;
     private final ClientConnectionManager connectionManager;
-    private final Matchmaking matchmaking;
+    private final HashMap<Integer, Matchmaking> matchmaking;
     private final GameConfig gameConfig;
 
     public Server(String host, int port) throws Exception {
@@ -25,7 +27,7 @@ public class Server {
         serverSocket = new TcpServerSocket(host, port);
         connectionManager = new ClientConnectionManager();
         gameConfig = GameConfig.loadFromResources();
-        matchmaking = new Matchmaking(gameConfig.maxPlayers);
+        matchmaking = new HashMap<>();
     }
 
     /**
@@ -72,8 +74,17 @@ public class Server {
      * Returns the server's matchmaking.
      * @return
      */
-    public Matchmaking getMatchmaking() {
-        return matchmaking;
+    public Matchmaking getMatchmaking(int matchCapacity) {
+        if (matchCapacity < gameConfig.minPlayers)
+            return null;
+        if (matchCapacity > gameConfig.maxPlayers)
+            return null;
+
+        if (!matchmaking.containsKey(matchCapacity)) {
+            matchmaking.put(matchCapacity, new Matchmaking(matchCapacity));
+        }
+
+        return matchmaking.get(matchCapacity);
     }
 
     /**

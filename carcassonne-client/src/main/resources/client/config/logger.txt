@@ -1,5 +1,6 @@
-Name	Value	Color
-Enable	True	
-Info		31m
-Warning		32m
-Error		33m
+Name	Value
+Level	DEBUG
+Debug	36m
+Info	32m
+Warning	33m
+Error	31m

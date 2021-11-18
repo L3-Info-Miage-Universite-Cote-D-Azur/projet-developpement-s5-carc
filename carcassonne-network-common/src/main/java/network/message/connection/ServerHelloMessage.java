@@ -52,4 +52,9 @@ public class ServerHelloMessage extends Message {
     public int getUserId() {
         return userId;
     }
+
+    @Override
+    public String toString() {
+        return "SERVER_HELLO {}";
+    }
 }

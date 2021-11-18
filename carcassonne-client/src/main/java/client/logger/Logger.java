@@ -7,6 +7,23 @@ public class Logger {
     private static String ANSI_PREFIX = "\u001B[0";
 
     /**
+     * Logs a message to the console with the debug color.
+     * @param message The message to log.
+     * @param args The arguments to format the message with.
+     */
+    public static void debug(String message, Object... args) {
+        debug(String.format(message, args));
+    }
+
+    /**
+     * Logs a message to the console with the debug color.
+     * @param message The message to log.
+     */
+    public static void debug(String message) {
+        print(message, config.getDebugColor(), LogLevel.DEBUG);
+    }
+
+    /**
      * Logs a message to the console with the info color.
      * @param message The message to log.
      * @param args The arguments to format the message with.
@@ -20,7 +37,7 @@ public class Logger {
      * @param message The message to log.
      */
     public static void info(String message) {
-        print(message, config.getInfoColor());
+        print(message, config.getInfoColor(), LogLevel.INFO);
     }
 
     /**
@@ -37,7 +54,7 @@ public class Logger {
      * @param message The message to log.
      */
     public static void warn(String message) {
-        print(message, config.getWarningColor());
+        print(message, config.getWarningColor(), LogLevel.WARN);
     }
 
     /**
@@ -54,7 +71,7 @@ public class Logger {
      * @param message The message to log.
      */
     public static void error(String message) {
-        print(message, config.getErrorColor());
+        print(message, config.getErrorColor(), LogLevel.ERROR);
     }
 
     /**
@@ -62,8 +79,8 @@ public class Logger {
      * @param message The message to print.
      * @param ansiColorCode The color to print the message in.
      */
-    private static void print(String message, String ansiColorCode) {
-        if (config.isEnabled()) {
+    private static void print(String message, String ansiColorCode, LogLevel level) {
+        if (level.ordinal() >= config.getLevel().ordinal()) {
             synchronized (System.out) {
                 System.out.print("\u001B[");
                 System.out.print(ansiColorCode);

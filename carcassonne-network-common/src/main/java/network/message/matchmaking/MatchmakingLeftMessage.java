@@ -35,4 +35,9 @@ public class MatchmakingLeftMessage extends Message {
     public void decode(ByteInputStream stream) {
 
     }
+
+    @Override
+    public String toString() {
+        return "MATCHMAKING_LEFT {}";
+    }
 }

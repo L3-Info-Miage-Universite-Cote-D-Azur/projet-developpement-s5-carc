@@ -1,5 +1,6 @@
 package excel;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +19,7 @@ public class ExcelNode {
     private ArrayList<String> columns;
     private ArrayList<ExcelRow> rows;
 
-    private ExcelNode() {
+    public ExcelNode() {
         children = new ArrayList<>();
         columns = new ArrayList<>();
         rows = new ArrayList<>();
@@ -30,6 +31,21 @@ public class ExcelNode {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Creates the specified child node.
+     * @param name The name of the child node.
+     */
+    public ExcelNode createChild(String name) {
+        if (getChild(name) != null) {
+            throw new IllegalArgumentException("Child node already exists.");
+        }
+
+        ExcelNode child = new ExcelNode();
+        child.name = name;
+        children.add(child);
+        return child;
     }
 
     /**
@@ -45,6 +61,18 @@ public class ExcelNode {
         }
 
         return null;
+    }
+
+    /**
+     * Adds the specified column.
+     * @param column The column.
+     */
+    public void addColumn(String column) {
+        if (columns.contains(column)) {
+            throw new IllegalArgumentException("Column already exists.");
+        }
+
+        columns.add(column);
     }
 
     /**
@@ -79,6 +107,31 @@ public class ExcelNode {
      */
     public int getRowCount() {
         return rows.size();
+    }
+
+    /**
+     * Creates a new row.
+     */
+    public ExcelRow createRow() {
+        ExcelRow row = new ExcelRow(this, rows.size());
+        rows.add(row);
+        return row;
+    }
+
+    /**
+     * Creates a new row with the specified name.
+     * @param name The name of the row.
+     * @return The row.
+     */
+    public ExcelRow createRow(String name) {
+        if (getColumnIndex(name) != -1) {
+            addColumn("Name");
+        }
+
+        ExcelRow row = new ExcelRow(this, rows.size());
+        rows.add(row);
+        row.add("Name", name);
+        return row;
     }
 
     /**
@@ -211,6 +264,66 @@ public class ExcelNode {
         }
 
         rows.add(row);
+    }
+
+    /**
+     * Saves the current node to the specified excel file.
+     * @param file The file.
+     * @throws IOException If an I/O error occurs.
+     */
+    public void saveToFile(File file) throws IOException {
+        Files.writeString(file.toPath(), toString());
+    }
+
+    /**
+     * Appends to the begin of the current node.
+     * @param builder
+     */
+    private void appendBegin(StringBuilder builder, int childIndex) {
+        for (int i = 0; i < childIndex; i++) {
+            builder.append(CELL_SEPARATOR);
+        }
+    }
+
+    /**
+     * Appends the specified node to the given string builder.
+     * @param builder The string builder.
+     * @param childIndex The child index.
+     */
+    private void writeToStringBuilder(StringBuilder builder, int childIndex) {
+        for (ExcelNode child : children) {
+            child.writeToStringBuilder(builder, childIndex + 1);
+            builder.append("\n");
+        }
+
+        appendBegin(builder, childIndex);
+
+        for (int i = 0; i < columns.size(); i++) {
+            if (i > 0) {
+                builder.append(CELL_SEPARATOR);
+            }
+
+            builder.append(columns.get(i));
+        }
+
+        builder.append("\n");
+
+        for (ExcelRow row : rows) {
+            appendBegin(builder, childIndex);
+            row.writeToStringBuilder(builder, CELL_SEPARATOR);
+            builder.append("\n");
+        }
+    }
+
+    /**
+     * Returns the string representation of the current node.
+     * @return The string representation of the current node.
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        writeToStringBuilder(builder, 0);
+        return builder.toString();
     }
 
     /**

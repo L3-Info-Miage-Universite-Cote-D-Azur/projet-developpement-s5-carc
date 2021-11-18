@@ -19,7 +19,6 @@ public class MasterTurnStartedCommand implements ICommand {
     }
 
     public MasterTurnStartedCommand(Tile tileToDraw, Game game) {
-        System.out.println("MASTER_TURN_STARTED_COMMAND: " + tileToDraw.getConfig().model);
         this.tileConfigIndex = game.getConfig().tiles.indexOf(tileToDraw.getConfig());
     }
 
@@ -78,12 +77,14 @@ public class MasterTurnStartedCommand implements ICommand {
         Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile();
         TileStack stack = game.getStack();
 
-        System.out.println("MASTER_TURN_STARTED_COMMAND: " + tile.getConfig().model);
-
         stack.clear();
         stack.fill(new ArrayList<>() {{
             add(tile);
         }});
+
+        if (!game.getBoard().hasFreePlaceForTile(tile)) {
+            throw new IllegalStateException("The tile is not placeable on the board!");
+        }
 
         if (!game.getTurn().playTurn()) {
             throw new IllegalStateException("Turn is not playable!");

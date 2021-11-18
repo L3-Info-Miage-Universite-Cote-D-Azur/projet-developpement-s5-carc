@@ -49,4 +49,9 @@ public class GameResultMessage extends Message {
     public byte[] getData() {
         return data;
     }
+
+    @Override
+    public String toString() {
+        return "GAME_RESULT {}";
+    }
 }

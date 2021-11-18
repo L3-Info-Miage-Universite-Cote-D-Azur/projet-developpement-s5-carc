@@ -16,8 +16,26 @@ public class ExcelRow {
         this.values = new ArrayList<String>();
     }
 
+    /**
+     * Adds the specified value to the row.
+     * @param value
+     */
     public void add(String value) {
         values.add(value);
+    }
+
+    /**
+     * Adds the specified value to the row.
+     * @param value
+     */
+    public void add(String columnName, String value) {
+        int columnIndex = node.getColumnIndex(columnName);
+
+        while (values.size() <= columnIndex) {
+            values.add("");
+        }
+
+        values.set(columnIndex, value);
     }
 
     /**
@@ -44,5 +62,12 @@ public class ExcelRow {
      */
     public String getValueAt(int index) {
         return values.get(index);
+    }
+
+    public void writeToStringBuilder(StringBuilder sb, String separator) {
+        for (String value : values) {
+            sb.append(value);
+            sb.append(separator);
+        }
     }
 }

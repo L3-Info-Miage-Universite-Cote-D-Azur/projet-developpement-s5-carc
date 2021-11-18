@@ -57,4 +57,11 @@ public class GameCommandRequestMessage extends Message {
     public ICommand getCommand() {
         return command;
     }
+
+    @Override
+    public String toString() {
+        return "GAME_COMMAND_REQUEST {" +
+                "command=" + command.getType() +
+                '}';
+    }
 }

@@ -6,10 +6,7 @@ import network.message.game.GameCommandMessage;
 import network.message.game.GameCommandRequestMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
-import network.message.matchmaking.JoinMatchmakingMessage;
-import network.message.matchmaking.LeaveMatchmakingMessage;
-import network.message.matchmaking.MatchmakingDataMessage;
-import network.message.matchmaking.MatchmakingLeftMessage;
+import network.message.matchmaking.*;
 
 /**
  * MessageType is an enumeration of all the message types.
@@ -24,6 +21,7 @@ public enum MessageType {
     MATCHMAKING_DATA(210, MatchmakingDataMessage.class),
     LEAVE_MATCHMAKING(111, LeaveMatchmakingMessage.class),
     MATCHMAKING_LEFT(211, MatchmakingLeftMessage.class),
+    MATCHMAKING_FAILED(212, MatchmakingFailedMessage.class),
 
     GAME_DATA(220, GameDataMessage.class),
     GAME_COMMAND_REQUEST(121, GameCommandRequestMessage.class),

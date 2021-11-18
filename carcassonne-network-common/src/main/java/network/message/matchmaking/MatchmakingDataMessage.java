@@ -59,4 +59,12 @@ public class MatchmakingDataMessage extends Message {
     public int getRequiredPlayers() {
         return requiredPlayers;
     }
+
+    @Override
+    public String toString() {
+        return "MATCHMAKING_DATA {" +
+                "numPlayers=" + numPlayers +
+                ", requiredPlayers=" + requiredPlayers +
+                '}';
+    }
 }

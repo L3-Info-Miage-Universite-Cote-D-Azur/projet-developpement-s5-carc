@@ -1,8 +1,9 @@
 package client.message;
 
-import client.ServerSideGameMain;
+import client.SlaveGameMain;
 import client.ai.SimpleAI;
 import client.command.MasterCommandExecutionNotifier;
+import client.config.ServerConfig;
 import client.listener.GameLogger;
 import client.logger.Logger;
 import client.network.ServerConnection;
@@ -17,7 +18,11 @@ import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
 import network.message.matchmaking.JoinMatchmakingMessage;
 import network.message.matchmaking.MatchmakingDataMessage;
+import network.message.matchmaking.MatchmakingFailedMessage;
 import stream.ByteInputStream;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Handles messages received from the server.
@@ -27,6 +32,7 @@ public class MessageHandler {
 
     private int userId;
     private Game currentMatchGame;
+    private ArrayList<Game> matchHistory = new ArrayList<>();
 
     public MessageHandler(ServerConnection connection) {
         this.connection = connection;
@@ -40,6 +46,7 @@ public class MessageHandler {
         switch (message.getType()) {
             case SERVER_HELLO -> onServerHello((ServerHelloMessage) message);
             case MATCHMAKING_DATA -> onMatchmakingData((MatchmakingDataMessage) message);
+            case MATCHMAKING_FAILED -> onMatchmakingFailed((MatchmakingFailedMessage) message);
             case GAME_DATA -> onGameData((GameDataMessage) message);
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
             case GAME_RESULT -> onGameResult((GameResultMessage) message);
@@ -52,10 +59,10 @@ public class MessageHandler {
      * @param message The message to handle.
      */
     private void onServerHello(ServerHelloMessage message) {
-        Logger.info("Network: ServerHelloMessage received. UID: %d", message.getUserId());
+        Logger.debug("Network: ServerHelloMessage received. UID: %d", message.getUserId());
 
         userId = message.getUserId();
-        connection.send(new JoinMatchmakingMessage());
+        connection.send(new JoinMatchmakingMessage(ServerConfig.MATCHMAKING_MATCH_CAPACITY));
     }
 
     /**
@@ -63,7 +70,11 @@ public class MessageHandler {
      * @param message The message to handle.
      */
     private void onMatchmakingData(MatchmakingDataMessage message) {
-        Logger.info("Matchmaking: %d/%d", message.getNumPlayers(), message.getRequiredPlayers());
+        Logger.debug("Matchmaking: %d/%d", message.getNumPlayers(), message.getRequiredPlayers());
+    }
+
+    private void onMatchmakingFailed(MatchmakingFailedMessage message) {
+        Logger.warn("Matchmaking: failed!");
     }
 
     /**
@@ -71,11 +82,15 @@ public class MessageHandler {
      * @param message
      */
     private void onGameData(GameDataMessage message) {
-        Logger.info("Game: data from server received!", message.getData());
+        Logger.debug("Game: data from server received!", message.getData());
 
-        currentMatchGame = new Game(GameConfig.loadFromResources());
+        currentMatchGame = new Game(ServerConfig.GAME_CONFIG);
         currentMatchGame.decode(new ByteInputStream(message.getData(), message.getData().length), false);
-        currentMatchGame.setListener(new GameLogger());
+
+        if (userId == 0) {
+            currentMatchGame.setListener(new GameLogger());
+        }
+
         currentMatchGame.getCommandExecutor().setListener(new MasterCommandExecutionNotifier(connection));
 
         Player ownPlayer = currentMatchGame.getPlayerById(userId);
@@ -98,6 +113,7 @@ public class MessageHandler {
         }
 
         if (message.getCommand().getType() == CommandType.MASTER_TURN_DATA || currentMatchGame.getTurn().getPlayer().getId() != userId) {
+            Logger.debug("Game: execute command %s", message.getCommand().getType());
             message.getCommand().execute(currentMatchGame);
         }
     }
@@ -107,21 +123,44 @@ public class MessageHandler {
      * @param message
      */
     private void onGameResult(GameResultMessage message) {
-        Logger.info("Game: result received from server!");
+        Logger.debug("Game: result received from server!");
         currentMatchGame = null;
 
-        Game masterGame = new Game(GameConfig.loadFromResources());
+        Game masterGame = new Game(ServerConfig.GAME_CONFIG);
         masterGame.decode(new ByteInputStream(message.getData(), message.getData().length), true);
+        matchHistory.add(masterGame);
 
-        ServerSideGameMain.onMatchOver(userId, masterGame);
-
+        if (matchHistory.size() == ServerConfig.NUM_MATCHES) {
+            Logger.info("Game: finished %d matches!", matchHistory.size());
+            SlaveGameMain.onAllMatchOver();
+            connection.close();
+        } else {
+            Logger.info("Game: match ended. Rejoin the matchmaking...");
+            connection.send(new JoinMatchmakingMessage(ServerConfig.MATCHMAKING_MATCH_CAPACITY));
+        }
     }
 
+    /**
+     * Gets the client's user id.
+     * @return
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     * Gets whether the client is in match.
+     * @return
+     */
     public boolean isInMatch() {
         return currentMatchGame != null;
+    }
+
+    /**
+     * Gets the match history.
+     * @return
+     */
+    public List<Game> getMatchHistory() {
+        return matchHistory;
     }
 }

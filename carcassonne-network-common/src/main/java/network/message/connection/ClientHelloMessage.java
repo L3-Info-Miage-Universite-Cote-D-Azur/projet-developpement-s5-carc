@@ -35,4 +35,9 @@ public class ClientHelloMessage extends Message {
     public void decode(ByteInputStream stream) {
 
     }
+
+    @Override
+    public String toString() {
+        return "CLIENT_HELLO {}";
+    }
 }

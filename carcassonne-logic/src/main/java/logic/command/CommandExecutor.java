@@ -52,8 +52,8 @@ public class CommandExecutor {
      */
     public boolean execute(ICommand command) {
         if (command.canBeExecuted(game)) {
-            command.execute(game);
             listener.onCommandExecuted(command);
+            command.execute(game);
             return true;
         }
 

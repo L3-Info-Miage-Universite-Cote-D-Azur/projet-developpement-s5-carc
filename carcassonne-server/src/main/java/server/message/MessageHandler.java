@@ -6,9 +6,11 @@ import network.message.connection.ServerHelloMessage;
 import network.message.game.GameCommandRequestMessage;
 import network.message.matchmaking.JoinMatchmakingMessage;
 import network.message.matchmaking.LeaveMatchmakingMessage;
+import network.message.matchmaking.MatchmakingFailedMessage;
 import server.Server;
 import server.logger.Logger;
 import server.matchmaking.Match;
+import server.matchmaking.Matchmaking;
 import server.network.ClientConnection;
 import server.session.ClientSession;
 
@@ -75,7 +77,15 @@ public class MessageHandler {
             return;
         }
 
-        Server.getInstance().getMatchmaking().add(session);
+        Matchmaking matchmaking = Server.getInstance().getMatchmaking(message.getMatchCapacity());
+
+        if (matchmaking == null) {
+            Logger.warn("No matchmaking found for capacity: " + message.getMatchCapacity());
+            client.send(new MatchmakingFailedMessage());
+            return;
+        }
+
+        matchmaking.add(session);
     }
 
     /**
@@ -90,12 +100,14 @@ public class MessageHandler {
             return;
         }
 
-        if (session.getMatchmaking() == null) {
+        Matchmaking matchmaking = session.getMatchmaking();
+
+        if (matchmaking == null) {
             Logger.warn("Client has no matchmaking.");
             return;
         }
 
-        Server.getInstance().getMatchmaking().remove(session);
+        matchmaking.remove(session);
     }
 
     /**
@@ -117,6 +129,8 @@ public class MessageHandler {
             return;
         }
 
-        match.executeCommand(session.getUserId(), message.getCommand());
+        synchronized (match) {
+            match.executeCommand(session.getUserId(), message.getCommand());
+        }
     }
 }

@@ -151,18 +151,12 @@ public class GameDrawUtils {
      * @return The image layer representing the specified game instance.
      */
     public static BufferedImage createLayer(Game game, Bounds boardBounds) {
-        long startTime = System.currentTimeMillis();
-
         Bounds layerBounds = boardBounds.scale(tileWidth, tileHeight).reverseY();
         BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D layerGraphics = layer.createGraphics();
         render(game, layerGraphics, layerBounds);
         layerGraphics.dispose();
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("Time to create image: " + (endTime - startTime) + "ms");
 
         return layer;
     }
