@@ -26,6 +26,11 @@ public class PlaceMeepleCommand implements ICommand {
         this.chunkId = chunkId;
     }
 
+    public PlaceMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
+        this.tilePosition = tilePosition;
+        this.chunkId = chunkId;
+    }
+
     /**
      * Gets the command type.
      * @return the command type

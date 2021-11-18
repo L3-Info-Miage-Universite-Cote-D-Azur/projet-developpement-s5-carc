@@ -21,8 +21,8 @@ public class RemoveMeepleCommand implements ICommand {
     public RemoveMeepleCommand() {
     }
 
-    public RemoveMeepleCommand(Tile tile, ChunkId chunkId) {
-        this.tilePosition = tile.getPosition();
+    public RemoveMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
+        this.tilePosition = tilePosition;
         this.chunkId = chunkId;
     }
 
