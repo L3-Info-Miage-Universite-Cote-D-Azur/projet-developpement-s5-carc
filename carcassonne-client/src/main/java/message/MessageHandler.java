@@ -106,10 +106,10 @@ public class MessageHandler {
 
     private void onGameCommand(GameCommandMessage message) {
         if (message.getCommand().getType() == CommandType.MASTER_TURN_DATA || currentMatchGame.getTurn().getPlayer().getId() != userId) {
-            Logger.info("Game: command %s received from server!", message.getCommand().getType());
+            // Logger.info("Game: command %s received from server!", message.getCommand().getType());
             message.getCommand().execute(currentMatchGame);
         } else {
-            Logger.info("Game: command %s received from server! (callback)", message.getCommand().getType());
+            // Logger.info("Game: command %s received from server! (callback)", message.getCommand().getType());
         }
     }
 

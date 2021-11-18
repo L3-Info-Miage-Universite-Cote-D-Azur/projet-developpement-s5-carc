@@ -23,4 +23,9 @@ public interface ITcpClientSocketListener {
      * Called when the socket has received data.
      */
     void onReceive(int length);
+
+    /**
+     * Called when the socket was sent data.
+     */
+    void onSend(int length);
 }

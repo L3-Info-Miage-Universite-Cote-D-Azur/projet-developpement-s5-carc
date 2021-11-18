@@ -6,6 +6,7 @@ import network.message.Message;
 import network.message.connection.ClientHelloMessage;
 import network.socket.ITcpClientSocketListener;
 import network.socket.TcpClientSocket;
+import network.socket.handler.TcpSendHandler;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -31,9 +32,21 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     private static int MAX_RECEIVE_BUFFER_SIZE = 1024 * 1024;
 
+    /**
+     * Initial size of the stream used to store data to send to the socket.
+     */
+    private static int INITIAL_SEND_STREAM_SIZE = 1024;
+
+    /**
+     * Max size of the stream used to store data to send to the socket.
+     * If the stream is full, the connection is closed.
+     */
+    private static int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
+
     private final TcpClientSocket clientSocket;
     private final ByteBuffer readBuffer;
-    private ResizableByteBuffer receiveStream;
+    private final ResizableByteBuffer receiveStream;
+    private final ResizableByteBuffer sendStream;
     private final MessageHandler messageHandler;
 
     public ServerConnection() throws IOException {
@@ -41,6 +54,7 @@ public class ServerConnection implements ITcpClientSocketListener {
         clientSocket.setListener(this);
         readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
+        sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
         messageHandler = new MessageHandler(this);
     }
 
@@ -126,6 +140,21 @@ public class ServerConnection implements ITcpClientSocketListener {
     }
 
     /**
+     * Invoked when the connection was sent data.
+     * @param length
+     */
+    @Override
+    public void onSend(int length) {
+        synchronized (sendStream) {
+            sendStream.remove(length);
+
+            if (sendStream.size() != 0) {
+                clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
+            }
+        }
+    }
+
+    /**
      * Sends a message to the server.
      * @param message The message to send.
      */
@@ -135,6 +164,22 @@ public class ServerConnection implements ITcpClientSocketListener {
         ByteOutputStream stream = new ByteOutputStream(32);
         Packet packet = Packet.create(message);
         packet.encode(stream);
-        clientSocket.write(ByteBuffer.wrap(stream.getBytes(), 0, stream.getLength()));
+
+        send(stream.getBytes(), 0, stream.getLength());
+    }
+
+    /**
+     * Sends the given data to the server.
+     * @param buffer The data to send.
+     */
+    private void send(byte[] buffer, int offset, int length) {
+        synchronized (this) {
+            if (sendStream.size() == 0) {
+                sendStream.put(buffer, offset, length);
+                clientSocket.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()));
+            } else {
+                sendStream.put(buffer, offset, length);
+            }
+        }
     }
 }

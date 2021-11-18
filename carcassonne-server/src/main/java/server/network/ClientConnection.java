@@ -45,6 +45,17 @@ public class ClientConnection {
     private static int LAST_PACKET_TIMEOUT = 60000;
 
     /**
+     * Initial size of the stream used to store data to send to the socket.
+     */
+    private static int INITIAL_SEND_STREAM_SIZE = 1024;
+
+    /**
+     * Max size of the stream used to store data to send to the socket.
+     * If the stream is full, the connection is closed.
+     */
+    private static int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
+
+    /**
      * The socket channel used to communicate with the client.
      */
     private final AsynchronousSocketChannel channel;
@@ -62,7 +73,13 @@ public class ClientConnection {
     /**
      * The stream used to store data to be handled.
      */
-    private ResizableByteBuffer receiveStream;
+    private final ResizableByteBuffer receiveStream;
+
+    /**
+     * The stream used to store data to be sent to the socket.
+     */
+    private final ResizableByteBuffer sendStream;
+
 
     /**
      * Session data of the client.
@@ -79,6 +96,7 @@ public class ClientConnection {
      */
     private LocalDateTime lastRead;
 
+
     /**
      * Whether the connection is destroyed.
      */
@@ -90,6 +108,7 @@ public class ClientConnection {
         this.messageHandler = new MessageHandler(this);
         this.readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         this.receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
+        this.sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
         this.lastRead = LocalDateTime.now();
 
         Logger.debug("Connection %d created. IP:%s", id, getRemoteAddress());
@@ -208,6 +227,20 @@ public class ClientConnection {
     }
 
     /**
+     * Invoked when the connection was sent data.
+     * @param length
+     */
+    public void onSend(int length) {
+        synchronized (sendStream) {
+            sendStream.remove(length);
+
+            if (sendStream.size() != 0) {
+                channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
+            }
+        }
+    }
+
+    /**
      * Sends the given message to the client.
      * @param message The message to send.
      */
@@ -219,7 +252,7 @@ public class ClientConnection {
             ByteOutputStream stream = new ByteOutputStream(64);
             packet.encode(stream);
 
-            send(ByteBuffer.wrap(stream.getBytes(), 0, stream.getLength()));
+            send(stream.getBytes(), 0, stream.getLength());
         }
     }
 
@@ -227,8 +260,15 @@ public class ClientConnection {
      * Sends the given data to the client.
      * @param buffer The data to send.
      */
-    private void send(ByteBuffer buffer) {
-        channel.write(buffer, this, new TcpSendHandler());
+    private void send(byte[] buffer, int offset, int length) {
+        synchronized (this) {
+            if (sendStream.size() == 0) {
+                sendStream.put(buffer, offset, length);
+                channel.write(ByteBuffer.wrap(sendStream.getBuffer(), 0, sendStream.size()), this, new TcpSendHandler());
+            } else {
+                sendStream.put(buffer, offset, length);
+            }
+        }
     }
 
     /**
