@@ -1,6 +1,6 @@
-package network.socket.handler;
+package client.network.socket.handler;
 
-import network.socket.ITcpClientSocketListener;
+import client.network.socket.ITcpClientSocketListener;
 
 import java.nio.channels.CompletionHandler;
 

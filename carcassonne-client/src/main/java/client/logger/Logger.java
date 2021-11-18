@@ -1,6 +1,6 @@
-package logger;
+package client.logger;
 
-import config.LoggerConfig;
+import client.config.LoggerConfig;
 
 public class Logger {
     private static LoggerConfig config = LoggerConfig.getDefaultConfig();

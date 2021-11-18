@@ -83,7 +83,7 @@ public class Chunk {
 
     public void decode(ByteInputStream stream, Game game) {
         if (stream.readBoolean()) {
-            meeple = new Meeple(game.getPlayer(stream.readInt()));
+            meeple = new Meeple(game.getPlayerById(stream.readInt()));
         } else {
             meeple = null;
         }

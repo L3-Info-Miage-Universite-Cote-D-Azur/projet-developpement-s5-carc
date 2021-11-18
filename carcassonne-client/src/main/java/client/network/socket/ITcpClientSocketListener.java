@@ -1,4 +1,4 @@
-package network.socket;
+package client.network.socket;
 
 /**
  * Interface for TCP client socket listeners.

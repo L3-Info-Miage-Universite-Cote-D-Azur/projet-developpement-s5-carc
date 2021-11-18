@@ -10,6 +10,15 @@ import stream.ByteOutputStream;
  * It contains the winner of the game and the stats of the players.
  */
 public class GameResultMessage extends Message {
+    private byte[] data;
+
+    public GameResultMessage() {
+    }
+
+    public GameResultMessage(byte[] data) {
+        this.data = data;
+    }
+
     @Override
     public MessageType getType() {
         return MessageType.GAME_RESULT;
@@ -21,7 +30,7 @@ public class GameResultMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-
+        stream.writeBytes(data);
     }
 
     /**
@@ -30,6 +39,10 @@ public class GameResultMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
+        data = stream.readBytes();
+    }
 
+    public byte[] getData() {
+        return data;
     }
 }

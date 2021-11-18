@@ -1,18 +1,18 @@
-package message;
+package client.message;
 
-import ai.SimpleAI;
-import logger.Logger;
+import client.ServerSideGameMain;
+import client.ai.SimpleAI;
+import client.command.MasterCommandNotifier;
+import client.config.ServerConfig;
+import client.logger.Logger;
 import logic.Game;
 import logic.command.CommandType;
-import logic.command.ICommand;
-import logic.command.ICommandExecutorListener;
 import logic.config.GameConfig;
 import logic.player.Player;
-import network.ServerConnection;
+import client.network.ServerConnection;
 import network.message.Message;
 import network.message.connection.ServerHelloMessage;
 import network.message.game.GameCommandMessage;
-import network.message.game.GameCommandRequestMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
 import network.message.matchmaking.JoinMatchmakingMessage;
@@ -75,45 +75,52 @@ public class MessageHandler {
 
         currentMatchGame = new Game(GameConfig.loadFromResources());
         currentMatchGame.decode(new ByteInputStream(message.getData(), message.getData().length), false);
-        currentMatchGame.getCommandExecutor().setListener(new ICommandExecutorListener() {
-            @Override
-            public void onCommandExecuted(ICommand command) {
-                connection.send(new GameCommandRequestMessage(command));
-            }
+        currentMatchGame.getCommandExecutor().setListener(new MasterCommandNotifier(connection));
 
-            @Override
-            public void onCommandFailed(ICommand command, String reason) {
-                Logger.warn("Game: command failed: %s", reason);
-            }
+        Player ownPlayer = currentMatchGame.getPlayerById(userId);
 
-            @Override
-            public void onCommandFailed(ICommand command, String reason, Object... args) {
-                Logger.warn("Game: command failed: %s", reason);
-            }
-        });
-
-        for (int i = 0; i < currentMatchGame.getPlayerCount(); i++) {
-            Player player = currentMatchGame.getPlayer(i);
-
-            if (player.getId() == userId) {
-                player.setListener(new SimpleAI(player));
-                return;
-            }
-        }
-
-        Logger.warn("Game: own user not found in game!");
-    }
-
-    private void onGameCommand(GameCommandMessage message) {
-        if (message.getCommand().getType() == CommandType.MASTER_TURN_DATA || currentMatchGame.getTurn().getPlayer().getId() != userId) {
-            // Logger.info("Game: command %s received from server!", message.getCommand().getType());
-            message.getCommand().execute(currentMatchGame);
+        if (ownPlayer != null) {
+            ownPlayer.setListener(new SimpleAI(ownPlayer));
         } else {
-            // Logger.info("Game: command %s received from server! (callback)", message.getCommand().getType());
+            Logger.warn("Game: own player not found!");
         }
     }
 
+    /**
+     * Handles a game command message.
+     * Command musts be executed if it's not our turn or if it's a master command.
+     * @param message
+     */
+    private void onGameCommand(GameCommandMessage message) {
+        if (currentMatchGame == null) {
+            return;
+        }
+
+        if (message.getCommand().getType() == CommandType.MASTER_TURN_DATA || currentMatchGame.getTurn().getPlayer().getId() != userId) {
+            message.getCommand().execute(currentMatchGame);
+        }
+    }
+
+    /**
+     * Handles a game result message.
+     * @param message
+     */
     private void onGameResult(GameResultMessage message) {
         Logger.info("Game: result received from server!");
+        currentMatchGame = null;
+
+        Game masterGame = new Game(GameConfig.loadFromResources());
+        masterGame.decode(new ByteInputStream(message.getData(), message.getData().length), true);
+
+        ServerSideGameMain.onMatchOver(userId, masterGame);
+
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public boolean isInMatch() {
+        return currentMatchGame != null;
     }
 }

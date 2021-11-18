@@ -107,6 +107,10 @@ public class Game {
         return ended;
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
     public void addPlayer(Player player) {
         if (getPlayerCount() >= config.maxPlayers) {
             throw new TooManyPlayerException();

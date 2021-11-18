@@ -1,4 +1,4 @@
-package ai;
+package client.ai;
 
 import logic.Game;
 import logic.command.EndTurnCommand;

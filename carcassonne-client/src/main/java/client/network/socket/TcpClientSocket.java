@@ -1,8 +1,8 @@
-package network.socket;
+package client.network.socket;
 
-import network.socket.handler.TcpConnectHandler;
-import network.socket.handler.TcpReadHandler;
-import network.socket.handler.TcpSendHandler;
+import client.network.socket.handler.TcpConnectHandler;
+import client.network.socket.handler.TcpReadHandler;
+import client.network.socket.handler.TcpSendHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

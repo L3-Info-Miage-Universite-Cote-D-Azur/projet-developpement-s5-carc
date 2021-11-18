@@ -1,12 +1,14 @@
-package network;
+package client.network;
 
-import logger.Logger;
-import message.MessageHandler;
+import client.logger.Logger;
+import client.message.MessageHandler;
+import network.Packet;
+import network.ResizableByteBuffer;
 import network.message.Message;
 import network.message.connection.ClientHelloMessage;
-import network.socket.ITcpClientSocketListener;
-import network.socket.TcpClientSocket;
-import network.socket.handler.TcpSendHandler;
+import client.network.socket.ITcpClientSocketListener;
+import client.network.socket.TcpClientSocket;
+import client.network.socket.handler.TcpSendHandler;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -181,5 +183,9 @@ public class ServerConnection implements ITcpClientSocketListener {
                 sendStream.put(buffer, offset, length);
             }
         }
+    }
+
+    public MessageHandler getMessageHandler() {
+        return messageHandler;
     }
 }

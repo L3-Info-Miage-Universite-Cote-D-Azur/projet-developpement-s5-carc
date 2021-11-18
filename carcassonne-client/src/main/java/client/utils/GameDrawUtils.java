@@ -1,4 +1,4 @@
-package utils;
+package client.utils;
 
 import logic.Game;
 import logic.board.GameBoard;

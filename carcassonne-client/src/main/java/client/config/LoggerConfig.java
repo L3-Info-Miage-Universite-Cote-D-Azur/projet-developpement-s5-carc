@@ -1,4 +1,4 @@
-package config;
+package client.config;
 
 import excel.ExcelNode;
 

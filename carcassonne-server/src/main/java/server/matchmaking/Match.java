@@ -13,11 +13,12 @@ import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
+import server.command.MasterCommandExecutionNotifier;
 import server.logger.Logger;
 import server.session.ClientSession;
 import stream.ByteOutputStream;
 
-public class Match implements IGameListener, ICommandExecutorListener {
+public class Match implements IGameListener {
     private final int id;
     private final ClientSession[] sessions;
     private final Game game;
@@ -27,14 +28,17 @@ public class Match implements IGameListener, ICommandExecutorListener {
         this.sessions = sessions;
         this.game = new Game(GameConfig.loadFromResources());
         game.setListener(this);
-        game.setMaster(true);
-        game.getCommandExecutor().setListener(this);
+        game.getCommandExecutor().setListener(new MasterCommandExecutionNotifier(this));
 
         for (ClientSession session : sessions) {
             game.addPlayer(new Player(session.getUserId()));
         }
     }
 
+    /**
+     * Removes the player from the connected sessions.
+     * @param session the session to remove
+     */
     public void removePlayer(ClientSession session) {
         for (int i = 0; i < sessions.length; i++) {
             if (sessions[i] == session) {
@@ -42,15 +46,23 @@ public class Match implements IGameListener, ICommandExecutorListener {
             }
         }
 
-        if (!game.isOver()) {
+        if (game.isStarted() && !game.isOver()) {
             autoPlayIfCurrentPlayerIsOffline();
         }
     }
 
+    /**
+     * Starts the match.
+     */
     public void startGame() {
         game.start();
     }
 
+    /**
+     * Gets the session by the user id.
+     * @param userId
+     * @return
+     */
     private ClientSession getSessionByUserId(int userId) {
         for (ClientSession session : sessions) {
             if (session != null && session.getUserId() == userId) {
@@ -60,6 +72,10 @@ public class Match implements IGameListener, ICommandExecutorListener {
         return null;
     }
 
+    /**
+     * Sends a message to all connected clients.
+     * @param message
+     */
     private void sendMessageToConnectedClients(Message message) {
         for (ClientSession session : sessions) {
             if (session != null) {
@@ -68,6 +84,11 @@ public class Match implements IGameListener, ICommandExecutorListener {
         }
     }
 
+    /**
+     * Executes a command in the master game and notify the connected clients if successful.
+     * @param userId the executor user id
+     * @param command the command to execute
+     */
     public void executeCommand(int userId, ICommand command) {
         GameTurn turn = game.getTurn();
 
@@ -91,10 +112,17 @@ public class Match implements IGameListener, ICommandExecutorListener {
         game.getCommandExecutor().execute(command);
     }
 
-    private void notifyCommandExecutionToConnectedClients(ICommand command) {
+    /**
+     * Notifies the connected clients that the command has been executed.
+     * @param command the executed command
+     */
+    public void notifyCommandExecutionToConnectedClients(ICommand command) {
         sendMessageToConnectedClients(new GameCommandMessage(command));
     }
 
+    /**
+     * Auto plays the game if the current player who must play is offline.
+     */
     private void autoPlayIfCurrentPlayerIsOffline() {
         GameTurn turn = game.getTurn();
         int userId = turn.getPlayer().getId();
@@ -146,27 +174,15 @@ public class Match implements IGameListener, ICommandExecutorListener {
     @Override
     public void onEnd() {
         Logger.info("Match %d: Game ended", id);
-        sendMessageToConnectedClients(new GameResultMessage());
+
+        ByteOutputStream stream = new ByteOutputStream(1000);
+        game.encode(stream, true);
+        sendMessageToConnectedClients(new GameResultMessage(stream.toByteArray()));
 
         for (ClientSession session : sessions) {
             if (session != null) {
                 session.setMatch(null);
             }
         }
-    }
-
-    @Override
-    public void onCommandExecuted(ICommand command) {
-        notifyCommandExecutionToConnectedClients(command);
-    }
-
-    @Override
-    public void onCommandFailed(ICommand command, String reason) {
-        Logger.warn("Match %d: Command failed: %s", id, reason);
-    }
-
-    @Override
-    public void onCommandFailed(ICommand command, String reason, Object... args) {
-        Logger.warn("Match %d: Command failed: %s", id, String.format(reason, args));
     }
 }
