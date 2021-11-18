@@ -116,7 +116,7 @@ public class Player implements Comparable {
      */
     public int compareTo(Object compareTo) {
         Player compareToEmp = (Player) compareTo;
-        return Integer.compare(id, compareToEmp.getScore());
+        return Integer.compare(getScore(), compareToEmp.getScore());
     }
 
     public int getRoadPoints() {

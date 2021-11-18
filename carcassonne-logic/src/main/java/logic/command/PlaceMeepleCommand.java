@@ -111,6 +111,7 @@ public class PlaceMeepleCommand implements ICommand {
         GameTurn turn = game.getTurn();
 
         chunk.setMeeple(new Meeple(player));
+        player.addScore(1, chunk.getType());
         player.removeRemainingMeepleCount();
         turn.setMeeplePlaced();
 
