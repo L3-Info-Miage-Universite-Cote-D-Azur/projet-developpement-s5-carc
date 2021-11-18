@@ -1,6 +1,6 @@
 # Livraison 5
 - # En terme de fonctionnalitées livrées et issues faites
-  - Modification du fonctionnement des tuiles (Issue #54)
+  - Modification du fonctionnement des tuiles (Issue #54 et #63)
     - Passage d'une tuile ayant 5 zones à une tuile composée de 13 zones (Issue #57)
   - Ajout des couleurs sur la console (Issue #55)
     - Ajout des couleurs en fonction d'un document de configuration (Issue #52)
