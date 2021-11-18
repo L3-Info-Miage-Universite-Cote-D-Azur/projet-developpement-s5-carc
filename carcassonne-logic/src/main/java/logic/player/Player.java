@@ -100,7 +100,7 @@ public class Player implements Comparable {
         }
 
         switch (chunkType) {
-            case ROAD -> roadScore += value;
+            case ROAD, ROAD_END -> roadScore += value;
             case TOWN -> townScore += value;
             case ABBEY -> abbeyScore += value;
             case FIELD -> fieldScore += value;

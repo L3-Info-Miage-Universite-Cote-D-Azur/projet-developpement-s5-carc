@@ -4,6 +4,7 @@ import client.ServerSideGameMain;
 import client.ai.SimpleAI;
 import client.command.MasterCommandNotifier;
 import client.config.ServerConfig;
+import client.listener.GameLogger;
 import client.logger.Logger;
 import logic.Game;
 import logic.command.CommandType;
@@ -75,6 +76,7 @@ public class MessageHandler {
 
         currentMatchGame = new Game(GameConfig.loadFromResources());
         currentMatchGame.decode(new ByteInputStream(message.getData(), message.getData().length), false);
+        currentMatchGame.setListener(new GameLogger());
         currentMatchGame.getCommandExecutor().setListener(new MasterCommandNotifier(connection));
 
         Player ownPlayer = currentMatchGame.getPlayerById(userId);
