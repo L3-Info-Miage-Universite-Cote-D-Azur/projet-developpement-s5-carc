@@ -1,7 +1,11 @@
 package logic.tile;
 
+import logic.Game;
 import logic.config.GameConfig;
 import logic.config.excel.TileExcelConfig;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +19,13 @@ public class TileStack {
 
     public TileStack() {
         this.tiles = new LinkedList<>();
+    }
+
+    /**
+     * Clears the stack.
+     */
+    public void clear() {
+        tiles.clear();
     }
 
     /**
@@ -79,6 +90,24 @@ public class TileStack {
         if (startingTile != null) {
             tiles.remove(startingTile);
             tiles.addFirst(startingTile);
+        }
+    }
+
+    public void encode(ByteOutputStream stream, Game game) {
+        stream.writeInt(tiles.size());
+
+        for (Tile tile : tiles) {
+            ByteStreamHelper.encodeTile(stream, tile, game);
+        }
+    }
+
+    public void decode(ByteInputStream stream, Game game) {
+        tiles.clear();
+
+        int numTiles = stream.readInt();
+
+        for (int i = 0; i < numTiles; i++) {
+            tiles.add(ByteStreamHelper.decodeTile(stream, game));
         }
     }
 }

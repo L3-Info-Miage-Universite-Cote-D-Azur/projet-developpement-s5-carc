@@ -1,9 +1,17 @@
 package logic.command;
 
+/**
+ * Class that creates commands from the given command type.
+ */
 public class CommandFactory {
-    public static ICommand create(CommandId commandId) {
+    /**
+     * Creates a command from the given command type.
+     * @param type the command type
+     * @return the command
+     */
+    public static ICommand create(CommandType type) {
         try {
-            return commandId.getCommandClass().getDeclaredConstructor().newInstance();
+            return type.getCommandClass().getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

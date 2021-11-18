@@ -1,17 +1,19 @@
 package server;
 
 import logic.config.GameConfig;
-import server.socket.TcpClientConnectionManager;
-import server.socket.TcpServerSocket;
+import server.matchmaking.Matchmaking;
+import server.network.ClientConnectionManager;
+import server.network.socket.TcpServerSocket;
 
-
-
+/**
+ * The server class.
+ */
 public class Server {
     private static Server instance;
 
     private final TcpServerSocket serverSocket;
-    private final TcpClientConnectionManager connectionManager;
-
+    private final ClientConnectionManager connectionManager;
+    private final Matchmaking matchmaking;
     private final GameConfig gameConfig;
 
     public Server(String host, int port) throws Exception {
@@ -21,8 +23,9 @@ public class Server {
 
         instance = this;
         serverSocket = new TcpServerSocket(host, port);
-        connectionManager = new TcpClientConnectionManager();
+        connectionManager = new ClientConnectionManager();
         gameConfig = GameConfig.loadFromResources();
+        matchmaking = new Matchmaking(gameConfig.maxPlayers);
     }
 
     public void start() {
@@ -39,8 +42,16 @@ public class Server {
         return serverSocket;
     }
 
-    public TcpClientConnectionManager getConnectionManager() {
+    public ClientConnectionManager getConnectionManager() {
         return connectionManager;
+    }
+
+    public GameConfig getGameConfig() {
+        return gameConfig;
+    }
+
+    public Matchmaking getMatchmaking() {
+        return matchmaking;
     }
 
     public static Server getInstance() {

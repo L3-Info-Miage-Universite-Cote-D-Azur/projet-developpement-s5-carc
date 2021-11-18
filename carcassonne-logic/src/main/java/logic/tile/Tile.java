@@ -1,8 +1,11 @@
 package logic.tile;
 
+import logic.Game;
 import logic.board.GameBoard;
 import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 import java.util.Arrays;
 
@@ -15,12 +18,8 @@ public class Tile {
     private TileExcelConfig config;
 
     public Tile(TileExcelConfig config) {
-        this.config = config;
         chunks = new Chunk[ChunkId.values().length];
-
-        for (ChunkId chunkId : ChunkId.values()) {
-            chunks[chunkId.ordinal()] = new Chunk(this, ChunkType.FIELD, new ChunkId[0]);
-        }
+        this.config = config;
     }
 
     /**
@@ -118,6 +117,40 @@ public class Tile {
      */
     public TileExcelConfig getConfig() {
         return config;
+    }
+
+    /**
+     * Encodes the tile.
+     * @param stream The stream to encode to.
+     */
+    public void encode(ByteOutputStream stream) {
+        if (position != null) {
+            stream.writeBoolean(true);
+            stream.writeInt(position.getX());
+            stream.writeInt(position.getY());
+        } else {
+            stream.writeBoolean(false);
+        }
+
+        for (Chunk chunk : chunks) {
+            chunk.encode(stream);
+        }
+    }
+
+    /**
+     * Decodes the tile.
+     * @param stream The stream to decode from.
+     */
+    public void decode(ByteInputStream stream, Game game) {
+        if (stream.readBoolean()) {
+            position = new Vector2(stream.readInt(), stream.readInt());
+        } else {
+            position = null;
+        }
+
+        for (Chunk chunk : chunks) {
+            chunk.decode(stream, game);
+        }
     }
 
     @Override

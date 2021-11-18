@@ -1,0 +1,241 @@
+package server.network;
+
+import network.Packet;
+import network.ResizableByteBuffer;
+import network.message.Message;
+import server.Server;
+import server.logger.Logger;
+import server.message.MessageHandler;
+import server.network.socket.handler.TcpReadHandler;
+import server.network.socket.handler.TcpSendHandler;
+import server.session.ClientSession;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
+import java.time.LocalDateTime;
+
+/**
+ * Represents a TCP client connection.
+ */
+public class ClientConnection {
+    /**
+     * Size of the buffer used to read data from the socket.
+     * When the data is read, it'll be stored in the stream receiveStream.
+     * If the buffer is full, extra data is handled by the next call to onReceive.
+     */
+    private static int READ_BUFFER_SIZE = 1024;
+
+    /**
+     * Initial size of the stream used to store data received from socket and to be handled.
+     */
+    private static int INITIAL_RECEIVE_STREAM_SIZE = 1024;
+
+    /**
+     * Max size of the stream used to store data received from socket and to be handled.
+     * If the stream is full, the connection is closed.
+     */
+    private static int MAX_RECEIVE_BUFFER_SIZE = 1024 * 1024;
+
+    /**
+     * Timeout before closing the connection if no data is received.
+     */
+    private static int LAST_PACKET_TIMEOUT = 60000;
+
+    /**
+     * The socket channel used to communicate with the client.
+     */
+    private final AsynchronousSocketChannel channel;
+
+    /**
+     * The handler used to handle the received messages.
+     */
+    private final MessageHandler messageHandler;
+
+    /**
+     * The buffer used to store data received from the socket.
+     */
+    private final ByteBuffer readBuffer;
+
+    /**
+     * The stream used to store data to be handled.
+     */
+    private ResizableByteBuffer receiveStream;
+
+    /**
+     * Session data of the client.
+     */
+    private ClientSession session;
+
+    /**
+     * The connection's id.
+     */
+    private final int id;
+
+    /**
+     * The last time the connection was received data.
+     */
+    private LocalDateTime lastRead;
+
+    /**
+     * Whether the connection is destroyed.
+     */
+    private volatile boolean destroyed;
+
+    public ClientConnection(AsynchronousSocketChannel channel, int id) {
+        this.channel = channel;
+        this.id = id;
+        this.messageHandler = new MessageHandler(this);
+        this.readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
+        this.receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
+        this.lastRead = LocalDateTime.now();
+
+        Logger.debug("Connection %d created. IP:%s", id, getRemoteAddress());
+    }
+
+    public void startIO() {
+        this.channel.read(readBuffer, this, new TcpReadHandler(this.channel, this.readBuffer));
+    }
+
+    /**
+     * Gets the id of the connection.
+     * @return The id of the connection.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Gets the session of the client.
+     * @return The session of the client.
+     */
+    public ClientSession getSession() {
+        return session;
+    }
+
+    /**
+     * Sets the session of the client.
+     * @param session The session of the client.
+     */
+    public void setSession(ClientSession session) {
+        this.session = session;
+    }
+
+    /**
+     * Gets the remote address of the connection.
+     * @return The remote address of the connection.
+     */
+    public String getRemoteAddress() {
+        try {
+            return channel.getRemoteAddress().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Closes the connection.
+     */
+    public void close() {
+        synchronized (this) {
+            if (destroyed) {
+                return;
+            }
+
+            destroyed = true;
+        }
+
+        try {
+            if (session != null) {
+                session.destroy();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            channel.close();
+            receiveStream.clear();
+            readBuffer.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Logger.debug("Connection %d closed.", id);
+            Server.getInstance().getConnectionManager().removeConnection(this);
+        }
+    }
+
+    /**
+     * Called when data is received.
+     * @param length The length of the data received.
+     */
+    public void onRead(int length) {
+        readBuffer.position(length);
+        readBuffer.flip();
+        receiveStream.put(readBuffer.array(), 0, length);
+        readBuffer.clear();
+
+        ByteInputStream stream = new ByteInputStream(receiveStream.getBuffer(), receiveStream.size());
+        int bytesRead = 0;
+
+        while (!stream.isAtEnd()) {
+            Packet packet = new Packet();
+            int read = packet.decode(stream);
+
+            if (read == -1) {
+                break;
+            } else if (read == -2) {
+                Logger.warn("Connection %d: Packet is too big, closing connection.", id);
+                close();
+                return;
+            } else if (read == -3) {
+                Logger.warn("Connection %d: Packet checksum mismatch, closing connection.", id);
+                close();
+                return;
+            }
+
+            Logger.debug("Connection %d: Received message %s", id, packet.getMessageType());
+
+            bytesRead += read;
+            messageHandler.handle(packet.getMessage());
+        }
+
+        receiveStream.remove(bytesRead);
+        lastRead = LocalDateTime.now();
+    }
+
+    /**
+     * Sends the given message to the client.
+     * @param message The message to send.
+     */
+    public void send(Message message) {
+        synchronized (this) {
+            Logger.debug("Connection %d: Sending message %s", id, message.getType());
+
+            Packet packet = Packet.create(message);
+            ByteOutputStream stream = new ByteOutputStream(64);
+            packet.encode(stream);
+
+            send(ByteBuffer.wrap(stream.getBytes(), 0, stream.getLength()));
+        }
+    }
+
+    /**
+     * Sends the given data to the client.
+     * @param buffer The data to send.
+     */
+    private void send(ByteBuffer buffer) {
+        channel.write(buffer, this, new TcpSendHandler());
+    }
+
+    /**
+     * Gets if the connection is alive.
+     * @return
+     */
+    public boolean isConnected() {
+        return channel.isOpen() && lastRead.isAfter(LocalDateTime.now().minusSeconds(LAST_PACKET_TIMEOUT));
+    }
+}

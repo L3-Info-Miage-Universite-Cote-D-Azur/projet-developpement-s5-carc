@@ -14,33 +14,21 @@ class PlaceTileDrawnCommandTest {
     @Test
     void testInvalidPosition() {
         Game game = createGameEnv();
-        game.update();
-
-        assertTrue(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
-
-        game.update();
-
-        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
+        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
     }
 
     @Test
     void testNoStartingTilePlacement() {
         Game game = createGameEnv();
-        game.update();
-        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10)).execute(game));
+        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
     }
 
     @Test
     void testOverlapTilePlacement() {
         Game game = createGameEnv();
-
-        game.update();
-
-        assertTrue(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
-
-        game.update();
-
-        assertFalse(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION).execute(game));
+        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
     }
 
     private static Game createGameEnv() {

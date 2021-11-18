@@ -1,20 +1,24 @@
 package logic.command;
 
-public enum CommandId {
+/**
+ * Enumeration of all possible commands with their type ids.
+ */
+public enum CommandType {
     PLACE_TILE_DRAWN(1, PlaceTileDrawnCommand.class),
     PLACE_MEEPLE(2, PlaceMeepleCommand.class),
     REMOVE_MEEPLE(3, RemoveMeepleCommand.class),
-    END_TURN(4, EndTurnCommand.class);
+    END_TURN(4, EndTurnCommand.class),
+    MASTER_TURN_DATA(5, MasterTurnStartedCommand.class);
 
     private final int id;
     private final Class<? extends ICommand> commandClass;
 
-    CommandId(int id, Class<? extends ICommand> commandClass) {
+    CommandType(int id, Class<? extends ICommand> commandClass) {
         this.id = id;
         this.commandClass = commandClass;
     }
 
-    public int getId() {
+    public int getValue() {
         return id;
     }
 
@@ -22,9 +26,9 @@ public enum CommandId {
         return commandClass;
     }
 
-    public static CommandId getCommandId(int id) {
-        for (CommandId commandId : CommandId.values()) {
-            if (commandId.getId() == id) {
+    public static CommandType getCommandType(int id) {
+        for (CommandType commandId : CommandType.values()) {
+            if (commandId.getValue() == id) {
                 return commandId;
             }
         }

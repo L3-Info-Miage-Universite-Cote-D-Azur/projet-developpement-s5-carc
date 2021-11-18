@@ -11,28 +11,33 @@ public class ByteOutputStream {
         index = 0;
     }
 
+    public void writeBoolean(boolean value) {
+        writeByte(value ? (byte)1 : (byte)0);
+    }
+
     public void writeByte(byte b) {
+        ensureCapacity(index + 1);
         buffer[index++] = b;
     }
 
     public void writeShort(short s) {
-        writeByte((byte)(s >>> 8));
-        writeByte((byte)s);
+        ensureCapacity(index + 2);
+        buffer[index++] = (byte)(s >>> 8);
     }
 
     public void writeInt(int i) {
-        writeByte((byte)(i >>> 24));
-        writeByte((byte)(i >>> 16));
-        writeByte((byte)(i >>> 8));
-        writeByte((byte)i);
+        ensureCapacity(index + 4);
+        buffer[index++] = (byte)(i >>> 24);
+        buffer[index++] = (byte)(i >>> 16);
+        buffer[index++] = (byte)(i >>> 8);
+        buffer[index++] = (byte)i;
     }
 
     public void writeString(String s) {
         if (s == null) {
             writeInt(-1);
         } else {
-            System.arraycopy(s.getBytes(StandardCharsets.UTF_8), 0, buffer, index, s.length());
-            index += s.length();
+            writeBytes(s.getBytes(StandardCharsets.UTF_8));
         }
     }
 
@@ -40,8 +45,33 @@ public class ByteOutputStream {
         if (b == null) {
             writeInt(-1);
         } else {
+            ensureCapacity(index + b.length + 4);
+            writeInt(b.length);
+            writeBytesWithoutLength(b);
+        }
+    }
+
+    public void writeBytesWithoutLength(byte[] b) {
+        if (b != null) {
+            ensureCapacity(index + b.length);
             System.arraycopy(b, 0, buffer, index, b.length);
             index += b.length;
+        }
+    }
+
+    public void writeBytesWithoutLength(byte[] b, int offset, int length) {
+        if (b != null) {
+            ensureCapacity(index + length);
+            System.arraycopy(b, offset, buffer, index, length);
+            index += length;
+        }
+    }
+
+    private void ensureCapacity(int capacity) {
+        if (buffer.length < capacity) {
+            byte[] newBuffer = new byte[Math.max(capacity, buffer.length * 2)];
+            System.arraycopy(buffer, 0, newBuffer, 0, index);
+            buffer = newBuffer;
         }
     }
 
@@ -51,5 +81,11 @@ public class ByteOutputStream {
 
     public int getLength() {
         return index;
+    }
+
+    public byte[] toByteArray() {
+        byte[] result = new byte[index];
+        System.arraycopy(buffer, 0, result, 0, index);
+        return result;
     }
 }

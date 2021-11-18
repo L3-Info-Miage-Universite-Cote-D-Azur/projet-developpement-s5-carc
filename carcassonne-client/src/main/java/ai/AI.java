@@ -1,5 +1,6 @@
 package ai;
 
+import logic.Game;
 import logic.command.EndTurnCommand;
 import logic.command.PlaceTileDrawnCommand;
 import logic.math.Vector2;
@@ -19,17 +20,19 @@ public abstract class AI implements IPlayerListener {
 
     /**
      * This method is called when it's the turn of the AI player.
+     * It should place a tile on the board, place meeple if needed and end the turn.
      */
     @Override
     public void play() {
-        Tile tileToDraw = player.getGame().getTurn().getTileToDraw();
+        Game game = player.getGame();
+        Tile tileToDraw = game.getTurn().getTileToDraw();
         Vector2 positionFound = findPositionForTile(tileToDraw);
 
-        new PlaceTileDrawnCommand(positionFound).execute(player.getGame());
+        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(positionFound));
 
         placeMeepleIfNeeded();
 
-        new EndTurnCommand().execute(player.getGame());
+        game.getCommandExecutor().execute(new EndTurnCommand());
     }
 
     /**

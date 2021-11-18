@@ -12,6 +12,10 @@ public class ByteInputStream {
         this.length = length;
     }
 
+    public boolean readBoolean() {
+        return readByte() != 0;
+    }
+
     public byte readByte() {
         return buf[pos++];
     }

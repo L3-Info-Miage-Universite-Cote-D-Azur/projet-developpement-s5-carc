@@ -1,6 +1,6 @@
-package server.socket;
+package server.network.socket;
 
-import server.socket.handler.TcpServerAcceptHandler;
+import server.network.socket.handler.TcpAcceptHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -15,7 +15,7 @@ public class TcpServerSocket {
     }
 
     public void start() {
-        serverSocketChannel.accept(null, new TcpServerAcceptHandler(serverSocketChannel));
+        serverSocketChannel.accept(null, new TcpAcceptHandler(serverSocketChannel));
     }
 
     public void stop()  {

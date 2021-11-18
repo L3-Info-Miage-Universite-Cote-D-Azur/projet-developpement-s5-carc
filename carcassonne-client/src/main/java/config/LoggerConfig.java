@@ -2,9 +2,14 @@ package config;
 
 import excel.ExcelNode;
 
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Represents the configuration of the logger.
+ * It contains the color for the foreground texts and if the logger should be enabled.
+ */
 public class LoggerConfig {
     private final boolean enabled;
     private final String infoColor;
@@ -39,11 +44,16 @@ public class LoggerConfig {
     }
 
     public static LoggerConfig loadFromResources() {
-        ExcelNode config = ExcelNode.load(Paths.get(LoggerConfig.class.getResource(".").getPath(), "logger.txt"));
+        try {
+            ExcelNode config = ExcelNode.load(Path.of(LoggerConfig.class.getResource("logger.txt").toURI()));
 
-        return new LoggerConfig(Boolean.parseBoolean(config.getRow("Enable").getValue("Value")),
-                config.getRow("Info").getValue("Color"),
-                config.getRow("Warning").getValue("Color"),
-                config.getRow("Error").getValue("Color"));
+            return new LoggerConfig(Boolean.parseBoolean(config.getRow("Enable").getValue("Value")),
+                    config.getRow("Info").getValue("Color"),
+                    config.getRow("Warning").getValue("Color"),
+                    config.getRow("Error").getValue("Color"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

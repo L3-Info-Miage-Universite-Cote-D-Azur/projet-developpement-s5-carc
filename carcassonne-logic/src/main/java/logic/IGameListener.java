@@ -45,17 +45,4 @@ public interface IGameListener {
      * Called when the game is over.
      */
     void onEnd();
-
-    /**
-     * Called when a command execution was failed.
-     * @param reason The reason of the failure.
-     */
-    void onCommandFailed(String reason);
-
-    /**
-     * Called when a command execution was failed.
-     * @param reason The reason of the failure.
-     * @param args The arguments of the failure.
-     */
-    void onCommandFailed(String reason, Object... args);
 }

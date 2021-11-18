@@ -65,14 +65,6 @@ class GameTest {
     }
 
     @Test
-    void testIfThrowExceptionIfUpdateCalledBeforeStart() {
-        Game game = new Game(config);
-
-        assertFalse(game.isOver());
-        assertThrows(IllegalStateException.class, game::update);
-    }
-
-    @Test
     void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);

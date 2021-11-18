@@ -32,6 +32,7 @@ public class SimpleAI extends AI {
     public void placeMeepleIfNeeded() {
         if (player.getRemainingMeepleCount() >= 1) {
             if (random.nextInt(100) >= MEEPLE_PLACEMENT_PROBABILITY) {
+                Game game = player.getGame();
                 GameBoard board = player.getGame().getBoard();
                 Tile tilePicked = board.getTiles().get(random.nextInt(board.getTileCount()));
 
@@ -39,7 +40,7 @@ public class SimpleAI extends AI {
                 Chunk chunkToPlaceMeeple = tilePicked.getChunk(chunkId);
 
                 if (!chunkToPlaceMeeple.hasMeeple()) {
-                    new PlaceMeepleCommand(tilePicked, chunkId).execute(player.getGame());
+                    game.getCommandExecutor().execute(new PlaceMeepleCommand(tilePicked, chunkId));
                 }
             }
         }

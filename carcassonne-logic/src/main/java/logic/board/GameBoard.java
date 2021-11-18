@@ -1,9 +1,13 @@
 package logic.board;
 
+import logic.Game;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 import logic.tile.TileFlags;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 import java.util.*;
 
@@ -200,5 +204,32 @@ public class GameBoard {
      */
     public List<Tile> getTiles() {
         return tiles.values().stream().toList();
+    }
+
+    /**
+     * Encodes the board into the specified output stream.
+     * @param stream the output stream to encode to
+     */
+    public void encode(ByteOutputStream stream, Game game) {
+        stream.writeInt(tiles.size());
+
+        for (Tile tile : tiles.values()) {
+            ByteStreamHelper.encodeTile(stream, tile, game);
+        }
+    }
+
+    /**
+     * Decodes the board from the specified input stream.
+     * @param stream the input stream to decode from
+     */
+    public void decode(ByteInputStream stream, Game game) {
+        tiles.clear();
+
+        int tileCount = stream.readInt();
+
+        for (int i = 0; i < tileCount; i++) {
+            Tile tile = ByteStreamHelper.decodeTile(stream, game);
+            tiles.put(tile.getPosition(), tile);
+        }
     }
 }

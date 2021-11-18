@@ -9,39 +9,62 @@ import stream.ByteOutputStream;
  * Command to end the turn.
  */
 public class EndTurnCommand implements ICommand {
+    /**
+     * Gets the command type.
+     * @return the command type
+     */
     @Override
-    public CommandId getId() {
-        return CommandId.END_TURN;
+    public CommandType getType() {
+        return CommandType.END_TURN;
     }
 
+    /**
+     * Encodes the command attributes to the output stream.
+     * @param stream the output stream
+     */
     @Override
     public void encode(ByteOutputStream stream) {
     }
 
+    /**
+     * Decodes the command attributes from the input stream.
+     * @param stream the input stream
+     */
     @Override
     public void decode(ByteInputStream stream) {
     }
 
     /**
-     * Executes the command to end the turn.
-     * @param game the game context
-     * @return true if the turn was ended, false otherwise
+     * Checks if the command is valid and can be executed.
+     * @return true if the command is valid
      */
     @Override
-    public boolean execute(Game game) {
+    public boolean canBeExecuted(Game game) {
         GameTurn turn = game.getTurn();
 
         if (turn.isOver()) {
-            game.getListener().onCommandFailed("Turn is already over!");
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Turn is already over!");
             return false;
         }
 
         if (!turn.hasPlacedTile()) {
-            game.getListener().onCommandFailed("You must place a tile before ending your turn!");
+            game.getCommandExecutor().getListener().onCommandFailed(this, "You must place a tile before ending your turn!");
+            return false;
         }
 
-        turn.endTurn();
+        return true;
+    }
 
-        return false;
+    /**
+     * Executes the command to end the turn.
+     * @param game the game context
+     */
+    @Override
+    public void execute(Game game) {
+        game.getTurn().endTurn();
+
+        if (game.isMaster()) {
+            game.getTurn().playTurn();
+        }
     }
 }

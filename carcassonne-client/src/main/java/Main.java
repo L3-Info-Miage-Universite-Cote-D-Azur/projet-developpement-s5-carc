@@ -3,6 +3,8 @@ import config.LoggerConfig;
 import logger.Logger;
 import logic.Game;
 import logic.IGameListener;
+import logic.command.ICommand;
+import logic.command.ICommandExecutorListener;
 import logic.config.GameConfig;
 import logic.player.Player;
 import logic.tile.ChunkId;
@@ -13,12 +15,13 @@ import utils.GameScoreUtils;
 import javax.imageio.ImageIO;
 import javax.naming.ConfigurationException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 import static java.lang.System.*;
 
 public class Main {
-    public static void main(String[] arg) throws ConfigurationException {
+    public static void main(String[] arg) throws ConfigurationException, URISyntaxException {
         Logger.setConfig(LoggerConfig.loadFromResources());
         GameConfig config = GameConfig.loadFromResources();
 
@@ -74,20 +77,25 @@ public class Main {
             public void onEnd() {
                 Logger.info("--- GAME OVER ---");
             }
+        });
+        game.getCommandExecutor().setListener(new ICommandExecutorListener() {
+            @Override
+            public void onCommandExecuted(ICommand command) {
+
+            }
 
             @Override
-            public void onCommandFailed(String reason) {
+            public void onCommandFailed(ICommand command, String reason) {
                 Logger.warn("Command execution failed: " + reason);
             }
 
             @Override
-            public void onCommandFailed(String reason, Object... args) {
+            public void onCommandFailed(ICommand command, String reason, Object... args) {
                 Logger.warn("Command execution failed: " + reason, args);
             }
         });
 
         game.start();
-        game.updateToEnd();
 
         out.println(GameScoreUtils.createScoreTable(game, 20));
 
@@ -109,8 +117,8 @@ public class Main {
 
         for (int i = 0; i < gameCount; i++) {
             game.start();
-            game.updateToEnd();
         }
+
         out.println(GameScoreUtils.createScoreTable(game, 20));
     }
 }

@@ -4,45 +4,64 @@ import logic.Game;
 import logic.GameTurn;
 import logic.board.GameBoard;
 import logic.math.Vector2;
+import logic.player.Player;
+import logic.tile.Chunk;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
+/**
+ * Command to place the tile drawn during the turn to the board.
+ */
 public class PlaceTileDrawnCommand implements ICommand {
     private Vector2 position;
+
+    public PlaceTileDrawnCommand() {
+    }
 
     public PlaceTileDrawnCommand(Vector2 position) {
         this.position = position;
     }
 
+    /**
+     * Gets the command type.
+     * @return the command type
+     */
     @Override
-    public CommandId getId() {
-        return CommandId.PLACE_TILE_DRAWN;
+    public CommandType getType() {
+        return CommandType.PLACE_TILE_DRAWN;
     }
 
+    /**
+     * Encodes the command attributes to the output stream.
+     * @param stream the output stream
+     */
     @Override
     public void encode(ByteOutputStream stream) {
         stream.writeInt(position.getX());
         stream.writeInt(position.getY());
     }
 
+    /**
+     * Decodes the command attributes from the input stream.
+     * @param stream the input stream
+     */
     @Override
     public void decode(ByteInputStream stream) {
         position = new Vector2(stream.readInt(), stream.readInt());
     }
 
     /**
-     * Executes the command.
-     * @param game The game context
-     * @return True if the tile was placed, false otherwise
+     * Checks if the command is valid and can be executed.
+     * @return true if the command is valid
      */
     @Override
-    public boolean execute(Game game) {
+    public boolean canBeExecuted(Game game) {
         GameTurn turn = game.getTurn();
 
         if (turn.hasPlacedTile()) {
-            game.getListener().onCommandFailed("You can only place one tile per turn.");
+            game.getCommandExecutor().getListener().onCommandFailed(this, "You can only place one tile per turn.");
             return false;
         }
 
@@ -51,36 +70,46 @@ public class PlaceTileDrawnCommand implements ICommand {
 
         if (board.getStartingTile() == null) {
             if (!tile.hasFlags(TileFlags.STARTING)) {
-                game.getListener().onCommandFailed("Starting tile must be placed before another tile can be placed.");
+                game.getCommandExecutor().getListener().onCommandFailed(this, "Starting tile must be placed before another tile can be placed.");
                 return false;
             }
 
             if (!position.equals(GameBoard.STARTING_TILE_POSITION)) {
-                game.getListener().onCommandFailed("Starting tile must be at 0,0.");
+                game.getCommandExecutor().getListener().onCommandFailed(this, "Starting tile must be at (0,0).");
                 return false;
             }
         } else {
             if (tile.hasFlags(TileFlags.STARTING)) {
-                game.getListener().onCommandFailed("Try to place two starting tile!");
+                game.getCommandExecutor().getListener().onCommandFailed(this, "Try to place two starting tile!");
                 return false;
             }
 
             if (!tile.canBePlacedAt(position, board)) {
-                game.getListener().onCommandFailed("Tile cannot be placed here.");
+                game.getCommandExecutor().getListener().onCommandFailed(this, "Tile cannot be placed here.");
                 return false;
             }
         }
 
         if (board.hasTileAt(position)) {
-            game.getListener().onCommandFailed("Try to place a tile on another.");
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Try to place a tile on another.");
             return false;
         }
 
-        tile.setPosition(position);
-        board.place(tile);
-        turn.setTilePlaced();
-        game.getListener().onTilePlaced(tile);
-
         return true;
+    }
+
+    /**
+     * Executes the command.
+     * @param game The game context
+     * @return True if the tile was placed, false otherwise
+     */
+    @Override
+    public void execute(Game game) {
+        Tile tile = game.getTurn().getTileToDraw();
+
+        tile.setPosition(position);
+        game.getBoard().place(tile);
+        game.getTurn().setTilePlaced();
+        game.getListener().onTilePlaced(tile);
     }
 }

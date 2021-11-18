@@ -1,21 +1,33 @@
 package network.message.game;
 
 import network.message.Message;
-import network.message.MessageId;
+import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
+/**
+ * Message sent by the server to the client to inform the client of the result of the game.
+ * It contains the winner of the game and the stats of the players.
+ */
 public class GameResultMessage extends Message {
     @Override
-    public MessageId getId() {
-        return MessageId.GAME_RESULT;
+    public MessageType getType() {
+        return MessageType.GAME_RESULT;
     }
 
+    /**
+     * Encodes the message attributes to the output stream.
+     * @param stream the output stream
+     */
     @Override
     public void encode(ByteOutputStream stream) {
 
     }
 
+    /**
+     * Decodes the message attributes from the input stream.
+     * @param stream the input stream
+     */
     @Override
     public void decode(ByteInputStream stream) {
 

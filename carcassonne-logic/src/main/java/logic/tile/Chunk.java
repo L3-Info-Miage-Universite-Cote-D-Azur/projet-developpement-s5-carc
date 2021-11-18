@@ -1,6 +1,9 @@
 package logic.tile;
 
+import logic.Game;
 import logic.meeple.Meeple;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 import java.util.Arrays;
 
@@ -67,5 +70,22 @@ public class Chunk {
                 "type=" + type +
                 ", meeple=" + meeple +
                 '}';
+    }
+
+    public void encode(ByteOutputStream stream) {
+        if (meeple != null) {
+            stream.writeBoolean(true);
+            stream.writeInt(meeple.getOwner().getId());
+        } else {
+            stream.writeBoolean(false);
+        }
+    }
+
+    public void decode(ByteInputStream stream, Game game) {
+        if (stream.readBoolean()) {
+            meeple = new Meeple(game.getPlayer(stream.readInt()));
+        } else {
+            meeple = null;
+        }
     }
 }

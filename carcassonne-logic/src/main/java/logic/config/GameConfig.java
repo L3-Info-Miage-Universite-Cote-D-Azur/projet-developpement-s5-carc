@@ -4,6 +4,7 @@ import excel.ExcelNode;
 import logic.config.excel.TileExcelConfig;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -49,15 +50,20 @@ public class GameConfig {
      * @return the game configuration
      */
     public static GameConfig loadFromResources() {
-        String resourcePath = GameConfig.class.getResource(".").getPath();
+        try {
+            String resourcePath = Path.of(GameConfig.class.getResource(".").toURI()).toString();
 
-        ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
-        ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(resourcePath, "game.txt"));
+            ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
+            ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(resourcePath, "game.txt"));
 
-        return new GameConfig(tiles,
-                Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue("Value")),
-                Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue("Value")),
-                Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
+            return new GameConfig(tiles,
+                    Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue("Value")),
+                    Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue("Value")),
+                    Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**

@@ -2,12 +2,14 @@ package logic.player;
 
 import logic.Game;
 import logic.tile.ChunkType;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 /**
  * The Player class represents the player in the game.
  */
 public class Player implements Comparable {
-    protected final int id;
+    protected int id;
     protected int roadScore;
     protected int townScore;
     protected int abbeyScore;
@@ -16,6 +18,15 @@ public class Player implements Comparable {
 
     protected Game game;
     protected IPlayerListener listener;
+
+    public Player() {
+        this.listener = new IPlayerListener() {
+            @Override
+            public void play() {
+
+            }
+        };
+    }
 
     /**
      * @param id The player id
@@ -142,5 +153,23 @@ public class Player implements Comparable {
 
     public int getPartisansRemained() {
         return 0;
+    }
+
+    public void encode(ByteOutputStream stream) {
+        stream.writeInt(id);
+        stream.writeInt(roadScore);
+        stream.writeInt(townScore);
+        stream.writeInt(abbeyScore);
+        stream.writeInt(fieldScore);
+        stream.writeInt(remainingMeepleCount);
+    }
+
+    public void decode(ByteInputStream stream) {
+        id = stream.readInt();
+        roadScore = stream.readInt();
+        townScore = stream.readInt();
+        abbeyScore = stream.readInt();
+        fieldScore = stream.readInt();
+        remainingMeepleCount = stream.readInt();
     }
 }
