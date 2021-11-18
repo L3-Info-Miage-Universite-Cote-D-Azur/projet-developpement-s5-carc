@@ -134,6 +134,30 @@ public class Packet {
     }
 
     /**
+     * Gets the checksum of the message data.
+     * @return the checksum
+     */
+    public int getChecksum() {
+        return checksum;
+    }
+
+    /**
+     * Gets the message length.
+     * @return the message length
+     */
+    public int getMessageLength() {
+        return messageLength;
+    }
+
+    /**
+     * Gets the message data.
+     * @return the message data
+     */
+    public byte[] getMessageData() {
+        return messageData;
+    }
+
+    /**
      * Creates a packet from the given message.
      * @param message the message to create the packet from
      * @return the packet
