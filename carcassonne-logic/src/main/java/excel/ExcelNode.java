@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -120,6 +121,18 @@ public class ExcelNode {
         }
 
         return false;
+    }
+
+    /**
+     * Loads the specified excel file content.
+     * @param fileContent The file content.
+     * @return The current row position.
+     */
+    public static ExcelNode load(String fileContent) {
+        String[] lines = fileContent.contains("\r\n") ? fileContent.split("\r\n") : fileContent.split("\n");
+        ExcelNode node = new ExcelNode();
+        node.load(Arrays.asList(lines), 0, 0);
+        return node;
     }
 
     /**
