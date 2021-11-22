@@ -12,15 +12,15 @@ import stream.ByteStreamHelper;
  * Represents the state of a game turn when a player is placing a tile.
  */
 public class GameTurnPlaceTileState extends GameState {
-    private Tile tileDraw;
+    private Tile tileDrawn;
 
     public GameTurnPlaceTileState(Game game) {
         super(game);
     }
 
-    public GameTurnPlaceTileState(Game game, Tile tileDraw) {
+    public GameTurnPlaceTileState(Game game, Tile tileDrawn) {
         super(game);
-        this.tileDraw = tileDraw;
+        this.tileDrawn = tileDrawn;
     }
 
     @Override
@@ -30,12 +30,12 @@ public class GameTurnPlaceTileState extends GameState {
 
     @Override
     public void encode(ByteOutputStream stream) {
-        ByteStreamHelper.encodeTile(stream, tileDraw, game);
+        ByteStreamHelper.encodeTile(stream, tileDrawn, game);
     }
 
     @Override
     public void decode(ByteInputStream stream) {
-        tileDraw = ByteStreamHelper.decodeTile(stream, game);
+        tileDrawn = ByteStreamHelper.decodeTile(stream, game);
     }
 
     /**
@@ -60,6 +60,6 @@ public class GameTurnPlaceTileState extends GameState {
      * @return The tile that is being drawn.
      */
     public Tile getTileDrawn() {
-        return tileDraw;
+        return tileDrawn;
     }
 }
