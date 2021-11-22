@@ -124,7 +124,7 @@ public class Match {
             return;
         }
 
-        Logger.info("Player %d executed command %s", userId, command.getType());
+        Logger.debug("Player %d executed command %s", userId, command.getType());
 
         game.getCommandExecutor().execute(command);
     }

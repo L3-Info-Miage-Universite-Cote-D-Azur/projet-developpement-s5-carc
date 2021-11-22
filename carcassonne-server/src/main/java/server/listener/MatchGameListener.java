@@ -18,12 +18,12 @@ public class MatchGameListener implements IGameListener {
 
     @Override
     public void onGameStarted() {
-        Logger.debug("Match %d: Game started", match.getId());
+        Logger.info("Match %d: Game started", match.getId());
     }
 
     @Override
     public void onGameOver() {
-        Logger.debug("Match %d: Game over", match.getId());
+        Logger.info("Match %d: Game over", match.getId());
     }
 
     /**
@@ -31,7 +31,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onTurnStarted(int id) {
-        Logger.debug("Match %d: Turn %d started", match.getId(), id);
+        Logger.info("Match %d: Turn %d started", match.getId(), id);
     }
 
     /**
@@ -39,13 +39,13 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onTurnEnded(int id) {
-        Logger.debug("Match %d: Turn %d ended", match.getId(), id);
+        Logger.info("Match %d: Turn %d ended", match.getId(), id);
     }
 
 
     @Override
     public void onStateChanged(GameState state) {
-        Logger.debug("Match %d: State changed to %s", match.getId(), state.getType());
+        Logger.info("Match %d: State changed to %s", match.getId(), state.getType());
 
         switch (state.getType()) {
             case TURN_PLACE_TILE -> match.onGameTurnStarted(((GameTurnPlaceTileState) state).getTileDrawn());
@@ -55,16 +55,16 @@ public class MatchGameListener implements IGameListener {
 
     @Override
     public void onTilePlaced(Tile tile) {
-        Logger.debug("Match %d: Tile model %s placed at (%d,%d)", match.getId(), tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
+        Logger.info("Match %d: Tile model %s placed at (%d,%d)", match.getId(), tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
     }
 
     @Override
     public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.debug("Match %d: Meeple placed at tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.info("Match %d: Meeple placed at tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 
     @Override
     public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.debug("Match %d: Meeple removed from tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.info("Match %d: Meeple removed from tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 }
