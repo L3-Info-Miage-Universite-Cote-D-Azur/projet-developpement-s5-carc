@@ -100,7 +100,7 @@ public class Game {
      * @return
      */
     public boolean isOver() {
-        return state.getType() == GameStateType.OVER;
+        return state != null && state.getType() == GameStateType.OVER;
     }
 
     /**

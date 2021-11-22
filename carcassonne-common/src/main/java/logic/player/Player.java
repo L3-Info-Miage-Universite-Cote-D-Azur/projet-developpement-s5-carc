@@ -161,6 +161,9 @@ public class Player implements Comparable {
     }
 
     public int getMeeplesRemained() {
+        if (game == null) {
+            return 0;
+        }
         return game.getConfig().startingMeepleCount - meeplesPlayed;
     }
 
