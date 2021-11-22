@@ -69,7 +69,7 @@ public class PlaceMeepleCommand implements ICommand {
     public boolean canBeExecuted(Game game) {
         Player player = game.getTurn().getPlayer();
 
-        if (player.getRemainingMeepleCount() < 1) {
+        if (!player.hasRemainingMeeples()) {
             game.getCommandExecutor().getListener().onCommandFailed(this, "Player has no meeple left.");
             return false;
         }
@@ -117,7 +117,7 @@ public class PlaceMeepleCommand implements ICommand {
 
         chunk.setMeeple(new Meeple(player));
         player.addScore(1, chunk.getType());
-        player.removeRemainingMeepleCount();
+        player.increasePlayedMeeples();
         turn.setMeeplePlaced();
 
         game.getListener().onMeeplePlaced(player, tile, chunkId);

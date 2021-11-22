@@ -126,11 +126,11 @@ public class GameDrawUtils {
     /**
      * Gets the sprite model to use for the specified player.
      *
-     * @param player The player to get the sprite model for.
+     * @param index The index of the player in the game.
      * @return The sprite model to use for the specified player's meeple.
      */
-    private static String getOwnMeepleSpriteModel(Player player) {
-        return Integer.toString(player.getId() - 1);
+    private static String getOwnMeepleSpriteModel(int index) {
+        return Integer.toString(index);
     }
 
     /**
@@ -190,7 +190,7 @@ public class GameDrawUtils {
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
                     Vector2 meepleImagePosition = getMeeplePosition(tileImagePosition, chunkId);
-                    BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(meeple.getOwner()));
+                    BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(game.getPlayerIndex(meeple.getOwner())));
                     graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
                     graphics.drawImage(meepleImage, meepleImagePosition.getX(), meepleImagePosition.getY(), null);
                 }

@@ -72,4 +72,4 @@ buildNumber.properties
 
 .DS_STORE
 game.png
-match_history/
+stats/

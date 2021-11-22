@@ -24,6 +24,10 @@ public class ImageDatabase {
     }
 
     public BufferedImage get(String assetName) {
+        if (!assets.containsKey(assetName)) {
+            throw new IllegalArgumentException("Image " + assetName + " is not in the database");
+        }
+
         return assets.get(assetName);
     }
 

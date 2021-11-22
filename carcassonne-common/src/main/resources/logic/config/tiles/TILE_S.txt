@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		TOWN				TOWN
+		TOWN		TOWN		TOWN
+		TOWN				TOWN
+			FIELD	ROAD	FIELD	
+	References					
+		Name				
+			D	D	D	
+		D				D
+		D		D		D
+		D				D
+			B	A	B	
+Data						
+	Name	Value				
+	Model	S				
+	Expansion					
+	Flags	SHIELD				
+	Count	2				

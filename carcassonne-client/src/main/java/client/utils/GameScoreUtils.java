@@ -46,17 +46,17 @@ public class GameScoreUtils {
 
         // Road points
         List<String> playerRoadPoints = new ArrayList<>();
-        playersSort.forEach(p -> playerRoadPoints.add(String.valueOf(p.getRoadPoints())));
+        playersSort.forEach(p -> playerRoadPoints.add(String.valueOf(p.getRoadScore())));
         toArrayLine("ROAD POINTS", cellSize, playerRoadPoints, stat);
 
         // Town points
         List<String> playerTownPoints = new ArrayList<>();
-        playersSort.forEach(p -> playerTownPoints.add(String.valueOf(p.getTownPoints())));
+        playersSort.forEach(p -> playerTownPoints.add(String.valueOf(p.getTownScore())));
         toArrayLine("TOWN POINTS", cellSize, playerTownPoints, stat);
 
         // Abbey points
         List<String> playerAbbeyPoints = new ArrayList<>();
-        playersSort.forEach(p -> playerAbbeyPoints.add(String.valueOf(p.getAbbeyPoints())));
+        playersSort.forEach(p -> playerAbbeyPoints.add(String.valueOf(p.getAbbeyScore())));
         toArrayLine("ABBEY POINTS", cellSize, playerAbbeyPoints, stat);
 
         // Field points
@@ -66,12 +66,12 @@ public class GameScoreUtils {
 
         // Partisans played
         List<String> playerPartisansPlayed = new ArrayList<>();
-        playersSort.forEach(p -> playerPartisansPlayed.add(String.valueOf(p.getPartisansPlayed())));
+        playersSort.forEach(p -> playerPartisansPlayed.add(String.valueOf(p.getMeeplesPlayed())));
         toArrayLine("PARTISANS PLAYED", cellSize, playerPartisansPlayed, stat);
 
         // Partisans remained
         List<String> playerPartisansRemained = new ArrayList<>();
-        playersSort.forEach(p -> playerPartisansRemained.add(String.valueOf(p.getPartisansRemained())));
+        playersSort.forEach(p -> playerPartisansRemained.add(String.valueOf(p.getMeeplesRemained())));
         toArrayLine("PARTISANS REMAINED", cellSize, playerPartisansRemained, stat);
 
         return stat.toString();

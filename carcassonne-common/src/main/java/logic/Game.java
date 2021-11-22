@@ -158,6 +158,10 @@ public class Game {
         return players.get(player);
     }
 
+    public int getPlayerIndex(Player player) {
+        return players.indexOf(player);
+    }
+
     public Player getPlayerById(int id) {
         for (Player player : players) {
             if (player.getId() == id) {

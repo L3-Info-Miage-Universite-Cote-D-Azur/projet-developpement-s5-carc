@@ -1,6 +1,7 @@
 package client.listener;
 
 import client.logger.Logger;
+import client.logger.LoggerCategory;
 import logic.IGameListener;
 import logic.player.Player;
 import logic.tile.ChunkId;
@@ -16,7 +17,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTurnStarted(int id) {
-        Logger.info("--- Turn %d started. ---", id);
+        Logger.info(LoggerCategory.GAME, "--- Turn %d started. ---", id);
     }
 
     /**
@@ -25,7 +26,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTurnEnded(int id) {
-        Logger.info("--- Turn %d ended. ---", id);
+        Logger.info(LoggerCategory.GAME, "--- Turn %d ended. ---", id);
     }
 
     /**
@@ -34,7 +35,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTilePlaced(Tile tile) {
-        Logger.info("Place tile %s at (%d,%d)", tile, tile.getPosition().getX(), tile.getPosition().getY());
+        Logger.info(LoggerCategory.GAME, "Place tile %s at (%d,%d)", tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
     }
 
     /**
@@ -45,7 +46,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info("Place meeple of player %d at tile (%d,%d), chunk %s", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.info(LoggerCategory.GAME, "Place meeple of player %d at tile (%d,%d), chunk %s", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 
     /**
@@ -56,7 +57,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info("Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.info(LoggerCategory.GAME, "Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 
     /**
@@ -64,7 +65,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onStart() {
-        Logger.info("--- GAME START ---");
+        Logger.info(LoggerCategory.GAME, "--- GAME START ---");
     }
 
     /**
@@ -72,6 +73,6 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onEnd() {
-        Logger.info("--- GAME OVER ---");
+        Logger.info(LoggerCategory.GAME, "--- GAME OVER ---");
     }
 }

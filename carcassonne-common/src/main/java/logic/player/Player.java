@@ -14,7 +14,7 @@ public class Player implements Comparable {
     protected int townScore;
     protected int abbeyScore;
     protected int fieldScore;
-    protected int remainingMeepleCount;
+    protected int meeplesPlayed;
 
     protected Game game;
     protected IPlayerListener listener;
@@ -46,7 +46,7 @@ public class Player implements Comparable {
         townScore = 0;
         abbeyScore = 0;
         fieldScore = 0;
-        remainingMeepleCount = game.getConfig().startingMeepleCount;
+        meeplesPlayed = 0;
     }
 
     public final int getId() {
@@ -115,19 +115,23 @@ public class Player implements Comparable {
      * @return returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
      */
     public int compareTo(Object compareTo) {
-        Player compareToEmp = (Player) compareTo;
-        return Integer.compare(getScore(), compareToEmp.getScore());
+        if (compareTo instanceof Player) {
+            Player other = (Player) compareTo;
+            return getScore() - other.getScore();
+        } else {
+            throw new IllegalArgumentException("Cannot compare to an object that is not a Player.");
+        }
     }
 
-    public int getRoadPoints() {
+    public int getRoadScore() {
         return roadScore;
     }
 
-    public int getTownPoints() {
+    public int getTownScore() {
         return townScore;
     }
 
-    public int getAbbeyPoints() {
+    public int getAbbeyScore() {
         return abbeyScore;
     }
 
@@ -135,24 +139,23 @@ public class Player implements Comparable {
         return fieldScore;
     }
 
-    public int getRemainingMeepleCount() {
-        return remainingMeepleCount;
+    public int getMeeplesPlayed() {
+        return meeplesPlayed;
     }
 
-    public void removeRemainingMeepleCount() {
-        remainingMeepleCount--;
+    public void decreasePlayedMeeples() {
+        meeplesPlayed--;
     }
-    public void addRemainingMeepleCount() {
-        remainingMeepleCount++;
-    }
-
-
-    public int getPartisansPlayed() {
-        return 0;
+    public void increasePlayedMeeples() {
+        meeplesPlayed++;
     }
 
-    public int getPartisansRemained() {
-        return 0;
+    public int getMeeplesRemained() {
+        return game.getConfig().startingMeepleCount - meeplesPlayed;
+    }
+
+    public boolean hasRemainingMeeples() {
+        return getMeeplesRemained() >= 1;
     }
 
     public void encode(ByteOutputStream stream) {
@@ -161,7 +164,7 @@ public class Player implements Comparable {
         stream.writeInt(townScore);
         stream.writeInt(abbeyScore);
         stream.writeInt(fieldScore);
-        stream.writeInt(remainingMeepleCount);
+        stream.writeInt(meeplesPlayed);
     }
 
     public void decode(ByteInputStream stream) {
@@ -170,6 +173,6 @@ public class Player implements Comparable {
         townScore = stream.readInt();
         abbeyScore = stream.readInt();
         fieldScore = stream.readInt();
-        remainingMeepleCount = stream.readInt();
+        meeplesPlayed = stream.readInt();
     }
 }

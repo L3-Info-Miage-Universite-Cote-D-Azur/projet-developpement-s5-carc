@@ -1,7 +1,8 @@
 package client.network;
 
 import client.logger.Logger;
-import client.message.MessageHandler;
+import client.logger.LoggerCategory;
+import client.message.MessageDispatcher;
 import client.network.socket.ITcpClientSocketListener;
 import client.network.socket.TcpClientSocket;
 import network.Packet;
@@ -48,7 +49,7 @@ public class ServerConnection implements ITcpClientSocketListener {
     private final ByteBuffer readBuffer;
     private final ResizableByteBuffer receiveStream;
     private final ResizableByteBuffer sendStream;
-    private final MessageHandler messageHandler;
+    private final MessageDispatcher messageDispatcher;
 
     public ServerConnection() throws IOException {
         clientSocket = new TcpClientSocket();
@@ -56,7 +57,7 @@ public class ServerConnection implements ITcpClientSocketListener {
         readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
         sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
-        messageHandler = new MessageHandler(this);
+        messageDispatcher = new MessageDispatcher(this);
     }
 
     /**
@@ -80,9 +81,8 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     @Override
     public void onConnected() {
-        Logger.info("Network: Connected to the server.");
+        Logger.info(LoggerCategory.NETWORK, "Connected to the server.");
         clientSocket.read(readBuffer);
-        send(new ClientHelloMessage());
     }
 
     /**
@@ -90,7 +90,7 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     @Override
     public void onConnectFailed() {
-        Logger.warn("Connection failed");
+        Logger.error(LoggerCategory.NETWORK, "Connection failed.");
     }
 
     /**
@@ -98,7 +98,7 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     @Override
     public void onDisconnected() {
-        Logger.warn("Disconnected from the server");
+        Logger.error(LoggerCategory.NETWORK, "Connection lost with the server.");
     }
 
     /**
@@ -122,19 +122,19 @@ public class ServerConnection implements ITcpClientSocketListener {
             if (read == -1) {
                 break;
             } else if (read == -2) {
-                Logger.warn("Network: Invalid packet received, closing connection...");
+                Logger.error(LoggerCategory.NETWORK, "Invalid packet received, closing connection...");
                 close();
                 return;
             } else if (read == -3) {
-                Logger.warn("Network: Invalid packet checksum, closing connection...");
+                Logger.warn(LoggerCategory.NETWORK, "Invalid packet checksum, closing connection...");
                 close();
                 return;
             }
 
-            Logger.debug("Network: Received message %s", packet.getMessage());
+            Logger.debug(LoggerCategory.NETWORK, "Received message %s", packet.getMessage());
 
             bytesRead += read;
-            messageHandler.handle(packet.getMessage());
+            messageDispatcher.handle(packet.getMessage());
         }
 
         receiveStream.remove(bytesRead);
@@ -158,7 +158,7 @@ public class ServerConnection implements ITcpClientSocketListener {
      * @param message The message to send.
      */
     public synchronized void send(Message message) {
-        Logger.debug("Network: Sending message %s", message);
+        Logger.debug(LoggerCategory.NETWORK, "Sending message %s", message);
 
         ByteOutputStream stream = new ByteOutputStream(32);
         Packet packet = Packet.create(message);
@@ -180,7 +180,7 @@ public class ServerConnection implements ITcpClientSocketListener {
         }
     }
 
-    public MessageHandler getMessageHandler() {
-        return messageHandler;
+    public MessageDispatcher getMessageDispatcher() {
+        return messageDispatcher;
     }
 }

@@ -17,11 +17,11 @@ class PlayerTest {
         assertEquals(0, player.getScore());
         player.addScore(100, ChunkType.ABBEY);
         assertEquals(100, player.getScore());
-        assertEquals(100, player.getAbbeyPoints());
+        assertEquals(100, player.getAbbeyScore());
 
         player.addScore(100, ChunkType.ROAD);
         assertEquals(200, player.getScore());
-        assertEquals(100, player.getRoadPoints());
+        assertEquals(100, player.getRoadScore());
 
         player.addScore(100, ChunkType.FIELD);
         assertEquals(300, player.getScore());
@@ -29,11 +29,11 @@ class PlayerTest {
 
         player.addScore(100, ChunkType.TOWN);
         assertEquals(400, player.getScore());
-        assertEquals(100, player.getTownPoints());
+        assertEquals(100, player.getTownScore());
 
-        assertEquals(0, player.getRemainingMeepleCount());
-        assertEquals(0, player.getPartisansPlayed());
-        assertEquals(0, player.getPartisansRemained());
+        assertEquals(0, player.getMeeplesPlayed());
+        assertEquals(0, player.getMeeplesPlayed());
+        assertEquals(0, player.getMeeplesRemained());
 
         assertThrows(IllegalArgumentException.class, () -> {
            player.addScore(-1, ChunkType.ABBEY);

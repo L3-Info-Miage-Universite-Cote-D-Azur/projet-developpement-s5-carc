@@ -82,7 +82,7 @@ public class RemoveMeepleCommand implements ICommand {
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         tile.getChunk(chunkId).setMeeple(null);
-        player.addRemainingMeepleCount();
+        player.decreasePlayedMeeples();
         turn.setMeeplePlaced();
 
         game.getListener().onMeepleRemoved(player, tile, chunkId);

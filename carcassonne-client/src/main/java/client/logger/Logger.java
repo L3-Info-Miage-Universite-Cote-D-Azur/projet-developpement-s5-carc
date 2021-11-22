@@ -11,16 +11,16 @@ public class Logger {
      * @param message The message to log.
      * @param args The arguments to format the message with.
      */
-    public static void debug(String message, Object... args) {
-        debug(String.format(message, args));
+    public static void debug(LoggerCategory category, String message, Object... args) {
+        debug(category, String.format(message, args));
     }
 
     /**
      * Logs a message to the console with the debug color.
      * @param message The message to log.
      */
-    public static void debug(String message) {
-        print(message, config.getDebugColor(), LogLevel.DEBUG);
+    public static void debug(LoggerCategory category, String message) {
+        print(category, message, config.getDebugColor(), LogLevel.DEBUG);
     }
 
     /**
@@ -28,16 +28,16 @@ public class Logger {
      * @param message The message to log.
      * @param args The arguments to format the message with.
      */
-    public static void info(String message, Object... args) {
-        info(String.format(message, args));
+    public static void info(LoggerCategory category, String message, Object... args) {
+        info(category, String.format(message, args));
     }
 
     /**
      * Logs a message to the console with the info color.
      * @param message The message to log.
      */
-    public static void info(String message) {
-        print(message, config.getInfoColor(), LogLevel.INFO);
+    public static void info(LoggerCategory category, String message) {
+        print(category, message, config.getInfoColor(), LogLevel.INFO);
     }
 
     /**
@@ -45,16 +45,16 @@ public class Logger {
      * @param message The message to log.
      * @param args The arguments to format the message with.
      */
-    public static void warn(String message, Object... args) {
-        warn(String.format(message, args));
+    public static void warn(LoggerCategory category, String message, Object... args) {
+        warn(category, String.format(message, args));
     }
 
     /**
      * Logs a message to the console with the warning color.
      * @param message The message to log.
      */
-    public static void warn(String message) {
-        print(message, config.getWarningColor(), LogLevel.WARN);
+    public static void warn(LoggerCategory category, String message) {
+        print(category, message, config.getWarningColor(), LogLevel.WARN);
     }
 
     /**
@@ -62,16 +62,16 @@ public class Logger {
      * @param message The message to log.
      * @param args The arguments to format the message with.
      */
-    public static void error(String message, Object... args) {
-        error(String.format(message, args));
+    public static void error(LoggerCategory category, String message, Object... args) {
+        error(category, String.format(message, args));
     }
 
     /**
      * Logs a message to the console with the error color.
      * @param message The message to log.
      */
-    public static void error(String message) {
-        print(message, config.getErrorColor(), LogLevel.ERROR);
+    public static void error(LoggerCategory category, String message) {
+        print(category, message, config.getErrorColor(), LogLevel.ERROR);
     }
 
     /**
@@ -79,11 +79,13 @@ public class Logger {
      * @param message The message to print.
      * @param ansiColorCode The color to print the message in.
      */
-    private static void print(String message, String ansiColorCode, LogLevel level) {
+    private static void print(LoggerCategory category, String message, String ansiColorCode, LogLevel level) {
         if (level.ordinal() >= config.getLevel().ordinal()) {
             synchronized (System.out) {
                 System.out.print("\u001B[");
                 System.out.print(ansiColorCode);
+                System.out.print(category);
+                System.out.print(": ");
                 System.out.print(message);
                 System.out.print(ANSI_PREFIX);
                 System.out.println("0m");

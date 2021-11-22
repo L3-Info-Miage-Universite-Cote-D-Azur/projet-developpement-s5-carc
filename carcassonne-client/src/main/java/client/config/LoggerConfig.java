@@ -25,6 +25,14 @@ public class LoggerConfig {
         this.errorColor = errorColor;
     }
 
+    public LoggerConfig(ExcelNode node) {
+        this.level = LogLevel.valueOf(node.getRow("Level").getValue("Value"));
+        this.debugColor = node.getRow("Debug").getValue("Value");
+        this.infoColor = node.getRow("Info").getValue("Value");
+        this.warningColor = node.getRow("Warning").getValue("Value");
+        this.errorColor = node.getRow("Error").getValue("Value");
+    }
+
     public LogLevel getLevel() {
         return level;
     }
@@ -47,20 +55,5 @@ public class LoggerConfig {
 
     public static LoggerConfig getDefaultConfig() {
         return new LoggerConfig(LogLevel.INFO, "36m", "32m", "33m", "31m");
-    }
-
-    public static LoggerConfig loadFromResources() {
-        try {
-            ExcelNode config = ExcelNode.load(Path.of(LoggerConfig.class.getResource("logger.txt").toURI()));
-
-            return new LoggerConfig(LogLevel.valueOf(config.getRow("Level").getValue("Value")),
-                    config.getRow("Debug").getValue("Value"),
-                    config.getRow("Info").getValue("Value"),
-                    config.getRow("Warning").getValue("Value"),
-                    config.getRow("Error").getValue("Value"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

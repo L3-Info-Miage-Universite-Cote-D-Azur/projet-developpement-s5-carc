@@ -1,6 +1,0 @@
-Name	Value
-Level	DEBUG
-Debug	36m
-Info	32m
-Warning	33m
-Error	31m

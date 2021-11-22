@@ -114,12 +114,12 @@ public class Match implements IGameListener {
         }
 
         if (turn.getPlayer().getId() != userId) {
-            Logger.warn("Player %d tried to execute command %s but it is not his turn", userId, command.getType());
+            Logger.warn("Player %d tried to execute command %s but it is not his turn.", userId, command.getType());
             return;
         }
 
         if (!command.canBeExecuted(game)) {
-            Logger.warn("Player %d tried to execute command %s but it is not allowed", userId, command.getType());
+            Logger.warn("Player %d tried to execute command %s but it is not executable.", userId, command.getType());
             return;
         }
 

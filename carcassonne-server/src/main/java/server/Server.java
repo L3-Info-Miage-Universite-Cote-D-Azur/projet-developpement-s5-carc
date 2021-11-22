@@ -89,7 +89,7 @@ public class Server {
 
     /**
      * Returns the server's instance.
-     * @return
+     * @return the server's instance
      */
     public static Server getInstance() {
         return instance;

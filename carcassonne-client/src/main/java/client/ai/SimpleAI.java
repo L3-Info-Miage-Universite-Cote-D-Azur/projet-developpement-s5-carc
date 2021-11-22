@@ -30,7 +30,7 @@ public class SimpleAI extends AI {
      */
     @Override
     public void placeMeepleIfNeeded() {
-        if (player.getRemainingMeepleCount() >= 1) {
+        if (player.hasRemainingMeeples()) {
             if (random.nextInt(100) >= MEEPLE_PLACEMENT_PROBABILITY) {
                 Game game = player.getGame();
                 GameBoard board = player.getGame().getBoard();
