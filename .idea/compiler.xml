@@ -8,12 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="carcassonne-client" />
         <module name="carcassonne-server" />
-        <module name="carcassonne-logic" />
-        <module name="carcassonne-network-common" />
+        <module name="carcassonne-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="carcassonne-client" target="16" />
+      <module name="carcassonne-common" target="16" />
       <module name="carcassonne-logic" target="16" />
       <module name="carcassonne-network-common" target="16" />
       <module name="carcassonne-server" target="16" />

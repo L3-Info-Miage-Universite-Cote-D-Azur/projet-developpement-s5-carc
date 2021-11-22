@@ -13,6 +13,7 @@
         <module>carcassonne-logic</module>
         <module>carcassonne-server</module>
         <module>carcassonne-network-common</module>
+        <module>carcassonne-common</module>
     </modules>
 
     <properties>

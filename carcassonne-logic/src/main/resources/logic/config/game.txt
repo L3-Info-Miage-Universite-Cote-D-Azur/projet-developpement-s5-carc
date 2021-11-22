@@ -1,4 +1,0 @@
-Name	Value
-MinPlayers	2
-MaxPlayers	5
-StartingMeepleCount	7
