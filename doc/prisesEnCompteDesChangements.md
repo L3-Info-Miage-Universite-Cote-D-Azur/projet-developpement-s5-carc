@@ -17,7 +17,7 @@ Afin d'ajouter ces fonctionnalités, nous avons du revoir nos itérations futurs
   - Ajout de fonctionnalités de jeu
     - Récupération des Meeples
   - Ajout des 500 parties
-  - Début de la séparation code client/serveur
+  - Implémentation client/serveur
   - Ajout de la personnalisation des couleurs du CLI
 
 - Livraison 6
@@ -26,7 +26,6 @@ Afin d'ajouter ces fonctionnalités, nous avons du revoir nos itérations futurs
     - Rotation des tuiles
     - Contrainte de placement pour les meeples
     - Ajout du comptage de point pour les zones de jeu
-  - Finition de la séparation code client/serveur
 
 - Livraison 7
   - Ajout de fonctionnalités de jeu
