@@ -22,7 +22,12 @@ public class Player implements Comparable {
     public Player() {
         this.listener = new IPlayerListener() {
             @Override
-            public void play() {
+            public void onWaitingPlaceTile() {
+
+            }
+
+            @Override
+            public void onWaitingExtraAction() {
 
             }
         };
@@ -35,7 +40,12 @@ public class Player implements Comparable {
         this.id = id;
         this.listener = new IPlayerListener() {
             @Override
-            public void play() {
+            public void onWaitingPlaceTile() {
+
+            }
+
+            @Override
+            public void onWaitingExtraAction() {
 
             }
         };

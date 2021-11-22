@@ -1,21 +1,20 @@
 package server.matchmaking;
 
 import logic.Game;
-import logic.GameTurn;
-import logic.IGameListener;
 import logic.command.EndTurnCommand;
 import logic.command.ICommand;
-import logic.command.MasterTurnStartedCommand;
+import logic.command.MasterNextTurnDataCommand;
 import logic.command.PlaceTileDrawnCommand;
 import logic.config.GameConfig;
 import logic.player.Player;
-import logic.tile.ChunkId;
+import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameResultMessage;
 import server.command.SlaveCommandExecutionNotifier;
+import server.listener.MatchGameListener;
 import server.logger.Logger;
 import server.session.ClientSession;
 import stream.ByteOutputStream;
@@ -23,7 +22,7 @@ import stream.ByteOutputStream;
 /**
  * Represents a game in the matchmaking system.
  */
-public class Match implements IGameListener {
+public class Match {
     private final int id;
     private final ClientSession[] sessions;
     private final Game game;
@@ -32,7 +31,7 @@ public class Match implements IGameListener {
         this.id = id;
         this.sessions = sessions;
         this.game = new Game(GameConfig.loadFromResources());
-        game.setListener(this);
+
         game.getCommandExecutor().setListener(new SlaveCommandExecutionNotifier(this));
 
         for (ClientSession session : sessions) {
@@ -52,6 +51,14 @@ public class Match implements IGameListener {
     }
 
     /**
+     * Gets the match id.
+     * @return the match id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Removes the player from the connected sessions.
      * @param session the session to remove
      */
@@ -65,13 +72,6 @@ public class Match implements IGameListener {
         if (game.isStarted() && !game.isOver()) {
             autoPlayIfCurrentPlayerIsOffline();
         }
-    }
-
-    /**
-     * Starts the match.
-     */
-    public void startGame() {
-        game.start();
     }
 
     /**
@@ -106,15 +106,16 @@ public class Match implements IGameListener {
      * @param command the command to execute
      */
     public void executeCommand(int userId, ICommand command) {
-        GameTurn turn = game.getTurn();
+        Player commandExecutor = game.getPlayerById(userId);
+        Player turnExecutor = game.getTurnExecutor();
 
-        if (turn.isOver()) {
-            Logger.warn("Player %d tried to execute command %s but the current turn is over.", userId, command);
+        if (commandExecutor != turnExecutor) {
+            Logger.warn("Player %d tried to execute command %s but it is not his turn.", userId, command.getType());
             return;
         }
 
-        if (turn.getPlayer().getId() != userId) {
-            Logger.warn("Player %d tried to execute command %s but it is not his turn.", userId, command.getType());
+        if (game.getState().getType() != command.getRequiredState()) {
+            Logger.warn("Player %d tried to execute command %s but the game state is %s.", userId, command.getType(), game.getState().getType());
             return;
         }
 
@@ -140,61 +141,35 @@ public class Match implements IGameListener {
      * Auto plays the game if the current player who must play is offline.
      */
     private void autoPlayIfCurrentPlayerIsOffline() {
-        GameTurn turn = game.getTurn();
-        int userId = turn.getPlayer().getId();
+        Player turnExecutor = game.getTurnExecutor();
 
-        if (getSessionByUserId(userId) == null) {
-            Logger.info("Player %d left the game. Tile to draw will be placed randomly to continue the game.",userId);
-            executeCommand(userId, new PlaceTileDrawnCommand(game.getBoard().findFreePlaceForTile(turn.getTileToDraw()).get(0)));
-            executeCommand(userId, new EndTurnCommand());
+        if (getSessionByUserId(turnExecutor.getId()) == null) {
+            Logger.info("Player %d left the game. Tile to draw will be placed randomly to continue the game.", turnExecutor.getId());
+
+            GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
+
+            executeCommand(turnExecutor.getId(), new PlaceTileDrawnCommand(game.getBoard().findFreePlaceForTile(placeTileState.getTileDrawn()).get(0)));
+            executeCommand(turnExecutor.getId(), new EndTurnCommand());
         }
     }
 
-    @Override
-    public void onTurnStarted(int id) {
-        Logger.info("Match %d: Turn %d started", this.id, id);
-
-        notifyCommandExecutionToConnectedClients(new MasterTurnStartedCommand(game.getTurn().getTileToDraw(), game));
-        autoPlayIfCurrentPlayerIsOffline();
-    }
-
-    @Override
-    public void onTurnEnded(int id) {
-        Logger.info("Match %d: Turn %d ended", this.id, id);
-    }
-
-    @Override
-    public void onTilePlaced(Tile tile) {
-        Logger.debug("Match %d: Tile model %s placed at (%d,%d)", id, tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
-    }
-
-    @Override
-    public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.debug("Match %d: Meeple placed at tile (%d,%d), chunk %s", id, tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
-    }
-
-    @Override
-    public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.debug("Match %d: Meeple removed from tile (%d,%d), chunk %s", id, tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
-    }
-
-    @Override
-    public void onStart() {
-        Logger.info("Match %d: Game started", id);
+    public void startGame() {
+        game.start();
+        game.setListener(new MatchGameListener(this));
 
         ByteOutputStream stream = new ByteOutputStream(1000);
         game.encode(stream, false);
         sendMessageToConnectedClients(new GameDataMessage(stream.toByteArray()));
     }
 
-    @Override
-    public void onEnd() {
-        Logger.info("Match %d: Game ended", id);
-
+    public void onGameOver() {
         ByteOutputStream stream = new ByteOutputStream(1000);
         game.encode(stream, true);
-
         destroy();
         sendMessageToConnectedClients(new GameResultMessage(stream.toByteArray()));
+    }
+
+    public void onGameTurnStarted(Tile tileDrawn) {
+        notifyCommandExecutionToConnectedClients(new MasterNextTurnDataCommand(tileDrawn, game));
     }
 }

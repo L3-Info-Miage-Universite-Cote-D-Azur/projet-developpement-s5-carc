@@ -69,35 +69,6 @@ class GameTest {
     }
 
     @Test
-    void testIfThrowExceptionIfWinnerCalledWhenGameNotFinished(){
-        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
-        Game game = new Game(gameConfig);
-
-        game.addPlayer(new Player(1));
-        game.start();
-
-        assertEquals(false, game.isOver());
-        assertThrows(IllegalStateException.class, game::getWinner);
-    }
-
-    @Test
-    void testWinner() {
-        Game game = new Game(config);
-        game.addPlayer(new Player(501));
-        game.addPlayer(new Player(502));
-
-        assertFalse(game.isOver());
-
-        game.start();
-        game.getPlayer(0).addScore(279, ChunkType.TOWN);
-
-        game.onEnd();
-
-        assertNotNull(game.getWinner());
-        assertEquals(game.getWinner(), game.getPlayer(0));
-    }
-
-    @Test
     void testIfThrowExceptionWhenNotEnoughPlayers() {
         Game game = new Game(new GameConfig(config.tiles, 1, 1, config.startingMeepleCount));
 

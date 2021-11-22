@@ -4,6 +4,7 @@ import client.logger.Logger;
 import client.logger.LoggerCategory;
 import logic.IGameListener;
 import logic.player.Player;
+import logic.state.GameState;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
 
@@ -12,21 +13,44 @@ import logic.tile.Tile;
  */
 public class GameLogger implements IGameListener {
     /**
-     * Invoked when a turn is started.
-     * @param id The turn id.
+     * Called when the game is started.
      */
     @Override
-    public void onTurnStarted(int id) {
-        Logger.info(LoggerCategory.GAME, "--- Turn %d started. ---", id);
+    public void onGameStarted() {
+        Logger.info(LoggerCategory.GAME, "--- GAME STARTED ---");
     }
 
     /**
-     * Invoked when a turn is ended.
-     * @param id The turn id.
+     * Called when the game is over.
+     */
+    @Override
+    public void onGameOver() {
+        Logger.info(LoggerCategory.GAME, "--- GAME OVER ---");
+    }
+
+    /**
+     * Called when the turn is started.
+     */
+    @Override
+    public void onTurnStarted(int id) {
+        Logger.info(LoggerCategory.GAME, "--- TURN %d STARTED ---", id);
+    }
+
+    /**
+     * Called when the turn is ended.
      */
     @Override
     public void onTurnEnded(int id) {
-        Logger.info(LoggerCategory.GAME, "--- Turn %d ended. ---", id);
+        Logger.info(LoggerCategory.GAME, "--- TURN %d ENDED ---", id);
+    }
+
+    /**
+     * Invoked when the game state changes.
+     * @param state The new game state.
+     */
+    @Override
+    public void onStateChanged(GameState state) {
+        Logger.info(LoggerCategory.GAME, "Game state changed to %s", state.getType());
     }
 
     /**
@@ -58,21 +82,5 @@ public class GameLogger implements IGameListener {
     @Override
     public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
         Logger.info(LoggerCategory.GAME, "Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
-    }
-
-    /**
-     * Invoked when the game is started.
-     */
-    @Override
-    public void onStart() {
-        Logger.info(LoggerCategory.GAME, "--- GAME START ---");
-    }
-
-    /**
-     * Invoked when the game is ended.
-     */
-    @Override
-    public void onEnd() {
-        Logger.info(LoggerCategory.GAME, "--- GAME OVER ---");
     }
 }

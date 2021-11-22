@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.state.GameStateType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -31,6 +32,12 @@ public interface ICommand {
      * @return true if the command is valid
      */
     boolean canBeExecuted(Game game);
+
+    /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    GameStateType getRequiredState();
 
     /**
      * Executes the command.

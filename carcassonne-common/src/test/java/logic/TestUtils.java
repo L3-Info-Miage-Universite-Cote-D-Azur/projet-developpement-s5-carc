@@ -8,6 +8,7 @@ import logic.config.GameConfig;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
+import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.ChunkId;
 
 import java.util.Random;
@@ -36,16 +37,24 @@ public class TestUtils {
         private final Game game;
         private final Random random = new Random();
 
+        private Vector2 lastTilePos;
+
         public FakeAI(Game game) {
             this.game = game;
         }
 
         @Override
-        public void play() {
-            Vector2 position = game.getBoard().getStartingTile() == null ? GameBoard.STARTING_TILE_POSITION : game.getBoard().findFreePlaceForTile(game.getTurn().getTileToDraw()).get(0);
+        public void onWaitingPlaceTile() {
+            GameTurnPlaceTileState placeTileState = ((GameTurnPlaceTileState) game.getState());
+            Vector2 position = game.getBoard().getStartingTile() == null ? GameBoard.STARTING_TILE_POSITION : game.getBoard().findFreePlaceForTile(placeTileState.getTileDrawn()).get(0);
 
             game.getCommandExecutor().execute(new PlaceTileDrawnCommand(position));
-            game.getCommandExecutor().execute(new PlaceMeepleCommand(position, ChunkId.values()[random.nextInt(ChunkId.values().length)]));
+            lastTilePos = position;
+        }
+
+        @Override
+        public void onWaitingExtraAction() {
+            game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]));
             game.getCommandExecutor().execute(new EndTurnCommand());
         }
     }

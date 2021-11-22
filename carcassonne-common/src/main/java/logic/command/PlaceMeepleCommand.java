@@ -1,10 +1,11 @@
 package logic.command;
 
 import logic.Game;
-import logic.GameTurn;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
+import logic.state.GameStateType;
+import logic.state.turn.GameTurnExtraActionState;
 import logic.tile.Chunk;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
@@ -67,7 +68,14 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        Player player = game.getTurn().getPlayer();
+        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
+
+        if (extraActionState.hasPlacedMeeple()) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Player has already placed a meeple.");
+            return false;
+        }
+
+        Player player = game.getTurnExecutor();
 
         if (!player.hasRemainingMeeples()) {
             game.getCommandExecutor().getListener().onCommandFailed(this, "Player has no meeple left.");
@@ -88,19 +96,16 @@ public class PlaceMeepleCommand implements ICommand {
             return false;
         }
 
-        GameTurn turn = game.getTurn();
-
-        if (!turn.hasPlacedTile()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Player has not placed a tile yet.");
-            return false;
-        }
-
-        if (turn.hasPlacedMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Player has already placed a meeple.");
-            return false;
-        }
-
         return true;
+    }
+
+    /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    @Override
+    public GameStateType getRequiredState() {
+        return GameStateType.TURN_EXTRA_ACTION;
     }
 
     /**
@@ -110,15 +115,15 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void execute(Game game) {
-        Player player = game.getTurn().getPlayer();
+        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
+        Player player = game.getTurnExecutor();
         Tile tile = game.getBoard().getTileAt(tilePosition);
         Chunk chunk = tile.getChunk(chunkId);
-        GameTurn turn = game.getTurn();
 
         chunk.setMeeple(new Meeple(player));
         player.addScore(1, chunk.getType());
         player.increasePlayedMeeples();
-        turn.setMeeplePlaced();
+        extraActionState.setPlacedMeeple();
 
         game.getListener().onMeeplePlaced(player, tile, chunkId);
     }

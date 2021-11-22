@@ -16,6 +16,6 @@ public class EndTurnCommandTest {
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
 
-        assertEquals(game.getTurn().getCount(), 2);
+        assertEquals(game.getTurnCount(), 2);
     }
 }

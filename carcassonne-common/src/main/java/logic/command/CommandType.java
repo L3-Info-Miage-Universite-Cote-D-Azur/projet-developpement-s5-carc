@@ -8,7 +8,7 @@ public enum CommandType {
     PLACE_MEEPLE(2, PlaceMeepleCommand.class),
     REMOVE_MEEPLE(3, RemoveMeepleCommand.class),
     END_TURN(4, EndTurnCommand.class),
-    MASTER_TURN_DATA(5, MasterTurnStartedCommand.class);
+    MASTER_NEXT_TURN_DATA(5, MasterNextTurnDataCommand.class);
 
     private final int id;
     private final Class<? extends ICommand> commandClass;

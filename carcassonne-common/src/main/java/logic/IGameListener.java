@@ -1,6 +1,7 @@
 package logic;
 
 import logic.player.Player;
+import logic.state.GameState;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
 
@@ -9,16 +10,30 @@ import logic.tile.Tile;
  */
 public interface IGameListener {
     /**
+     * Called when the game is started.
+     */
+    void onGameStarted();
+
+    /**
+     * Called when the game is over.
+     */
+    void onGameOver();
+
+    /**
      * Called when the turn is started.
-     * @param id The turn id.
      */
     void onTurnStarted(int id);
 
     /**
-     * Called when the turn is over.
-     * @param id The turn id.
+     * Called when the turn is ended.
      */
     void onTurnEnded(int id);
+
+    /**
+     * Called when the game state changes.
+     * @param state The new game state.
+     */
+    void onStateChanged(GameState state);
 
     /**
      * Called when a tile is placed.
@@ -34,15 +49,11 @@ public interface IGameListener {
      */
     void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId);
 
+    /**
+     * Called when a meeple is removed from a tile.
+     * @param player The player who removed the meeple.
+     * @param tile The tile from which the meeple was removed.
+     * @param chunkId The chunk id from which the meeple was removed.
+     */
     void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId);
-
-    /**
-     * Called when the game is started.
-     */
-    void onStart();
-
-    /**
-     * Called when the game is over.
-     */
-    void onEnd();
 }

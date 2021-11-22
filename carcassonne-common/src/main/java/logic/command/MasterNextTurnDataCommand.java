@@ -1,6 +1,8 @@
 package logic.command;
 
 import logic.Game;
+import logic.state.GameStateType;
+import logic.state.turn.GameTurnWaitingMasterDataState;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 import stream.ByteInputStream;
@@ -12,13 +14,13 @@ import java.util.ArrayList;
  * Command to inform the remote client about the current turn data.
  * As the stack is not serialized to avoid cheating, the client musts insert the next tile on the stack before starting the next turn.
  */
-public class MasterTurnStartedCommand implements ICommand {
+public class MasterNextTurnDataCommand implements ICommand {
     private int tileConfigIndex;
 
-    public MasterTurnStartedCommand() {
+    public MasterNextTurnDataCommand() {
     }
 
-    public MasterTurnStartedCommand(Tile tileToDraw, Game game) {
+    public MasterNextTurnDataCommand(Tile tileToDraw, Game game) {
         this.tileConfigIndex = game.getConfig().tiles.indexOf(tileToDraw.getConfig());
     }
 
@@ -28,7 +30,7 @@ public class MasterTurnStartedCommand implements ICommand {
      */
     @Override
     public CommandType getType() {
-        return CommandType.MASTER_TURN_DATA;
+        return CommandType.MASTER_NEXT_TURN_DATA;
     }
 
     /**
@@ -69,6 +71,15 @@ public class MasterTurnStartedCommand implements ICommand {
     }
 
     /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    @Override
+    public GameStateType getRequiredState() {
+        return GameStateType.TURN_WAITING_MASTER_DATA;
+    }
+
+    /**
      * Executes the command.
      * @param game the game context
      */
@@ -82,12 +93,6 @@ public class MasterTurnStartedCommand implements ICommand {
             add(tile);
         }});
 
-        if (!game.getBoard().hasFreePlaceForTile(tile)) {
-            throw new IllegalStateException("The tile is not placeable on the board!");
-        }
-
-        if (!game.getTurn().playTurn()) {
-            throw new IllegalStateException("Turn is not playable!");
-        }
+        game.getState().complete();
     }
 }

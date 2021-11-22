@@ -11,6 +11,7 @@ import logic.Game;
 import logic.command.CommandType;
 import logic.config.GameConfig;
 import logic.player.Player;
+import logic.state.GameState;
 import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
@@ -73,6 +74,14 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         } else {
             Logger.warn(LoggerCategory.SERVICE, "Own player not found!");
         }
+
+        /* As we restore the game view from the server snapshot, we need to call the player listeners if the current state needs it. */
+        GameState currentState = gameView.getState();
+
+        switch (currentState.getType()) {
+            case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
+            case TURN_EXTRA_ACTION -> gameView.getTurnExecutor().getListener().onWaitingExtraAction();
+        }
     }
 
     /**
@@ -81,7 +90,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      * @param message
      */
     private void onGameCommand(GameCommandMessage message) {
-        if (message.getCommand().getType() == CommandType.MASTER_TURN_DATA || gameView.getTurn().getPlayer().getId() != client.getAuthenticationService().getUserId()) {
+        if (message.getCommand().getType() == CommandType.MASTER_NEXT_TURN_DATA || gameView.getTurnExecutor().getId() != client.getAuthenticationService().getUserId()) {
             Logger.debug(LoggerCategory.SERVICE, "Server command %s received and executed.", message.getCommand().getType());
             message.getCommand().execute(gameView);
         }

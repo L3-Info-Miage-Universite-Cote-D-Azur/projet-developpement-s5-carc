@@ -1,7 +1,8 @@
 package logic.command;
 
 import logic.Game;
-import logic.GameTurn;
+import logic.state.GameStateType;
+import logic.state.turn.GameTurnExtraActionState;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -40,31 +41,26 @@ public class EndTurnCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        GameTurn turn = game.getTurn();
+        return game.getState() instanceof GameTurnExtraActionState;
+    }
 
-        if (turn.isOver()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Turn is already over!");
-            return false;
-        }
-
-        if (!turn.hasPlacedTile()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "You must place a tile before ending your turn!");
-            return false;
-        }
-
-        return true;
+    /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    @Override
+    public GameStateType getRequiredState() {
+        return GameStateType.TURN_EXTRA_ACTION;
     }
 
     /**
      * Executes the command to end the turn.
+     * If the game instance is a master instance, the command will end the turn.
+     * If the game instance is a slave instance, the command will do nothing as we need the data of the next state.
      * @param game the game context
      */
     @Override
     public void execute(Game game) {
-        game.getTurn().endTurn();
-
-        if (game.isMaster()) {
-            game.getTurn().playTurn();
-        }
+        game.getState().complete();
     }
 }

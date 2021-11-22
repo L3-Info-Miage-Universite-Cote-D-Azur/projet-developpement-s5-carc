@@ -1,9 +1,10 @@
 package logic.command;
 
 import logic.Game;
-import logic.GameTurn;
 import logic.board.GameBoard;
 import logic.math.Vector2;
+import logic.state.GameStateType;
+import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
 import stream.ByteInputStream;
@@ -56,14 +57,8 @@ public class PlaceTileDrawnCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        GameTurn turn = game.getTurn();
-
-        if (turn.hasPlacedTile()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "You can only place one tile per turn.");
-            return false;
-        }
-
-        Tile tile = game.getTurn().getTileToDraw();
+        GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
+        Tile tile = placeTileState.getTileDrawn();
         GameBoard board = game.getBoard();
 
         if (board.getStartingTile() == null) {
@@ -97,17 +92,28 @@ public class PlaceTileDrawnCommand implements ICommand {
     }
 
     /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    @Override
+    public GameStateType getRequiredState() {
+        return GameStateType.TURN_PLACE_TILE;
+    }
+
+    /**
      * Executes the command.
      * @param game The game context
      * @return True if the tile was placed, false otherwise
      */
     @Override
     public void execute(Game game) {
-        Tile tile = game.getTurn().getTileToDraw();
+        GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
+        Tile tile = placeTileState.getTileDrawn();
 
         tile.setPosition(position);
         game.getBoard().place(tile);
-        game.getTurn().setTilePlaced();
         game.getListener().onTilePlaced(tile);
+
+        placeTileState.complete();
     }
 }

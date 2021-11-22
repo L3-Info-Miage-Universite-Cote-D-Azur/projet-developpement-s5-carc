@@ -1,9 +1,10 @@
 package logic.command;
 
 import logic.Game;
-import logic.GameTurn;
 import logic.math.Vector2;
 import logic.player.Player;
+import logic.state.GameStateType;
+import logic.state.turn.GameTurnExtraActionState;
 import logic.tile.ChunkId;
 import logic.tile.Tile;
 import stream.ByteInputStream;
@@ -60,14 +61,23 @@ public class RemoveMeepleCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        Tile tile = game.getBoard().getTileAt(tilePosition);
+        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
 
-        if (tile == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist.");
+        if (extraActionState.hasRemovedMeeple()) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Cannot remove meeple twice in a turn.");
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Gets the game state required to execute the command.
+     * @return the game state
+     */
+    @Override
+    public GameStateType getRequiredState() {
+        return GameStateType.TURN_EXTRA_ACTION;
     }
 
     /**
@@ -77,13 +87,13 @@ public class RemoveMeepleCommand implements ICommand {
      */
     @Override
     public void execute(Game game) {
-        GameTurn turn = game.getTurn();
-        Player player = turn.getPlayer();
+        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
+        Player player = game.getTurnExecutor();
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         tile.getChunk(chunkId).setMeeple(null);
         player.decreasePlayedMeeples();
-        turn.setMeeplePlaced();
+        extraActionState.setRemovedMeeple();
 
         game.getListener().onMeepleRemoved(player, tile, chunkId);
     }

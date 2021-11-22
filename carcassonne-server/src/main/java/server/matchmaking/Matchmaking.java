@@ -53,7 +53,7 @@ public class Matchmaking {
                 sessions[i] = queue.remove(0);
             }
 
-            Match match = new Match(matchIdCounter++, sessions);
+            Match match = new Match(++matchIdCounter, sessions);
 
             for (ClientSession session : sessions) {
                 session.setMatch(match);

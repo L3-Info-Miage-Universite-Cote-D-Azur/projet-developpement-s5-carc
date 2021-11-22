@@ -1,0 +1,63 @@
+package logic.state;
+
+
+import logic.Game;
+import logic.player.Player;
+import logic.state.turn.GameTurnInitState;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
+
+/**
+ * Represents the state of the game when it's started.
+ */
+public class GameStartState extends GameState {
+    public GameStartState(Game game) {
+        super(game);
+    }
+
+    /**
+     * Inits the state.
+     * {@link GameStartState} initializes the game by clearing the game instance and starting the first turn.
+     */
+    @Override
+    public void init() {
+        for (Player player : game.getPlayers()) {
+            player.init();
+        }
+
+        game.getBoard().clear();
+        game.getStack().fill(game.getConfig());
+        game.getStack().shuffle();
+
+        game.getListener().onGameStarted();
+
+        game.setState(new GameTurnInitState(game));
+    }
+
+    @Override
+    public void encode(ByteOutputStream stream) {
+        throw new IllegalStateException("GameStateState musts be not encoded as it makes transition to the GamePlaceTileState.");
+    }
+
+    @Override
+    public void decode(ByteInputStream stream) {
+        throw new IllegalStateException("GameStateState musts be not decoded as it makes transition to the GamePlaceTileState.");
+    }
+
+    /**
+     * Completes the state.
+     */
+    @Override
+    public void complete() {
+        throw new IllegalStateException("Cannot complete this state.");
+    }
+
+    /**
+     * Gets the type of the state.
+     * @return The type of the state.
+     */
+    @Override
+    public GameStateType getType() {
+        return GameStateType.START;
+    }
+}

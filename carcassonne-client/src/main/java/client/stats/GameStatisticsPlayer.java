@@ -2,6 +2,9 @@ package client.stats;
 
 import logic.player.Player;
 
+/**
+ * Represents the statistics of a player.
+ */
 public class GameStatisticsPlayer {
     private final int id;
     private final int roadScore;

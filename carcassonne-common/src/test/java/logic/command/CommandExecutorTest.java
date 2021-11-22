@@ -2,6 +2,7 @@ package logic.command;
 
 import logic.Game;
 import logic.TestUtils;
+import logic.state.GameStateType;
 import org.junit.jupiter.api.Test;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -77,6 +78,11 @@ public class CommandExecutorTest {
         }
 
         @Override
+        public GameStateType getRequiredState() {
+            return null;
+        }
+
+        @Override
         public void execute(Game game) {
 
         }
@@ -102,6 +108,11 @@ public class CommandExecutorTest {
         public boolean canBeExecuted(Game game) {
             game.getCommandExecutor().getListener().onCommandFailed(this, "rip");
             return false;
+        }
+
+        @Override
+        public GameStateType getRequiredState() {
+            return null;
         }
 
         @Override
