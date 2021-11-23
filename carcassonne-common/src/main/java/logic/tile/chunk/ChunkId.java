@@ -1,6 +1,6 @@
-package logic.tile;
+package logic.tile.chunk;
 
-import logic.math.Direction;
+import logic.tile.TileEdge;
 
 import java.util.Arrays;
 
@@ -11,90 +11,80 @@ public enum ChunkId {
     /**
      * Chunk id for the chunk in the top left corner of the tile grid.
      */
-    NORTH_LEFT(Direction.LEFT, Direction.TOP),
+    NORTH_LEFT(TileEdge.TOP),
 
     /**
      * Chunk id for the chunk in the top middle corner of the tile grid.
      */
-    NORTH_MIDDLE(Direction.MIDDLE, Direction.TOP),
+    NORTH_MIDDLE(TileEdge.TOP),
 
     /**
      * Chunk id for the chunk in the top right corner of the tile grid.
      */
-    NORTH_RIGHT(Direction.RIGHT, Direction.TOP),
+    NORTH_RIGHT(TileEdge.TOP),
 
     /**
      * Chunk id for the chunk in the right top corner of the tile grid.
      */
-    EAST_TOP(Direction.RIGHT, Direction.TOP),
+    EAST_TOP(TileEdge.RIGHT),
 
     /**
      * Chunk id for the chunk in the right middle corner of the tile grid.
      */
-    EAST_MIDDLE(Direction.RIGHT, Direction.MIDDLE),
+    EAST_MIDDLE(TileEdge.RIGHT),
 
     /**
      * Chunk id for the chunk in the right bottom corner of the tile grid.
      */
-    EAST_BOTTOM(Direction.RIGHT, Direction.RIGHT),
+    EAST_BOTTOM(TileEdge.RIGHT),
 
     /**
      * Chunk id for the chunk in the bottom right corner of the tile grid.
      */
-    SOUTH_RIGHT(Direction.RIGHT, Direction.BOTTOM),
+    SOUTH_RIGHT(TileEdge.BOTTOM),
 
     /**
      * Chunk id for the chunk in the bottom middle corner of the tile grid.
      */
-    SOUTH_MIDDLE(Direction.MIDDLE, Direction.BOTTOM),
+    SOUTH_MIDDLE(TileEdge.BOTTOM),
 
     /**
      * Chunk id for the chunk in the bottom left corner of the tile grid.
      */
-    SOUTH_LEFT(Direction.LEFT, Direction.BOTTOM),
+    SOUTH_LEFT(TileEdge.BOTTOM),
 
     /**
      * Chunk id for the chunk in the left bottom corner of the tile grid.
      */
-    WEST_BOTTOM(Direction.LEFT, Direction.RIGHT),
+    WEST_BOTTOM(TileEdge.LEFT),
 
     /**
      * Chunk id for the chunk in the left middle corner of the tile grid.
      */
-    WEST_MIDDLE(Direction.LEFT, Direction.MIDDLE),
+    WEST_MIDDLE(TileEdge.LEFT),
 
     /**
      * Chunk id for the chunk in the left top corner of the tile grid.
      */
-    WEST_TOP(Direction.LEFT, Direction.TOP),
+    WEST_TOP(TileEdge.LEFT),
 
     /**
      * Chunk id for the chunk in the middle of the tile grid.
      */
-    CENTER_MIDDLE(Direction.MIDDLE, Direction.MIDDLE);
+    CENTER_MIDDLE(null);
 
-    private final Direction column;
-    private final Direction row;
+    private final TileEdge edge;
 
-    ChunkId(Direction column, Direction row) {
-        this.column = column;
-        this.row = row;
+    ChunkId(TileEdge edge) {
+        this.edge = edge;
     }
 
     /**
-     * Returns the column of the chunk.
-     * @return The column of the chunk.
+     * Gets the edge of the tile.
+     * @return The edge of the tile.
      */
-    public Direction getColumn() {
-        return column;
-    }
-
-    /**
-     * Returns the row of the chunk.
-     * @return The row of the chunk.
-     */
-    public Direction getRow() {
-        return row;
+    public TileEdge getEdge() {
+        return edge;
     }
 
     /**

@@ -1,7 +1,7 @@
 package logic.player;
 
 import logic.Game;
-import logic.tile.ChunkType;
+import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 

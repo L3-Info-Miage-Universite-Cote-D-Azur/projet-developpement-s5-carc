@@ -4,6 +4,8 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 

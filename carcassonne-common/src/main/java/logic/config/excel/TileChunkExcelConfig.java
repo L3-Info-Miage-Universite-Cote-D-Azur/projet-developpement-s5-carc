@@ -1,8 +1,6 @@
 package logic.config.excel;
 
-import logic.tile.Chunk;
-import logic.tile.ChunkId;
-import logic.tile.ChunkType;
+import logic.tile.chunk.*;
 import logic.tile.Tile;
 
 /**
@@ -10,14 +8,19 @@ import logic.tile.Tile;
  */
 public class TileChunkExcelConfig {
     public ChunkType type;
-    public ChunkId[] references;
 
-    public TileChunkExcelConfig(ChunkType type, ChunkId[] references) {
+    public TileChunkExcelConfig(ChunkType type) {
         this.type = type;
-        this.references = references;
     }
 
     public Chunk createChunk(Tile parent) {
-        return new Chunk(parent, type, references);
+        return switch (type) {
+            case ROAD -> new RoadChunk(parent);
+            case TOWN -> new TownChunk(parent);
+            case RIVER -> new RiverChunk(parent);
+            case ABBEY -> new AbbeyChunk(parent);
+            case FIELD -> new FieldChunk(parent);
+            case ROAD_END -> new RoadEndChunk(parent);
+        };
     }
 }

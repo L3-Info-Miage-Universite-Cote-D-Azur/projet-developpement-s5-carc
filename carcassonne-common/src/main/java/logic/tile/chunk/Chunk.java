@@ -1,32 +1,32 @@
-package logic.tile;
+package logic.tile.chunk;
 
 import logic.Game;
 import logic.meeple.Meeple;
+import logic.tile.Tile;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
+
+import java.util.ArrayList;
 
 /**
  * Represents a chunk of tiles. A chunk is a part of tile grid.
  */
-public class Chunk {
+public abstract class Chunk {
     private final Tile parent;
-    private final ChunkType type;
-    private final ChunkId[] relations;
 
     private Meeple meeple;
+    private AreaChunk area;
 
-    public Chunk(Tile parent, ChunkType type, ChunkId[] relations) {
+    public Chunk(Tile parent) {
         this.parent = parent;
-        this.type = type;
-        this.relations = relations;
     }
 
     /**
-     * Gets the type of this chunk.
-     * @return The type of this chunk.
+     * Gets the parent tile of this chunk.
+     * @return The parent tile of this chunk.
      */
-    public ChunkType getType() {
-        return type;
+    public Tile getParent() {
+        return parent;
     }
 
     /**
@@ -35,6 +35,14 @@ public class Chunk {
      */
     public Meeple getMeeple(){
         return meeple;
+    }
+
+    /**
+     * Sets the area of this chunk.
+     * @param area The area to set.
+     */
+    public void setArea(AreaChunk area){
+        this.area = area;
     }
 
     /**
@@ -58,15 +66,18 @@ public class Chunk {
      * @param chunk
      * @return
      */
-    public boolean isCompatibleWith(Chunk chunk) {
-        return this.type.isCompatibleWith(chunk.type);
-    }
+    public abstract boolean isCompatibleWith(Chunk chunk);
+
+    /**
+     * Gets the type of this chunk.
+     * @return The type of this chunk.
+     */
+    public abstract ChunkType getType();
 
     @Override
     public String toString() {
         return "Chunk{" +
-                "type=" + type +
-                ", meeple=" + meeple +
+                "meeple=" + meeple +
                 '}';
     }
 

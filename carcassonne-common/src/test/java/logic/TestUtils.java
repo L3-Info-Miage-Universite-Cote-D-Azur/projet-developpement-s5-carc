@@ -9,7 +9,7 @@ import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceTileState;
-import logic.tile.ChunkId;
+import logic.tile.chunk.ChunkId;
 
 import java.util.Random;
 

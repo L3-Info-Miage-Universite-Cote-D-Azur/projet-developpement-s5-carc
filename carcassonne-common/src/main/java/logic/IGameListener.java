@@ -2,7 +2,7 @@ package logic;
 
 import logic.player.Player;
 import logic.state.GameState;
-import logic.tile.ChunkId;
+import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 
 /**

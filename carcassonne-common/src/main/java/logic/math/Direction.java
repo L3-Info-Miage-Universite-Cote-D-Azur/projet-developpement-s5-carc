@@ -7,36 +7,42 @@ public enum Direction {
     /**
      * Represents the direction of the positive x-axis.
      */
-    TOP(1),
+    TOP(0, 1),
 
     /**
      * Represents the direction of the negative x-axis.
      */
-    BOTTOM(-1),
+    BOTTOM(0, -1),
 
     /**
      * Represents the direction of the null x-axis y-axis.
      */
-    MIDDLE(0),
+    MIDDLE(0, 0),
 
     /**
      * Represents the direction of the negative y-axis.
      */
-    LEFT(-1),
+    LEFT(-1, 0),
 
     /**
      * Represents the direction of the positive y-axis.
      */
-    RIGHT(1);
+    RIGHT(1, 0);
 
-    private final int value;
+    private final int x;
+    private final int y;
 
-    Direction(int value) {
-        this.value = value;
+    Direction(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getValue() {
-        return value;
+    /**
+     * Gets the offset of this direction.
+     * @return The offset of this direction.
+     */
+    public Vector2 getOffset() {
+        return new Vector2(x, y);
     }
 
     public Direction getOpposite() {

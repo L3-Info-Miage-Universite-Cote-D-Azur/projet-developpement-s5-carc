@@ -1,8 +1,10 @@
 package logic.config.excel;
 
 import excel.ExcelNode;
-import logic.tile.ChunkId;
-import logic.tile.ChunkType;
+import logic.tile.chunk.AreaChunk;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
+import logic.tile.chunk.ChunkType;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
 
@@ -13,6 +15,7 @@ import java.util.*;
  */
 public class TileExcelConfig {
     public TileChunkExcelConfig[] chunks;
+    public List<ArrayList<ChunkId>> areaChunks;
     public String model;
     public String expansion;
     public EnumSet<TileFlags> flags;
@@ -21,13 +24,15 @@ public class TileExcelConfig {
     /**
      * Creates a tile excel configuration from the given parameters.
      * @param chunks The chunks configuration.
+     * @param areaChunks The area chunks configuration.
      * @param model The model of tile.
      * @param expansion The expansion of tile.
      * @param flags The flags of tile.
      * @param count The count of tile in the stack.
      */
-    public TileExcelConfig(TileChunkExcelConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
+    public TileExcelConfig(TileChunkExcelConfig[] chunks, List<ArrayList<ChunkId>> areaChunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
         this.chunks = chunks;
+        this.areaChunks = areaChunks;
         this.model = model;
         this.expansion = expansion;
         this.flags = flags;
@@ -85,13 +90,13 @@ public class TileExcelConfig {
             }
         }
 
+        areaChunks = chunkGroups.entrySet().stream().map(e -> e.getValue()).toList();
         chunks = new TileChunkExcelConfig[ChunkId.values().length];
 
         for (ChunkId chunkId : ChunkId.values()) {
             ChunkType type = chunkTypes[chunkId.ordinal()];
-            ChunkId[] references = chunkReferences[chunkId.ordinal()];
 
-            chunks[chunkId.ordinal()] = new TileChunkExcelConfig(type, references);
+            chunks[chunkId.ordinal()] = new TileChunkExcelConfig(type);
         }
     }
 
@@ -122,6 +127,14 @@ public class TileExcelConfig {
 
         for (ChunkId chunkId : ChunkId.values()) {
             tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
+        }
+
+        for (ArrayList<ChunkId> chunkList : areaChunks) {
+            AreaChunk areaChunk = new AreaChunk();
+
+            for (ChunkId chunkId : chunkList) {
+                areaChunk.addChunk(tile.getChunk(chunkId));
+            }
         }
 
         return tile;
