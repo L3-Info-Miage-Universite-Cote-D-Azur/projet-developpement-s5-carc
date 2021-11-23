@@ -2,11 +2,15 @@ package client.utils;
 
 import logic.Game;
 import logic.board.GameBoard;
+import logic.math.Polygon;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
+import logic.tile.TileEdge;
+import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
+import logic.tile.chunk.ChunkType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +22,7 @@ import java.util.HashMap;
 /**
  * Class for drawing the game.
  */
-public class GameDrawUtils {
+public class GameDrawUtils implements ChunkPositionConstant {
     private static final int tileWidth = 160;
     private static final int tileHeight = 160;
     private static final int meepleWidth = 27;
@@ -41,6 +45,29 @@ public class GameDrawUtils {
         put(ChunkId.EAST_MIDDLE, new Vector2(124, 71));
         put(ChunkId.EAST_BOTTOM, new Vector2(133, 106));
         put(ChunkId.CENTER_MIDDLE, new Vector2(67, 67));
+    }};
+    private static final HashMap<ChunkId, Polygon> chunksGeo = new HashMap<>() {{
+        put(ChunkId.NORTH_LEFT, new Polygon(A, B, F)); // ABF
+        put(ChunkId.NORTH_MIDDLE, new Polygon(B, C, G, F)); // BCGF
+        put(ChunkId.NORTH_RIGHT, new Polygon(C, D, G)); // CDG
+        put(ChunkId.SOUTH_LEFT, new Polygon(M, J, N)); // MJN
+        put(ChunkId.SOUTH_MIDDLE, new Polygon(J, K, O, N)); // JKON
+        put(ChunkId.SOUTH_RIGHT, new Polygon(K, P, O)); // KPO
+        put(ChunkId.WEST_TOP, new Polygon(A, E, F)); // AEF
+        put(ChunkId.WEST_MIDDLE, new Polygon(E, F, J, I)); // EFJI
+        put(ChunkId.WEST_BOTTOM, new Polygon(I, J, M)); // IJM
+        put(ChunkId.EAST_TOP, new Polygon(G, H, D)); // GHD
+        put(ChunkId.EAST_MIDDLE, new Polygon(G, H, L, K)); // GHLK
+        put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
+        put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
+    }};
+    private static final HashMap<ChunkType, Color> chunksColor = new HashMap<>() {{
+        put(ChunkType.ROAD, Color.gray);
+        put(ChunkType.ROAD_END, Color.darkGray);
+        put(ChunkType.FIELD, Color.green);
+        put(ChunkType.TOWN, Color.ORANGE);
+        put(ChunkType.ABBEY, Color.CYAN);
+        put(ChunkType.RIVER, Color.blue);
     }};
 
     /**
@@ -133,6 +160,34 @@ public class GameDrawUtils {
     }
 
     /**
+     * Draw a chunk
+     *
+     * @param g            The graphics to draw into
+     * @param tilePosition The position of the tile associated with the chunk
+     * @param chunkType    The type of the chunk to draw
+     * @param chunkId      The id of the chunk to draw
+     */
+    private static void drawChunk(Graphics g, Vector2 tilePosition, ChunkType chunkType, ChunkId chunkId) {
+        g.setColor(chunksColor.get(chunkType));
+        Polygon polygon = chunksGeo.get(chunkId);
+        g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
+    }
+
+    /**
+     * Draw tile border
+     *
+     * @param g            The graphics to draw into
+     * @param tilePosition The position of the tile associated with the chunk
+     */
+    private static void drawTileBorder(Graphics g, Vector2 tilePosition) {
+        g.setColor(Color.black);
+        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX() + tileWidth, tilePosition.getY());
+        g.drawLine(tilePosition.getX(), tilePosition.getY() + tileHeight - 1, tilePosition.getX() + tileWidth, tilePosition.getY() + tileHeight - 1);
+        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX(), tilePosition.getY() + tileHeight);
+        g.drawLine(tilePosition.getX() + tileWidth - 1, tilePosition.getY(), tilePosition.getX() + tileWidth - 1, tilePosition.getY() + tileHeight);
+    }
+
+    /**
      * Creates a new image layer representing the specified game instance.
      *
      * @param game The game instance to create the image layer for.
@@ -186,12 +241,19 @@ public class GameDrawUtils {
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
 
+                // Show chunk
+                drawChunk(graphics, tileImagePosition, chunk.getType(), chunkId);
+
+                // Show tile border
+                drawTileBorder(graphics, tileImagePosition);
+
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
                     Vector2 meepleImagePosition = getMeeplePosition(tileImagePosition, chunkId);
                     BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(game.getPlayerIndex(meeple.getOwner())));
-                    graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
+                    graphics.setColor(Color.blue);
                     graphics.drawImage(meepleImage, meepleImagePosition.getX(), meepleImagePosition.getY(), null);
+                    //graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
                 }
             }
         }
