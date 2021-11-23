@@ -34,7 +34,7 @@ public class Tile {
         Chunk[] originalChunkOrder = chunks.clone();
 
         for (int i = 0; i < originalChunkOrder.length - 1; i++) {
-            chunks[(i + 3) % (ChunkId.values().length - 1)] = originalChunkOrder[i];
+            setChunk(ChunkId.values()[(i + 3) % (ChunkId.values().length - 1)], originalChunkOrder[i]);
         }
 
         rotation = (rotation + 1) % 4;
@@ -73,6 +73,7 @@ public class Tile {
 
     public void setChunk(ChunkId id, Chunk chunk) {
         chunks[id.ordinal()] = chunk;
+        chunk.setCurrentId(id);
     }
 
     /**

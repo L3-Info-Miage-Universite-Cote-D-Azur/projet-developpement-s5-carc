@@ -2,19 +2,21 @@ package logic.tile.chunk;
 
 import logic.tile.Tile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Represents a chunk area.
+ * It contains the list of chunks in the area.
+ */
 public class ChunkArea {
     private final HashSet<Chunk> chunks;
     private final HashSet<Tile> tiles;
-    private boolean completed;
+    private boolean closed;
 
     public ChunkArea() {
         chunks = new HashSet<>();
         tiles = new HashSet<>();
-        completed = false;
+        closed = false;
     }
 
     /**
@@ -32,6 +34,8 @@ public class ChunkArea {
 
         chunks.add(chunk);
         tiles.add(chunk.getParent());
+        chunk.setArea(this);
+        checkIfClosed();
     }
 
     /**
@@ -41,5 +45,31 @@ public class ChunkArea {
     public void merge(ChunkArea other) {
         chunks.addAll(other.chunks);
         tiles.addAll(other.tiles);
+
+        for (Chunk chunk : other.chunks) {
+            chunk.setArea(this);
+        }
+
+        checkIfClosed();
+    }
+
+    /**
+     * Checks if the area is closed.
+     */
+    private void checkIfClosed() {
+        if (closed) {
+            return;
+        }
+
+
+    }
+
+    /**
+     * Gets if the given chunk is a border chunk.
+     * @param chunk The chunk to check.
+     * @return True if the chunk is a border chunk.
+     */
+    private boolean isBorderChunk(Chunk chunk) {
+        return chunk.getCurrentId() != ChunkId.CENTER_MIDDLE || chunks.size() == 1;
     }
 }

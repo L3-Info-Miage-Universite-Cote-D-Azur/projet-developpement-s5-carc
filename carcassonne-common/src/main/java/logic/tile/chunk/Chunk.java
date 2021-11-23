@@ -12,6 +12,7 @@ import stream.ByteOutputStream;
 public abstract class Chunk {
     private final Tile parent;
 
+    private ChunkId currentId;
     private Meeple meeple;
     private ChunkArea area;
 
@@ -25,6 +26,22 @@ public abstract class Chunk {
      */
     public Tile getParent() {
         return parent;
+    }
+
+    /**
+     * Gets the current chunk id.
+     * @return The current chunk id.
+     */
+    public ChunkId getCurrentId() {
+        return currentId;
+    }
+
+    /**
+     * Sets the current chunk id.
+     * @param id The new chunk id.
+     */
+    public void setCurrentId(ChunkId id) {
+        this.currentId = id;
     }
 
     /**
