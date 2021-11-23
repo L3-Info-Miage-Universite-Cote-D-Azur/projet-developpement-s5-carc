@@ -1,7 +1,7 @@
 package logic.config.excel;
 
 import excel.ExcelNode;
-import logic.tile.chunk.AreaChunk;
+import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 import logic.tile.Tile;
@@ -14,7 +14,6 @@ import java.util.*;
  */
 public class TileExcelConfig {
     public TileChunkExcelConfig[] chunks;
-    public List<ArrayList<ChunkId>> areaChunks;
     public String model;
     public String expansion;
     public EnumSet<TileFlags> flags;
@@ -23,15 +22,13 @@ public class TileExcelConfig {
     /**
      * Creates a tile excel configuration from the given parameters.
      * @param chunks The chunks configuration.
-     * @param areaChunks The area chunks configuration.
      * @param model The model of tile.
      * @param expansion The expansion of tile.
      * @param flags The flags of tile.
      * @param count The count of tile in the stack.
      */
-    public TileExcelConfig(TileChunkExcelConfig[] chunks, List<ArrayList<ChunkId>> areaChunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
+    public TileExcelConfig(TileChunkExcelConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
         this.chunks = chunks;
-        this.areaChunks = areaChunks;
         this.model = model;
         this.expansion = expansion;
         this.flags = flags;
@@ -72,56 +69,23 @@ public class TileExcelConfig {
             chunks[chunkId.ordinal()] = new TileChunkExcelConfig(type);
         }
 
-        String[] zoneReferenceIds = new String[ChunkId.values().length];
-        ArrayList<String> zonesCompleted = new ArrayList<>();
-        ArrayList<ArrayList<ChunkId>> zones = new ArrayList<>();
+        HashMap<String, ArrayList<ChunkId>> zones = new HashMap<>();
 
         for (ChunkId chunkId : ChunkId.values()) {
-            zoneReferenceIds[chunkId.ordinal()] = getCellValue(referenceNode, chunkId);
-        }
+            String referenceId = getCellValue(referenceNode, chunkId);
 
-        for (ChunkId chunkId : ChunkId.values()) {
-            String referenceId = zoneReferenceIds[chunkId.ordinal()];
-
-            if (zonesCompleted.contains(referenceId)) {
-                boolean isReferenceFound = false;
-
-                for (int i = 0; i < zones.size(); i++) {
-                    if (zones.get(i).contains(chunkId)) {
-                        isReferenceFound = true;
-                        break;
-                    }
-                }
-
-                if (!isReferenceFound) {
-                    throw new IllegalArgumentException(String.format("Tile %s: Chunk %s has reference to zone %s but no path as found to reach it.", model, chunkId, referenceId));
-                }
-            } else {
-                ArrayList<ChunkId> references = new ArrayList<>();
-                findZonePath(chunkId, referenceId, references, zoneReferenceIds);
-                zonesCompleted.add(referenceId);
-                zones.add(references);
+            if (!zones.containsKey(referenceId)) {
+                zones.put(referenceId, new ArrayList<>());
             }
+
+            zones.get(referenceId).add(chunkId);
         }
 
-        areaChunks = zones;
-    }
+        for (ArrayList<ChunkId> chunkIds : zones.values()) {
+            TileChunkAreaConfig areaConfig = new TileChunkAreaConfig(chunkIds);
 
-    private void findZonePath(ChunkId chunkId, String referenceId, ArrayList<ChunkId> referenced, String[] chunkReferenceIds) {
-        if (model.equals("C")) {
-            System.out.println(String.format("%s: %s", chunkId, referenceId));
-        }
-        
-        ChunkId[] neighborChunkIds = chunkId.getNeighbours();
-
-        for (ChunkId neighborChunkId : neighborChunkIds) {
-            if (chunkReferenceIds[neighborChunkId.ordinal()].equals(referenceId)) {
-                if (referenced.contains(neighborChunkId)) {
-                    break;
-                }
-
-                referenced.add(neighborChunkId);
-                findZonePath(neighborChunkId, referenceId, referenced, chunkReferenceIds);
+            for (ChunkId chunkId : chunkIds) {
+                chunks[chunkId.ordinal()].setArea(areaConfig);
             }
         }
     }
@@ -155,11 +119,11 @@ public class TileExcelConfig {
             tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
         }
 
-        for (ArrayList<ChunkId> chunkList : areaChunks) {
-            AreaChunk areaChunk = new AreaChunk();
+        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).toList()) {
+            ChunkArea area = new ChunkArea();
 
-            for (ChunkId chunkId : chunkList) {
-                areaChunk.addChunk(tile.getChunk(chunkId));
+            for (ChunkId chunkInArea : areaConfig.getChunkIds()) {
+                area.addChunk(tile.getChunk(chunkInArea));
             }
         }
 

@@ -6,8 +6,6 @@ import logic.tile.Tile;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
-import java.util.ArrayList;
-
 /**
  * Represents a chunk of tiles. A chunk is a part of tile grid.
  */
@@ -15,7 +13,7 @@ public abstract class Chunk {
     private final Tile parent;
 
     private Meeple meeple;
-    private AreaChunk area;
+    private ChunkArea area;
 
     public Chunk(Tile parent) {
         this.parent = parent;
@@ -38,10 +36,18 @@ public abstract class Chunk {
     }
 
     /**
+     * Gets the chunk area of this chunk.
+     * @return The chunk area of this chunk.
+     */
+    public ChunkArea getArea() {
+        return area;
+    }
+
+    /**
      * Sets the area of this chunk.
      * @param area The area to set.
      */
-    public void setArea(AreaChunk area){
+    public void setArea(ChunkArea area){
         this.area = area;
     }
 
@@ -73,6 +79,8 @@ public abstract class Chunk {
      * @return The type of this chunk.
      */
     public abstract ChunkType getType();
+
+
 
     @Override
     public String toString() {

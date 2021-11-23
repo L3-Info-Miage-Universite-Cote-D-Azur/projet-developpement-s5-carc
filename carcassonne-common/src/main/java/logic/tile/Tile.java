@@ -5,6 +5,7 @@ import logic.board.GameBoard;
 import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
 import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -128,6 +129,42 @@ public class Tile {
         }
 
         return hasContactWithTile;
+    }
+
+    /**
+     * Merges my chunk areas with the given tile.
+     * @param neighborTile The tile to merge with.
+     */
+    public void mergeChunkAreas(Tile neighborTile, TileEdge edgeConnection) {
+        ChunkId[] ownChunkIds = edgeConnection.getChunkIds();
+        ChunkId[] oppositeChunkIds = edgeConnection.negate().getChunkIds();
+
+        for (int i = 0; i < ownChunkIds.length; i++) {
+            ChunkId ownChunkId = ownChunkIds[i];
+            ChunkId neighborChunkId = oppositeChunkIds[i];
+
+            ChunkArea ownChunkArea = getChunk(ownChunkId).getArea();
+            ChunkArea neighborChunkArea = neighborTile.getChunk(neighborChunkId).getArea();
+
+            /* We are checking if the area of this chunk is not merged already. */
+            if (ownChunkArea != neighborChunkArea) {
+                neighborChunkArea.merge(ownChunkArea);
+            }
+        }
+    }
+
+    /**
+     * Called when the tile is placed on the board.
+     * @param board The board on which the tile is placed.
+     */
+    public void onTilePlaced(GameBoard board) {
+        for (TileEdge edge : TileEdge.values()) {
+            Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
+
+            if (edgeTile != null) {
+                mergeChunkAreas(edgeTile, edge);
+            }
+        }
     }
 
     /**

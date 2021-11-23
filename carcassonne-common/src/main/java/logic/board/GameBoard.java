@@ -55,6 +55,7 @@ public class GameBoard {
         }
 
         tiles.put(tile.getPosition(), tile);
+        tile.onTilePlaced(this);
     }
 
     /**
