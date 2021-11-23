@@ -9,6 +9,7 @@ public class ClientConfig {
     private final String serverHost;
     private final int serverPort;
     private final LoggerConfig loggerConfig;
+    private final MatchConfig matchConfig;
 
     private ClientConfig(ExcelNode node) {
         ExcelNode serverNode = node.getChild("Server");
@@ -23,10 +24,17 @@ public class ClientConfig {
             throw new IllegalArgumentException("Logger node not found");
         }
 
+        ExcelNode matchNode = node.getChild("Match");
+
+        if (matchNode == null) {
+            throw new IllegalArgumentException("Match node not found");
+        }
+
         this.serverHost = serverNode.getRow("Host").getValue("Value");
         this.serverPort = Integer.parseInt(serverNode.getRow("Port").getValue("Value"));
 
         this.loggerConfig = new LoggerConfig(loggerNode);
+        this.matchConfig = new MatchConfig(matchNode);
     }
 
     /**
@@ -51,6 +59,14 @@ public class ClientConfig {
      */
     public LoggerConfig getLoggerConfig() {
         return loggerConfig;
+    }
+
+    /**
+     * Returns the match configuration.
+     * @return the match configuration
+     */
+    public MatchConfig getMatchConfig() {
+        return matchConfig;
     }
 
     public static ClientConfig loadFromResources() {

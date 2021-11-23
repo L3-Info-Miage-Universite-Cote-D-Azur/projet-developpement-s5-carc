@@ -10,24 +10,12 @@ import network.message.Message;
  */
 public class GameControllerService extends ServiceBase implements IMessageHandler {
     /**
-     * Sizes the match to play.
-     */
-    private final int matchSizeToPlay;
-
-    /**
-     * Numbers of matches to play.
-     */
-    private final int numberOfMatches;
-
-    /**
      * Remaining matches to play.
      */
     private int remainingMatches;
 
-    public GameControllerService(Client client, int matchSize, int numberOfMatches) {
+    public GameControllerService(Client client) {
         super(client);
-        this.matchSizeToPlay = matchSize;
-        this.numberOfMatches = numberOfMatches;
     }
 
     /**
@@ -46,7 +34,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
      * Called when the client is connected and ready to play.
      */
     private void onAuthenticated() {
-        client.getMatchmakingService().joinMatchmaking(matchSizeToPlay);
+        client.getMatchmakingService().joinMatchmaking(client.getConfig().getMatchConfig().getNumPlayers());
     }
 
     /**
@@ -58,7 +46,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
         if (remainingMatches == 0) {
             client.stop();
         } else {
-            client.getMatchmakingService().joinMatchmaking(matchSizeToPlay);
+            client.getMatchmakingService().joinMatchmaking(client.getConfig().getMatchConfig().getNumPlayers());
         }
     }
 
@@ -67,7 +55,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
      */
     @Override
     public void onConnect() {
-        remainingMatches = numberOfMatches;
+        remainingMatches = client.getConfig().getMatchConfig().getNumMatches();
     }
 
     /**

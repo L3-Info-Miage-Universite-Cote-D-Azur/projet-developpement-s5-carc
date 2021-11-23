@@ -9,3 +9,7 @@ Logger
 	Info	32m
 	Warning	33m
 	Error	31m
+Match
+	Name	Value
+	NumMatches	10
+	NumPlayers	2

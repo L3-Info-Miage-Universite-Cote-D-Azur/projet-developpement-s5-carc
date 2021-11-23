@@ -5,6 +5,7 @@ import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
 import network.message.Message;
+import network.message.game.GameDataMessage;
 import network.message.matchmaking.JoinMatchmakingMessage;
 import network.message.matchmaking.MatchmakingDataMessage;
 import network.message.matchmaking.MatchmakingFailedMessage;
@@ -47,6 +48,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
         switch (message.getType()) {
             case MATCHMAKING_DATA -> onMatchmakingData((MatchmakingDataMessage) message);
             case MATCHMAKING_FAILED -> onMatchmakingFailed((MatchmakingFailedMessage) message);
+            case GAME_DATA -> onMatchmakingCompleted((GameDataMessage) message);
         }
     }
 
@@ -69,6 +71,13 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
      */
     private void onMatchmakingFailed(MatchmakingFailedMessage message) {
         Logger.error(LoggerCategory.SERVICE, "Matchmaking failed!");
+        reset();
+    }
+
+    /**
+     * Handles the matchmaking completed message.
+     */
+    private void onMatchmakingCompleted(GameDataMessage message) {
         reset();
     }
 

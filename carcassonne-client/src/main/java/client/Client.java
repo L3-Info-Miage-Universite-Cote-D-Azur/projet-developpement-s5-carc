@@ -52,7 +52,7 @@ public class Client {
         this.recordService(new BattleService(this));
         this.recordService(new GameStatisticsService(this));
 
-        this.recordService(new GameControllerService(this, 2, 1));
+        this.recordService(new GameControllerService(this));
 
         this.serverConnection.connect(config.getServerHost(), config.getServerPort());
     }
@@ -75,6 +75,14 @@ public class Client {
      */
     public final ServerConnection getServerConnection() {
         return serverConnection;
+    }
+
+    /**
+     * Gets the client config.
+     * @return the client config
+     */
+    public final ClientConfig getConfig() {
+        return config;
     }
 
     /**
