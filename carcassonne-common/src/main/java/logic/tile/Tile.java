@@ -28,14 +28,13 @@ public class Tile {
     }
 
     /**
-     * Rotate the tile to 90 degrees in the .
+     * Rotate the tile to 90 degrees in the clockwise direction.
      */
     public void rotate() {
         Chunk[] originalChunkOrder = chunks.clone();
 
-        for (int i = 0; i< originalChunkOrder.length; i++) {
-            Chunk chunk = originalChunkOrder[(i + 3) % (ChunkId.values().length - 1)];
-            chunks[i] = chunk;
+        for (int i = 0; i < originalChunkOrder.length - 1; i++) {
+            chunks[(i + 3) % (ChunkId.values().length - 1)] = originalChunkOrder[i];
         }
 
         rotation = (rotation + 1) % 4;
