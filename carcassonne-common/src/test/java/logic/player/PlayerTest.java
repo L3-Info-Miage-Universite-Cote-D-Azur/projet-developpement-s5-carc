@@ -2,7 +2,7 @@ package logic.player;
 
 import logic.Game;
 import logic.config.GameConfig;
-import logic.tile.ChunkType;
+import logic.tile.chunk.ChunkType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

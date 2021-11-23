@@ -5,8 +5,8 @@ import logic.board.GameBoard;
 import logic.command.PlaceMeepleCommand;
 import logic.math.Vector2;
 import logic.player.Player;
-import logic.tile.Chunk;
-import logic.tile.ChunkId;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 
 import java.util.ArrayList;

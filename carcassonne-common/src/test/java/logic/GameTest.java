@@ -5,9 +5,9 @@ import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
-import logic.tile.Chunk;
-import logic.tile.ChunkId;
-import logic.tile.ChunkType;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
+import logic.tile.chunk.ChunkType;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 

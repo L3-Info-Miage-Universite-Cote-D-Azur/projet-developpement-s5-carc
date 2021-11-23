@@ -10,7 +10,7 @@ import logic.state.GameStartState;
 import logic.state.GameState;
 import logic.state.GameStateFactory;
 import logic.state.GameStateType;
-import logic.tile.ChunkId;
+import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 import stream.ByteInputStream;

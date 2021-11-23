@@ -5,7 +5,7 @@ import logic.math.Vector2;
 import logic.player.Player;
 import logic.state.GameStateType;
 import logic.state.turn.GameTurnExtraActionState;
-import logic.tile.ChunkId;
+import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;

@@ -1,6 +1,7 @@
 package logic.tile;
 
 import logic.math.Vector2;
+import logic.tile.chunk.ChunkId;
 
 /**
  * Represents a tile edge.

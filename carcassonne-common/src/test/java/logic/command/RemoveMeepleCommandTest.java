@@ -3,7 +3,7 @@ package logic.command;
 import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
-import logic.tile.ChunkId;
+import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
