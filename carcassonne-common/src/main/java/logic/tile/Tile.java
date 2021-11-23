@@ -17,9 +17,25 @@ public class Tile {
     private Chunk[] chunks;
     private TileExcelConfig config;
 
+    private int rotation;
+
     public Tile(TileExcelConfig config) {
         chunks = new Chunk[ChunkId.values().length];
         this.config = config;
+    }
+
+    /**
+     * Rotate the tile.
+     */
+    public void rotate() {
+        Chunk[] originalChunkOrder = chunks.clone();
+
+        for (int i = 0; i< originalChunkOrder.length; i++) {
+            Chunk chunk = originalChunkOrder[(i + 3) % (ChunkId.values().length - 1)];
+            chunks[i] = chunk;
+        }
+
+        rotation = (rotation + 1) % 4;
     }
 
     /**
@@ -52,6 +68,7 @@ public class Tile {
      * @param id The id of the chunk.
      * @param chunk The chunk to set.
      */
+
     public void setChunk(ChunkId id, Chunk chunk) {
         chunks[id.ordinal()] = chunk;
     }
