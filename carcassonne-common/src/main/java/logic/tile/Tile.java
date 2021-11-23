@@ -25,7 +25,7 @@ public class Tile {
     }
 
     /**
-     * Rotate the tile.
+     * Rotate the tile to 90 degrees in the .
      */
     public void rotate() {
         Chunk[] originalChunkOrder = chunks.clone();
