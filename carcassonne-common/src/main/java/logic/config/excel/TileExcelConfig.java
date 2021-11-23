@@ -2,7 +2,6 @@ package logic.config.excel;
 
 import excel.ExcelNode;
 import logic.tile.chunk.AreaChunk;
-import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 import logic.tile.Tile;
@@ -49,8 +48,8 @@ public class TileExcelConfig {
         ExcelNode chunkReferencesExcel = chunkExcel.getChild("References");
         ExcelNode dataExcel = node.getChild("Data");
 
-        loadChunks(chunkTypesExcel, chunkReferencesExcel);
         loadData(dataExcel);
+        loadChunks(chunkTypesExcel, chunkReferencesExcel);
     }
 
     /**
@@ -60,43 +59,70 @@ public class TileExcelConfig {
      */
     private void loadChunks(ExcelNode typeNode, ExcelNode referenceNode) {
         ChunkType[] chunkTypes = new ChunkType[ChunkId.values().length];
-        ChunkId[][] chunkReferences = new ChunkId[ChunkId.values().length][];
-
-        HashMap<String, ArrayList<ChunkId>> chunkGroups = new HashMap<>();
 
         for (ChunkId chunkId : ChunkId.values()) {
-            ChunkType type = ChunkType.valueOf(getCellValue(typeNode, chunkId));
-            String reference = getCellValue(referenceNode, chunkId);
-
-            if (reference.length() != 0) {
-                ArrayList<ChunkId> ids = chunkGroups.getOrDefault(reference, null);
-
-                if (ids == null) {
-                    ids = new ArrayList<>();
-                    chunkGroups.put(reference, ids);
-                }
-
-                ids.add(chunkId);
-            }
-
-            chunkTypes[chunkId.ordinal()] = type;
+            chunkTypes[chunkId.ordinal()] = ChunkType.valueOf(getCellValue(typeNode, chunkId));
         }
 
-        for (Map.Entry<String, ArrayList<ChunkId>> group : chunkGroups.entrySet()) {
-            ArrayList<ChunkId> ids = group.getValue();
-
-            for (ChunkId id : ids) {
-                chunkReferences[id.ordinal()] = Arrays.stream(id.getNeighbours()).filter(ids::contains).toArray(ChunkId[]::new);
-            }
-        }
-
-        areaChunks = chunkGroups.entrySet().stream().map(e -> e.getValue()).toList();
         chunks = new TileChunkExcelConfig[ChunkId.values().length];
 
         for (ChunkId chunkId : ChunkId.values()) {
             ChunkType type = chunkTypes[chunkId.ordinal()];
 
             chunks[chunkId.ordinal()] = new TileChunkExcelConfig(type);
+        }
+
+        String[] zoneReferenceIds = new String[ChunkId.values().length];
+        ArrayList<String> zonesCompleted = new ArrayList<>();
+        ArrayList<ArrayList<ChunkId>> zones = new ArrayList<>();
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            zoneReferenceIds[chunkId.ordinal()] = getCellValue(referenceNode, chunkId);
+        }
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            String referenceId = zoneReferenceIds[chunkId.ordinal()];
+
+            if (zonesCompleted.contains(referenceId)) {
+                boolean isReferenceFound = false;
+
+                for (int i = 0; i < zones.size(); i++) {
+                    if (zones.get(i).contains(chunkId)) {
+                        isReferenceFound = true;
+                        break;
+                    }
+                }
+
+                if (!isReferenceFound) {
+                    throw new IllegalArgumentException(String.format("Tile %s: Chunk %s has reference to zone %s but no path as found to reach it.", model, chunkId, referenceId));
+                }
+            } else {
+                ArrayList<ChunkId> references = new ArrayList<>();
+                findZonePath(chunkId, referenceId, references, zoneReferenceIds);
+                zonesCompleted.add(referenceId);
+                zones.add(references);
+            }
+        }
+
+        areaChunks = zones;
+    }
+
+    private void findZonePath(ChunkId chunkId, String referenceId, ArrayList<ChunkId> referenced, String[] chunkReferenceIds) {
+        if (model.equals("C")) {
+            System.out.println(String.format("%s: %s", chunkId, referenceId));
+        }
+        
+        ChunkId[] neighborChunkIds = chunkId.getNeighbours();
+
+        for (ChunkId neighborChunkId : neighborChunkIds) {
+            if (chunkReferenceIds[neighborChunkId.ordinal()].equals(referenceId)) {
+                if (referenced.contains(neighborChunkId)) {
+                    break;
+                }
+
+                referenced.add(neighborChunkId);
+                findZonePath(neighborChunkId, referenceId, referenced, chunkReferenceIds);
+            }
         }
     }
 
