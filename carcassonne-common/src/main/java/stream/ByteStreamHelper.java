@@ -13,8 +13,8 @@ public class ByteStreamHelper {
 
     public static Tile decodeTile(ByteInputStream stream, Game game) {
         int tileConfigIndex = stream.readInt();
-        Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile();
-        tile.decode(stream, game);
+        Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile(game);
+        tile.decode(stream);
         return tile;
     }
 }

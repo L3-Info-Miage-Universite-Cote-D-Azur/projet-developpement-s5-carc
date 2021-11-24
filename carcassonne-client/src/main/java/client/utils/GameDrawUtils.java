@@ -8,6 +8,7 @@ import logic.meeple.Meeple;
 import logic.tile.TileEdge;
 import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 import logic.tile.chunk.ChunkType;
@@ -18,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Class for drawing the game.
@@ -30,6 +32,8 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
     private static ImageDatabase tileDatabase;
     private static ImageDatabase meepleDatabase;
+
+    private static Random rand = new Random();
 
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
@@ -174,6 +178,37 @@ public class GameDrawUtils implements ChunkPositionConstant {
     }
 
     /**
+     * Draw zone with a unique color
+     *
+     * @param g The graphics to draw into
+     * @param tilePosition The position of the tile associated with the chunk
+     * @param chunk The chunk of the chunk to draw
+     * @param colorZone The colors of all zone
+     */
+    private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<ChunkArea, Color> colorZone) {
+        ChunkArea chunkArea = chunk.getArea();
+        if (!colorZone.containsKey(chunkArea))
+            colorZone.put(chunkArea, generateColor(1));
+
+        g.setColor(colorZone.get(chunkArea));
+        Polygon polygon = chunksGeo.get(chunk.getCurrentId());
+        g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
+    }
+
+    /**
+     * Generate a random color
+     *
+     * @param opacity The opacity wanted
+     * @return a random color
+     */
+    public static Color generateColor(float opacity) {
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+        return new Color(r, g, b, opacity);
+    }
+
+    /**
      * Draw tile border
      *
      * @param g            The graphics to draw into
@@ -206,7 +241,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     public static BufferedImage createLayer(Game game, Bounds boardBounds) {
         Bounds layerBounds = boardBounds.scale(tileWidth, tileHeight).reverseY();
-        BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D layerGraphics = layer.createGraphics();
         render(game, layerGraphics, layerBounds);
@@ -222,8 +257,9 @@ public class GameDrawUtils implements ChunkPositionConstant {
      * @param graphics    The graphics context to render to.
      * @param layerBounds The bounds of the layer to render.
      */
-    public static void render(Game game, Graphics graphics, Bounds layerBounds) {
+    public static synchronized void render(Game game, Graphics graphics, Bounds layerBounds) {
         loadImageDatabaseIfNeeded();
+        HashMap<ChunkArea, Color> colorZone = new HashMap<>();
 
         graphics.setFont(new Font("Courier New", Font.CENTER_BASELINE | Font.BOLD, 25));
         graphics.setColor(Color.blue);
@@ -242,10 +278,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 Chunk chunk = tile.getChunk(chunkId);
 
                 // Show chunk
-                drawChunk(graphics, tileImagePosition, chunk.getType(), chunkId);
+                //drawChunk(graphics, tileImagePosition, chunk.getType(), chunkId);
+
+                // Show zones
+                drawZone(graphics, tileImagePosition, chunk, colorZone);
 
                 // Show tile border
-                drawTileBorder(graphics, tileImagePosition);
+                //drawTileBorder(graphics, tileImagePosition);
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
@@ -257,5 +296,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+
+        ;
     }
 }

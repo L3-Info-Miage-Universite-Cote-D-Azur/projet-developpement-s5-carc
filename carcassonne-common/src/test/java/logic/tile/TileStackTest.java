@@ -1,5 +1,7 @@
 package logic.tile;
 
+import logic.Game;
+import logic.TestUtils;
 import logic.config.GameConfig;
 import org.junit.jupiter.api.Test;
 
@@ -14,8 +16,9 @@ class TileStackTest {
 
     @Test
     void testRemove() {
-        TileStack tileStack = new TileStack();
-        Tile testTile = config.tiles.get(0).createTile();
+        Game game = TestUtils.initGameEnv(2, false, false);
+        TileStack tileStack = game.getStack();
+        Tile testTile = config.tiles.get(0).createTile(game);
 
         tileStack.fill(new ArrayList<>() {{
             add(testTile);
@@ -27,7 +30,8 @@ class TileStackTest {
 
     @Test
     void testFill() {
-        TileStack stack = new TileStack();
+        Game game = TestUtils.initGameEnv(2, false, false);
+        TileStack stack = game.getStack();
         stack.fill(config);
         assertEquals(config.tiles.stream().map(t -> t.count).reduce((t1, t2) -> t1 + t2).get(), stack.getNumTiles());
     }
@@ -39,8 +43,8 @@ class TileStackTest {
             return e;
         }).collect(Collectors.toCollection(ArrayList::new)), config.minPlayers, config.maxPlayers, config.startingMeepleCount);
 
-
-        TileStack stack = new TileStack();
+        Game game = TestUtils.initGameEnv(2, false, false);
+        TileStack stack = game.getStack();
         stack.fill(newConfig);
 
         ArrayList<Tile> originalTilesPicked = new ArrayList<>();
@@ -75,7 +79,8 @@ class TileStackTest {
 
     @Test
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
-        TileStack stack = new TileStack();
+        Game game = TestUtils.initGameEnv(2, false, false);
+        TileStack stack = new TileStack(game);
         stack.fill(config);
         stack.shuffle();
 

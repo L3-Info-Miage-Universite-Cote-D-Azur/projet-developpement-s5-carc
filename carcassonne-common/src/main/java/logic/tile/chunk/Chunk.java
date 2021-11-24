@@ -3,10 +3,13 @@ package logic.tile.chunk;
 import logic.Game;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
+import logic.tile.TileEdge;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents a chunk of tiles. A chunk is a part of tile grid.
@@ -100,11 +103,45 @@ public abstract class Chunk {
     public abstract ChunkType getType();
 
     /**
+     * Gets the neighbors chunks of this chunk.
+     * @return
+     */
+    public List<Chunk> getNeighbors() {
+        LinkedList<Chunk> neighbors = new LinkedList<>();
+
+        for (ChunkId id : currentId.getNeighbors()) {
+            neighbors.add(parent.getChunk(id));
+        }
+
+        if (currentId != ChunkId.CENTER_MIDDLE) {
+            TileEdge edgeConnection = currentId.getEdge();
+            Tile edgeTile = parent.getGame().getBoard().getTileAt(parent.getPosition().add(edgeConnection.getValue()));
+
+            if (edgeTile != null) {
+                ChunkId[] ownEdgeChunkIds = edgeConnection.getChunkIds();
+                ChunkId[] neighborsChunkIds = edgeConnection.negate().getChunkIds();
+
+                int chunkIndex = -1;
+
+                for (int i = 0; i < ownEdgeChunkIds.length; i++) {
+                    if (ownEdgeChunkIds[i].equals(currentId)) {
+                        chunkIndex = i;
+                    }
+                }
+
+                neighbors.add(edgeTile.getChunk(neighborsChunkIds[chunkIndex]));
+            }
+        }
+
+        return neighbors;
+    }
+
+    /**
      * Determine if this chunk is a border chunk.
      * @return True if this chunk is a border chunk, false otherwise.
      */
     public boolean isBorder() {
-        return Arrays.stream(currentId.getNeighbors()).map(id -> parent.getChunk(id)).allMatch(c -> c.getType() == getType());
+        return getNeighbors().stream().allMatch(c -> c.getArea() != area);
     }
 
     @Override
@@ -123,9 +160,9 @@ public abstract class Chunk {
         }
     }
 
-    public void decode(ByteInputStream stream, Game game) {
+    public void decode(ByteInputStream stream) {
         if (stream.readBoolean()) {
-            meeple = new Meeple(game.getPlayerById(stream.readInt()));
+            meeple = new Meeple(parent.getGame().getPlayerById(stream.readInt()));
         } else {
             meeple = null;
         }
