@@ -10,8 +10,7 @@ import server.session.ClientSession;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled
-public class SlaveCommandTest {
+/*public class SlaveCommandTest {
     private static final GameConfig config = GameConfig.loadFromResources();
 
     @Disabled //Doesn't work
@@ -22,3 +21,4 @@ public class SlaveCommandTest {
         assertEquals(match, new SlaveCommandExecutionNotifier(match));
     }
 }
+*/
