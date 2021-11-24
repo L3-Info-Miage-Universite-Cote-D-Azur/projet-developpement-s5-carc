@@ -19,9 +19,4 @@ public class MatchTest {
         Match match = new Match(89, new ClientSession[0]);
         assertEquals(89,match.getId());
     }
-
-    @Test
-    void removePlayerTest() {
-
-    }
 }
