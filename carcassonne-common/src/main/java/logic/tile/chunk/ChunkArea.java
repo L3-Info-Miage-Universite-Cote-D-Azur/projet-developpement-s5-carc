@@ -47,7 +47,7 @@ public class ChunkArea {
 
     /**
      * Returns whether the area is closed.
-     * @return Whether the area is closed.
+     * @return True if the area is closed, false otherwise.
      */
     public boolean isClosed() {
         return closed;
