@@ -25,6 +25,13 @@ public class ChunkArea {
     }
 
     /**
+     *
+     * @return
+     */
+    public HashSet<Chunk> getChunks() {
+        return chunks;
+    }
+    /**
      * Adds a chunk to the area.
      * It will also add all the tiles in the chunk to the area.
      * @param chunk The chunk to add.

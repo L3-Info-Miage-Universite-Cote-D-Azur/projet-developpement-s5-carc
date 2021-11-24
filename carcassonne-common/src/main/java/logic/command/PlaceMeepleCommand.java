@@ -19,14 +19,16 @@ public class PlaceMeepleCommand implements ICommand {
     private Vector2 tilePosition;
     private ChunkId chunkId;
 
-    public PlaceMeepleCommand() {
-    }
-
     public PlaceMeepleCommand(Tile tile, ChunkId chunkId) {
         this.tilePosition = tile.getPosition();
         this.chunkId = chunkId;
     }
 
+    /**
+     * Constructor PlaceMeepleCommand
+     * @param tilePosition
+     * @param chunkId
+     */
     public PlaceMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
         this.tilePosition = tilePosition;
         this.chunkId = chunkId;
@@ -95,6 +97,17 @@ public class PlaceMeepleCommand implements ICommand {
             game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk %s already has a meeple.", chunkId);
             return false;
         }
+
+        for (Chunk chunkInArea : chunk.getArea().getChunks()) {
+            if (chunkInArea.hasMeeple()) {
+                game.getCommandExecutor().getListener().onCommandFailed(this, "Meeple already present in the area.");
+                return false;
+            }
+        }
+
+        // parcourir tout les chunks de la tuile sur laquelle on veut poser,
+        // s'il y a déjà un meeple alors on relance la commande avec une autre tuile,
+        // sinon on place le meeple
 
         return true;
     }
