@@ -33,7 +33,6 @@ public class TileChunkExcelConfig {
         return switch (type) {
             case ROAD -> new RoadChunk(parent);
             case TOWN -> new TownChunk(parent);
-            case RIVER -> new RiverChunk(parent);
             case ABBEY -> new AbbeyChunk(parent);
             case FIELD -> new FieldChunk(parent);
             case ROAD_END -> new RoadEndChunk(parent);

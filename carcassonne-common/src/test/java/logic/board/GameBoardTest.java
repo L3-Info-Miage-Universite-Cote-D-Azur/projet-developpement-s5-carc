@@ -2,6 +2,7 @@ package logic.board;
 
 import logic.Game;
 import logic.TestUtils;
+import logic.config.GameConfig;
 import logic.config.excel.TileChunkExcelConfig;
 import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
@@ -18,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameBoardTest {
     @Test
     void testPlace() {
+        Game game = TestUtils.initGameEnv(2, false, true);
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
-        Tile tile = new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.of(TileFlags.STARTING), 1), null);
-
+        Tile tile = game.getStack().peek();
         tile.setPosition(new Vector2(0, 0));
 
         gameBoard.place(tile);
@@ -34,18 +35,20 @@ class GameBoardTest {
 
     @Test
     void testPlaceThrowIfOverlap() {
+        Game game = TestUtils.initGameEnv(2, false, true);
         GameBoard gameBoard = new GameBoard();
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);
-        gameBoard.place(new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.of(TileFlags.STARTING), 1), null) {{
-            setPosition(overlapPosition);
-        }});
+        Tile tile = game.getStack().peek();
+        tile.setPosition(overlapPosition);
+        gameBoard.place(tile);
+
+        Tile tile2 = game.getStack().peek();
+        tile2.setPosition(overlapPosition);
 
         assertThrows(IllegalArgumentException.class, () -> {
-            gameBoard.place(new Tile(new TileExcelConfig(new TileChunkExcelConfig[0], "A", "default", EnumSet.noneOf(TileFlags.class), 1), null) {{
-                setPosition(overlapPosition);
-            }});
+            gameBoard.place(tile2);
         });
     }
 

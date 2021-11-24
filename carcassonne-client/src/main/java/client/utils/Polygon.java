@@ -1,8 +1,8 @@
-package logic.math;
+package client.utils;
+
+import logic.math.Vector2;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public class Polygon {
     private Vector2[] vectors;

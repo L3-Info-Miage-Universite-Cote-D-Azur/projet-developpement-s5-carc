@@ -9,8 +9,13 @@ import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceTileState;
+import logic.tile.Tile;
+import logic.tile.TileFlags;
+import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class TestUtils {
@@ -46,16 +51,37 @@ public class TestUtils {
         @Override
         public void onWaitingPlaceTile() {
             GameTurnPlaceTileState placeTileState = ((GameTurnPlaceTileState) game.getState());
-            Vector2 position = game.getBoard().getStartingTile() == null ? GameBoard.STARTING_TILE_POSITION : game.getBoard().findFreePlacesForTile(placeTileState.getTileDrawn()).get(0);
+            Tile tile = placeTileState.getTileDrawn();
+            Vector2 pos = findPositionForTile(tile);
 
-            game.getCommandExecutor().execute(new PlaceTileDrawnCommand(position));
-            lastTilePos = position;
+            game.getCommandExecutor().execute(new PlaceTileDrawnCommand(pos));
+            lastTilePos = pos;
         }
 
         @Override
         public void onWaitingExtraAction() {
             game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]));
             game.getCommandExecutor().execute(new EndTurnCommand());
+        }
+
+        private Vector2 findPositionForTile(Tile tile) {
+            if (tile.hasFlags(TileFlags.STARTING)) {
+                return GameBoard.STARTING_TILE_POSITION;
+            }
+
+            TileRotation originalRotation = tile.getRotation();
+
+            for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
+                tile.rotate();
+                LinkedList<Vector2> positions = game.getBoard().findFreePlacesForTile(tile);
+
+                if (!positions.isEmpty()) {
+                    tile.setRotation(originalRotation);
+                    return positions.get(random.nextInt(positions.size()));
+                }
+            }
+
+            return null;
         }
     }
 }

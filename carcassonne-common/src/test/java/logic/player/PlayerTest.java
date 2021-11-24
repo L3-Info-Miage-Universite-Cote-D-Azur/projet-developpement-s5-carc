@@ -38,10 +38,6 @@ class PlayerTest {
         assertThrows(IllegalArgumentException.class, () -> {
            player.addScore(-1, ChunkType.ABBEY);
         });
-
-        assertThrows(IllegalStateException.class, () -> {
-            player.addScore(10, ChunkType.RIVER);
-        });
     }
 
     @Test

@@ -15,11 +15,6 @@ public enum ChunkType {
     TOWN,
 
     /**
-     * The chunk contains a river.
-     */
-    RIVER,
-
-    /**
      * The chunk contains a abbey.
      */
     ABBEY,

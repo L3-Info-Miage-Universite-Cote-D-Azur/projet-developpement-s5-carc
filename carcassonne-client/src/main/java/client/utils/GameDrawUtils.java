@@ -2,7 +2,6 @@ package client.utils;
 
 import logic.Game;
 import logic.board.GameBoard;
-import logic.math.Polygon;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.TileRotation;
@@ -202,7 +201,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Gets the sprite model to use for the specified tile and rotation.
      * @param tile The tile to get the sprite model for.
-     * @param rotation The rotation to get the sprite model for.
      * @return
      */
     private static String getTileSpriteModel(Tile tile) {
