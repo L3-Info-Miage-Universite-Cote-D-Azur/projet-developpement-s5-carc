@@ -14,11 +14,18 @@ public class TileChunkExcelConfig {
         this.type = type;
     }
 
+    public ChunkType getType() {
+        return type;
+    }
+
     public TileChunkAreaConfig getArea() {
         return area;
     }
 
     public void setArea(TileChunkAreaConfig area) {
+        if (area.getChunkType() != type) {
+            throw new IllegalArgumentException("Chunk type mismatch");
+        }
         this.area = area;
     }
 

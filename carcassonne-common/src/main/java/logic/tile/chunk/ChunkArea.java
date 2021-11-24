@@ -3,6 +3,7 @@ package logic.tile.chunk;
 import logic.tile.Tile;
 
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Represents a chunk area.
@@ -11,9 +12,13 @@ import java.util.HashSet;
 public class ChunkArea {
     private final HashSet<Chunk> chunks;
     private final HashSet<Tile> tiles;
+    private final ChunkType type;
+
     private boolean closed;
 
-    public ChunkArea() {
+    public ChunkArea(ChunkType type) {
+        this.type = type;
+
         chunks = new HashSet<>();
         tiles = new HashSet<>();
         closed = false;
@@ -27,6 +32,9 @@ public class ChunkArea {
     public void addChunk(Chunk chunk) {
         if (chunk.getArea() != null) {
             throw new IllegalStateException("Chunk already has an area. Are you trying to merge two area?");
+        }
+        if (chunk.getType() != type) {
+            throw new IllegalArgumentException("Chunk type does not match area type.");
         }
         if (chunks.contains(chunk)) {
             throw new IllegalStateException("Chunk already in area.");
@@ -43,6 +51,10 @@ public class ChunkArea {
      * @param other The other area to merge with.
      */
     public void merge(ChunkArea other) {
+        if (other.type != type) {
+            throw new IllegalArgumentException("Cannot merge areas of different types.");
+        }
+
         chunks.addAll(other.chunks);
         tiles.addAll(other.tiles);
 
@@ -61,15 +73,28 @@ public class ChunkArea {
             return;
         }
 
+        List<Chunk> borderChunks = chunks.stream().filter(Chunk::isBorder).toList();
 
     }
 
-    /**
-     * Gets if the given chunk is a border chunk.
-     * @param chunk The chunk to check.
-     * @return True if the chunk is a border chunk.
-     */
-    private boolean isBorderChunk(Chunk chunk) {
-        return chunk.getCurrentId() != ChunkId.CENTER_MIDDLE || chunks.size() == 1;
+    private boolean findClosedFromBorder(Chunk border, HashSet<Chunk> visited) {
+        visited.add(border);
+        Tile tile = border.getParent();
+
+        for (ChunkId neighborId : border.getCurrentId().getNeighbors()) {
+            Chunk neighbor = tile.getChunk(neighborId);
+
+            if (visited.contains(neighbor)) {
+                continue;
+            }
+
+            if (neighbor.isBorder()) {
+                if (findClosedFromBorder(neighbor, visited)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

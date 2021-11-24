@@ -82,7 +82,7 @@ public class TileExcelConfig {
         }
 
         for (ArrayList<ChunkId> chunkIds : zones.values()) {
-            TileChunkAreaConfig areaConfig = new TileChunkAreaConfig(chunkIds);
+            TileChunkAreaConfig areaConfig = new TileChunkAreaConfig(chunks[chunkIds.get(0).ordinal()].getType(), chunkIds);
 
             for (ChunkId chunkId : chunkIds) {
                 chunks[chunkId.ordinal()].setArea(areaConfig);
@@ -119,8 +119,8 @@ public class TileExcelConfig {
             tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
         }
 
-        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).toList()) {
-            ChunkArea area = new ChunkArea();
+        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
+            ChunkArea area = new ChunkArea(areaConfig.getChunkType());
 
             for (ChunkId chunkInArea : areaConfig.getChunkIds()) {
                 area.addChunk(tile.getChunk(chunkInArea));

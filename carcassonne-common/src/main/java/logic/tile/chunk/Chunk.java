@@ -6,6 +6,8 @@ import logic.tile.Tile;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
+import java.util.Arrays;
+
 /**
  * Represents a chunk of tiles. A chunk is a part of tile grid.
  */
@@ -97,7 +99,13 @@ public abstract class Chunk {
      */
     public abstract ChunkType getType();
 
-
+    /**
+     * Determine if this chunk is a border chunk.
+     * @return True if this chunk is a border chunk, false otherwise.
+     */
+    public boolean isBorder() {
+        return Arrays.stream(currentId.getNeighbors()).map(id -> parent.getChunk(id)).allMatch(c -> c.getType() == getType());
+    }
 
     @Override
     public String toString() {
