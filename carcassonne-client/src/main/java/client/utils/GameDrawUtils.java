@@ -34,7 +34,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static ImageDatabase meepleDatabase;
     private static ImageDatabase extraDatabase;
 
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
@@ -222,11 +222,21 @@ public class GameDrawUtils implements ChunkPositionConstant {
         if (!chunk.getArea().isClosed())
             return;
 
-        BufferedImage patternImageClosed = extraDatabase.get("PatternClosed");
-        TexturePaint patternClosed = new TexturePaint(patternImageClosed, new Rectangle(0, 0, patternImageClosed.getWidth(), patternImageClosed.getHeight()));
+        drawPattern(g, "PatternClosed", chunksGeo.get(chunk.getCurrentId()), tilePosition);
+    }
+
+    private static void drawBorder(Graphics g, Vector2 tilePosition, Chunk chunk) {
+        if (!chunk.isBorder())
+            return;
+
+        drawPattern(g, "PatternBorder", chunksGeo.get(chunk.getCurrentId()), tilePosition);
+    }
+
+    private static void drawPattern(Graphics g, String patternName, Polygon polygon, Vector2 tilePosition) {
+        BufferedImage patternImage = extraDatabase.get(patternName);
+        TexturePaint patternTexture = new TexturePaint(patternImage, new Rectangle(0, 0, patternImage.getWidth(), patternImage.getHeight()));
         Graphics2D g2 = (Graphics2D) g;
-        g2.setPaint(patternClosed);
-        Polygon polygon = chunksGeo.get(chunk.getCurrentId());
+        g2.setPaint(patternTexture);
         g2.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
     }
 
@@ -246,7 +256,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Modify the opacity of a color
      *
-     * @param color
+     * @param color The color to change opacity of
      * @param opacity The opacity wanted (0-1)
      * @return the color with the new opacity
      */
@@ -262,9 +272,25 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     private static void drawTileBorder(Graphics g, Vector2 tilePosition) {
         g.setColor(Color.black);
+        drawTileBorderUp(g, tilePosition);
+        drawTileBorderDown(g, tilePosition);
+        drawTileBorderLeft(g, tilePosition);
+        drawTileBorderRight(g, tilePosition);
+    }
+
+    private static void drawTileBorderUp(Graphics g, Vector2 tilePosition) {
         g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX() + tileWidth, tilePosition.getY());
+    }
+
+    private static void drawTileBorderDown(Graphics g, Vector2 tilePosition) {
         g.drawLine(tilePosition.getX(), tilePosition.getY() + tileHeight - 1, tilePosition.getX() + tileWidth, tilePosition.getY() + tileHeight - 1);
+    }
+
+    private static void drawTileBorderLeft(Graphics g, Vector2 tilePosition) {
         g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX(), tilePosition.getY() + tileHeight);
+    }
+
+    private static void drawTileBorderRight(Graphics g, Vector2 tilePosition) {
         g.drawLine(tilePosition.getX() + tileWidth - 1, tilePosition.getY(), tilePosition.getX() + tileWidth - 1, tilePosition.getY() + tileHeight);
     }
 
@@ -334,6 +360,9 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
                 // Show tile border
                 drawTileBorder(graphics, tileImagePosition);
+
+                // Show Border
+                drawBorder(graphics, tileImagePosition, chunk);
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
