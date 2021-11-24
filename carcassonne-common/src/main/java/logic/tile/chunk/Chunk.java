@@ -101,49 +101,6 @@ public abstract class Chunk {
     public abstract ChunkType getType();
 
     /**
-     * Gets the neighbors chunks of this chunk.
-     * @return
-     */
-    public List<Chunk> getNeighbors() {
-        LinkedList<Chunk> neighbors = new LinkedList<>();
-
-        for (ChunkId id : currentId.getNeighbors()) {
-            neighbors.add(parent.getChunk(id));
-        }
-
-        if (currentId != ChunkId.CENTER_MIDDLE) {
-            TileEdge edgeConnection = currentId.getEdge();
-            Tile edgeTile = parent.getGame().getBoard().getTileAt(parent.getPosition().add(edgeConnection.getValue()));
-
-            if (edgeTile != null) {
-                ChunkId[] ownEdgeChunkIds = edgeConnection.getChunkIds();
-                ChunkId[] neighborsChunkIds = edgeConnection.negate().getChunkIds();
-
-                int chunkIndex = -1;
-
-                for (int i = 0; i < ownEdgeChunkIds.length; i++) {
-                    if (ownEdgeChunkIds[i].equals(currentId)) {
-                        chunkIndex = i;
-                    }
-                }
-
-                neighbors.add(edgeTile.getChunk(neighborsChunkIds[chunkIndex]));
-            }
-        }
-
-        return neighbors;
-    }
-
-    /**
-     * Determine if this chunk is a border chunk.
-     * @return True if this chunk is a border chunk, false otherwise.
-     */
-    public boolean isBorder() {
-        return false;
-        // return getNeighbors().stream().anyMatch(c -> c.getArea() != area);
-    }
-
-    /**
      * Encodes this chunk attributes into the given stream.
      * @param stream
      */

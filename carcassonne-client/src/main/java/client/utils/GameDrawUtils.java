@@ -256,13 +256,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
         drawPattern(g, "PatternClosed", chunksGeo.get(chunk.getCurrentId()), tilePosition);
     }
 
-    private static void drawBorder(Graphics g, Vector2 tilePosition, Chunk chunk) {
-        if (!chunk.isBorder())
-            return;
-
-        drawPattern(g, "PatternBorder", chunksGeo.get(chunk.getCurrentId()), tilePosition);
-    }
-
     private static void drawPattern(Graphics g, String patternName, Polygon polygon, Vector2 tilePosition) {
         BufferedImage patternImage = extraDatabase.get(patternName);
         TexturePaint patternTexture = new TexturePaint(patternImage, new Rectangle(0, 0, patternImage.getWidth(), patternImage.getHeight()));
@@ -391,9 +384,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
                 // Show tile border
                 drawTileBorder(graphics, tileImagePosition);
-
-                // Show Border
-                drawBorder(graphics, tileImagePosition, chunk);
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
