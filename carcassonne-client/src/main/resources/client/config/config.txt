@@ -5,10 +5,11 @@ Server
 Logger
 	Name	Value
 	Level	DEBUG
-	Debug	36m
-	Info	32m
-	Warning	33m
-	Error	31m
+	Player_1	35m
+	Player_2	34m
+	Player_3	93m
+	Player_4	94m
+	Player_5	95m
 Match
 	Name	Value
 	NumMatches	10

@@ -2,6 +2,7 @@ package client.listener;
 
 import client.logger.Logger;
 import client.logger.LoggerCategory;
+import logic.Game;
 import logic.IGameListener;
 import logic.player.Player;
 import logic.state.GameState;
@@ -12,12 +13,18 @@ import logic.tile.Tile;
  * GameLogger is a class that implements IGameListener and logs all the events
  */
 public class GameLogger implements IGameListener {
+    private final Game game;
+
+    public GameLogger(Game game) {
+        this.game = game;
+    }
+
     /**
      * Called when the game is started.
      */
     @Override
     public void onGameStarted() {
-        Logger.info(LoggerCategory.GAME, "--- GAME STARTED ---");
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME STARTED ---");
     }
 
     /**
@@ -25,7 +32,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onGameOver() {
-        Logger.info(LoggerCategory.GAME, "--- GAME OVER ---");
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME OVER ---");
     }
 
     /**
@@ -33,7 +40,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTurnStarted(int id) {
-        Logger.info(LoggerCategory.GAME, "--- TURN %d STARTED ---", id);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- TURN %d STARTED ---", id);
     }
 
     /**
@@ -41,7 +48,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTurnEnded(int id) {
-        Logger.info(LoggerCategory.GAME, "--- TURN %d ENDED ---", id);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- TURN %d ENDED ---", id);
     }
 
     /**
@@ -50,7 +57,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onStateChanged(GameState state) {
-        Logger.info(LoggerCategory.GAME, "Game state changed to %s", state.getType());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Game state changed to %s", state.getType());
     }
 
     /**
@@ -59,7 +66,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onTilePlaced(Tile tile) {
-        Logger.info(LoggerCategory.GAME, "Place tile %s at (%d,%d)", tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place tile %s at (%d,%d)", tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
     }
 
     /**
@@ -70,7 +77,7 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info(LoggerCategory.GAME, "Place meeple of player %d at tile (%d,%d), chunk %s", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple of player %d at tile (%d,%d), chunk %s", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 
     /**
@@ -81,6 +88,6 @@ public class GameLogger implements IGameListener {
      */
     @Override
     public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info(LoggerCategory.GAME, "Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
     }
 }

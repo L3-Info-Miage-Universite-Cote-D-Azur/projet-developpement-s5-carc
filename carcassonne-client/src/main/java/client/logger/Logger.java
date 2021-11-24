@@ -1,6 +1,7 @@
 package client.logger;
 
 import client.config.LoggerConfig;
+import logic.player.Player;
 
 public class Logger {
     private static LoggerConfig config = LoggerConfig.getDefaultConfig();
@@ -72,6 +73,26 @@ public class Logger {
      */
     public static void error(LoggerCategory category, String message) {
         print(category, message, config.getErrorColor(), LogLevel.ERROR);
+    }
+
+    /**
+     * Logs a message to the console with the player color.
+     * @param category Category of the log
+     * @param player Player
+     * @param message The message to log
+     */
+    public static void player(LoggerCategory category, Player player, String message) {
+        print(category, message, config.getPlayerColor(player.getGame().getPlayerIndex(player)), LogLevel.INFO);
+    }
+
+    /**
+     * Logs a message to the console with the player color.
+     * @param category Category of the log
+     * @param player Player
+     * @param message The message to log
+     */
+    public static void player(LoggerCategory category, Player player, String message, Object... args) {
+        print(category, String.format(message, args), config.getPlayerColor(player.getGame().getPlayerIndex(player)), LogLevel.INFO);
     }
 
     /**

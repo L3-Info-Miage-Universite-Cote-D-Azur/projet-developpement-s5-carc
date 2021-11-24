@@ -64,7 +64,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         gameView.getCommandExecutor().setListener(new MasterCommandExecutionNotifier(client));
 
         /* Attach a listener to the game view so we logs the game events. */
-        gameView.setListener(new GameLogger());
+        gameView.setListener(new GameLogger(gameView));
 
         /* Attach your AI as listener of our player. */
         Player ownPlayer = gameView.getPlayerById(client.getAuthenticationService().getUserId());
