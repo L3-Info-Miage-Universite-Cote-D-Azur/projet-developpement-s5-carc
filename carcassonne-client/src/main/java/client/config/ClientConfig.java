@@ -1,6 +1,7 @@
 package client.config;
 
 import excel.ExcelNode;
+import logic.config.GameConfig;
 
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -71,7 +72,8 @@ public class ClientConfig {
 
     public static ClientConfig loadFromResources() {
         try {
-            ExcelNode rootNode = ExcelNode.load(Path.of(LoggerConfig.class.getResource("config.txt").toURI()));
+            String path = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
+            ExcelNode rootNode = ExcelNode.load(Path.of(path, "config.txt"));
             return new ClientConfig(rootNode);
         } catch (URISyntaxException e) {
             e.printStackTrace();

@@ -28,7 +28,9 @@ public class ClientTest {
 
     @Test
     void testNotifyOnStop() throws Exception {
-        Client client = new Client(ClientConfig.loadFromResources(), GameConfig.loadFromResources());
+        ClientConfig clientConfig = ClientConfig.loadFromResources();
+        GameConfig gameConfig = GameConfig.loadFromResources();
+        Client client = new Client(clientConfig, gameConfig);
 
         try {
             client.start();
