@@ -41,8 +41,6 @@ public class TileTest {
 
         assertEquals(originalChunkReferences[12], rotatedChunkReferences[12]);
 
-        tile.rotate();
-
         for (int i = 0; i< rotatedChunkReferences.length; i++) {
             rotatedChunkReferences[i] = tile.getChunk(ChunkId.values()[i]);
         }
