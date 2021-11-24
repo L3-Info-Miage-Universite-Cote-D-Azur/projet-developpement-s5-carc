@@ -122,7 +122,7 @@ public class ClientConnection {
      * Gets the id of the connection.
      * @return The id of the connection.
      */
-    public int getId() {
+    public final int getId() {
         return id;
     }
 
