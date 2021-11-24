@@ -38,6 +38,22 @@ public class ChunkArea {
     }
 
     /**
+     * Gets the area unique id.
+     * @return The unique id.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Returns whether the area is closed.
+     * @return Whether the area is closed.
+     */
+    public boolean isClosed() {
+        return closed;
+    }
+
+    /**
      * Adds a chunk to the area.
      * It will also add all the tiles in the chunk to the area.
      * @param chunk The chunk to add.
@@ -137,10 +153,6 @@ public class ChunkArea {
         }
 
         return borderNeighbors.stream().filter(c -> c != previous).findFirst().get();
-    }
-
-    public int getId() {
-        return id;
     }
 
     @Override
