@@ -112,7 +112,7 @@ public class ChunkArea {
         Chunk first = chunks.stream().filter(c -> c.isBorder()).findFirst().orElse(null);
 
         if (first != null) {
-            HashSet<Chunk> chunksVisited = new HashSet<>();
+            // HashSet<Chunk> chunksVisited = new HashSet<>();
             // closed = browseAreaBorder(first, first, null, chunksVisited);
         } else {
             closed = false;
