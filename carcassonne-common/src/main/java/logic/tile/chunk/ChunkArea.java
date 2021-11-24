@@ -50,7 +50,10 @@ public class ChunkArea {
         chunks.add(chunk);
         tiles.add(chunk.getParent());
         chunk.setArea(this);
-        checkIfClosed();
+
+        if (chunk.getParent().getPosition() != null) {
+            checkIfClosed();
+        }
     }
 
     /**
@@ -80,28 +83,53 @@ public class ChunkArea {
             return;
         }
 
-        List<Chunk> borderChunks = chunks.stream().filter(Chunk::isBorder).toList();
+        Chunk first = chunks.stream().filter(c -> c.isBorder()).findFirst().orElse(null);
 
+        if (first != null) {
+            HashSet<Chunk> chunksVisited = new HashSet<>();
+            closed = browseAreaBorder(first, null, chunksVisited);
+        } else {
+            closed = false;
+        }
     }
 
-    private boolean findClosedFromBorder(Chunk border, HashSet<Chunk> visited) {
-        visited.add(border);
-        Tile tile = border.getParent();
+    private boolean browseAreaBorder(Chunk current, Chunk previous, HashSet<Chunk> chunksVisited) {
+        Chunk next = findNextBorder(current, previous, chunksVisited);
+        chunksVisited.add(current);
 
-        for (ChunkId neighborId : border.getCurrentId().getNeighbors()) {
-            Chunk neighbor = tile.getChunk(neighborId);
+        if (next == current) {
+            return true;
+        } else if (next != null) {
+            return browseAreaBorder(next, current, chunksVisited);
+        } else {
+            return false;
+        }
+    }
 
-            if (visited.contains(neighbor)) {
-                continue;
-            }
+    /**
+     * Finds the next border from the current chunk.
+     * @param current The current chunk.
+     * @param previous The previous chunk.
+     * @param visited The list of visited chunks.
+     * @return The next border chunk.
+     */
+    private Chunk findNextBorder(Chunk current, Chunk previous, HashSet<Chunk> visited) {
+        List<Chunk> neighbors = current.getNeighbors();
 
-            if (neighbor.isBorder()) {
-                if (findClosedFromBorder(neighbor, visited)) {
-                    return true;
-                }
-            }
+        if (previous != null && previous.equals(current)) {
+            throw new IllegalStateException("Previous chunk is not the neighbors.");
         }
 
-        return false;
+        List<Chunk> borderNeighbors = neighbors.stream().filter(c -> c.isBorder()).filter(c -> !visited.contains(c)).toList();
+
+        if (borderNeighbors.size() == 0) {
+            return null;
+        }
+
+        if (borderNeighbors.size() == 1) {
+            return borderNeighbors.get(0);
+        }
+
+        return borderNeighbors.stream().filter(c -> c != previous).findFirst().get();
     }
 }

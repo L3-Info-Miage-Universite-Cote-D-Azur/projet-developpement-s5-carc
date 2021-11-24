@@ -1,6 +1,7 @@
 package logic.config.excel;
 
 import excel.ExcelNode;
+import logic.Game;
 import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
@@ -112,8 +113,8 @@ public class TileExcelConfig {
      * Instantiate a tile with the current configuration.
      * @return The tile instantiated.
      */
-    public Tile createTile() {
-        Tile tile = new Tile(this);
+    public Tile createTile(Game game) {
+        Tile tile = new Tile(this, game);
 
         for (ChunkId chunkId : ChunkId.values()) {
             tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));

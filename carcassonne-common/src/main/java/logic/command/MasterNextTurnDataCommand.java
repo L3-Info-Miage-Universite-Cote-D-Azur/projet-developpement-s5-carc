@@ -85,7 +85,7 @@ public class MasterNextTurnDataCommand implements ICommand {
      */
     @Override
     public void execute(Game game) {
-        Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile();
+        Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile(game);
         TileStack stack = game.getStack();
 
         stack.clear();

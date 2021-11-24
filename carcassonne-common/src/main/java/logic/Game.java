@@ -38,7 +38,7 @@ public class Game {
     public Game(GameConfig config) {
         this.config = config;
         this.board = new GameBoard();
-        this.stack = new TileStack();
+        this.stack = new TileStack(this);
         this.players = new ArrayList<>(config.maxPlayers);
         this.commandExecutor = new CommandExecutor(this);
         this.master = true;

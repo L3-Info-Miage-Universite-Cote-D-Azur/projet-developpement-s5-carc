@@ -19,12 +19,14 @@ public class Tile {
     private Vector2 position;
     private Chunk[] chunks;
     private TileExcelConfig config;
+    private Game game;
 
     private int rotation;
 
-    public Tile(TileExcelConfig config) {
+    public Tile(TileExcelConfig config, Game game) {
         chunks = new Chunk[ChunkId.values().length];
         this.config = config;
+        this.game = game;
     }
 
     /**
@@ -38,6 +40,14 @@ public class Tile {
         }
 
         rotation = (rotation + 1) % 4;
+    }
+
+    /**
+     * Gets the game the tile is in.
+     * @return The game the tile is in.
+     */
+    public final Game getGame() {
+        return game;
     }
 
     /**
@@ -197,7 +207,7 @@ public class Tile {
      * Decodes the tile.
      * @param stream The stream to decode from.
      */
-    public void decode(ByteInputStream stream, Game game) {
+    public void decode(ByteInputStream stream) {
         if (stream.readBoolean()) {
             position = new Vector2(stream.readInt(), stream.readInt());
         } else {
@@ -205,7 +215,7 @@ public class Tile {
         }
 
         for (Chunk chunk : chunks) {
-            chunk.decode(stream, game);
+            chunk.decode(stream);
         }
     }
 

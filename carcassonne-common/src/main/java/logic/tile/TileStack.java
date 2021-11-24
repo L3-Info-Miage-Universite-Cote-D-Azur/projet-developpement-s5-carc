@@ -16,9 +16,11 @@ import java.util.LinkedList;
  */
 public class TileStack {
     private final LinkedList<Tile> tiles;
+    private final Game game;
 
-    public TileStack() {
+    public TileStack(Game game) {
         this.tiles = new LinkedList<>();
+        this.game = game;
     }
 
     /**
@@ -43,7 +45,7 @@ public class TileStack {
     public void fill(GameConfig config) {
         for (TileExcelConfig tileConfig : config.tiles) {
             for (int i = 0; i < tileConfig.count; i++) {
-                tiles.add(tileConfig.createTile());
+                tiles.add(tileConfig.createTile(game));
             }
         }
     }

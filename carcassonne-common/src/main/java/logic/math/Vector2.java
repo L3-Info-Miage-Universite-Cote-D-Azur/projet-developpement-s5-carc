@@ -57,6 +57,10 @@ public final class Vector2 {
         return new Vector2(this.x * x, this.y * y);
     }
 
+    public Vector2 reverse() {
+        return new Vector2(-x, -y);
+    }
+
     public Vector2 reverseX() {
         return new Vector2(-x, y);
     }
