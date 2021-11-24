@@ -5,14 +5,12 @@ import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 import logic.tile.TileFlags;
+import logic.tile.TileRotation;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class that represents the game board.
@@ -55,7 +53,7 @@ public class GameBoard {
         }
 
         tiles.put(tile.getPosition(), tile);
-        tile.onTilePlaced(this);
+        tile.onBoard();
     }
 
     /**
@@ -117,7 +115,19 @@ public class GameBoard {
         } else if (tileToPlace.hasFlags(TileFlags.STARTING)) {
             return false;
         } else {
-            return hasFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>());
+            TileRotation originalRotation = tileToPlace.getRotation();
+
+            for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
+                tileToPlace.rotate();
+
+                if (hasFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>())) {
+                    // Restores the original rotation of the tile.
+                    tileToPlace.setRotation(originalRotation);
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
@@ -144,7 +154,7 @@ public class GameBoard {
                         return true;
                     }
                 }
-            } else if (tileToPlace.canBePlacedAt(edgePos, this)) {
+            } else if (tileToPlace.canBePlacedAt(edgePos)) {
                 return true;
             }
         }
@@ -153,16 +163,16 @@ public class GameBoard {
     }
 
     /**
-     * Finds all free places for the specified tile.
+     * Finds all free positions for the specified tile and the current rotation.
      * @param tileToPlace the tile to place
      * @return a list of free places for the specified tile
      */
-    public ArrayList<Vector2> findFreePlaceForTile(Tile tileToPlace) {
+    public LinkedList<Vector2> findFreePlacesForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
             throw new IllegalArgumentException("Tile must be not null.");
         }
 
-        ArrayList<Vector2> freePoints = new ArrayList<>();
+        LinkedList<Vector2> freePoints = new LinkedList<>();
         Tile startingTile = getStartingTile();
 
         if (startingTile == null) {
@@ -183,7 +193,7 @@ public class GameBoard {
      * @param parentNodes the nodes that have already been visited
      * @param freePoints the list of free points to add to
      */
-    private void findFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes, ArrayList<Vector2> freePoints) {
+    private void findFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes, List<Vector2> freePoints) {
         Vector2 tilePosition = node.getPosition();
 
         for (TileEdge edge : TileEdge.values()) {
@@ -196,7 +206,7 @@ public class GameBoard {
                     parentNodes.add(subNode);
                     findFreePlaceForTileFromNode(subNode, tileToPlace, parentNodes, freePoints);
                 }
-            } else if (tileToPlace.canBePlacedAt(edgePos, this)) {
+            } else if (tileToPlace.canBePlacedAt(edgePos)) {
                 freePoints.add(edgePos);
             }
         }
@@ -233,8 +243,7 @@ public class GameBoard {
 
         for (int i = 0; i < tileCount; i++) {
             Tile tile = ByteStreamHelper.decodeTile(stream, game);
-            tiles.put(tile.getPosition(), tile);
-            tile.onTilePlaced(this);
+            place(tile);
         }
     }
 }

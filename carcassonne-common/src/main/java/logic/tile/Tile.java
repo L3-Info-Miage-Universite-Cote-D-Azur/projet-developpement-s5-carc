@@ -21,17 +21,17 @@ public class Tile {
     private Chunk[] chunks;
     private TileExcelConfig config;
     private Game game;
-
-    private int rotation;
+    private TileRotation rotation;
 
     public Tile(TileExcelConfig config, Game game) {
         chunks = new Chunk[ChunkId.values().length];
         this.config = config;
         this.game = game;
+        this.rotation = TileRotation.UP;
     }
 
     /**
-     * Rotate the tile to 90 degrees in the clockwise direction.
+     * Rotates the tile to 90 degrees in the clockwise direction.
      */
     public void rotate() {
         Chunk[] originalChunkOrder = chunks.clone();
@@ -40,7 +40,24 @@ public class Tile {
             setChunk(ChunkId.values()[(i + 3) % (ChunkId.values().length - 1)], originalChunkOrder[i]);
         }
 
-        rotation = (rotation + 1) % 4;
+        this.rotation = this.rotation.next();
+    }
+
+    /**
+     * Gets the tile's rotation.
+     * @return The tile's rotation.
+     */
+    public TileRotation getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Rotates the tile to the given rotation.
+     */
+    public void setRotation(TileRotation rotation) {
+        while (this.rotation != rotation) {
+            rotate();
+        }
     }
 
     /**
@@ -57,6 +74,14 @@ public class Tile {
      */
     public Vector2 getPosition() {
         return position;
+    }
+
+    /**
+     * Determines if the tile is on the board.
+     * @return True if the tile is on the board, false otherwise.
+     */
+    public boolean isOnBoard() {
+        return position != null;
     }
 
     /**
@@ -129,14 +154,13 @@ public class Tile {
     /**
      * Determines if the tile can be placed at the given position.
      * @param position The position to check.
-     * @param board The board to check.
      * @return True if the tile can be placed at the given position, false otherwise.
      */
-    public boolean canBePlacedAt(Vector2 position, GameBoard board) {
+    public boolean canBePlacedAt(Vector2 position) {
         boolean hasContactWithTile = false;
 
         for (TileEdge edge : TileEdge.values()) {
-            Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
+            Tile edgeTile = game.getBoard().getTileAt(position.add(edge.getValue()));
 
             if (edgeTile != null) {
                 hasContactWithTile = true;
@@ -151,10 +175,10 @@ public class Tile {
     }
 
     /**
-     * Merges my chunk areas with the given tile.
+     * Tries to merge the chunk areas with the areas that are connected to the given edge.
      * @param neighborTile The tile to merge with.
      */
-    public void mergeChunkAreas(Tile neighborTile, TileEdge edgeConnection) {
+    public void mergeAreas(Tile neighborTile, TileEdge edgeConnection) {
         ChunkId[] ownChunkIds = edgeConnection.getChunkIds();
         ChunkId[] oppositeChunkIds = edgeConnection.negate().getChunkIds();
 
@@ -173,17 +197,29 @@ public class Tile {
     }
 
     /**
-     * Called when the tile is placed on the board.
-     * @param board The board on which the tile is placed.
+     * Tries to merge the chunk areas with the areas that are connected to the edges of the tile.
      */
-    public void onTilePlaced(GameBoard board) {
+    public void mergeAreas() {
+        GameBoard board = game.getBoard();
+
         for (TileEdge edge : TileEdge.values()) {
             Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
 
             if (edgeTile != null) {
-                mergeChunkAreas(edgeTile, edge);
+                mergeAreas(edgeTile, edge);
             }
         }
+    }
+
+    /**
+     * Called when the tile is placed on the board.
+     */
+    public void onBoard() {
+        for (ChunkArea area : Arrays.stream(chunks).map(Chunk::getArea).toList()) {
+            area.onBoard();
+        }
+
+        mergeAreas();
     }
 
     /**
@@ -203,6 +239,7 @@ public class Tile {
             stream.writeBoolean(true);
             stream.writeInt(position.getX());
             stream.writeInt(position.getY());
+            stream.writeInt(rotation.ordinal());
         } else {
             stream.writeBoolean(false);
         }
@@ -219,6 +256,7 @@ public class Tile {
     public void decode(ByteInputStream stream) {
         if (stream.readBoolean()) {
             position = new Vector2(stream.readInt(), stream.readInt());
+            setRotation(TileRotation.values()[stream.readInt()]);
         } else {
             position = null;
         }

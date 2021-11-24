@@ -1,10 +1,12 @@
 package logic.tile.chunk;
 
+import logic.board.GameBoard;
 import logic.tile.Tile;
+import logic.tile.TileEdge;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a chunk area.
@@ -22,15 +24,23 @@ public class ChunkArea {
 
     /**
      * Constructor for the area.
-     * @param type The type of the area.
      */
-    public ChunkArea(ChunkType type) {
-        this.type = type;
-        this.id = uniqueId++;
+    public ChunkArea(List<Chunk> chunks) {
+        Chunk firstChunk = chunks.get(0);
 
-        chunks = new HashSet<>();
+        this.type = firstChunk.getType();
+        this.chunks = new HashSet<>(chunks);
+
+        id = uniqueId++;
         tiles = new HashSet<>();
         closed = false;
+
+        tiles.add(firstChunk.getParent());
+
+        for (Chunk chunk : chunks) {
+            chunk.setArea(this);
+        }
+
     }
 
     /**
@@ -58,31 +68,6 @@ public class ChunkArea {
     }
 
     /**
-     * Adds a chunk to the area.
-     * It will also add all the tiles in the chunk to the area.
-     * @param chunk The chunk to add.
-     */
-    public void addChunk(Chunk chunk) {
-        if (chunk.getArea() != null) {
-            throw new IllegalStateException("Chunk already has an area. Are you trying to merge two area?");
-        }
-        if (chunk.getType() != type) {
-            throw new IllegalArgumentException("Chunk type does not match area type.");
-        }
-        if (chunks.contains(chunk)) {
-            throw new IllegalStateException("Chunk already in area.");
-        }
-
-        chunks.add(chunk);
-        tiles.add(chunk.getParent());
-        chunk.setArea(this);
-
-        if (chunk.getParent().getPosition() != null) {
-            checkIfClosed();
-        }
-    }
-
-    /**
      * Merges two areas together.
      * @param other The other area to merge with.
      */
@@ -98,25 +83,41 @@ public class ChunkArea {
             chunk.setArea(this);
         }
 
-        checkIfClosed();
+        checkClosure();
+    }
+
+    /**
+     * Called when the parent tile of the area is placed on the board.
+     */
+    public void onBoard() {
+        checkClosure();
     }
 
     /**
      * Checks if the area is closed.
      */
-    private void checkIfClosed() {
+    private void checkClosure() {
         if (closed) {
             return;
         }
 
-        Chunk first = chunks.stream().filter(c -> c.isBorder()).findFirst().orElse(null);
+        GameBoard board = tiles.iterator().next().getGame().getBoard();
 
-        if (first != null) {
-            // HashSet<Chunk> chunksVisited = new HashSet<>();
-            // closed = browseAreaBorder(first, first, null, chunksVisited);
-        } else {
-            closed = false;
-        }
+        // Checks if we have a continuation of this area on any edge of the tiles.
+        // If yes, then the area is not closed as we can continue on the edge.
+        closed = tiles.stream().allMatch(t -> {
+            for (TileEdge edge : TileEdge.values()) {
+                if (Arrays.stream(edge.getChunkIds()).map(c -> t.getChunk(c)).anyMatch(c -> c.getArea() == this)) {
+                    if (board.getTileAt(t.getPosition().add(edge.getValue())) == null) {
+                        // We can continue on this edge -> not closed.
+                        return false;
+                    }
+                }
+            }
+
+            // No edge can be continued -> Need to check the next tile.
+            return true;
+        });
     }
 
     @Override

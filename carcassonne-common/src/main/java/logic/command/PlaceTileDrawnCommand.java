@@ -77,7 +77,7 @@ public class PlaceTileDrawnCommand implements ICommand {
                 return false;
             }
 
-            if (!tile.canBePlacedAt(position, board)) {
+            if (!tile.canBePlacedAt(position)) {
                 game.getCommandExecutor().getListener().onCommandFailed(this, "Tile cannot be placed here.");
                 return false;
             }

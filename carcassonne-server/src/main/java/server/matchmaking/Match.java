@@ -148,7 +148,7 @@ public class Match {
 
             GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
 
-            executeCommand(turnExecutor.getId(), new PlaceTileDrawnCommand(game.getBoard().findFreePlaceForTile(placeTileState.getTileDrawn()).get(0)));
+            executeCommand(turnExecutor.getId(), new PlaceTileDrawnCommand(game.getBoard().findFreePlacesForTile(placeTileState.getTileDrawn()).get(0)));
             executeCommand(turnExecutor.getId(), new EndTurnCommand());
         }
     }

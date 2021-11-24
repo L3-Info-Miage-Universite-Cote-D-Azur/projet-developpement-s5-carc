@@ -1,13 +1,11 @@
 package logic.tile.chunk;
 
-import logic.Game;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -141,17 +139,14 @@ public abstract class Chunk {
      * @return True if this chunk is a border chunk, false otherwise.
      */
     public boolean isBorder() {
-        return getNeighbors().stream().allMatch(c -> c.getArea() != area);
+        return false;
+        // return getNeighbors().stream().anyMatch(c -> c.getArea() != area);
     }
 
-    @Override
-    public String toString() {
-        return "Chunk{" +
-                "area=" + area +
-                " meeple=" + meeple +
-                '}';
-    }
-
+    /**
+     * Encodes this chunk attributes into the given stream.
+     * @param stream
+     */
     public void encode(ByteOutputStream stream) {
         if (meeple != null) {
             stream.writeBoolean(true);
@@ -161,11 +156,23 @@ public abstract class Chunk {
         }
     }
 
+    /**
+     * Decodes this chunk attributes from the given stream.
+     * @param stream
+     */
     public void decode(ByteInputStream stream) {
         if (stream.readBoolean()) {
             meeple = new Meeple(parent.getGame().getPlayerById(stream.readInt()));
         } else {
             meeple = null;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Chunk{" +
+                "area=" + area +
+                " meeple=" + meeple +
+                '}';
     }
 }

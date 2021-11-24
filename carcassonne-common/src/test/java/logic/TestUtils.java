@@ -46,7 +46,7 @@ public class TestUtils {
         @Override
         public void onWaitingPlaceTile() {
             GameTurnPlaceTileState placeTileState = ((GameTurnPlaceTileState) game.getState());
-            Vector2 position = game.getBoard().getStartingTile() == null ? GameBoard.STARTING_TILE_POSITION : game.getBoard().findFreePlaceForTile(placeTileState.getTileDrawn()).get(0);
+            Vector2 position = game.getBoard().getStartingTile() == null ? GameBoard.STARTING_TILE_POSITION : game.getBoard().findFreePlacesForTile(placeTileState.getTileDrawn()).get(0);
 
             game.getCommandExecutor().execute(new PlaceTileDrawnCommand(position));
             lastTilePos = position;

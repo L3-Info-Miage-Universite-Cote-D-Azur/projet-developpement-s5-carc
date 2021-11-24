@@ -121,11 +121,7 @@ public class TileExcelConfig {
         }
 
         for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
-            ChunkArea area = new ChunkArea(areaConfig.getChunkType());
-
-            for (ChunkId chunkInArea : areaConfig.getChunkIds()) {
-                area.addChunk(tile.getChunk(chunkInArea));
-            }
+            new ChunkArea(areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList());
         }
 
         return tile;

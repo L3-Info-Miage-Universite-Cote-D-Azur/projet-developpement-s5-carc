@@ -5,6 +5,7 @@ import logic.board.GameBoard;
 import logic.math.Polygon;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
+import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
@@ -85,7 +86,12 @@ public class GameDrawUtils implements ChunkPositionConstant {
             for (File file : new File("models/tiles").listFiles()) {
                 if (file.isFile()) {
                     try {
-                        tileDatabase.cache(file.getName().replace(".jpg", ""), ImageIO.read(file));
+                        BufferedImage image = ImageIO.read(file);
+                        String name = file.getName().replace(".jpg", "");
+
+                        for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
+                            tileDatabase.cache(String.format("%s_%d", name, i * TileRotation.ANGLE_ROTATION), rotateImage(image, i * TileRotation.ANGLE_ROTATION));
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -120,6 +126,21 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+    }
+
+    private static BufferedImage rotateImage(BufferedImage image, int angle) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        BufferedImage newImage = new BufferedImage(width, height, image.getType());
+        Graphics2D g = newImage.createGraphics();
+
+        g.translate((width - height) / 2, (height - width) / 2);
+        g.rotate(Math.toRadians(angle), height / 2, width / 2);
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+
+        return newImage;
     }
 
     /**
@@ -176,6 +197,16 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     private static String getOwnMeepleSpriteModel(int index) {
         return Integer.toString(index);
+    }
+
+    /**
+     * Gets the sprite model to use for the specified tile and rotation.
+     * @param tile The tile to get the sprite model for.
+     * @param rotation The rotation to get the sprite model for.
+     * @return
+     */
+    private static String getTileSpriteModel(Tile tile) {
+        return String.format("%s_%s", tile.getConfig().model, tile.getRotation().ordinal() * TileRotation.ANGLE_ROTATION);
     }
 
     /**
@@ -338,7 +369,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
         for (Tile tile : game.getBoard().getTiles()) {
             Vector2 tileImagePosition = getTilePosition(tile).reverseY().subtract(layerBounds.start);
-            BufferedImage tileImage = tileDatabase.get(tile.getConfig().model);
+            BufferedImage tileImage = tileDatabase.get(getTileSpriteModel(tile));
 
             assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
             assert tileImagePosition.getX() + tileWidth <= layerBounds.getWidth() && tileImagePosition.getY() + tileHeight <= layerBounds.getHeight();
