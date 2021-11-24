@@ -72,7 +72,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkType.FIELD, Color.green);
         put(ChunkType.TOWN, Color.ORANGE);
         put(ChunkType.ABBEY, Color.CYAN);
-        put(ChunkType.RIVER, Color.blue);
     }};
 
     /**

@@ -19,6 +19,10 @@ public class PacketTest {
         assertEquals(originalPacket.getMessageType(), decodedPacket.getMessageType());
         assertEquals(originalPacket.getChecksum(), decodedPacket.getChecksum());
         assertEquals(originalPacket.getMessageLength(), decodedPacket.getMessageLength());
+
+        for (int i = 0; i < originalPacket.getMessageLength(); i++) {
+            assertEquals(originalPacket.getMessageData()[i], decodedPacket.getMessageData()[i]);
+        }
     }
 
     @Test

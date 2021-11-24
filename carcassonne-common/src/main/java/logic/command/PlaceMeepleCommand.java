@@ -108,10 +108,6 @@ public class PlaceMeepleCommand implements ICommand {
             }
         }
 
-        // parcourir tout les chunks de la tuile sur laquelle on veut poser,
-        // s'il y a déjà un meeple alors on relance la commande avec une autre tuile,
-        // sinon on place le meeple
-
         return true;
     }
 

@@ -5,8 +5,7 @@ import logic.config.GameConfig;
 import logic.tile.chunk.ChunkType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
     private static final GameConfig config = GameConfig.loadFromResources();

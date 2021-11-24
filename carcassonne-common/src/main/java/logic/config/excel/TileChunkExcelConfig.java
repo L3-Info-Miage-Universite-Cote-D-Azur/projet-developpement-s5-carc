@@ -29,13 +29,12 @@ public class TileChunkExcelConfig {
         this.area = area;
     }
 
-    public Chunk createChunk(Tile parent) {
-        return switch (type) {
-            case ROAD -> new RoadChunk(parent);
-            case TOWN -> new TownChunk(parent);
-            case ABBEY -> new AbbeyChunk(parent);
-            case FIELD -> new FieldChunk(parent);
-            case ROAD_END -> new RoadEndChunk(parent);
-        };
+    /**
+     * Instantiates a tile chunk from this configuration.
+     * @param tile The tile.
+     * @return The tile chunk.
+     */
+    public Chunk createChunk(Tile tile) {
+        return ChunkFactory.createByType(type, tile);
     }
 }

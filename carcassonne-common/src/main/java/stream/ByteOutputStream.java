@@ -23,6 +23,7 @@ public class ByteOutputStream {
     public void writeShort(short s) {
         ensureCapacity(index + 2);
         buffer[index++] = (byte)(s >>> 8);
+        buffer[index++] = (byte) s;
     }
 
     public void writeInt(int i) {

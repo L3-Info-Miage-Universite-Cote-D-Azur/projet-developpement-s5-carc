@@ -37,6 +37,12 @@ public class Client {
             }
 
             @Override
+            public void onConnectFailed() {
+                super.onConnectFailed();
+                stop();
+            }
+
+            @Override
             public void onDisconnected() {
                 super.onDisconnected();
 
@@ -53,7 +59,12 @@ public class Client {
         this.recordService(new GameStatisticsService(this));
 
         this.recordService(new GameControllerService(this));
+    }
 
+    /**
+     * Starts the client by connecting it to the server.
+     */
+    public void start() {
         this.serverConnection.connect(config.getServerHost(), config.getServerPort());
     }
 

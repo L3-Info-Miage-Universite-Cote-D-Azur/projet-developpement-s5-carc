@@ -51,7 +51,7 @@ public class CommandExecutor {
      * @return true if the command was executed, false otherwise.
      */
     public boolean execute(ICommand command) {
-        if (command.canBeExecuted(game)) {
+        if (command.getRequiredState() == game.getState().getType() && command.canBeExecuted(game)) {
             listener.onCommandExecuted(command);
             command.execute(game);
             return true;
