@@ -281,7 +281,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 //drawChunk(graphics, tileImagePosition, chunk.getType(), chunkId);
 
                 // Show zones
-                drawAllZones(graphics, tileImagePosition, chunk, colorZone);
+                drawZone(graphics, tileImagePosition, chunk, colorZone);
 
                 // Show tile border
                 //drawTileBorder(graphics, tileImagePosition);
