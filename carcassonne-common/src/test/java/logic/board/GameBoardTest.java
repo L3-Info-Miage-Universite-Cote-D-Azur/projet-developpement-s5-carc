@@ -1,10 +1,13 @@
 package logic.board;
 
+import logic.Game;
+import logic.TestUtils;
 import logic.config.excel.TileChunkExcelConfig;
 import logic.config.excel.TileExcelConfig;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
+import logic.tile.TileStack;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -44,5 +47,12 @@ class GameBoardTest {
                 setPosition(overlapPosition);
             }});
         });
+    }
+
+    @Test
+    void testClear() {
+        Game game = TestUtils.initGameEnv(2, true, true);
+        game.getBoard().clear();
+        assertTrue(game.getBoard().isEmpty());
     }
 }
