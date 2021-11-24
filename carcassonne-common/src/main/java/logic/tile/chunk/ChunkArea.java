@@ -4,6 +4,7 @@ import logic.tile.Tile;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a chunk area.
@@ -11,6 +12,20 @@ import java.util.List;
  */
 public class ChunkArea {
     private final HashSet<Chunk> chunks;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChunkArea chunkArea = (ChunkArea) o;
+        return closed == chunkArea.closed && Objects.equals(chunks, chunkArea.chunks) && Objects.equals(tiles, chunkArea.tiles) && type == chunkArea.type;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chunks, tiles, type, closed);
+    }
+
     private final HashSet<Tile> tiles;
     private final ChunkType type;
 
