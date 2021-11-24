@@ -20,6 +20,10 @@ public class ChunkArea {
 
     private boolean closed;
 
+    /**
+     * Constructor for the area.
+     * @param type The type of the area.
+     */
     public ChunkArea(ChunkType type) {
         this.type = type;
         this.id = uniqueId++;
@@ -94,7 +98,7 @@ public class ChunkArea {
             chunk.setArea(this);
         }
 
-        // checkIfClosed();
+        checkIfClosed();
     }
 
     /**
@@ -109,50 +113,10 @@ public class ChunkArea {
 
         if (first != null) {
             HashSet<Chunk> chunksVisited = new HashSet<>();
-            closed = browseAreaBorder(first, null, chunksVisited);
+            // closed = browseAreaBorder(first, first, null, chunksVisited);
         } else {
             closed = false;
         }
-    }
-
-    private boolean browseAreaBorder(Chunk current, Chunk previous, HashSet<Chunk> chunksVisited) {
-        Chunk next = findNextBorder(current, previous, chunksVisited);
-        chunksVisited.add(current);
-
-        if (next == current) {
-            return true;
-        } else if (next != null) {
-            return browseAreaBorder(next, current, chunksVisited);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Finds the next border from the current chunk.
-     * @param current The current chunk.
-     * @param previous The previous chunk.
-     * @param visited The list of visited chunks.
-     * @return The next border chunk.
-     */
-    private Chunk findNextBorder(Chunk current, Chunk previous, HashSet<Chunk> visited) {
-        List<Chunk> neighbors = current.getNeighbors();
-
-        if (previous != null && previous.equals(current)) {
-            throw new IllegalStateException("Previous chunk is not the neighbors.");
-        }
-
-        List<Chunk> borderNeighbors = neighbors.stream().filter(c -> c.isBorder()).filter(c -> !visited.contains(c)).toList();
-
-        if (borderNeighbors.size() == 0) {
-            return null;
-        }
-
-        if (borderNeighbors.size() == 1) {
-            return borderNeighbors.get(0);
-        }
-
-        return borderNeighbors.stream().filter(c -> c != previous).findFirst().get();
     }
 
     @Override
