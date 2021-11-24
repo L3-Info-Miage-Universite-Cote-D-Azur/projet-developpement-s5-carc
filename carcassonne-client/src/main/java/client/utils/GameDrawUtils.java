@@ -204,8 +204,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<ChunkArea, Color> colorZone) {
         ChunkArea chunkArea = chunk.getArea();
-        if (!chunkArea.isClosed())
-            return;
 
         if (!colorZone.containsKey(chunkArea))
             colorZone.put(chunkArea, generateColor(0.5f));
@@ -216,6 +214,9 @@ public class GameDrawUtils implements ChunkPositionConstant {
     }
 
     private static void drawClosedZone(Graphics g, Vector2 tilePosition, Chunk chunk) {
+        if (!chunk.getArea().isClosed())
+            return;
+
         BufferedImage patternImageClosed = extraDatabase.get("PatternClosed");
         TexturePaint patternClosed = new TexturePaint(patternImageClosed, new Rectangle(0, 0, patternImageClosed.getWidth(), patternImageClosed.getHeight()));
         Graphics2D g2 = (Graphics2D) g;
