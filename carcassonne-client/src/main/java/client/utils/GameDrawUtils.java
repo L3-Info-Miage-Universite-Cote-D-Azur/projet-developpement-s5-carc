@@ -5,8 +5,6 @@ import logic.board.GameBoard;
 import logic.math.Polygon;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
-import logic.tile.TileEdge;
-import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
@@ -213,6 +211,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
         g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
     }
 
+    /**
+     * Draw on closed zone a closed pattern
+     *
+     * @param g            The graphics to draw into
+     * @param tilePosition The position of the tile associated with the chunk
+     * @param chunk        The chunk of the chunk to draw
+     */
     private static void drawClosedZone(Graphics g, Vector2 tilePosition, Chunk chunk) {
         if (!chunk.getArea().isClosed())
             return;
@@ -339,10 +344,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
                     //graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
                 }
             }
-        }
-
-        for (int i = 0; i < game.getPlayers().size(); i++) {
-            game.getPlayers().get(i);
         }
     }
 }
