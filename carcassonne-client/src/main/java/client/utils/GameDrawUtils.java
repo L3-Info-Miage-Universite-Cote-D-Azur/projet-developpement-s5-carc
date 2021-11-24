@@ -180,15 +180,15 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Draw zone with a unique color
      *
-     * @param g The graphics to draw into
+     * @param g            The graphics to draw into
      * @param tilePosition The position of the tile associated with the chunk
-     * @param chunk The chunk of the chunk to draw
-     * @param colorZone The colors of all zone
+     * @param chunk        The chunk of the chunk to draw
+     * @param colorZone    The colors of all zone
      */
     private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<ChunkArea, Color> colorZone) {
         ChunkArea chunkArea = chunk.getArea();
         if (!colorZone.containsKey(chunkArea))
-            colorZone.put(chunkArea, generateColor(1));
+            colorZone.put(chunkArea, generateColor(0.5f));
 
         g.setColor(colorZone.get(chunkArea));
         Polygon polygon = chunksGeo.get(chunk.getCurrentId());
@@ -198,7 +198,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Generate a random color
      *
-     * @param opacity The opacity wanted
+     * @param opacity The opacity wanted (0-1)
      * @return a random color
      */
     public static Color generateColor(float opacity) {
@@ -206,6 +206,17 @@ public class GameDrawUtils implements ChunkPositionConstant {
         float g = rand.nextFloat();
         float b = rand.nextFloat();
         return new Color(r, g, b, opacity);
+    }
+
+    /**
+     * Modify the opacity of a color
+     *
+     * @param color
+     * @param opacity The opacity wanted (0-1)
+     * @return the color with the new opacity
+     */
+    public static Color modifyAlphaColor(Color color, float opacity) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), opacity);
     }
 
     /**
@@ -284,7 +295,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 drawZone(graphics, tileImagePosition, chunk, colorZone);
 
                 // Show tile border
-                //drawTileBorder(graphics, tileImagePosition);
+                drawTileBorder(graphics, tileImagePosition);
 
                 if (chunk.hasMeeple()) {
                     Meeple meeple = chunk.getMeeple();
