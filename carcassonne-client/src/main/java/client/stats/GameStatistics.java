@@ -15,6 +15,8 @@ import java.util.ArrayList;
  * Represents the statistics of the game.
  */
 public class GameStatistics {
+    private static final Object writeLock = new Object();
+
     private final ArrayList<GameStatisticsPlayer> players;
     private final BufferedImage boardView;
 
@@ -83,11 +85,13 @@ public class GameStatistics {
      * @param viewFile the excel file with the board view.
      */
     public void save(File detailsFile, File viewFile) {
-        try {
-            createDetailsExcel().saveToFile(detailsFile);
-            ImageIO.write(boardView, "png", viewFile);
-        } catch (Exception e) {
-            e.printStackTrace();
+        synchronized (writeLock) {
+            try {
+                createDetailsExcel().saveToFile(detailsFile);
+                ImageIO.write(boardView, "png", viewFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
