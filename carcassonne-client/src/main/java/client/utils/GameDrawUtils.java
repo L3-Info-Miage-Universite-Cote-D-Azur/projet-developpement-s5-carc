@@ -297,6 +297,8 @@ public class GameDrawUtils implements ChunkPositionConstant {
             }
         }
 
-        ;
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            game.getPlayers().get(i);
+        }
     }
 }

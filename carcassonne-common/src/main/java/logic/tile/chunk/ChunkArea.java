@@ -87,7 +87,7 @@ public class ChunkArea {
             chunk.setArea(this);
         }
 
-        checkIfClosed();
+        // checkIfClosed();
     }
 
     /**

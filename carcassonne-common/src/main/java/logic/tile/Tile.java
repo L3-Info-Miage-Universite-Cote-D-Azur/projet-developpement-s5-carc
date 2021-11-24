@@ -11,6 +11,7 @@ import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents a tile on the game board.
@@ -64,6 +65,14 @@ public class Tile {
      */
     public void setPosition(Vector2 position) {
         this.position = position;
+    }
+
+    /**
+     * Gets the chunks in the tile.
+     * @return The chunks in the tile.
+     */
+    public List<Chunk> getChunks() {
+        return Arrays.stream(chunks).toList();
     }
 
     /**

@@ -147,7 +147,8 @@ public abstract class Chunk {
     @Override
     public String toString() {
         return "Chunk{" +
-                "meeple=" + meeple +
+                "area=" + area +
+                " meeple=" + meeple +
                 '}';
     }
 
