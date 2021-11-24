@@ -15,9 +15,11 @@ public class MasterNextTurnDataCommandTest {
         Game game = TestUtils.initGameEnv(5, false, true);
         Tile tile = ((GameTurnPlaceTileState) game.getState()).getTileDrawn();
 
-        game.getStack().clear();
+        game.start();
         game.setMaster(false);
 
+        game.getState().complete();
+        game.getState().complete();
         assertTrue(game.getCommandExecutor().execute(new MasterNextTurnDataCommand(tile, game)));
     }
 

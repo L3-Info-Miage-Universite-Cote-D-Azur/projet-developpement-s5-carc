@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CommandExecutorTest {
     @Test
     void testExecuteCommand() {
-        CommandExecutor executor = TestUtils.initGameEnv(2, false, false).getCommandExecutor();
+        Game game = TestUtils.initGameEnv(2, false, true);
+        CommandExecutor executor = game.getCommandExecutor();
 
         assertTrue(executor.execute(new FakeSuccessfulCommand()));
         assertFalse(executor.execute(new FakeFailingCommand()));
@@ -21,7 +22,8 @@ public class CommandExecutorTest {
 
     @Test
     void testListenerCallback() {
-        CommandExecutor executor = TestUtils.initGameEnv(2, false, false).getCommandExecutor();
+        Game game = TestUtils.initGameEnv(2, false, true);
+        CommandExecutor executor = game.getCommandExecutor();
 
         final boolean[] commandExecuted = {false};
         final boolean[] commandFailed = {false};
@@ -79,7 +81,7 @@ public class CommandExecutorTest {
 
         @Override
         public GameStateType getRequiredState() {
-            return null;
+            return GameStateType.TURN_PLACE_TILE;
         }
 
         @Override
@@ -112,7 +114,7 @@ public class CommandExecutorTest {
 
         @Override
         public GameStateType getRequiredState() {
-            return null;
+            return GameStateType.TURN_PLACE_TILE;
         }
 
         @Override
