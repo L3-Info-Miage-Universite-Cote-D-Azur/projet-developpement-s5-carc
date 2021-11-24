@@ -11,5 +11,5 @@ Logger
 	Error	31m
 Match
 	Name	Value
-	NumMatches	10
+	NumMatches	1
 	NumPlayers	2

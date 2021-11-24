@@ -15,7 +15,6 @@ public class GameOverState extends GameState {
 
     @Override
     public void init() {
-        System.out.println("Num areas: " + game.getBoard().getTiles().stream().flatMap(t -> t.getChunks().stream()).map(c -> c.getArea()).count());
         game.getListener().onGameOver();
     }
 

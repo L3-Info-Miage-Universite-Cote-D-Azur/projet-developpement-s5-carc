@@ -11,28 +11,18 @@ import java.util.Objects;
  * It contains the list of chunks in the area.
  */
 public class ChunkArea {
+    private static int uniqueId;
+
     private final HashSet<Chunk> chunks;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChunkArea chunkArea = (ChunkArea) o;
-        return closed == chunkArea.closed && Objects.equals(chunks, chunkArea.chunks) && Objects.equals(tiles, chunkArea.tiles) && type == chunkArea.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(chunks, tiles, type, closed);
-    }
-
     private final HashSet<Tile> tiles;
     private final ChunkType type;
+    private final int id;
 
     private boolean closed;
 
     public ChunkArea(ChunkType type) {
         this.type = type;
+        this.id = uniqueId++;
 
         chunks = new HashSet<>();
         tiles = new HashSet<>();
@@ -40,12 +30,13 @@ public class ChunkArea {
     }
 
     /**
-     *
-     * @return
+     * Gets the list of chunks in the area.
+     * @return The list of chunks.
      */
     public HashSet<Chunk> getChunks() {
         return chunks;
     }
+
     /**
      * Adds a chunk to the area.
      * It will also add all the tiles in the chunk to the area.
@@ -146,5 +137,14 @@ public class ChunkArea {
         }
 
         return borderNeighbors.stream().filter(c -> c != previous).findFirst().get();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(id);
     }
 }

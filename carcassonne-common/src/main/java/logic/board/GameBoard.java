@@ -234,6 +234,7 @@ public class GameBoard {
         for (int i = 0; i < tileCount; i++) {
             Tile tile = ByteStreamHelper.decodeTile(stream, game);
             tiles.put(tile.getPosition(), tile);
+            tile.onTilePlaced(this);
         }
     }
 }
