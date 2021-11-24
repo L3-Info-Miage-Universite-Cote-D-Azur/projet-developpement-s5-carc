@@ -29,9 +29,12 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static final int tileHeight = 160;
     private static final int meepleWidth = 27;
     private static final int meepleHeight = 27;
+    private static final int extraWidth = 40;
+    private static final int extraHeight = 40;
 
     private static ImageDatabase tileDatabase;
     private static ImageDatabase meepleDatabase;
+    private static ImageDatabase extraDatabase;
 
     private static Random rand = new Random();
 
@@ -105,6 +108,20 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+
+        if (extraDatabase == null) {
+            extraDatabase = new ImageDatabase(extraWidth, extraHeight);
+
+            for (File file : new File("models/pattern").listFiles()) {
+                if (file.isFile()) {
+                    try {
+                        extraDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -172,7 +189,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      * @param chunkId      The id of the chunk to draw
      */
     private static void drawChunk(Graphics g, Vector2 tilePosition, ChunkType chunkType, ChunkId chunkId) {
-        g.setColor(chunksColor.get(chunkType));
+        g.setColor(modifyAlphaColor(chunksColor.get(chunkType), 0.5f));
         Polygon polygon = chunksGeo.get(chunkId);
         g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
     }
@@ -187,12 +204,24 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<ChunkArea, Color> colorZone) {
         ChunkArea chunkArea = chunk.getArea();
+        if (!chunkArea.isClosed())
+            return;
+
         if (!colorZone.containsKey(chunkArea))
             colorZone.put(chunkArea, generateColor(0.5f));
 
         g.setColor(colorZone.get(chunkArea));
         Polygon polygon = chunksGeo.get(chunk.getCurrentId());
         g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
+    }
+
+    private static void drawClosedZone(Graphics g, Vector2 tilePosition, Chunk chunk) {
+        BufferedImage patternImageClosed = extraDatabase.get("PatternClosed");
+        TexturePaint patternClosed = new TexturePaint(patternImageClosed, new Rectangle(0, 0, patternImageClosed.getWidth(), patternImageClosed.getHeight()));
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setPaint(patternClosed);
+        Polygon polygon = chunksGeo.get(chunk.getCurrentId());
+        g2.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
     }
 
     /**
@@ -293,6 +322,9 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
                 // Show zones
                 drawZone(graphics, tileImagePosition, chunk, colorZone);
+
+                // Show closed zone
+                drawClosedZone(graphics, tileImagePosition, chunk);
 
                 // Show tile border
                 drawTileBorder(graphics, tileImagePosition);
