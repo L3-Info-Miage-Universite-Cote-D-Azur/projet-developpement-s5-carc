@@ -34,7 +34,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static ImageDatabase meepleDatabase;
     private static ImageDatabase extraDatabase;
 
-    private static final Random rand = new Random();
+    private static final Random rand = new Random(7855742);
 
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
@@ -199,6 +199,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
     /**
      * Gets the sprite model to use for the specified tile and rotation.
+     *
      * @param tile The tile to get the sprite model for.
      * @return
      */
@@ -277,7 +278,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Modify the opacity of a color
      *
-     * @param color The color to change opacity of
+     * @param color   The color to change opacity of
      * @param opacity The opacity wanted (0-1)
      * @return the color with the new opacity
      */
