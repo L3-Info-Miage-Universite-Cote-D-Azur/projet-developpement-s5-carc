@@ -40,17 +40,27 @@ Voici nos super itérations pour notre super projet !
      - Ajout des Meeples
      - Statistiques de jeu
 
-  - Livraison 5
-    - Ajout de fonctionnalités de jeu
-      - Zone fermée
-      - Récupération des Meeples
-    - Ajout des 500 parties de test
- 
-  - Livraison 6
-    - Ajout de fonctionnalités de jeu
-      - Rotation des tuiles
-      - Contrainte de placement pour les meeples
-      - Ajout du comptage de point pour les zones de jeu
+- Livraison 5
+  - Ajout de fonctionnalités de jeu
+    - Récupération des Meeples
+  - Ajout des 500 parties
+  - Implémentation client/serveur
+  - Ajout de la personnalisation des couleurs du CLI
 
-  - Livraison 7
-    - Ajout d'une IA semi-logique
+- Livraison 6
+  - Ajout de fonctionnalités de jeu
+    - Zone fermée
+    - Rotation des tuiles
+    - Contrainte de placement pour les meeples
+    - Ajout du comptage de point pour les zones de jeu
+
+- Livraison 7
+  - Ajout de fonctionnalités de jeu
+    - Ajout des princesses
+    - Ajout des nouvelles tuiles "Abbaye dans la ville", "Tunnel" et "Portail Magique"
+    - Ajout du dragon et volcan
+
+- Livraison 8
+  - Ajout de fonctionnalités de jeu
+    - Ajout des tuiles marquées par le dragon
+  - Ajout d'une IA semi-logique
