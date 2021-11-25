@@ -97,4 +97,13 @@ public class ClientConnectionManager {
     public void removeConnection(ClientConnection connection) {
         connections.remove(connection.getId());
     }
+
+    /**
+     * Gets the number of connections.
+     *
+     * @return The number of connections.
+     */
+    public int count() {
+        return connections.size();
+    }
 }
