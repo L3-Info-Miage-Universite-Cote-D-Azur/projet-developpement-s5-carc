@@ -31,6 +31,17 @@ public class Server {
     }
 
     /**
+     * Destroys the server.
+     */
+    public void destroy() {
+        this.stop();
+
+        if (instance == this) {
+            instance = null;
+        }
+    }
+
+    /**
      * Returns the server's instance.
      *
      * @return the server's instance
