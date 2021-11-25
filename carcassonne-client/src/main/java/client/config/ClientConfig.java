@@ -74,9 +74,12 @@ public class ClientConfig {
     public static ClientConfig loadFromResources() {
         try {
             File file = new File("config.txt");
-            System.out.println("DEBUG FILE : " + file.getPath());
-            System.out.println("DEBUG FILE : " + file.getAbsolutePath());
-            System.out.println("DEBUG FILE : " + file.toPath().toString());
+            System.out.println("0DEBUG EXIST : " + file.exists());
+            System.out.println("1DEBUG FILE : " + new File(file.getPath()));
+            System.out.println("2DEBUG FILE : " + new File(file.getAbsolutePath()));
+            System.out.println("3DEBUG FILE : " + file.getPath());
+            System.out.println("4DEBUG FILE : " + file.getAbsolutePath());
+            System.out.println("5DEBUG FILE : " + file.toPath().toString());
             String path = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
             ExcelNode rootNode = ExcelNode.load(Path.of(path, "config.txt"));
             return new ClientConfig(rootNode);
