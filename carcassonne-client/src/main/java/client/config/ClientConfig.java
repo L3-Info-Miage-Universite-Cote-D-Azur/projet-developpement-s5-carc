@@ -75,8 +75,8 @@ public class ClientConfig {
         try {
             File file = new File("config.txt");
             System.out.println("0DEBUG EXIST : " + file.exists());
-            System.out.println("1DEBUG FILE : " + new File(file.getPath()));
-            System.out.println("2DEBUG FILE : " + new File(file.getAbsolutePath()));
+            System.out.println("1DEBUG FILE : " + new File(file.getPath()).exists());
+            System.out.println("2DEBUG FILE : " + new File(file.getAbsolutePath()).exists());
             System.out.println("3DEBUG FILE : " + file.getPath());
             System.out.println("4DEBUG FILE : " + file.getAbsolutePath());
             System.out.println("5DEBUG FILE : " + file.toPath().toString());
