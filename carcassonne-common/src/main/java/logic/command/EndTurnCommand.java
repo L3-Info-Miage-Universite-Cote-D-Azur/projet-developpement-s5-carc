@@ -12,6 +12,7 @@ import stream.ByteOutputStream;
 public class EndTurnCommand implements ICommand {
     /**
      * Gets the command type.
+     *
      * @return the command type
      */
     @Override
@@ -21,6 +22,7 @@ public class EndTurnCommand implements ICommand {
 
     /**
      * Encodes the command attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -29,6 +31,7 @@ public class EndTurnCommand implements ICommand {
 
     /**
      * Decodes the command attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -37,6 +40,7 @@ public class EndTurnCommand implements ICommand {
 
     /**
      * Checks if the command is valid and can be executed.
+     *
      * @return true if the command is valid
      */
     @Override
@@ -46,6 +50,7 @@ public class EndTurnCommand implements ICommand {
 
     /**
      * Gets the game state required to execute the command.
+     *
      * @return the game state
      */
     @Override
@@ -57,6 +62,7 @@ public class EndTurnCommand implements ICommand {
      * Executes the command to end the turn.
      * If the game instance is a master instance, the command will end the turn.
      * If the game instance is a slave instance, the command will do nothing as we need the data of the next state.
+     *
      * @param game the game context
      */
     @Override

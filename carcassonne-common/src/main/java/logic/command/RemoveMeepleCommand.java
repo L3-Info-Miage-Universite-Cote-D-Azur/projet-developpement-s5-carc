@@ -5,8 +5,8 @@ import logic.math.Vector2;
 import logic.player.Player;
 import logic.state.GameStateType;
 import logic.state.turn.GameTurnExtraActionState;
-import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
+import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -27,6 +27,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Gets the command type.
+     *
      * @return the command type
      */
     @Override
@@ -36,6 +37,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Encodes the command attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -47,6 +49,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Decodes the command attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -57,6 +60,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Checks if the command is valid and can be executed.
+     *
      * @return true if the command is valid
      */
     @Override
@@ -73,6 +77,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Gets the game state required to execute the command.
+     *
      * @return the game state
      */
     @Override
@@ -82,6 +87,7 @@ public class RemoveMeepleCommand implements ICommand {
 
     /**
      * Executes the command.
+     *
      * @param game the game context
      * @return true if the meeple was removed, false otherwise
      */

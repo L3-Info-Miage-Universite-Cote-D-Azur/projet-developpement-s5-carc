@@ -5,7 +5,6 @@ import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +46,7 @@ public class ChunkArea {
 
     /**
      * Gets the list of chunks in the area.
+     *
      * @return The list of chunks.
      */
     public HashSet<Chunk> getChunks() {
@@ -55,6 +55,7 @@ public class ChunkArea {
 
     /**
      * Gets the area unique id.
+     *
      * @return The unique id.
      */
     public int getId() {
@@ -63,6 +64,7 @@ public class ChunkArea {
 
     /**
      * Returns whether the area is closed.
+     *
      * @return True if the area is closed, false otherwise.
      */
     public boolean isClosed() {
@@ -71,6 +73,7 @@ public class ChunkArea {
 
     /**
      * Merges two areas together.
+     *
      * @param other The other area to merge with.
      */
     public void merge(ChunkArea other) {

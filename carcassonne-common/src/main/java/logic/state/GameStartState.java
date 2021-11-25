@@ -54,6 +54,7 @@ public class GameStartState extends GameState {
 
     /**
      * Gets the type of the state.
+     *
      * @return The type of the state.
      */
     @Override

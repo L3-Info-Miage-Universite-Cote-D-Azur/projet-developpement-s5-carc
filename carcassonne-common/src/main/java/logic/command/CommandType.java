@@ -19,14 +19,6 @@ public enum CommandType {
         this.commandClass = commandClass;
     }
 
-    public int getValue() {
-        return id;
-    }
-
-    public Class<? extends ICommand> getCommandClass() {
-        return commandClass;
-    }
-
     public static CommandType getCommandType(int id) {
         for (CommandType commandId : CommandType.values()) {
             if (commandId.getValue() == id) {
@@ -34,5 +26,13 @@ public enum CommandType {
             }
         }
         return null;
+    }
+
+    public int getValue() {
+        return id;
+    }
+
+    public Class<? extends ICommand> getCommandClass() {
+        return commandClass;
     }
 }

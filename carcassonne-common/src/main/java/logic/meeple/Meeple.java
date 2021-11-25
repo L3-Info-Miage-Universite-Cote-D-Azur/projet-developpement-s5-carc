@@ -14,6 +14,7 @@ public class Meeple {
 
     /**
      * Gets the owner of the meeple.
+     *
      * @return the owner of the meeple.
      */
     public Player getOwner() {

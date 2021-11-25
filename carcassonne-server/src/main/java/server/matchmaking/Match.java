@@ -52,6 +52,7 @@ public class Match {
 
     /**
      * Gets the match id.
+     *
      * @return the match id
      */
     public int getId() {
@@ -60,6 +61,7 @@ public class Match {
 
     /**
      * Removes the player from the connected sessions.
+     *
      * @param session the session to remove
      */
     public void removePlayer(ClientSession session) {
@@ -76,6 +78,7 @@ public class Match {
 
     /**
      * Gets the session by the user id.
+     *
      * @param userId
      * @return
      */
@@ -90,6 +93,7 @@ public class Match {
 
     /**
      * Sends a message to all connected clients.
+     *
      * @param message
      */
     private void sendMessageToConnectedClients(Message message) {
@@ -102,7 +106,8 @@ public class Match {
 
     /**
      * Executes a command in the master game and notify the connected clients if successful.
-     * @param userId the executor user id
+     *
+     * @param userId  the executor user id
      * @param command the command to execute
      */
     public void executeCommand(int userId, ICommand command) {
@@ -131,6 +136,7 @@ public class Match {
 
     /**
      * Notifies the connected clients that the command has been executed.
+     *
      * @param command the executed command
      */
     public void notifyCommandExecutionToConnectedClients(ICommand command) {

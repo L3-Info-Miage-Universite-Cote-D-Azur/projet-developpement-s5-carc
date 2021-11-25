@@ -2,8 +2,6 @@ package logic.tile.chunk;
 
 import logic.tile.TileEdge;
 
-import java.util.Arrays;
-
 /**
  * A chunk id is a unique identifier for a chunk. It contains the chunk's position in the tile grid.
  */
@@ -81,6 +79,7 @@ public enum ChunkId {
 
     /**
      * Gets the edge of the tile.
+     *
      * @return The edge of the tile.
      */
     public TileEdge getEdge() {

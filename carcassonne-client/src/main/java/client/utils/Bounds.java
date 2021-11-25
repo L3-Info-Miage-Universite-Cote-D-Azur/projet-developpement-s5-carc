@@ -24,6 +24,7 @@ public final class Bounds {
 
     /**
      * Gets the width of the bounding box.
+     *
      * @return the width of the bounding box.
      */
     public int getWidth() {
@@ -32,6 +33,7 @@ public final class Bounds {
 
     /**
      * Gets the height of the bounding box.
+     *
      * @return the height of the bounding box.
      */
     public int getHeight() {
@@ -40,6 +42,7 @@ public final class Bounds {
 
     /**
      * Reverse the y-axis of the bounding box.
+     *
      * @return the reversed bounding box.
      */
     public Bounds reverseY() {
@@ -48,6 +51,7 @@ public final class Bounds {
 
     /**
      * Scales the bounding box.
+     *
      * @param x the x-axis scale factor.
      * @param y the y-axis scale factor.
      * @return the scaled bounding box.

@@ -18,6 +18,7 @@ public class ExcelRow {
 
     /**
      * Adds the specified value to the row.
+     *
      * @param value
      */
     public void add(String value) {
@@ -26,6 +27,7 @@ public class ExcelRow {
 
     /**
      * Adds the specified value to the row.
+     *
      * @param value
      */
     public void add(String columnName, String value) {
@@ -40,6 +42,7 @@ public class ExcelRow {
 
     /**
      * Gets the name of the row.
+     *
      * @return The name of the row.
      */
     public String getName() {
@@ -48,6 +51,7 @@ public class ExcelRow {
 
     /**
      * Gets the value of the row at the given column.
+     *
      * @param columnName The name of the column.
      * @return The value of the row at the given column.
      */
@@ -57,6 +61,7 @@ public class ExcelRow {
 
     /**
      * Gets the value of the row at the given column index.
+     *
      * @param index The index of the column.
      * @return The value of the row at the given column index.
      */

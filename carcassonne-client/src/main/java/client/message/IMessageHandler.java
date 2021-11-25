@@ -8,6 +8,7 @@ import network.message.Message;
 public interface IMessageHandler {
     /**
      * Handles the specified message if the handler is interested in it.
+     *
      * @param message The message to handle.
      */
     void handleMessage(Message message);

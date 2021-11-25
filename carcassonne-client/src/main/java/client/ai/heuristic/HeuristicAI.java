@@ -28,6 +28,7 @@ public class HeuristicAI extends AI {
 
     /**
      * Finds the best position for the given tile to be placed.
+     *
      * @param tile The tile to find a position for.
      * @return
      */
@@ -43,6 +44,7 @@ public class HeuristicAI extends AI {
 
     /**
      * Calculates the heuristic score for the given tile.
+     *
      * @param tile The tile to calculate the score for.
      * @return The heuristic score.
      */

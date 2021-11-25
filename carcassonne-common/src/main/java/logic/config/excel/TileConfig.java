@@ -2,13 +2,16 @@ package logic.config.excel;
 
 import excel.ExcelNode;
 import logic.Game;
+import logic.tile.Tile;
+import logic.tile.TileFlags;
 import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
-import logic.tile.Tile;
-import logic.tile.TileFlags;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
 
 /**
  * Represents a tile excel configuration.
@@ -22,11 +25,12 @@ public class TileConfig {
 
     /**
      * Creates a tile excel configuration from the given parameters.
-     * @param chunks The chunks configuration.
-     * @param model The model of tile.
+     *
+     * @param chunks    The chunks configuration.
+     * @param model     The model of tile.
      * @param expansion The expansion of tile.
-     * @param flags The flags of tile.
-     * @param count The count of tile in the stack.
+     * @param flags     The flags of tile.
+     * @param count     The count of tile in the stack.
      */
     public TileConfig(TileChunkConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
         this.chunks = chunks;
@@ -38,6 +42,7 @@ public class TileConfig {
 
     /**
      * Creates a tile excel configuration from the given excel node.
+     *
      * @param node The excel node.
      */
     public TileConfig(ExcelNode node) {
@@ -48,83 +53,6 @@ public class TileConfig {
 
         loadData(dataExcel);
         loadChunks(chunkTypesExcel, chunkReferencesExcel);
-    }
-
-    /**
-     * Loads the chunks configuration from the given excel nodes.
-     * @param typeNode The chunk types excel node.
-     * @param referenceNode The chunk references excel node.
-     */
-    private void loadChunks(ExcelNode typeNode, ExcelNode referenceNode) {
-        ChunkType[] chunkTypes = new ChunkType[ChunkId.values().length];
-
-        for (ChunkId chunkId : ChunkId.values()) {
-            chunkTypes[chunkId.ordinal()] = ChunkType.valueOf(getCellValue(typeNode, chunkId));
-        }
-
-        chunks = new TileChunkConfig[ChunkId.values().length];
-
-        for (ChunkId chunkId : ChunkId.values()) {
-            ChunkType type = chunkTypes[chunkId.ordinal()];
-
-            chunks[chunkId.ordinal()] = new TileChunkConfig(type);
-        }
-
-        HashMap<String, ArrayList<ChunkId>> zones = new HashMap<>();
-
-        for (ChunkId chunkId : ChunkId.values()) {
-            String referenceId = getCellValue(referenceNode, chunkId);
-
-            if (!zones.containsKey(referenceId)) {
-                zones.put(referenceId, new ArrayList<>());
-            }
-
-            zones.get(referenceId).add(chunkId);
-        }
-
-        for (ArrayList<ChunkId> chunkIds : zones.values()) {
-            TileChunkAreaConfig areaConfig = new TileChunkAreaConfig(chunks[chunkIds.get(0).ordinal()].getType(), chunkIds);
-
-            for (ChunkId chunkId : chunkIds) {
-                chunks[chunkId.ordinal()].setArea(areaConfig);
-            }
-        }
-    }
-
-    /**
-     * Loads the tile data from the given excel node.
-     * @param node The excel node.
-     */
-    private void loadData(ExcelNode node) {
-        model = node.getRow("Model").getValue("Value");
-        expansion = node.getRow("Expansion").getValue("Value");
-        flags = EnumSet.noneOf(TileFlags.class);
-
-        for (String flag : node.getRow("Flags").getValue("Value").split(",")) {
-            if (flag.length() != 0) {
-                flags.add(TileFlags.valueOf(flag));
-            }
-        }
-
-        count = Integer.parseInt(node.getRow("Count").getValue("Value"));
-    }
-
-    /**
-     * Instantiate a tile with the current configuration.
-     * @return The tile instantiated.
-     */
-    public Tile createTile(Game game) {
-        Tile tile = new Tile(this, game);
-
-        for (ChunkId chunkId : ChunkId.values()) {
-            tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
-        }
-
-        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
-            new ChunkArea(areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList());
-        }
-
-        return tile;
     }
 
     private static String getCellValue(ExcelNode node, ChunkId chunkId) {
@@ -189,5 +117,85 @@ public class TileConfig {
         }
 
         return node.getRowAt(row).getValueAt(column);
+    }
+
+    /**
+     * Loads the chunks configuration from the given excel nodes.
+     *
+     * @param typeNode      The chunk types excel node.
+     * @param referenceNode The chunk references excel node.
+     */
+    private void loadChunks(ExcelNode typeNode, ExcelNode referenceNode) {
+        ChunkType[] chunkTypes = new ChunkType[ChunkId.values().length];
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            chunkTypes[chunkId.ordinal()] = ChunkType.valueOf(getCellValue(typeNode, chunkId));
+        }
+
+        chunks = new TileChunkConfig[ChunkId.values().length];
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            ChunkType type = chunkTypes[chunkId.ordinal()];
+
+            chunks[chunkId.ordinal()] = new TileChunkConfig(type);
+        }
+
+        HashMap<String, ArrayList<ChunkId>> zones = new HashMap<>();
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            String referenceId = getCellValue(referenceNode, chunkId);
+
+            if (!zones.containsKey(referenceId)) {
+                zones.put(referenceId, new ArrayList<>());
+            }
+
+            zones.get(referenceId).add(chunkId);
+        }
+
+        for (ArrayList<ChunkId> chunkIds : zones.values()) {
+            TileChunkAreaConfig areaConfig = new TileChunkAreaConfig(chunks[chunkIds.get(0).ordinal()].getType(), chunkIds);
+
+            for (ChunkId chunkId : chunkIds) {
+                chunks[chunkId.ordinal()].setArea(areaConfig);
+            }
+        }
+    }
+
+    /**
+     * Loads the tile data from the given excel node.
+     *
+     * @param node The excel node.
+     */
+    private void loadData(ExcelNode node) {
+        model = node.getRow("Model").getValue("Value");
+        expansion = node.getRow("Expansion").getValue("Value");
+        flags = EnumSet.noneOf(TileFlags.class);
+
+        for (String flag : node.getRow("Flags").getValue("Value").split(",")) {
+            if (flag.length() != 0) {
+                flags.add(TileFlags.valueOf(flag));
+            }
+        }
+
+        count = Integer.parseInt(node.getRow("Count").getValue("Value"));
+    }
+
+    /**
+     * Instantiate a tile with the current configuration.
+     *
+     * @return The tile instantiated.
+     */
+    public Tile createTile(Game game) {
+        Tile tile = new Tile(this, game);
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
+        }
+
+        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
+            new ChunkArea(areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList());
+        }
+
+        return tile;
     }
 }

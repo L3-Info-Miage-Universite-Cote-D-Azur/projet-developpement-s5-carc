@@ -3,10 +3,10 @@ package client.ai;
 import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.player.Player;
+import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
-import logic.tile.Tile;
 
 import java.util.LinkedList;
 import java.util.Random;
@@ -27,6 +27,7 @@ public class SimpleAI extends AI {
     /**
      * Picks a tile's chunk where the meeple can be placed.
      * Returns null if no chunk should be placed.
+     *
      * @return The chunk where the meeple can be placed.
      */
     @Override
@@ -48,6 +49,7 @@ public class SimpleAI extends AI {
 
     /**
      * Finds the best position to place the tile.
+     *
      * @param tile The tile to place.
      * @return The position to place the tile.
      */

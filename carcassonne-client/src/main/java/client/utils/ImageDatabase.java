@@ -9,9 +9,9 @@ import java.util.Map;
  * Provides a way to get images from the memory-database.
  */
 public class ImageDatabase {
-    private Map<String, BufferedImage> assets;
     private final int width;
     private final int height;
+    private Map<String, BufferedImage> assets;
 
     public ImageDatabase(int width, int height) {
         this.width = width;
@@ -21,8 +21,9 @@ public class ImageDatabase {
 
     /**
      * Adds an image to the database.
+     *
      * @param assetName The name of the image.
-     * @param image The image.
+     * @param image     The image.
      */
     public void cache(String assetName, BufferedImage image) {
         if (image.getWidth() != width || image.getHeight() != height) {
@@ -34,6 +35,7 @@ public class ImageDatabase {
 
     /**
      * Gets an image from the database.
+     *
      * @param assetName The name of the image.
      * @return The image.
      */
@@ -58,6 +60,7 @@ public class ImageDatabase {
 
     /**
      * Gets the width of the images.
+     *
      * @return The width.
      */
     public int getWidth() {
@@ -66,6 +69,7 @@ public class ImageDatabase {
 
     /**
      * Gets the height of the images.
+     *
      * @return The height.
      */
     public int getHeight() {

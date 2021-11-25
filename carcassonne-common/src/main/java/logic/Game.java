@@ -10,9 +10,9 @@ import logic.state.GameStartState;
 import logic.state.GameState;
 import logic.state.GameStateFactory;
 import logic.state.GameStateType;
-import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
 import logic.tile.TileStack;
+import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -78,7 +78,7 @@ public class Game {
 
             @Override
             public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-                
+
             }
         };
     }
@@ -97,6 +97,7 @@ public class Game {
 
     /**
      * Returns if the game is ended.
+     *
      * @return
      */
     public boolean isOver() {
@@ -105,6 +106,7 @@ public class Game {
 
     /**
      * Returns if the game is started.
+     *
      * @return if the game is started
      */
     public boolean isStarted() {
@@ -113,6 +115,7 @@ public class Game {
 
     /**
      * Adds the given player to the game.
+     *
      * @param player the player to add
      */
     public void addPlayer(Player player) {
@@ -126,6 +129,7 @@ public class Game {
 
     /**
      * Gets the configuration of the game.
+     *
      * @return the configuration of the game
      */
     public GameConfig getConfig() {
@@ -134,6 +138,7 @@ public class Game {
 
     /**
      * Gets the game board.
+     *
      * @return the game board
      */
     public GameBoard getBoard() {
@@ -142,6 +147,7 @@ public class Game {
 
     /**
      * Gets the tile stack.
+     *
      * @return the tile stack
      */
     public TileStack getStack() {
@@ -150,6 +156,7 @@ public class Game {
 
     /**
      * Gets the current state of the game.
+     *
      * @return The current state of the game.
      */
     public GameState getState() {
@@ -158,6 +165,7 @@ public class Game {
 
     /**
      * Sets and initializes the state of the game.
+     *
      * @param state The state to set.
      */
     public void setState(GameState state) {
@@ -173,6 +181,7 @@ public class Game {
 
     /**
      * Gets the list of players.
+     *
      * @return the list of players
      */
     public List<Player> getPlayers() {
@@ -181,6 +190,7 @@ public class Game {
 
     /**
      * Gets the player at the given index.
+     *
      * @param index The index of the player.
      * @return Player The player at the given index.
      */
@@ -190,6 +200,7 @@ public class Game {
 
     /**
      * Gets the index of the player in the game logic.
+     *
      * @param player The player to get the index of.
      * @return The index of the player.
      */
@@ -199,6 +210,7 @@ public class Game {
 
     /**
      * Gets the player's instance of the given player id.
+     *
      * @param id The player id.
      * @return The player instance.
      */
@@ -213,6 +225,7 @@ public class Game {
 
     /**
      * Gets the number of players in the game.
+     *
      * @return The number of players in the game.
      */
     public int getPlayerCount() {
@@ -221,6 +234,7 @@ public class Game {
 
     /**
      * Returns the listener of this game.
+     *
      * @return the listener of this game.
      */
     public IGameListener getListener() {
@@ -229,6 +243,7 @@ public class Game {
 
     /**
      * Sets the listener for this game.
+     *
      * @param listener The listener to set.
      */
     public void setListener(IGameListener listener) {
@@ -237,6 +252,7 @@ public class Game {
 
     /**
      * Gets the command executor.
+     *
      * @return the command executor
      */
     public CommandExecutor getCommandExecutor() {
@@ -245,6 +261,7 @@ public class Game {
 
     /**
      * Determines if the game is the master version (aka server / offline game).
+     *
      * @return
      */
     public boolean isMaster() {
@@ -253,6 +270,7 @@ public class Game {
 
     /**
      * Sets the game as the master version (aka server / offline game).
+     *
      * @param master
      */
     public void setMaster(boolean master) {
@@ -261,6 +279,7 @@ public class Game {
 
     /**
      * Gets the turn counter.
+     *
      * @return turn count
      */
     public int getTurnCount() {
@@ -276,6 +295,7 @@ public class Game {
 
     /**
      * Gets the executor of the current turn.
+     *
      * @return The executor of the current turn.
      */
     public Player getTurnExecutor() {
@@ -292,6 +312,7 @@ public class Game {
 
     /**
      * Encodes the game attributes to the given output stream.
+     *
      * @param stream the output stream
      * @param master if the game data to encode is for a master version (aka server / offline game)
      */
@@ -321,6 +342,7 @@ public class Game {
 
     /**
      * Decodes the game attributes from the given input stream.
+     *
      * @param stream the input stream
      * @param master if the game data to decode is for a master version (aka server / offline game)
      */
@@ -356,6 +378,7 @@ public class Game {
 
     /**
      * Clones the current game.
+     *
      * @return the cloned game
      */
     public Game clone() {

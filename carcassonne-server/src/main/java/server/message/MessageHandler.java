@@ -28,6 +28,7 @@ public class MessageHandler {
 
     /**
      * Handles a message received from the server.
+     *
      * @param message The message to handle.
      */
     public void handle(Message message) {
@@ -42,6 +43,7 @@ public class MessageHandler {
 
     /**
      * Handles a client hello message.
+     *
      * @param message The client hello message.
      */
     private void onClientHello(ClientHelloMessage message) {
@@ -57,6 +59,7 @@ public class MessageHandler {
 
     /**
      * Handles a join matchmaking message.
+     *
      * @param message The join matchmaking message.
      */
     private void onJoinMatchmaking(JoinMatchmakingMessage message) {
@@ -90,6 +93,7 @@ public class MessageHandler {
 
     /**
      * Handles a leave matchmaking message.
+     *
      * @param message The leave matchmaking message.
      */
     private void onLeaveMatchmaking(LeaveMatchmakingMessage message) {
@@ -112,6 +116,7 @@ public class MessageHandler {
 
     /**
      * Handles a game command request message.
+     *
      * @param message The game command request message.
      */
     private void onGameCommandRequest(GameCommandRequestMessage message) {

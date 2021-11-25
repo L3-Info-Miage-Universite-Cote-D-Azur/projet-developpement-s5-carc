@@ -76,6 +76,7 @@ public class Player implements Comparable {
 
     /**
      * Get the player's listener
+     *
      * @return the player's listener
      */
     public IPlayerListener getListener() {
@@ -84,6 +85,7 @@ public class Player implements Comparable {
 
     /**
      * Set the player's listener
+     *
      * @param listener the new listener
      */
     public void setListener(IPlayerListener listener) {
@@ -101,6 +103,7 @@ public class Player implements Comparable {
 
     /**
      * Add a score to a specific chunk type.
+     *
      * @param value     The score to add
      * @param chunkType The chunk type
      * @throws IllegalArgumentException If the value to add is negative
@@ -137,6 +140,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the road score
+     *
      * @return the road score
      */
     public int getRoadScore() {
@@ -145,6 +149,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the town score
+     *
      * @return the town score
      */
     public int getTownScore() {
@@ -153,6 +158,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the abbey score
+     *
      * @return the abbey score
      */
     public int getAbbeyScore() {
@@ -161,6 +167,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the field score
+     *
      * @return the field score
      */
     public int getFieldPoints() {
@@ -169,6 +176,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the meeples played
+     *
      * @return the meeples played
      */
     public int getMeeplesPlayed() {
@@ -191,6 +199,7 @@ public class Player implements Comparable {
 
     /**
      * Gets the meeples left
+     *
      * @return the meeples left
      */
     public int getMeeplesRemained() {
@@ -202,6 +211,7 @@ public class Player implements Comparable {
 
     /**
      * Gets whether there are meeples left
+     *
      * @return true if there are meeples left, false otherwise
      */
     public boolean hasRemainingMeeples() {
@@ -210,6 +220,7 @@ public class Player implements Comparable {
 
     /**
      * Encodes the player's attributes into the given output stream.
+     *
      * @param stream the output stream
      */
     public void encode(ByteOutputStream stream) {
@@ -223,6 +234,7 @@ public class Player implements Comparable {
 
     /**
      * Decodes the player's attributes from the given input stream.
+     *
      * @param stream the input stream
      */
     public void decode(ByteInputStream stream) {

@@ -20,7 +20,8 @@ public class TcpReadHandler implements CompletionHandler<Integer, ClientConnecti
 
     /**
      * Invoked when the data has been read.
-     * @param read Bytes The number of bytes read.
+     *
+     * @param read       Bytes The number of bytes read.
      * @param connection The connection.
      */
     @Override
@@ -38,7 +39,8 @@ public class TcpReadHandler implements CompletionHandler<Integer, ClientConnecti
 
     /**
      * Invoked when an error occurred.
-     * @param exc The error.
+     *
+     * @param exc        The error.
      * @param connection The connection.
      */
     @Override

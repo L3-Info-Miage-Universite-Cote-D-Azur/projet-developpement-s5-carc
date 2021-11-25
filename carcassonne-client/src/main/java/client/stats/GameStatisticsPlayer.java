@@ -29,6 +29,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's id.
+     *
      * @return the player's id.
      */
     public int getId() {
@@ -37,6 +38,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's total score.
+     *
      * @return the player's total score.
      */
     public int getTotalScore() {
@@ -45,6 +47,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's road score.
+     *
      * @return the player's road score.
      */
     public int getRoadScore() {
@@ -53,6 +56,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's town score.
+     *
      * @return the player's town score.
      */
     public int getTownScore() {
@@ -61,6 +65,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's abbey score.
+     *
      * @return the player's abbey score.
      */
     public int getAbbeyScore() {
@@ -69,6 +74,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's field score.
+     *
      * @return the player's field score.
      */
     public int getFieldScore() {
@@ -77,6 +83,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's remaining meeples.
+     *
      * @return the player's remaining meeples.
      */
     public int getRemainingMeeples() {
@@ -85,6 +92,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's played meeples.
+     *
      * @return the player's played meeples.
      */
     public int getPlayedMeeples() {
@@ -93,6 +101,7 @@ public class GameStatisticsPlayer {
 
     /**
      * Gets the player's order in the ranking.
+     *
      * @return the player's order in the ranking.
      */
     public int getOrder() {

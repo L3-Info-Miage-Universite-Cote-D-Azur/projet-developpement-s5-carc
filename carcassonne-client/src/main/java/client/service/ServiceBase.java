@@ -14,6 +14,7 @@ public abstract class ServiceBase {
 
     /**
      * Gets the client.
+     *
      * @return the client
      */
     public final Client getClient() {

@@ -15,7 +15,7 @@ public class ByteOutputStream {
     }
 
     public void writeBoolean(boolean value) {
-        writeByte(value ? (byte)1 : (byte)0);
+        writeByte(value ? (byte) 1 : (byte) 0);
     }
 
     public void writeByte(byte b) {
@@ -25,16 +25,16 @@ public class ByteOutputStream {
 
     public void writeShort(short s) {
         ensureCapacity(index + 2);
-        buffer[index++] = (byte)(s >>> 8);
+        buffer[index++] = (byte) (s >>> 8);
         buffer[index++] = (byte) s;
     }
 
     public void writeInt(int i) {
         ensureCapacity(index + 4);
-        buffer[index++] = (byte)(i >>> 24);
-        buffer[index++] = (byte)(i >>> 16);
-        buffer[index++] = (byte)(i >>> 8);
-        buffer[index++] = (byte)i;
+        buffer[index++] = (byte) (i >>> 24);
+        buffer[index++] = (byte) (i >>> 16);
+        buffer[index++] = (byte) (i >>> 8);
+        buffer[index++] = (byte) i;
     }
 
     public void writeString(String s) {

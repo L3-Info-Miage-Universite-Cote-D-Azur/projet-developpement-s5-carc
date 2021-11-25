@@ -35,6 +35,7 @@ public enum TileEdge {
 
     /**
      * Gets the value of the edge.
+     *
      * @return the value of the edge
      */
     public Vector2 getValue() {
@@ -43,6 +44,7 @@ public enum TileEdge {
 
     /**
      * Gets the opposite edge.
+     *
      * @return the opposite edge
      */
     public TileEdge negate() {
@@ -56,6 +58,7 @@ public enum TileEdge {
 
     /**
      * Gets the chunks that are adjacent to the edge.
+     *
      * @return
      */
     public ChunkId[] getChunkIds() {

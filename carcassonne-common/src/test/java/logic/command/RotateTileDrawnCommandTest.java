@@ -1,7 +1,6 @@
 package logic.command;
 
 
-
 import logic.Game;
 import logic.TestUtils;
 import logic.state.turn.GameTurnPlaceTileState;
@@ -9,7 +8,7 @@ import logic.tile.Tile;
 import logic.tile.TileRotation;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RotateTileDrawnCommandTest {
     @Test

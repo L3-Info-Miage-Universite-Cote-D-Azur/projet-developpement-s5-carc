@@ -25,6 +25,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Gets the command type.
+     *
      * @return the command type
      */
     @Override
@@ -34,6 +35,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Encodes the command attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -44,6 +46,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Decodes the command attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -53,6 +56,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Checks if the command is valid and can be executed.
+     *
      * @return true if the command is valid
      */
     @Override
@@ -93,6 +97,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Gets the game state required to execute the command.
+     *
      * @return the game state
      */
     @Override
@@ -102,6 +107,7 @@ public class PlaceTileDrawnCommand implements ICommand {
 
     /**
      * Executes the command.
+     *
      * @param game The game context
      * @return True if the tile was placed, false otherwise
      */

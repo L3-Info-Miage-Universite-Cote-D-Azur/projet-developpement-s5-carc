@@ -7,7 +7,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.Random;
-import java.util.concurrent.Semaphore;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

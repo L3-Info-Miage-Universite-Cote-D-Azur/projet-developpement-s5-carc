@@ -6,6 +6,7 @@ package logic.command;
 public class CommandFactory {
     /**
      * Creates a command from the given command type.
+     *
      * @param type the command type
      * @return the command
      */

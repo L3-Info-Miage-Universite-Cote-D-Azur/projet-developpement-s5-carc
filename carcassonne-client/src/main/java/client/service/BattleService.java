@@ -38,6 +38,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles the specified message if the handler is interested in it.
+     *
      * @param message The message to handle.
      */
     @Override
@@ -51,6 +52,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles a game data message.
+     *
      * @param message
      */
     private void onGameData(GameDataMessage message) {
@@ -87,6 +89,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
     /**
      * Handles a game command message.
      * Command musts be executed if it's not our turn (because we already executed the command locally) or if it's a master command.
+     *
      * @param message
      */
     private void onGameCommand(GameCommandMessage message) {
@@ -98,6 +101,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles a game result message.
+     *
      * @param message
      */
     private void onGameResult(GameResultMessage message) {

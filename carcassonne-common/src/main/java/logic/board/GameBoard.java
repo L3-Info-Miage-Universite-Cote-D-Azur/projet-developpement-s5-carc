@@ -10,7 +10,10 @@ import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class that represents the game board.
@@ -39,9 +42,10 @@ public class GameBoard {
 
     /**
      * Place a tile on the board.
+     *
+     * @param tile the tile to place
      * @throws IllegalArgumentException if the tile position is null.
      * @throws IllegalArgumentException if the tile is already placed on the board.
-     * @param tile the tile to place
      */
     public void place(Tile tile) {
         if (tile.getPosition() == null) {
@@ -58,6 +62,7 @@ public class GameBoard {
 
     /**
      * Gets the tile at the specified position.
+     *
      * @param position the position of the tile
      * @return the tile at the specified position
      */
@@ -67,6 +72,7 @@ public class GameBoard {
 
     /**
      * Gets the starting tile.
+     *
      * @return the starting tile
      */
     public Tile getStartingTile() {
@@ -75,6 +81,7 @@ public class GameBoard {
 
     /**
      * Gets the number of tiles on the board.
+     *
      * @return the number of tiles on the board
      */
     public int getTileCount() {
@@ -83,6 +90,7 @@ public class GameBoard {
 
     /**
      * Checks if the board has a tile at the specified position.
+     *
      * @param position the position to check
      * @return true if the board has a tile at the specified position, false otherwise
      */
@@ -92,6 +100,7 @@ public class GameBoard {
 
     /**
      * Determines if the board is empty.
+     *
      * @return true if the board is empty, false otherwise
      */
     public boolean isEmpty() {
@@ -100,6 +109,7 @@ public class GameBoard {
 
     /**
      * Determines if the board has a free place for the specified tile.
+     *
      * @param tileToPlace the tile to place
      * @return true if the board has a free place for the specified tile, false otherwise
      */
@@ -133,7 +143,8 @@ public class GameBoard {
 
     /**
      * Determines if the board has a free place for the specified tile from the specified node.
-     * @param node the node to start from
+     *
+     * @param node        the node to start from
      * @param tileToPlace the tile to place
      * @param parentNodes the nodes that have already been visited
      * @return true if the board has a free place for the specified tile from the specified node, false otherwise
@@ -164,6 +175,7 @@ public class GameBoard {
 
     /**
      * Finds all free positions for the specified tile and the current rotation.
+     *
      * @param tileToPlace the tile to place
      * @return a list of free places for the specified tile
      */
@@ -188,10 +200,11 @@ public class GameBoard {
 
     /**
      * Finds all free places for the specified tile from the specified node.
-     * @param node the node to start from
+     *
+     * @param node        the node to start from
      * @param tileToPlace the tile to place
      * @param parentNodes the nodes that have already been visited
-     * @param freePoints the list of free points to add to
+     * @param freePoints  the list of free points to add to
      */
     private void findFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes, List<Vector2> freePoints) {
         Vector2 tilePosition = node.getPosition();
@@ -214,6 +227,7 @@ public class GameBoard {
 
     /**
      * Gets all tiles on the board.
+     *
      * @return
      */
     public List<Tile> getTiles() {
@@ -222,6 +236,7 @@ public class GameBoard {
 
     /**
      * Encodes the board into the specified output stream.
+     *
      * @param stream the output stream to encode to
      */
     public void encode(ByteOutputStream stream, Game game) {
@@ -234,6 +249,7 @@ public class GameBoard {
 
     /**
      * Decodes the board from the specified input stream.
+     *
      * @param stream the input stream to decode from
      */
     public void decode(ByteInputStream stream, Game game) {

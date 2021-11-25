@@ -26,7 +26,37 @@ public class ExcelNode {
     }
 
     /**
+     * Loads the specified excel file content.
+     *
+     * @param fileContent The file content.
+     * @return The current row position.
+     */
+    public static ExcelNode load(String fileContent) {
+        String[] lines = fileContent.contains("\r\n") ? fileContent.split("\r\n") : fileContent.split("\n");
+        ExcelNode node = new ExcelNode();
+        node.load(Arrays.asList(lines), 0, 0);
+        return node;
+    }
+
+    /**
+     * Loads the specified excel file.
+     *
+     * @param filePath The file path.
+     * @return The root node.
+     */
+    public static ExcelNode load(Path filePath) {
+        ExcelNode root = new ExcelNode();
+        try {
+            root.load(Files.readAllLines(filePath), 0, 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return root;
+    }
+
+    /**
      * Gets the name of the node.
+     *
      * @return The name of the node.
      */
     public String getName() {
@@ -35,6 +65,7 @@ public class ExcelNode {
 
     /**
      * Creates the specified child node.
+     *
      * @param name The name of the child node.
      */
     public ExcelNode createChild(String name) {
@@ -50,6 +81,7 @@ public class ExcelNode {
 
     /**
      * Gets the specified child node.
+     *
      * @param name The name of the child node.
      * @return The child node.
      */
@@ -65,6 +97,7 @@ public class ExcelNode {
 
     /**
      * Adds the specified column.
+     *
      * @param column The column.
      */
     public void addColumn(String column) {
@@ -77,6 +110,7 @@ public class ExcelNode {
 
     /**
      * Gets the column count.
+     *
      * @return The column count.
      */
     public int getColumnCount() {
@@ -85,6 +119,7 @@ public class ExcelNode {
 
     /**
      * Gets the column name at the specified index.
+     *
      * @param index The index of the column.
      * @return The column name.
      */
@@ -94,6 +129,7 @@ public class ExcelNode {
 
     /**
      * Gets the index of the specified column.
+     *
      * @param name The name of the column.
      * @return The index of the column.
      */
@@ -103,6 +139,7 @@ public class ExcelNode {
 
     /**
      * Gets the row count.
+     *
      * @return The row count.
      */
     public int getRowCount() {
@@ -120,6 +157,7 @@ public class ExcelNode {
 
     /**
      * Creates a new row with the specified name.
+     *
      * @param name The name of the row.
      * @return The row.
      */
@@ -136,6 +174,7 @@ public class ExcelNode {
 
     /**
      * Gets the row at the specified index.
+     *
      * @param index The index of the row.
      * @return The row.
      */
@@ -145,6 +184,7 @@ public class ExcelNode {
 
     /**
      * Gets the row by the specified name.
+     *
      * @param name The name of the row.
      * @return The row.
      */
@@ -160,7 +200,8 @@ public class ExcelNode {
 
     /**
      * Determines if data is outside the child range. If the data is outside the child range, then it's the end of the child.
-     * @param cells The cells.
+     *
+     * @param cells      The cells.
      * @param childIndex The child index.
      * @return True if the data is outside the child range.
      */
@@ -177,21 +218,10 @@ public class ExcelNode {
     }
 
     /**
-     * Loads the specified excel file content.
-     * @param fileContent The file content.
-     * @return The current row position.
-     */
-    public static ExcelNode load(String fileContent) {
-        String[] lines = fileContent.contains("\r\n") ? fileContent.split("\r\n") : fileContent.split("\n");
-        ExcelNode node = new ExcelNode();
-        node.load(Arrays.asList(lines), 0, 0);
-        return node;
-    }
-
-    /**
      * Loads the specified excel file.
-     * @param lines The lines of the excel file.
-     * @param rowIndex The row index.
+     *
+     * @param lines       The lines of the excel file.
+     * @param rowIndex    The row index.
      * @param columnIndex The column index.
      * @return The current row position.
      */
@@ -233,7 +263,8 @@ public class ExcelNode {
 
     /**
      * Loads the columns from the specified cells.
-     * @param cells The cells.
+     *
+     * @param cells      The cells.
      * @param childIndex The child index.
      */
     private void loadColumns(String[] cells, int childIndex) {
@@ -252,8 +283,9 @@ public class ExcelNode {
 
     /**
      * Loads the row from the specified cells.
-     * @param cells The cells.
-     * @param index The index.
+     *
+     * @param cells      The cells.
+     * @param index      The index.
      * @param childIndex The child index.
      */
     private void loadRow(String[] cells, int index, int childIndex) {
@@ -268,6 +300,7 @@ public class ExcelNode {
 
     /**
      * Saves the current node to the specified excel file.
+     *
      * @param file The file.
      * @throws IOException If an I/O error occurs.
      */
@@ -277,6 +310,7 @@ public class ExcelNode {
 
     /**
      * Appends to the begin of the current node.
+     *
      * @param builder
      */
     private void appendBegin(StringBuilder builder, int childIndex) {
@@ -287,7 +321,8 @@ public class ExcelNode {
 
     /**
      * Appends the specified node to the given string builder.
-     * @param builder The string builder.
+     *
+     * @param builder    The string builder.
      * @param childIndex The child index.
      */
     private void writeToStringBuilder(StringBuilder builder, int childIndex) {
@@ -317,6 +352,7 @@ public class ExcelNode {
 
     /**
      * Returns the string representation of the current node.
+     *
      * @return The string representation of the current node.
      */
     @Override
@@ -324,21 +360,6 @@ public class ExcelNode {
         StringBuilder builder = new StringBuilder();
         writeToStringBuilder(builder, 0);
         return builder.toString();
-    }
-
-    /**
-     * Loads the specified excel file.
-     * @param filePath The file path.
-     * @return The root node.
-     */
-    public static ExcelNode load(Path filePath) {
-        ExcelNode root = new ExcelNode();
-        try {
-            root.load(Files.readAllLines(filePath), 0, 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return root;
     }
 
     /**

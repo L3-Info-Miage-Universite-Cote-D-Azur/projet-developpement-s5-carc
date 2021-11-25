@@ -27,6 +27,7 @@ public class GameStatisticsService extends ServiceBase {
 
     /**
      * Called by {@link BattleService} when the battle is over.
+     *
      * @param game The game that was played.
      */
     public void onBattleOver(Game game) {

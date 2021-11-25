@@ -1,7 +1,6 @@
 package logic.state;
 
 import logic.Game;
-import logic.player.Player;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 

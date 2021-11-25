@@ -25,6 +25,7 @@ public class MatchmakingDataMessage extends Message {
 
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     @Override
@@ -34,6 +35,7 @@ public class MatchmakingDataMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -44,6 +46,7 @@ public class MatchmakingDataMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override

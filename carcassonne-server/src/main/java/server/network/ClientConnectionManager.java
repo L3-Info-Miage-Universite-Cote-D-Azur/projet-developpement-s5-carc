@@ -67,6 +67,7 @@ public class ClientConnectionManager {
 
     /**
      * Gets a connection by its id.
+     *
      * @param connectionId The connection id.
      * @return The connection.
      */
@@ -76,6 +77,7 @@ public class ClientConnectionManager {
 
     /**
      * Creates a new connection with the given socket channel.
+     *
      * @param channel The socket channel.
      * @return The connection.
      */
@@ -89,6 +91,7 @@ public class ClientConnectionManager {
 
     /**
      * Removes a connection.
+     *
      * @param connection The connection.
      */
     public void removeConnection(ClientConnection connection) {

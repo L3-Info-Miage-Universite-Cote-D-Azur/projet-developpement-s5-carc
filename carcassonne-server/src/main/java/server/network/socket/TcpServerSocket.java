@@ -27,7 +27,7 @@ public class TcpServerSocket {
     /**
      * Closes the server socket.
      */
-    public void stop()  {
+    public void stop() {
         try {
             serverSocketChannel.close();
         } catch (IOException e) {

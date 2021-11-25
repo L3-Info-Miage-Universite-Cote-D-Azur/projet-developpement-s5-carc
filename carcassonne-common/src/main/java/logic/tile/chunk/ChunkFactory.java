@@ -8,7 +8,8 @@ import logic.tile.Tile;
 public class ChunkFactory {
     /**
      * Creates a chunk.
-     * @param type The type of the chunk.
+     *
+     * @param type   The type of the chunk.
      * @param parent The parent tile of the chunk.
      * @return the chunk
      */

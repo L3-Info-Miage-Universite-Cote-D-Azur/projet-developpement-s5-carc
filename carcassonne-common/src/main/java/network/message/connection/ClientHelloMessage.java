@@ -11,6 +11,7 @@ import stream.ByteOutputStream;
 public class ClientHelloMessage extends Message {
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     @Override
@@ -20,6 +21,7 @@ public class ClientHelloMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -29,6 +31,7 @@ public class ClientHelloMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override

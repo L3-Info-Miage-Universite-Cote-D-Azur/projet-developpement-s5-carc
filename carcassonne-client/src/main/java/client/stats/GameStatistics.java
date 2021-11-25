@@ -42,6 +42,7 @@ public class GameStatistics {
 
     /**
      * Creates the excel file with the details statistics.
+     *
      * @return the excel file with the details statistics.
      */
     private ExcelNode createDetailsExcel() {
@@ -81,8 +82,9 @@ public class GameStatistics {
 
     /**
      * Saves the excel file with the details statistics.
+     *
      * @param detailsFile the excel file with the details statistics.
-     * @param viewFile the excel file with the board view.
+     * @param viewFile    the excel file with the board view.
      */
     public void save(File detailsFile, File viewFile) {
         synchronized (writeLock) {

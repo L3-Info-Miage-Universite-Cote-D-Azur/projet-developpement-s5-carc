@@ -23,6 +23,7 @@ public class Crc32 {
 
     /**
      * Calculates the CRC32 checksum of the given data.
+     *
      * @param data the data to calculate the checksum for
      * @return the checksum
      */
@@ -36,7 +37,8 @@ public class Crc32 {
 
     /**
      * Calculates the CRC32 checksum of the given data.
-     * @param data the data to calculate the checksum for
+     *
+     * @param data   the data to calculate the checksum for
      * @param offset the offset to start at
      * @param length the length to calculate the checksum for
      * @return the checksum

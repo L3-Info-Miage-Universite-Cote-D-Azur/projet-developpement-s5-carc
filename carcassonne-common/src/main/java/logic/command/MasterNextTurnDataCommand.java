@@ -2,7 +2,6 @@ package logic.command;
 
 import logic.Game;
 import logic.state.GameStateType;
-import logic.state.turn.GameTurnWaitingMasterDataState;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 import stream.ByteInputStream;
@@ -26,6 +25,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Returns the command type.
+     *
      * @return the command type
      */
     @Override
@@ -35,6 +35,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Encodes the command attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -44,6 +45,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Decodes the command attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -53,6 +55,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Checks if the command is valid and can be executed.
+     *
      * @return true if the command is valid
      */
     @Override
@@ -72,6 +75,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Gets the game state required to execute the command.
+     *
      * @return the game state
      */
     @Override
@@ -81,6 +85,7 @@ public class MasterNextTurnDataCommand implements ICommand {
 
     /**
      * Executes the command.
+     *
      * @param game the game context
      */
     @Override

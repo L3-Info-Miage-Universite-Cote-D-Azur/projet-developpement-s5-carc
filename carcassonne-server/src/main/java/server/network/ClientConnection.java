@@ -79,18 +79,14 @@ public class ClientConnection {
      * The stream used to store data to be sent to the socket.
      */
     private final ResizableByteBuffer sendStream;
-
-
-    /**
-     * Session data of the client.
-     */
-    private ClientSession session;
-
     /**
      * The connection's id.
      */
     private final int id;
-
+    /**
+     * Session data of the client.
+     */
+    private ClientSession session;
     /**
      * The last time the connection was received data.
      */
@@ -120,6 +116,7 @@ public class ClientConnection {
 
     /**
      * Gets the id of the connection.
+     *
      * @return The id of the connection.
      */
     public int getId() {
@@ -128,6 +125,7 @@ public class ClientConnection {
 
     /**
      * Gets the session of the client.
+     *
      * @return The session of the client.
      */
     public ClientSession getSession() {
@@ -136,6 +134,7 @@ public class ClientConnection {
 
     /**
      * Sets the session of the client.
+     *
      * @param session The session of the client.
      */
     public void setSession(ClientSession session) {
@@ -144,6 +143,7 @@ public class ClientConnection {
 
     /**
      * Gets the remote address of the connection.
+     *
      * @return The remote address of the connection.
      */
     public String getRemoteAddress() {
@@ -189,6 +189,7 @@ public class ClientConnection {
 
     /**
      * Called when data is received.
+     *
      * @param length The length of the data received.
      */
     public void onRead(int length) {
@@ -228,6 +229,7 @@ public class ClientConnection {
 
     /**
      * Invoked when the connection was sent data.
+     *
      * @param length
      */
     public synchronized void onSend(int length) {
@@ -240,6 +242,7 @@ public class ClientConnection {
 
     /**
      * Sends the given message to the client.
+     *
      * @param message The message to send.
      */
     public synchronized void send(Message message) {
@@ -254,6 +257,7 @@ public class ClientConnection {
 
     /**
      * Sends the given data to the client.
+     *
      * @param buffer The data to send.
      */
     private synchronized void send(byte[] buffer, int offset, int length) {
@@ -267,6 +271,7 @@ public class ClientConnection {
 
     /**
      * Gets if the connection is alive.
+     *
      * @return
      */
     public boolean isConnected() {

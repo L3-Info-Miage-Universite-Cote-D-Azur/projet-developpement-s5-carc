@@ -9,9 +9,10 @@ import logic.tile.Tile;
 public class ByteStreamHelper {
     /**
      * Encodes a tile into a byte-stream.
+     *
      * @param stream The byte-stream to write to.
-     * @param tile The tile to encode.
-     * @param game The game.
+     * @param tile   The tile to encode.
+     * @param game   The game.
      */
     public static void encodeTile(ByteOutputStream stream, Tile tile, Game game) {
         int tileConfigIndex = game.getConfig().tiles.indexOf(tile.getConfig());
@@ -22,8 +23,9 @@ public class ByteStreamHelper {
 
     /**
      * Decodes a tile from a byte-stream.
+     *
      * @param stream The byte-stream to read from.
-     * @param game The game.
+     * @param game   The game.
      * @return The decoded tile.
      */
     public static Tile decodeTile(ByteInputStream stream, Game game) {

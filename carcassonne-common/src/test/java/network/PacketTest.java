@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PacketTest {
     @Test
     public void testEncodeDecode() {
-        Packet originalPacket = Packet.create(new GameResultMessage(new byte[] { 1, 2, 3, 4, 5 }));
+        Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
         ByteInputStream inputStream = new ByteInputStream(outputStream.getBytes(), outputStream.getLength());
@@ -27,7 +28,7 @@ public class PacketTest {
 
     @Test
     public void testDetectCorruptedMessageData() {
-        Packet originalPacket = Packet.create(new GameResultMessage(new byte[] { 1, 2, 3, 4, 5 }));
+        Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
         outputStream.getBytes()[Packet.HEADER_SIZE - 4] ^= (byte) 0xFF;
@@ -38,7 +39,7 @@ public class PacketTest {
 
     @Test
     public void testDetectInvalidHeader() {
-        Packet originalPacket = Packet.create(new GameResultMessage(new byte[] { 1, 2, 3, 4, 5 }));
+        Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
         outputStream.getBytes()[0] ^= (byte) 0xFF;
@@ -49,7 +50,7 @@ public class PacketTest {
 
     @Test
     public void testDetectInvalidTrailer() {
-        Packet originalPacket = Packet.create(new GameResultMessage(new byte[] { 1, 2, 3, 4, 5 }));
+        Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
         outputStream.getBytes()[outputStream.getLength() - 1] ^= (byte) 0xFF;
@@ -60,7 +61,7 @@ public class PacketTest {
 
     @Test
     public void testDeserializeMessageFromStream() {
-        Packet originalPacket = Packet.create(new GameResultMessage(new byte[] { 1, 2, 3, 4, 5 }));
+        Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
         ByteInputStream inputStream = new ByteInputStream(outputStream.getBytes(), outputStream.getLength());

@@ -11,6 +11,7 @@ import stream.ByteOutputStream;
 public class MatchmakingFailedMessage extends Message {
     /**
      * Gets the message type of this message.
+     *
      * @return The message type.
      */
     @Override
@@ -20,6 +21,7 @@ public class MatchmakingFailedMessage extends Message {
 
     /**
      * Encodes the message into a byte stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -29,6 +31,7 @@ public class MatchmakingFailedMessage extends Message {
 
     /**
      * Decodes the message from a byte stream.
+     *
      * @param stream the input stream
      */
     @Override

@@ -26,6 +26,7 @@ public class GameResultMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -35,6 +36,7 @@ public class GameResultMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -44,6 +46,7 @@ public class GameResultMessage extends Message {
 
     /**
      * Gets the serialized game master data.
+     *
      * @return the serialized game master data
      */
     public byte[] getData() {

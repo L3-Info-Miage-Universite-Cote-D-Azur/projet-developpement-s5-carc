@@ -43,22 +43,6 @@ public enum MessageType {
         this.messageClass = messageClass;
     }
 
-    /**
-     * Gets the message type value.
-     * @return the message type value.
-     */
-    public int getValue() {
-        return type;
-    }
-
-    /**
-     * Returns the message class.
-     * @return
-     */
-    public Class<? extends Message> getMessageClass() {
-        return messageClass;
-    }
-
     public static MessageType getByType(int type) {
         for (MessageType messageId : MessageType.values()) {
             if (messageId.getValue() == type) {
@@ -67,5 +51,23 @@ public enum MessageType {
         }
 
         return null;
+    }
+
+    /**
+     * Gets the message type value.
+     *
+     * @return the message type value.
+     */
+    public int getValue() {
+        return type;
+    }
+
+    /**
+     * Returns the message class.
+     *
+     * @return
+     */
+    public Class<? extends Message> getMessageClass() {
+        return messageClass;
     }
 }

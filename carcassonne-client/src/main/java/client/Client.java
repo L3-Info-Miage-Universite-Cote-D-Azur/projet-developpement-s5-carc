@@ -70,6 +70,7 @@ public class Client {
 
     /**
      * Records the specified service and registers it to the message dispatcher if it implements the IMessageHandler interface.
+     *
      * @param service the service
      */
     private void recordService(ServiceBase service) {
@@ -82,6 +83,7 @@ public class Client {
 
     /**
      * Gets the server connection.
+     *
      * @return the server connection
      */
     public final ServerConnection getServerConnection() {
@@ -90,6 +92,7 @@ public class Client {
 
     /**
      * Gets the client config.
+     *
      * @return the client config
      */
     public final ClientConfig getConfig() {
@@ -98,6 +101,7 @@ public class Client {
 
     /**
      * Gets the game config.
+     *
      * @return the game config
      */
     public final GameConfig getGameConfig() {
@@ -106,6 +110,7 @@ public class Client {
 
     /**
      * Gets the authentication service.
+     *
      * @return the authentication service
      */
     public final AuthenticationService getAuthenticationService() {
@@ -114,6 +119,7 @@ public class Client {
 
     /**
      * Gets the matchmaking service.
+     *
      * @return the matchmaking service
      */
     public MatchmakingService getMatchmakingService() {
@@ -122,6 +128,7 @@ public class Client {
 
     /**
      * Gets the battle service.
+     *
      * @return the battle service
      */
     public BattleService getBattleService() {
@@ -130,6 +137,7 @@ public class Client {
 
     /**
      * Gets the game statistics service.
+     *
      * @return the game statistics service
      */
     public GameStatisticsService getGameStatisticsService() {
@@ -138,6 +146,7 @@ public class Client {
 
     /**
      * Gets the service of the specified type.
+     *
      * @param serviceClass the service class
      * @return the service
      */

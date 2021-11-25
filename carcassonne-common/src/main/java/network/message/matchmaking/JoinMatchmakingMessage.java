@@ -20,6 +20,7 @@ public class JoinMatchmakingMessage extends Message {
 
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     @Override
@@ -29,6 +30,7 @@ public class JoinMatchmakingMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -38,6 +40,7 @@ public class JoinMatchmakingMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -52,6 +55,7 @@ public class JoinMatchmakingMessage extends Message {
 
     /**
      * Returns the match capacity.
+     *
      * @return the match capacity
      */
     public int getMatchCapacity() {

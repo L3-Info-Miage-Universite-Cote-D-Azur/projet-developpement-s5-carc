@@ -32,6 +32,7 @@ public class TileStack {
 
     /**
      * Fill the stack with the given number of tiles.
+     *
      * @param tiles Tiles to fill the stack with.
      */
     public void fill(ArrayList<Tile> tiles) {
@@ -40,6 +41,7 @@ public class TileStack {
 
     /**
      * Fill the stack with the given configuration.
+     *
      * @param config Configuration to fill the stack with.
      */
     public void fill(GameConfig config) {
@@ -52,6 +54,7 @@ public class TileStack {
 
     /**
      * Get the number of tiles in the stack.
+     *
      * @return Number of tiles in the stack.
      */
     public int getNumTiles() {
@@ -60,6 +63,7 @@ public class TileStack {
 
     /**
      * Determine if the stack is empty.
+     *
      * @return True if the stack is empty, false otherwise.
      */
     public boolean isEmpty() {
@@ -68,6 +72,7 @@ public class TileStack {
 
     /**
      * Draw a tile from the stack.
+     *
      * @return Tile drawn from the stack.
      */
     public Tile remove() {
@@ -76,6 +81,7 @@ public class TileStack {
 
     /**
      * Peek at the top tile in the stack. Allows the top tile to be seen without removing it.
+     *
      * @return Top tile in the stack.
      */
     public Tile peek() {

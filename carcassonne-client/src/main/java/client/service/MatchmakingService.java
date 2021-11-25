@@ -44,6 +44,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles the specified message if the handler is interested in it.
+     *
      * @param message The message to handle.
      */
     @Override
@@ -57,6 +58,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles the matchmaking data message.
+     *
      * @param message
      */
     private void onMatchmakingData(MatchmakingDataMessage message) {
@@ -70,6 +72,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
 
     /**
      * Handles the matchmaking failed message.
+     *
      * @param message
      */
     private void onMatchmakingFailed(MatchmakingFailedMessage message) {
@@ -102,6 +105,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
 
     /**
      * Joins the matchmaking queue.
+     *
      * @param matchSize The number of players that are required to start a match.
      */
     public void joinMatchmaking(int matchSize) {

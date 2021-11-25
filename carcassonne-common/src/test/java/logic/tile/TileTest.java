@@ -1,11 +1,6 @@
 package logic.tile;
 
 import logic.config.GameConfig;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
@@ -21,13 +16,13 @@ public class TileTest {
         Chunk[] originalChunkReferences = new Chunk[ChunkId.values().length];
         Chunk[] rotatedChunkReferences = new Chunk[ChunkId.values().length];
 
-        for (int i = 0; i< originalChunkReferences.length; i++) {
+        for (int i = 0; i < originalChunkReferences.length; i++) {
             originalChunkReferences[i] = tile.getChunk(ChunkId.values()[i]);
         }
 
         tile.setRotation(TileRotation.LEFT);
 
-        for (int i = 0; i< rotatedChunkReferences.length; i++) {
+        for (int i = 0; i < rotatedChunkReferences.length; i++) {
             rotatedChunkReferences[i] = tile.getChunk(ChunkId.values()[i]);
         }
 
@@ -39,7 +34,7 @@ public class TileTest {
 
         tile.setRotation(TileRotation.UP);
 
-        for (int i = 0; i< rotatedChunkReferences.length; i++) {
+        for (int i = 0; i < rotatedChunkReferences.length; i++) {
             rotatedChunkReferences[i] = tile.getChunk(ChunkId.values()[i]);
         }
 

@@ -8,7 +8,6 @@ import client.network.socket.TcpClientSocket;
 import network.Packet;
 import network.ResizableByteBuffer;
 import network.message.Message;
-import network.message.connection.ClientHelloMessage;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -65,6 +64,7 @@ public class ServerConnection implements ITcpClientSocketListener {
 
     /**
      * Connects to the server.
+     *
      * @param host The host of the server.
      * @param port The port of the server.
      */
@@ -106,6 +106,7 @@ public class ServerConnection implements ITcpClientSocketListener {
 
     /**
      * Invoked when data is received from the server.
+     *
      * @param length The length of the data received.
      */
     @Override
@@ -145,6 +146,7 @@ public class ServerConnection implements ITcpClientSocketListener {
 
     /**
      * Invoked when the connection was sent data.
+     *
      * @param length
      */
     @Override
@@ -158,6 +160,7 @@ public class ServerConnection implements ITcpClientSocketListener {
 
     /**
      * Sends a message to the server.
+     *
      * @param message The message to send.
      */
     public synchronized void send(Message message) {
@@ -172,6 +175,7 @@ public class ServerConnection implements ITcpClientSocketListener {
 
     /**
      * Sends the given data to the server.
+     *
      * @param buffer The data to send.
      */
     private synchronized void send(byte[] buffer, int offset, int length) {

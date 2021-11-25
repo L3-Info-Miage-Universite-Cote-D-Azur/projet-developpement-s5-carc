@@ -4,11 +4,11 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
+import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkArea;
 import logic.tile.chunk.ChunkId;
-import logic.tile.Tile;
 import logic.tile.chunk.ChunkType;
 
 import javax.imageio.ImageIO;
@@ -29,13 +29,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static final int meepleHeight = 27;
     private static final int extraWidth = 40;
     private static final int extraHeight = 40;
-
-    private static ImageDatabase tileDatabase;
-    private static ImageDatabase meepleDatabase;
-    private static ImageDatabase extraDatabase;
-
     private static final Random rand = new Random();
-
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
         put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
@@ -73,6 +67,9 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkType.TOWN, Color.ORANGE);
         put(ChunkType.ABBEY, Color.CYAN);
     }};
+    private static ImageDatabase tileDatabase;
+    private static ImageDatabase meepleDatabase;
+    private static ImageDatabase extraDatabase;
 
     /**
      * Loads the images for the rendering and stores them in the image database.
@@ -199,6 +196,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
     /**
      * Gets the sprite model to use for the specified tile and rotation.
+     *
      * @param tile The tile to get the sprite model for.
      * @return
      */
@@ -277,7 +275,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Modify the opacity of a color
      *
-     * @param color The color to change opacity of
+     * @param color   The color to change opacity of
      * @param opacity The opacity wanted (0-1)
      * @return the color with the new opacity
      */

@@ -29,6 +29,7 @@ public class MatchConfig {
 
     /**
      * Gets the number of matches to play.
+     *
      * @return number of matches
      */
     public int getNumMatches() {
@@ -37,6 +38,7 @@ public class MatchConfig {
 
     /**
      * Gets the number of players in each match.
+     *
      * @return number of players
      */
     public int getNumPlayers() {

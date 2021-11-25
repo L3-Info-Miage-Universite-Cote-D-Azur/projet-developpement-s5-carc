@@ -43,6 +43,7 @@ public class GameTurnEndingState extends GameState {
 
     /**
      * Returns the type of the state.
+     *
      * @return the type of the state
      */
     @Override

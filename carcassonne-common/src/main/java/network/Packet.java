@@ -12,21 +12,18 @@ import stream.ByteOutputStream;
  */
 public class Packet {
     /**
-     * Magic number used to verify the packet transmission.
-     */
-    private static int HEADER_MAGIC = 0xA0B0C0D0;
-
-    /**
-     * Magic number used to verify the packet transmission.
-     */
-    private static int TRAILER_MAGIC = 0xF0C0B0A0;
-
-    /**
      * The packet header length.
      * If the incoming packet is smaller than this, we assume that all the data is not yet received.
      */
     public static int HEADER_SIZE = 20;
-
+    /**
+     * Magic number used to verify the packet transmission.
+     */
+    private static int HEADER_MAGIC = 0xA0B0C0D0;
+    /**
+     * Magic number used to verify the packet transmission.
+     */
+    private static int TRAILER_MAGIC = 0xF0C0B0A0;
     /**
      * The message type.
      */
@@ -59,7 +56,20 @@ public class Packet {
     }
 
     /**
+     * Creates a packet from the given message.
+     *
+     * @param message the message to create the packet from
+     * @return the packet
+     */
+    public static Packet create(Message message) {
+        ByteOutputStream stream = new ByteOutputStream(20);
+        message.encode(stream);
+        return new Packet(message.getType(), Crc32.getCrc(stream.getBytes(), 0, stream.getLength()), stream.getLength(), stream.getBytes());
+    }
+
+    /**
      * Decodes the packet from the given stream
+     *
      * @param stream the stream to read from
      * @return the number of bytes read.
      * >= 0 if the packet was successfully decoded.
@@ -103,6 +113,7 @@ public class Packet {
 
     /**
      * Encodes the packet to the given stream
+     *
      * @param stream the stream to write to
      * @return the number of bytes written.
      */
@@ -117,6 +128,7 @@ public class Packet {
 
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     public MessageType getMessageType() {
@@ -125,6 +137,7 @@ public class Packet {
 
     /**
      * Creates and returns the message from the packet.
+     *
      * @return the message
      */
     public Message getMessage() {
@@ -135,6 +148,7 @@ public class Packet {
 
     /**
      * Gets the checksum of the message data.
+     *
      * @return the checksum
      */
     public int getChecksum() {
@@ -143,6 +157,7 @@ public class Packet {
 
     /**
      * Gets the message length.
+     *
      * @return the message length
      */
     public int getMessageLength() {
@@ -151,20 +166,10 @@ public class Packet {
 
     /**
      * Gets the message data.
+     *
      * @return the message data
      */
     public byte[] getMessageData() {
         return messageData;
-    }
-
-    /**
-     * Creates a packet from the given message.
-     * @param message the message to create the packet from
-     * @return the packet
-     */
-    public static Packet create(Message message) {
-        ByteOutputStream stream = new ByteOutputStream(20);
-        message.encode(stream);
-        return new Packet(message.getType(), Crc32.getCrc(stream.getBytes(), 0, stream.getLength()), stream.getLength(), stream.getBytes());
     }
 }

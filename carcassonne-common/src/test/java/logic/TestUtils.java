@@ -15,7 +15,6 @@ import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class TestUtils {

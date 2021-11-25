@@ -26,6 +26,7 @@ public class MessageDispatcher {
 
     /**
      * Handles a message received from the server.
+     *
      * @param message The message to handle.
      */
     public void handle(Message message) {

@@ -22,8 +22,9 @@ public class TcpAcceptHandler implements CompletionHandler<AsynchronousSocketCha
 
     /**
      * Called when a new connection is accepted.
+     *
      * @param clientSocketChannel The client socket channel.
-     * @param attachment The attachment.
+     * @param attachment          The attachment.
      */
     @Override
     public void completed(AsynchronousSocketChannel clientSocketChannel, Object attachment) {
@@ -42,7 +43,8 @@ public class TcpAcceptHandler implements CompletionHandler<AsynchronousSocketCha
 
     /**
      * Called when an error occurs.
-     * @param exc The throwable.
+     *
+     * @param exc        The throwable.
      * @param attachment The attachment.
      */
     @Override

@@ -1,6 +1,5 @@
 package client.ai;
 
-import logic.Game;
 import logic.command.EndTurnCommand;
 import logic.command.PlaceMeepleCommand;
 import logic.command.PlaceTileDrawnCommand;
@@ -8,7 +7,6 @@ import logic.command.RotateTileDrawnCommand;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
-import logic.state.GameState;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
@@ -61,6 +59,7 @@ public abstract class AI implements IPlayerListener {
 
     /**
      * Finds a position for the given tile.
+     *
      * @param tile The tile to find a position for.
      * @return The position where the tile can be placed.
      */
@@ -69,6 +68,7 @@ public abstract class AI implements IPlayerListener {
     /**
      * Picks a tile's chunk where the meeple can be placed.
      * Returns null if no chunk should be placed.
+     *
      * @return The chunk where the meeple can be placed.
      */
     protected abstract Chunk pickChunkToPlaceMeeple();

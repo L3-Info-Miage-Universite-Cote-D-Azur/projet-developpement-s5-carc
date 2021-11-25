@@ -8,6 +8,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the DEBUG level.
+     *
      * @param message the message to log
      */
     public static void debug(String message) {
@@ -16,6 +17,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the DEBUG level.
+     *
      * @param message the message to log
      */
     public static void debug(String message, Object... args) {
@@ -24,6 +26,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the INFO level.
+     *
      * @param message the message to log
      */
     public static void info(String message) {
@@ -32,6 +35,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the INFO level.
+     *
      * @param message the message to log
      */
     public static void info(String message, Object... args) {
@@ -40,6 +44,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the WARNING level.
+     *
      * @param message the message to log
      */
     public static void warn(String message) {
@@ -48,6 +53,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the WARNING level.
+     *
      * @param message the message to log
      */
     public static void warn(String message, Object... args) {
@@ -56,6 +62,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the ERROR level.
+     *
      * @param message the message to log
      */
     public static void error(String message) {
@@ -64,6 +71,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the ERROR level.
+     *
      * @param message the message to log
      */
     public static void error(String message, Object... args) {
@@ -72,6 +80,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the FATAL level.
+     *
      * @param message the message to log
      */
     public static void fatal(String message) {
@@ -80,6 +89,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the FATAL level.
+     *
      * @param message the message to log
      */
     public static void fatal(String message, Object... args) {
@@ -88,6 +98,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the DEBUG level.
+     *
      * @param message the message to log
      */
     public static void print(String message, String color, LogLevel level) {

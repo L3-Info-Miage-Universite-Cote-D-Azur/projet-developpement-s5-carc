@@ -6,8 +6,8 @@ import logic.Game;
 import logic.IGameListener;
 import logic.player.Player;
 import logic.state.GameState;
-import logic.tile.chunk.ChunkId;
 import logic.tile.Tile;
+import logic.tile.chunk.ChunkId;
 
 /**
  * GameLogger is a class that implements IGameListener and logs all the events
@@ -53,6 +53,7 @@ public class GameLogger implements IGameListener {
 
     /**
      * Invoked when the game state changes.
+     *
      * @param state The new game state.
      */
     @Override
@@ -62,6 +63,7 @@ public class GameLogger implements IGameListener {
 
     /**
      * Invoked when a tile is placed.
+     *
      * @param tile The tile placed.
      */
     @Override
@@ -71,8 +73,9 @@ public class GameLogger implements IGameListener {
 
     /**
      * Invoked when a meeple is placed.
-     * @param player The player who placed the meeple.
-     * @param tile The tile on which the meeple was placed.
+     *
+     * @param player  The player who placed the meeple.
+     * @param tile    The tile on which the meeple was placed.
      * @param chunkId The chunk id on which the meeple was placed.
      */
     @Override
@@ -82,8 +85,9 @@ public class GameLogger implements IGameListener {
 
     /**
      * Invoked when a meeple is removed.
-     * @param player The player who removed the meeple.
-     * @param tile The tile on which the meeple was removed.
+     *
+     * @param player  The player who removed the meeple.
+     * @param tile    The tile on which the meeple was removed.
      * @param chunkId The chunk id on which the meeple was removed.
      */
     @Override

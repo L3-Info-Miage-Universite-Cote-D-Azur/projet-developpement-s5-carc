@@ -20,6 +20,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
 
     /**
      * Handles the specified message if the handler is interested in it.
+     *
      * @param message The message to handle.
      */
     @Override

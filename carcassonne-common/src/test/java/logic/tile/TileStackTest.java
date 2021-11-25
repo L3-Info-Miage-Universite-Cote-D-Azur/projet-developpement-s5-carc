@@ -62,12 +62,12 @@ class TileStackTest {
             shuffledTilesPicked.add(stack.remove());
         }
 
-        assertEquals(shuffledTilesPicked.size(),originalTilesPicked.size());
+        assertEquals(shuffledTilesPicked.size(), originalTilesPicked.size());
 
         int matchCount = 0;
 
-        for (int i = 0; i < shuffledTilesPicked.size() ; i++) {
-            if(shuffledTilesPicked.get(i) == originalTilesPicked.get(i)) {
+        for (int i = 0; i < shuffledTilesPicked.size(); i++) {
+            if (shuffledTilesPicked.get(i) == originalTilesPicked.get(i)) {
                 matchCount++;
             }
         }

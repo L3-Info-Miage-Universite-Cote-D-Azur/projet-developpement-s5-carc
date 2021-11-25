@@ -26,27 +26,8 @@ public class GameConfig {
     }
 
     /**
-     * Validates the game configuration.
-     * @return true if the game configuration is valid, false otherwise
-     */
-    public boolean validate() {
-        if (minPlayers < 1) {
-            return false;
-        }
-
-        if (minPlayers > maxPlayers) {
-            return false;
-        }
-
-        if (startingMeepleCount < 1) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Loads the game configuration from the given path.
+     *
      * @return the game configuration
      */
     public static GameConfig loadFromResources() {
@@ -68,6 +49,7 @@ public class GameConfig {
 
     /**
      * Loads the tiles from the given path.
+     *
      * @param path the path to the tiles
      * @return the tiles configuration
      */
@@ -87,5 +69,26 @@ public class GameConfig {
         }
 
         return tiles;
+    }
+
+    /**
+     * Validates the game configuration.
+     *
+     * @return true if the game configuration is valid, false otherwise
+     */
+    public boolean validate() {
+        if (minPlayers < 1) {
+            return false;
+        }
+
+        if (minPlayers > maxPlayers) {
+            return false;
+        }
+
+        if (startingMeepleCount < 1) {
+            return false;
+        }
+
+        return true;
     }
 }

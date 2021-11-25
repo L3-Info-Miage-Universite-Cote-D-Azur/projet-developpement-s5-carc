@@ -38,7 +38,7 @@ public class Main {
 
         HashMap<String, String> config = new HashMap<>();
 
-        for (int i = 0; i < args.length; i+= 2) {
+        for (int i = 0; i < args.length; i += 2) {
             String arg = args[i];
             String value = args[i + 1];
 

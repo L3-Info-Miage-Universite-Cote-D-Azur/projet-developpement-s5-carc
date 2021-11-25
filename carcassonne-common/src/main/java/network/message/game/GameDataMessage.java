@@ -24,6 +24,7 @@ public class GameDataMessage extends Message {
 
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     @Override
@@ -33,6 +34,7 @@ public class GameDataMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -42,6 +44,7 @@ public class GameDataMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -51,6 +54,7 @@ public class GameDataMessage extends Message {
 
     /**
      * Returns the serialized game slave data.
+     *
      * @return the serialized game slave data
      */
     public byte[] getData() {

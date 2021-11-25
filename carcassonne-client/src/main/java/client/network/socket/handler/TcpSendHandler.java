@@ -10,7 +10,8 @@ import java.nio.channels.CompletionHandler;
 public class TcpSendHandler implements CompletionHandler<Integer, ITcpClientSocketListener> {
     /**
      * Called when the data has been sent.
-     * @param result The number of bytes sent.
+     *
+     * @param result   The number of bytes sent.
      * @param listener The listener.
      */
     @Override
@@ -24,7 +25,8 @@ public class TcpSendHandler implements CompletionHandler<Integer, ITcpClientSock
 
     /**
      * Called when an error occurs.
-     * @param exc The exception.
+     *
+     * @param exc      The exception.
      * @param listener The listener.
      */
     @Override

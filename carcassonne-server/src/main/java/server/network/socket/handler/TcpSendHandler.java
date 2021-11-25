@@ -7,7 +7,8 @@ import java.nio.channels.CompletionHandler;
 public class TcpSendHandler implements CompletionHandler<Integer, ClientConnection> {
     /**
      * Invoked when the data has been transferred.
-     * @param result the number of bytes that were transferred
+     *
+     * @param result     the number of bytes that were transferred
      * @param connection the connection
      */
     @Override

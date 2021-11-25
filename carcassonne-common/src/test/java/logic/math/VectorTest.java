@@ -28,14 +28,14 @@ class VectorTest {
     }
 
     @Test
-    void testGetX(){
+    void testGetX() {
         int n = 30;
         Vector2 vector0 = new Vector2(n, n * 2);
         assertEquals(30, vector0.getX());
     }
 
     @Test
-    void testGetY(){
+    void testGetY() {
         int n = 40;
         Vector2 vector0 = new Vector2(n, n * 2);
         assertEquals(80, vector0.getY());

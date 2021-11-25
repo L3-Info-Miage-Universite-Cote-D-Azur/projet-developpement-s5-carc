@@ -20,6 +20,7 @@ public class Matchmaking {
 
     /**
      * Adds a client to the queue.
+     *
      * @param client
      */
     public synchronized void add(ClientSession client) {
@@ -35,6 +36,7 @@ public class Matchmaking {
 
     /**
      * Removes a client from the queue.
+     *
      * @param client
      */
     public synchronized void remove(ClientSession client) {

@@ -23,6 +23,7 @@ public class ResizableByteBuffer {
 
     /**
      * Puts the given byte array into the buffer.
+     *
      * @param data The data to put into the buffer.
      */
     public void put(byte[] data) {
@@ -31,7 +32,8 @@ public class ResizableByteBuffer {
 
     /**
      * Puts the given byte array into the buffer.
-     * @param data The data to put into the buffer.
+     *
+     * @param data   The data to put into the buffer.
      * @param offset The offset to start putting the data at.
      * @param length The length of the data to put.
      */
@@ -51,6 +53,7 @@ public class ResizableByteBuffer {
 
     /**
      * Resizes the buffer to the given size.
+     *
      * @param newSize The new size of the buffer.
      */
     private void resize(int newSize) {
@@ -61,6 +64,7 @@ public class ResizableByteBuffer {
 
     /**
      * Removes the given amount of bytes from the buffer.
+     *
      * @param size The amount of bytes to remove.
      */
     public void remove(int size) {
@@ -73,6 +77,7 @@ public class ResizableByteBuffer {
 
     /**
      * Gets the buffer.
+     *
      * @return The buffer.
      */
     public byte[] getBuffer() {
@@ -81,6 +86,7 @@ public class ResizableByteBuffer {
 
     /**
      * Gets the number of bytes in the buffer.
+     *
      * @return The number of bytes in the buffer.
      */
     public int size() {

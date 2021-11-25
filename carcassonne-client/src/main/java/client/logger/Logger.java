@@ -9,8 +9,9 @@ public class Logger {
 
     /**
      * Logs a message to the console with the debug color.
+     *
      * @param message The message to log.
-     * @param args The arguments to format the message with.
+     * @param args    The arguments to format the message with.
      */
     public static void debug(LoggerCategory category, String message, Object... args) {
         debug(category, String.format(message, args));
@@ -18,6 +19,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the debug color.
+     *
      * @param message The message to log.
      */
     public static void debug(LoggerCategory category, String message) {
@@ -26,8 +28,9 @@ public class Logger {
 
     /**
      * Logs a message to the console with the info color.
+     *
      * @param message The message to log.
-     * @param args The arguments to format the message with.
+     * @param args    The arguments to format the message with.
      */
     public static void info(LoggerCategory category, String message, Object... args) {
         info(category, String.format(message, args));
@@ -35,6 +38,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the info color.
+     *
      * @param message The message to log.
      */
     public static void info(LoggerCategory category, String message) {
@@ -43,8 +47,9 @@ public class Logger {
 
     /**
      * Logs a message to the console with the warning color.
+     *
      * @param message The message to log.
-     * @param args The arguments to format the message with.
+     * @param args    The arguments to format the message with.
      */
     public static void warn(LoggerCategory category, String message, Object... args) {
         warn(category, String.format(message, args));
@@ -52,6 +57,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the warning color.
+     *
      * @param message The message to log.
      */
     public static void warn(LoggerCategory category, String message) {
@@ -60,8 +66,9 @@ public class Logger {
 
     /**
      * Logs a message to the console with the error color.
+     *
      * @param message The message to log.
-     * @param args The arguments to format the message with.
+     * @param args    The arguments to format the message with.
      */
     public static void error(LoggerCategory category, String message, Object... args) {
         error(category, String.format(message, args));
@@ -69,6 +76,7 @@ public class Logger {
 
     /**
      * Logs a message to the console with the error color.
+     *
      * @param message The message to log.
      */
     public static void error(LoggerCategory category, String message) {
@@ -77,9 +85,10 @@ public class Logger {
 
     /**
      * Logs a message to the console with the player color.
+     *
      * @param category Category of the log
-     * @param player Player
-     * @param message The message to log
+     * @param player   Player
+     * @param message  The message to log
      */
     public static void player(LoggerCategory category, Player player, String message) {
         print(category, message, config.getPlayerColor(player.getGame().getPlayerIndex(player)), LogLevel.INFO);
@@ -87,9 +96,10 @@ public class Logger {
 
     /**
      * Logs a message to the console with the player color.
+     *
      * @param category Category of the log
-     * @param player Player
-     * @param message The message to log
+     * @param player   Player
+     * @param message  The message to log
      */
     public static void player(LoggerCategory category, Player player, String message, Object... args) {
         print(category, String.format(message, args), config.getPlayerColor(player.getGame().getPlayerIndex(player)), LogLevel.INFO);
@@ -97,7 +107,8 @@ public class Logger {
 
     /**
      * Prints a message to the console with the given color.
-     * @param message The message to print.
+     *
+     * @param message       The message to print.
      * @param ansiColorCode The color to print the message in.
      */
     private static void print(LoggerCategory category, String message, String ansiColorCode, LogLevel level) {
@@ -116,6 +127,7 @@ public class Logger {
 
     /**
      * Sets the configuration for the logger.
+     *
      * @param config The configuration to use.
      */
     public static void setConfig(LoggerConfig config) {

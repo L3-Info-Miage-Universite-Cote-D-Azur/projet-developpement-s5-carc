@@ -6,6 +6,7 @@ package network.message;
 public class MessageFactory {
     /**
      * Creates a message instance from the given message type.
+     *
      * @param type The message type.
      * @return The message instance.
      */

@@ -3,7 +3,8 @@ package network.stream;
 import org.junit.jupiter.api.Test;
 import stream.ByteOutputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ByteOutputStreamTest {
     @Test

@@ -31,6 +31,7 @@ public class CommandExecutor {
 
     /**
      * Gets the listener of the command executor.
+     *
      * @return the listener of the command executor.
      */
     public ICommandExecutorListener getListener() {
@@ -39,6 +40,7 @@ public class CommandExecutor {
 
     /**
      * Sets the listener of the command executor.
+     *
      * @param listener the listener of the command executor.
      */
     public void setListener(ICommandExecutorListener listener) {
@@ -47,6 +49,7 @@ public class CommandExecutor {
 
     /**
      * Executes the given command and notifies the listener if the command has been executed or not.
+     *
      * @param command the command to execute.
      * @return true if the command was executed, false otherwise.
      */

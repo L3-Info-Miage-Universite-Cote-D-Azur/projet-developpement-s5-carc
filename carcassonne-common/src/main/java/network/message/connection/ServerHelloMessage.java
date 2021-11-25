@@ -20,6 +20,7 @@ public class ServerHelloMessage extends Message {
 
     /**
      * Gets the message type of this message.
+     *
      * @return The message type.
      */
     @Override
@@ -29,6 +30,7 @@ public class ServerHelloMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -38,6 +40,7 @@ public class ServerHelloMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -47,6 +50,7 @@ public class ServerHelloMessage extends Message {
 
     /**
      * Gets the user id of the user that is connected to the server.
+     *
      * @return The user id.
      */
     public int getUserId() {

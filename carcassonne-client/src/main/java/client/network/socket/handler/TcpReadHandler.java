@@ -20,7 +20,8 @@ public class TcpReadHandler implements CompletionHandler<Integer, ITcpClientSock
 
     /**
      * Invoked when a read operation completes.
-     * @param result The number of bytes read, possibly zero.
+     *
+     * @param result   The number of bytes read, possibly zero.
      * @param listener The listener.
      */
     @Override
@@ -38,7 +39,8 @@ public class TcpReadHandler implements CompletionHandler<Integer, ITcpClientSock
 
     /**
      * Invoked when an operation fails.
-     * @param exc The exception.
+     *
+     * @param exc      The exception.
      * @param listener The listener.
      */
     @Override

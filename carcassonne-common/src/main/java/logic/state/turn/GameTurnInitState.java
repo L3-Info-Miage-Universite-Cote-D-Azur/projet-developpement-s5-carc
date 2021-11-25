@@ -54,6 +54,7 @@ public class GameTurnInitState extends GameState {
 
     /**
      * Returns the type of this state.
+     *
      * @return The type of this state.
      */
     @Override

@@ -1,7 +1,9 @@
 package logic.config.excel;
 
-import logic.tile.chunk.*;
 import logic.tile.Tile;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkFactory;
+import logic.tile.chunk.ChunkType;
 
 /**
  * Represents a tile chunk excel configuration.
@@ -31,6 +33,7 @@ public class TileChunkConfig {
 
     /**
      * Instantiates a tile chunk from this configuration.
+     *
      * @param tile The tile.
      * @return The tile chunk.
      */

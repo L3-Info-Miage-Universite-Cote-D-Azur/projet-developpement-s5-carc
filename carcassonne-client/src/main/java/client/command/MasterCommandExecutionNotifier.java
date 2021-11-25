@@ -3,7 +3,6 @@ package client.command;
 import client.Client;
 import client.logger.Logger;
 import client.logger.LoggerCategory;
-import client.network.ServerConnection;
 import logic.command.ICommand;
 import logic.command.ICommandExecutorListener;
 import network.message.game.GameCommandRequestMessage;
@@ -20,6 +19,7 @@ public class MasterCommandExecutionNotifier implements ICommandExecutorListener 
 
     /**
      * Notifies the master that a command has been executed.
+     *
      * @param command The command that was executed.
      */
     @Override
@@ -28,9 +28,8 @@ public class MasterCommandExecutionNotifier implements ICommandExecutorListener 
     }
 
     /**
-     *
      * @param command
-     * @param reason The reason of the failure.
+     * @param reason  The reason of the failure.
      */
     @Override
     public void onCommandFailed(ICommand command, String reason) {

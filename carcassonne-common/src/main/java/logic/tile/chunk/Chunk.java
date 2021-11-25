@@ -2,12 +2,8 @@ package logic.tile.chunk;
 
 import logic.meeple.Meeple;
 import logic.tile.Tile;
-import logic.tile.TileEdge;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Represents a chunk of tiles.
@@ -26,6 +22,7 @@ public abstract class Chunk {
 
     /**
      * Gets the parent tile of this chunk.
+     *
      * @return The parent tile of this chunk.
      */
     public Tile getParent() {
@@ -34,6 +31,7 @@ public abstract class Chunk {
 
     /**
      * Gets the current chunk id.
+     *
      * @return The current chunk id.
      */
     public ChunkId getCurrentId() {
@@ -42,6 +40,7 @@ public abstract class Chunk {
 
     /**
      * Sets the current chunk id.
+     *
      * @param id The new chunk id.
      */
     public void setCurrentId(ChunkId id) {
@@ -50,14 +49,25 @@ public abstract class Chunk {
 
     /**
      * Gets the meeple on this chunk.
+     *
      * @return The meeple on this chunk.
      */
-    public Meeple getMeeple(){
+    public Meeple getMeeple() {
         return meeple;
     }
 
     /**
+     * Sets the meeple on this chunk.
+     *
+     * @param meeple The meeple to set.
+     */
+    public void setMeeple(Meeple meeple) {
+        this.meeple = meeple;
+    }
+
+    /**
      * Gets the chunk area of this chunk.
+     *
      * @return The chunk area of this chunk.
      */
     public ChunkArea getArea() {
@@ -66,22 +76,16 @@ public abstract class Chunk {
 
     /**
      * Sets the area of this chunk.
+     *
      * @param area The area to set.
      */
-    public void setArea(ChunkArea area){
+    public void setArea(ChunkArea area) {
         this.area = area;
     }
 
     /**
-     * Sets the meeple on this chunk.
-     * @param meeple The meeple to set.
-     */
-    public void setMeeple(Meeple meeple) {
-        this.meeple = meeple;
-    }
-
-    /**
      * Determines if this chunk has a meeple.
+     *
      * @return
      */
     public boolean hasMeeple() {
@@ -90,6 +94,7 @@ public abstract class Chunk {
 
     /**
      * Determines if this chunk is compatible with the given chunk.
+     *
      * @param chunk
      * @return
      */
@@ -97,12 +102,14 @@ public abstract class Chunk {
 
     /**
      * Gets the type of this chunk.
+     *
      * @return The type of this chunk.
      */
     public abstract ChunkType getType();
 
     /**
      * Encodes this chunk attributes into the given stream.
+     *
      * @param stream
      */
     public void encode(ByteOutputStream stream) {
@@ -116,6 +123,7 @@ public abstract class Chunk {
 
     /**
      * Decodes this chunk attributes from the given stream.
+     *
      * @param stream
      */
     public void decode(ByteInputStream stream) {

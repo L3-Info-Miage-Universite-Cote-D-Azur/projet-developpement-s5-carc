@@ -50,6 +50,7 @@ public class TcpClientSocket {
 
     /**
      * Reads data from the socket channel.
+     *
      * @param buffer The buffer to read data into.
      */
     public void read(ByteBuffer buffer) {
@@ -58,6 +59,7 @@ public class TcpClientSocket {
 
     /**
      * Writes data to the socket channel.
+     *
      * @param buffer The buffer to write data from.
      */
     public void write(ByteBuffer buffer) {
@@ -66,6 +68,7 @@ public class TcpClientSocket {
 
     /**
      * Sets the listener that is notified of socket events.
+     *
      * @param listener The listener to notify.
      */
     public void setListener(ITcpClientSocketListener listener) {

@@ -46,6 +46,7 @@ public class Tile {
 
     /**
      * Gets the tile's rotation.
+     *
      * @return The tile's rotation.
      */
     public TileRotation getRotation() {
@@ -63,6 +64,7 @@ public class Tile {
 
     /**
      * Gets the game the tile is in.
+     *
      * @return The game the tile is in.
      */
     public final Game getGame() {
@@ -71,6 +73,7 @@ public class Tile {
 
     /**
      * Gets the position of the tile.
+     *
      * @return The position of the tile.
      */
     public Vector2 getPosition() {
@@ -78,15 +81,8 @@ public class Tile {
     }
 
     /**
-     * Determines if the tile is on the board.
-     * @return True if the tile is on the board, false otherwise.
-     */
-    public boolean isOnBoard() {
-        return position != null;
-    }
-
-    /**
      * Sets the position of the tile.
+     *
      * @param position The position of the tile.
      */
     public void setPosition(Vector2 position) {
@@ -94,7 +90,17 @@ public class Tile {
     }
 
     /**
+     * Determines if the tile is on the board.
+     *
+     * @return True if the tile is on the board, false otherwise.
+     */
+    public boolean isOnBoard() {
+        return position != null;
+    }
+
+    /**
      * Gets the chunks in the tile.
+     *
      * @return The chunks in the tile.
      */
     public List<Chunk> getChunks() {
@@ -103,6 +109,7 @@ public class Tile {
 
     /**
      * Gets the chunk with the given id.
+     *
      * @param id The id of the chunk.
      * @return The chunk with the given id.
      */
@@ -112,7 +119,8 @@ public class Tile {
 
     /**
      * Sets the chunk with the given id.
-     * @param id The id of the chunk.
+     *
+     * @param id    The id of the chunk.
      * @param chunk The chunk to set.
      */
 
@@ -123,6 +131,7 @@ public class Tile {
 
     /**
      * Determines if the tile has the specified flag.
+     *
      * @param flag The flag to check.
      * @return True if the tile has the specified flag, false otherwise.
      */
@@ -132,7 +141,8 @@ public class Tile {
 
     /**
      * Checks if the chunks that are connected to the given tile chunks are compatible.
-     * @param tile The tile to check.
+     *
+     * @param tile           The tile to check.
      * @param edgeConnection The edge connection which is being checked.
      * @return True if the chunks are compatible, false otherwise.
      */
@@ -154,6 +164,7 @@ public class Tile {
 
     /**
      * Determines if the tile can be placed at the given position.
+     *
      * @param position The position to check.
      * @return True if the tile can be placed at the given position, false otherwise.
      */
@@ -177,6 +188,7 @@ public class Tile {
 
     /**
      * Tries to merge the chunk areas with the areas that are connected to the given edge.
+     *
      * @param neighborTile The tile to merge with.
      */
     public void mergeAreas(Tile neighborTile, TileEdge edgeConnection) {
@@ -225,6 +237,7 @@ public class Tile {
 
     /**
      * Gets the tile's config.
+     *
      * @return The tile's config.
      */
     public TileConfig getConfig() {
@@ -233,6 +246,7 @@ public class Tile {
 
     /**
      * Encodes the tile.
+     *
      * @param stream The stream to encode to.
      */
     public void encode(ByteOutputStream stream) {
@@ -252,6 +266,7 @@ public class Tile {
 
     /**
      * Decodes the tile.
+     *
      * @param stream The stream to decode from.
      */
     public void decode(ByteInputStream stream) {

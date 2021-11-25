@@ -5,10 +5,10 @@ import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
+import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
-import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +17,7 @@ class GameTest {
     private static final GameConfig config = GameConfig.loadFromResources();
 
     @Test
-    void testInitialState(){
+    void testInitialState() {
         Game game = new Game(config);
 
         assertEquals(config, game.getConfig());

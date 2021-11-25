@@ -23,6 +23,7 @@ public class GameCommandMessage extends Message {
 
     /**
      * Returns the message type.
+     *
      * @return the message type
      */
     @Override
@@ -32,6 +33,7 @@ public class GameCommandMessage extends Message {
 
     /**
      * Encodes the message attributes to the output stream.
+     *
      * @param stream the output stream
      */
     @Override
@@ -42,6 +44,7 @@ public class GameCommandMessage extends Message {
 
     /**
      * Decodes the message attributes from the input stream.
+     *
      * @param stream the input stream
      */
     @Override
@@ -52,6 +55,7 @@ public class GameCommandMessage extends Message {
 
     /**
      * Returns the command to be executed.
+     *
      * @return the command
      */
     public ICommand getCommand() {

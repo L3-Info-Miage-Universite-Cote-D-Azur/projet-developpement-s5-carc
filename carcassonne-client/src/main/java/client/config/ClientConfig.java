@@ -1,10 +1,7 @@
 package client.config;
 
 import excel.ExcelNode;
-import logic.config.GameConfig;
 
-import java.io.File;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 
@@ -41,6 +38,22 @@ public class ClientConfig {
     }
 
     /**
+     * Loads the client configuration from the resources.
+     *
+     * @return
+     */
+    public static ClientConfig loadFromResources() {
+        ExcelNode rootNode = null;
+        try {
+            String resourcePath = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
+            rootNode = ExcelNode.load(Path.of(resourcePath, "config.txt"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return new ClientConfig(rootNode);
+    }
+
+    /**
      * Returns the hostname of the server.
      *
      * @return the hostname of the server
@@ -74,20 +87,5 @@ public class ClientConfig {
      */
     public MatchConfig getMatchConfig() {
         return matchConfig;
-    }
-
-    /**
-     * Loads the client configuration from the resources.
-     * @return
-     */
-    public static ClientConfig loadFromResources() {
-        ExcelNode rootNode = null;
-        try {
-            String resourcePath = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
-            rootNode = ExcelNode.load(Path.of(resourcePath, "config.txt"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return new ClientConfig(rootNode);
     }
 }

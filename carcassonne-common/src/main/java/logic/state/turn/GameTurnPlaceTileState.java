@@ -48,6 +48,7 @@ public class GameTurnPlaceTileState extends GameState {
 
     /**
      * Returns the type of this state.
+     *
      * @return The type of this state.
      */
     @Override
@@ -57,6 +58,7 @@ public class GameTurnPlaceTileState extends GameState {
 
     /**
      * Returns the tile that is being drawn.
+     *
      * @return The tile that is being drawn.
      */
     public Tile getTileDrawn() {

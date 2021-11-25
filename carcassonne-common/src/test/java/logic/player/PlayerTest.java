@@ -5,10 +5,12 @@ import logic.config.GameConfig;
 import logic.tile.chunk.ChunkType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PlayerTest {
     private static final GameConfig config = GameConfig.loadFromResources();
+
     @Test
     void testAddScore() {
         Player player = new Player(1);
@@ -35,7 +37,7 @@ class PlayerTest {
         assertEquals(0, player.getMeeplesRemained());
 
         assertThrows(IllegalArgumentException.class, () -> {
-           player.addScore(-1, ChunkType.ABBEY);
+            player.addScore(-1, ChunkType.ABBEY);
         });
     }
 

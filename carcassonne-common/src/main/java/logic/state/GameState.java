@@ -21,12 +21,14 @@ public abstract class GameState {
 
     /**
      * Encodes the state to a byte stream.
+     *
      * @param stream The stream to encode to.
      */
     public abstract void encode(ByteOutputStream stream);
 
     /**
      * Decodes the state from a byte stream.
+     *
      * @param stream The stream to decode from.
      */
     public abstract void decode(ByteInputStream stream);
@@ -38,6 +40,7 @@ public abstract class GameState {
 
     /**
      * Returns the type of the state.
+     *
      * @return The type of the state.
      */
     public abstract GameStateType getType();

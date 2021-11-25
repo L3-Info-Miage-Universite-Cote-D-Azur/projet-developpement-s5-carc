@@ -31,6 +31,15 @@ public class Server {
     }
 
     /**
+     * Returns the server's instance.
+     *
+     * @return the server's instance
+     */
+    public static Server getInstance() {
+        return instance;
+    }
+
+    /**
      * Starts the server.
      */
     public void start() {
@@ -48,6 +57,7 @@ public class Server {
 
     /**
      * Returns the server's TCP server socket.
+     *
      * @return
      */
     public TcpServerSocket getServerSocket() {
@@ -56,6 +66,7 @@ public class Server {
 
     /**
      * Returns the server's client connection manager.
+     *
      * @return
      */
     public ClientConnectionManager getConnectionManager() {
@@ -64,6 +75,7 @@ public class Server {
 
     /**
      * Returns the server's game config.
+     *
      * @return
      */
     public GameConfig getGameConfig() {
@@ -72,6 +84,7 @@ public class Server {
 
     /**
      * Returns the server's matchmaking.
+     *
      * @return
      */
     public Matchmaking getMatchmaking(int matchCapacity) {
@@ -85,13 +98,5 @@ public class Server {
         }
 
         return matchmaking.get(matchCapacity);
-    }
-
-    /**
-     * Returns the server's instance.
-     * @return the server's instance
-     */
-    public static Server getInstance() {
-        return instance;
     }
 }

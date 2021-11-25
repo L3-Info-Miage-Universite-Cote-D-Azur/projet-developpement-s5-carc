@@ -21,6 +21,7 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
 
     /**
      * Handles the specified message if the handler is interested in it.
+     *
      * @param message The message to handle.
      */
     @Override
@@ -32,6 +33,7 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
 
     /**
      * Handles the server hello message from the server.
+     *
      * @param message The server hello message.
      */
     private void onServerHello(ServerHelloMessage message) {
@@ -72,6 +74,7 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
 
     /**
      * Gets whether the client is authenticated.
+     *
      * @return Whether the client is authenticated.
      */
     public boolean isAuthenticated() {
@@ -80,6 +83,7 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
 
     /**
      * Gets the user id.
+     *
      * @return The user id.
      */
     public int getUserId() {

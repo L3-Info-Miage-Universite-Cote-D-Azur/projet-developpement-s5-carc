@@ -17,6 +17,7 @@ public class TargetList {
 
     /**
      * Adds the given position to the pickable list.
+     *
      * @param entry The position to add.
      */
     public void add(TargetEntry entry) {
@@ -32,6 +33,7 @@ public class TargetList {
 
     /**
      * Returns the current pickable positions.
+     *
      * @return The current pickable positions.
      */
     public List<TargetEntry> getEntries() {
@@ -40,6 +42,7 @@ public class TargetList {
 
     /**
      * Picks the best position from the list.
+     *
      * @return The best position from the list.
      */
     public TargetEntry pick() {

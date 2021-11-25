@@ -10,6 +10,7 @@ import java.nio.channels.CompletionHandler;
 public class TcpConnectHandler implements CompletionHandler<Void, ITcpClientSocketListener> {
     /**
      * Invoked when the connection is established.
+     *
      * @param result
      * @param listener The listener of the socket.
      */
@@ -20,7 +21,8 @@ public class TcpConnectHandler implements CompletionHandler<Void, ITcpClientSock
 
     /**
      * Invoked when an error occurs.
-     * @param exc The exception.
+     *
+     * @param exc      The exception.
      * @param listener The listener of the socket.
      */
     @Override
