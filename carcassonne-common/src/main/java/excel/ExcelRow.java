@@ -70,9 +70,16 @@ public class ExcelRow {
     }
 
     public void writeToStringBuilder(StringBuilder sb, String separator) {
+        boolean first = true;
+
         for (String value : values) {
+            if (!first) {
+                sb.append(separator);
+            } else {
+                first = false;
+            }
+
             sb.append(value);
-            sb.append(separator);
         }
     }
 }

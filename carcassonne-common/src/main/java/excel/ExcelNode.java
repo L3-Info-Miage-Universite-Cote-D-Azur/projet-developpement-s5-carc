@@ -327,26 +327,29 @@ public class ExcelNode {
      */
     private void writeToStringBuilder(StringBuilder builder, int childIndex) {
         for (ExcelNode child : children) {
-            child.writeToStringBuilder(builder, childIndex + 1);
+            builder.append(child.name);
             builder.append("\n");
+            child.writeToStringBuilder(builder, childIndex + 1);
         }
 
-        appendBegin(builder, childIndex);
+        if (columns.size() != 0) {
+            appendBegin(builder, childIndex);
 
-        for (int i = 0; i < columns.size(); i++) {
-            if (i > 0) {
-                builder.append(CELL_SEPARATOR);
+            for (int i = 0; i < columns.size(); i++) {
+                if (i > 0) {
+                    builder.append(CELL_SEPARATOR);
+                }
+
+                builder.append(columns.get(i));
             }
 
-            builder.append(columns.get(i));
-        }
-
-        builder.append("\n");
-
-        for (ExcelRow row : rows) {
-            appendBegin(builder, childIndex);
-            row.writeToStringBuilder(builder, CELL_SEPARATOR);
             builder.append("\n");
+
+            for (ExcelRow row : rows) {
+                appendBegin(builder, childIndex);
+                row.writeToStringBuilder(builder, CELL_SEPARATOR);
+                builder.append("\n");
+            }
         }
     }
 

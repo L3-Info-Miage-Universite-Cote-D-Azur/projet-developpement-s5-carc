@@ -73,7 +73,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkType.TOWN, Color.ORANGE);
         put(ChunkType.ABBEY, Color.CYAN);
     }};
-    
+
     /**
      * Loads the images for the rendering and stores them in the image database.
      */

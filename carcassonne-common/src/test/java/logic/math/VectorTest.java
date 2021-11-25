@@ -50,4 +50,70 @@ class VectorTest {
         Vector2 vectorResult = vector1.add(vector0);
         assertEquals(vectorResult, vectorFinal);
     }
+
+    @Test
+    void testSubtract() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vector1 = new Vector2(50, 50);
+        Vector2 vectorFinal = new Vector2(50, 50);
+        Vector2 vectorResult = vector0.subtract(vector1);
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testSubtract2() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vector1 = new Vector2(50, 50);
+        Vector2 vectorFinal = new Vector2(50, 50);
+        Vector2 vectorResult = vector0.subtract(vector1.getX(), vector1.getY());
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testMultiply() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vector1 = new Vector2(50, 50);
+        Vector2 vectorFinal = new Vector2(5000, 5000);
+        Vector2 vectorResult = vector0.multiply(vector1);
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testMultiply2() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vector1 = new Vector2(50, 50);
+        Vector2 vectorFinal = new Vector2(5000, 5000);
+        Vector2 vectorResult = vector0.multiply(vector1.getX(), vector1.getY());
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testReverse() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vectorFinal = new Vector2(-100, -100);
+        Vector2 vectorResult = vector0.reverse();
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testReverseX() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vectorFinal = new Vector2(-100, 100);
+        Vector2 vectorResult = vector0.reverseX();
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testReverseY() {
+        Vector2 vector0 = new Vector2(100, 100);
+        Vector2 vectorFinal = new Vector2(100, -100);
+        Vector2 vectorResult = vector0.reverseY();
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
+    void testToString() {
+        Vector2 vector0 = new Vector2(100, 100);
+        assertEquals("Vector2(100, 100)", vector0.toString());
+    }
 }

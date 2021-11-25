@@ -51,6 +51,10 @@ public final class Vector2 {
         return new Vector2(this.x - vector.x, this.y - vector.y);
     }
 
+    public Vector2 multiply(Vector2 vector) {
+        return new Vector2(this.x * vector.x, this.y * vector.y);
+    }
+
     public Vector2 multiply(int x, int y) {
         return new Vector2(this.x * x, this.y * y);
     }
@@ -69,9 +73,6 @@ public final class Vector2 {
 
     @Override
     public String toString() {
-        return "Vector2{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "Vector2(" + x + ", " + y + ")";
     }
 }

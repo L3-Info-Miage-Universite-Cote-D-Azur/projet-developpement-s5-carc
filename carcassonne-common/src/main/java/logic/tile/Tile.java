@@ -99,15 +99,6 @@ public class Tile {
     }
 
     /**
-     * Gets the chunks in the tile.
-     *
-     * @return The chunks in the tile.
-     */
-    public List<Chunk> getChunks() {
-        return Arrays.stream(chunks).toList();
-    }
-
-    /**
      * Gets the chunk with the given id.
      *
      * @param id The id of the chunk.

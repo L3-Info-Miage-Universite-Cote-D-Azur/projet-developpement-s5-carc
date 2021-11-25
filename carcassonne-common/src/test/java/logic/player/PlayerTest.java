@@ -54,4 +54,20 @@ class PlayerTest {
         player.setGame(game);
         assertEquals(game, player.getGame());
     }
+
+    @Test
+    void testCompareTo() {
+        Player player1 = new Player(1);
+        Player player2 = new Player(2);
+
+        player1.addScore(10, ChunkType.ABBEY);
+        player2.addScore(10, ChunkType.ABBEY);
+
+        assertEquals(0, player1.compareTo(player2));
+
+        player2.addScore(10, ChunkType.ABBEY);
+
+        assertEquals(-10, player1.compareTo(player2));
+        assertEquals(10, player2.compareTo(player1));
+    }
 }

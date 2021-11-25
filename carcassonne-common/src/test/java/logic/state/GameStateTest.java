@@ -4,13 +4,10 @@ import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
 import logic.command.PlaceTileDrawnCommand;
-import logic.state.turn.GameTurnExtraActionState;
-import logic.state.turn.GameTurnPlaceTileState;
-import logic.state.turn.GameTurnWaitingMasterDataState;
+import logic.state.turn.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameStateTest {
     @Test
@@ -97,5 +94,19 @@ public class GameStateTest {
         assertEquals(GameOverState.class, game.getState().getClass());
     }
 
-
+    @Test
+    void testUncompleteableState() {
+        assertThrows(IllegalStateException.class, () -> {
+            new GameStartState(TestUtils.initGameEnv(2, false, false)).complete();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new GameOverState(TestUtils.initGameEnv(2, false, false)).complete();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new GameTurnInitState(TestUtils.initGameEnv(2, false, false)).complete();
+        });
+        assertThrows(IllegalStateException.class, () -> {
+            new GameTurnEndingState(TestUtils.initGameEnv(2, false, false)).complete();
+        });
+    }
 }

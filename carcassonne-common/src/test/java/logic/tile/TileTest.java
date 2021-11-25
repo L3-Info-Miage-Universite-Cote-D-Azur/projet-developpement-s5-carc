@@ -1,11 +1,12 @@
 package logic.tile;
 
 import logic.config.GameConfig;
+import logic.math.Vector2;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTest {
     @Test
@@ -43,5 +44,20 @@ public class TileTest {
         }
 
         assertEquals(originalChunkReferences[12], rotatedChunkReferences[12]);
+    }
+
+    @Test
+    void testIsOnBoard() {
+        Tile tile = new Tile(null, null);
+
+        assertFalse(tile.isOnBoard());
+
+        tile.setPosition(new Vector2(1, 2));
+        assertTrue(tile.isOnBoard());
+    }
+
+    @Test
+    void testArea() {
+        // TODO
     }
 }

@@ -6,8 +6,7 @@ import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MasterNextTurnDataCommandTest {
     @Test
@@ -20,6 +19,7 @@ public class MasterNextTurnDataCommandTest {
 
         game.getState().complete();
         game.getState().complete();
+
         assertTrue(game.getCommandExecutor().execute(new MasterNextTurnDataCommand(tile, game)));
     }
 
