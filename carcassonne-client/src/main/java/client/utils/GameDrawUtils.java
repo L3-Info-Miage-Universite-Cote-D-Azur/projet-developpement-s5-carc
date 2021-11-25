@@ -29,7 +29,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static final int meepleHeight = 27;
     private static final int extraWidth = 40;
     private static final int extraHeight = 40;
+
     private static final Random rand = new Random();
+
+    private static ImageDatabase tileDatabase;
+    private static ImageDatabase meepleDatabase;
+    private static ImageDatabase extraDatabase;
+
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
         put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
