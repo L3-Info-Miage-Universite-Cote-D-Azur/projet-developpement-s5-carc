@@ -79,8 +79,8 @@ public class ClientConfig {
     public static ClientConfig loadFromResources() {
         ExcelNode rootNode = null;
         try {
-            Path path = Path.of(ClientConfig.class.getResource("config.txt").toURI());
-            rootNode = ExcelNode.load(path);
+            String resourcePath = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
+            rootNode = ExcelNode.load(Path.of(resourcePath, "config.txt"));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
