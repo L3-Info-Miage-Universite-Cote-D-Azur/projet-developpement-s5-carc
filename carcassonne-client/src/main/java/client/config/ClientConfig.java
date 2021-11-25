@@ -4,6 +4,7 @@ import excel.ExcelNode;
 import logic.config.GameConfig;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 
@@ -73,15 +74,8 @@ public class ClientConfig {
 
     public static ClientConfig loadFromResources() {
         try {
-            File file = new File("config.txt");
-            System.out.println("0DEBUG EXIST : " + file.exists());
-            System.out.println("1DEBUG FILE : " + new File(file.getPath()).exists());
-            System.out.println("2DEBUG FILE : " + new File(file.getAbsolutePath()).exists());
-            System.out.println("3DEBUG FILE : " + file.getPath());
-            System.out.println("4DEBUG FILE : " + file.getAbsolutePath());
-            System.out.println("5DEBUG FILE : " + file.toPath().toString());
-            String path = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
-            ExcelNode rootNode = ExcelNode.load(Path.of(path, "config.txt"));
+            URI uri = ClientConfig.class.getResource("/client/config/config.txt").toURI();
+            ExcelNode rootNode = ExcelNode.load(Path.of(uri));
             return new ClientConfig(rootNode);
         } catch (URISyntaxException e) {
             e.printStackTrace();
