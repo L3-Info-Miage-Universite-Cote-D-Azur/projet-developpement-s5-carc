@@ -17,6 +17,8 @@ public class ServerTest {
 
         assertEquals(server, Server.getInstance());
         assertThrows(Exception.class, () -> new Server(SERVER_HOST, new Random().nextInt(10000) + 40000));
+
+        server.destroy();
     }
 
     @Test
@@ -32,5 +34,7 @@ public class ServerTest {
         assertEquals(1, server.getConnectionManager().count());
         server.stop();
         assertEquals(0, server.getConnectionManager().count());
+
+        server.destroy();
     }
 }
