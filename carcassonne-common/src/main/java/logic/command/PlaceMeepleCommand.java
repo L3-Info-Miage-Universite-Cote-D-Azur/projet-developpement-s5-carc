@@ -133,7 +133,6 @@ public class PlaceMeepleCommand implements ICommand {
         Chunk chunk = tile.getChunk(chunkId);
 
         chunk.setMeeple(new Meeple(player));
-        player.addScore(1, chunk.getType());
         player.increasePlayedMeeples();
         extraActionState.setPlacedMeeple();
 

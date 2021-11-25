@@ -1,9 +1,11 @@
 package logic.tile.chunk;
 
 import logic.board.GameBoard;
+import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -107,6 +109,7 @@ public class ChunkArea {
         // If yes, then the area is not closed as we can continue on the edge.
         closed = tiles.stream().allMatch(t -> {
             for (TileEdge edge : TileEdge.values()) {
+                // Check if we have a chunk from this tile that is on this edge.
                 if (Arrays.stream(edge.getChunkIds()).map(c -> t.getChunk(c)).anyMatch(c -> c.getArea() == this)) {
                     if (board.getTileAt(t.getPosition().add(edge.getValue())) == null) {
                         // We can continue on this edge -> not closed.
@@ -118,6 +121,29 @@ public class ChunkArea {
             // No edge can be continued -> Need to check the next tile.
             return true;
         });
+
+        if (closed) {
+            onAreaClosed();
+        }
+    }
+
+    /**
+     * Called when the area is closed.
+     */
+    private void onAreaClosed() {
+        List<Chunk> chunksWithMeeple = chunks.stream().filter(c -> c.hasMeeple()).toList();
+
+        if (chunksWithMeeple.size() >= 1) {
+            // TODO: Change score earn by chunk type.
+            Meeple meeple = chunksWithMeeple.get(0).getMeeple();
+            meeple.getOwner().addScore(tiles.size(), type);
+
+            /* As the area points are counted, we can remove the meeples from the area. */
+            for (Chunk chunk : chunksWithMeeple) {
+                meeple.getOwner().decreasePlayedMeeples();
+                chunk.setMeeple(null);
+            }
+        }
     }
 
     @Override
