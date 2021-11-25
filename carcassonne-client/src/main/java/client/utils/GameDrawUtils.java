@@ -73,10 +73,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkType.TOWN, Color.ORANGE);
         put(ChunkType.ABBEY, Color.CYAN);
     }};
-    private static ImageDatabase tileDatabase;
-    private static ImageDatabase meepleDatabase;
-    private static ImageDatabase extraDatabase;
-
+    
     /**
      * Loads the images for the rendering and stores them in the image database.
      */
