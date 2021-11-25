@@ -2,6 +2,9 @@ package stream;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Stream for reading primitive types from a byte array.
+ */
 public class ByteInputStream {
     private byte[] buf;
     private int pos;

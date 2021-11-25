@@ -51,6 +51,9 @@ public class Player implements Comparable {
         };
     }
 
+    /**
+     * Initializes the player to the default state.
+     */
     public void init() {
         roadScore = 0;
         townScore = 0;
@@ -97,8 +100,7 @@ public class Player implements Comparable {
     }
 
     /**
-     * Add a score to a scpecific chunk type
-     *
+     * Add a score to a specific chunk type.
      * @param value     The score to add
      * @param chunkType The chunk type
      * @throws IllegalArgumentException If the value to add is negative
@@ -133,33 +135,64 @@ public class Player implements Comparable {
         }
     }
 
+    /**
+     * Gets the road score
+     * @return the road score
+     */
     public int getRoadScore() {
         return roadScore;
     }
 
+    /**
+     * Gets the town score
+     * @return the town score
+     */
     public int getTownScore() {
         return townScore;
     }
 
+    /**
+     * Gets the abbey score
+     * @return the abbey score
+     */
     public int getAbbeyScore() {
         return abbeyScore;
     }
 
+    /**
+     * Gets the field score
+     * @return the field score
+     */
     public int getFieldPoints() {
         return fieldScore;
     }
 
+    /**
+     * Gets the meeples played
+     * @return the meeples played
+     */
     public int getMeeplesPlayed() {
         return meeplesPlayed;
     }
 
+    /**
+     * Decrements the meeples played.
+     */
     public void decreasePlayedMeeples() {
         meeplesPlayed--;
     }
+
+    /**
+     * Increments the meeples played.
+     */
     public void increasePlayedMeeples() {
         meeplesPlayed++;
     }
 
+    /**
+     * Gets the meeples left
+     * @return the meeples left
+     */
     public int getMeeplesRemained() {
         if (game == null) {
             return 0;
@@ -167,10 +200,18 @@ public class Player implements Comparable {
         return game.getConfig().startingMeepleCount - meeplesPlayed;
     }
 
+    /**
+     * Gets whether there are meeples left
+     * @return true if there are meeples left, false otherwise
+     */
     public boolean hasRemainingMeeples() {
         return getMeeplesRemained() >= 1;
     }
 
+    /**
+     * Encodes the player's attributes into the given output stream.
+     * @param stream the output stream
+     */
     public void encode(ByteOutputStream stream) {
         stream.writeInt(id);
         stream.writeInt(roadScore);
@@ -180,6 +221,10 @@ public class Player implements Comparable {
         stream.writeInt(meeplesPlayed);
     }
 
+    /**
+     * Decodes the player's attributes from the given input stream.
+     * @param stream the input stream
+     */
     public void decode(ByteInputStream stream) {
         id = stream.readInt();
         roadScore = stream.readInt();

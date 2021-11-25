@@ -2,6 +2,9 @@ package logic.tile.chunk;
 
 import logic.tile.Tile;
 
+/**
+ * Represents a road chunk.
+ */
 public class RoadChunk extends Chunk {
     public RoadChunk(Tile parent) {
         super(parent);

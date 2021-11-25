@@ -9,7 +9,7 @@ import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
 
 /**
- * Service that handles the authentication process with the server.
+ * Service that manages the authentication process with the server.
  */
 public class AuthenticationService extends ServiceBase implements IMessageHandler {
     private boolean authenticated;

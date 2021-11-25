@@ -10,7 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Represents a chunk of tiles. A chunk is a part of tile grid.
+ * Represents a chunk of tiles.
+ * A chunk is a part of tile grid.
  */
 public abstract class Chunk {
     private final Tile parent;

@@ -2,6 +2,9 @@ package logic.tile.chunk;
 
 import logic.tile.Tile;
 
+/**
+ * Represents an abbey chunk.
+ */
 public class AbbeyChunk extends Chunk {
     public AbbeyChunk(Tile parent) {
         super(parent);

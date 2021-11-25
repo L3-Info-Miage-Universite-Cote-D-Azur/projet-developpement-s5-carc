@@ -27,38 +27,74 @@ public class GameStatisticsPlayer {
         this.order = order;
     }
 
+    /**
+     * Gets the player's id.
+     * @return the player's id.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Gets the player's total score.
+     * @return the player's total score.
+     */
     public int getTotalScore() {
         return roadScore + townScore + abbeyScore + fieldScore;
     }
 
+    /**
+     * Gets the player's road score.
+     * @return the player's road score.
+     */
     public int getRoadScore() {
         return roadScore;
     }
 
+    /**
+     * Gets the player's town score.
+     * @return the player's town score.
+     */
     public int getTownScore() {
         return townScore;
     }
 
+    /**
+     * Gets the player's abbey score.
+     * @return the player's abbey score.
+     */
     public int getAbbeyScore() {
         return abbeyScore;
     }
 
+    /**
+     * Gets the player's field score.
+     * @return the player's field score.
+     */
     public int getFieldScore() {
         return fieldScore;
     }
 
+    /**
+     * Gets the player's remaining meeples.
+     * @return the player's remaining meeples.
+     */
     public int getRemainingMeeples() {
         return remainingMeeples;
     }
 
+    /**
+     * Gets the player's played meeples.
+     * @return the player's played meeples.
+     */
     public int getPlayedMeeples() {
         return playedMeeples;
     }
 
+    /**
+     * Gets the player's order in the ranking.
+     * @return the player's order in the ranking.
+     */
     public int getOrder() {
         return order;
     }

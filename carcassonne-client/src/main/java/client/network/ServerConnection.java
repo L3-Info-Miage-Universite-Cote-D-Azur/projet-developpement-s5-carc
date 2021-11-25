@@ -15,6 +15,9 @@ import stream.ByteOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+/**
+ * Class that manages the connection to the server.
+ */
 public class ServerConnection implements ITcpClientSocketListener {
     /**
      * Size of the buffer used to read data from the socket.

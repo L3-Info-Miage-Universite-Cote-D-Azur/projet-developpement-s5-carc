@@ -2,7 +2,7 @@ package logic.tile;
 
 import logic.Game;
 import logic.board.GameBoard;
-import logic.config.excel.TileExcelConfig;
+import logic.config.excel.TileConfig;
 import logic.math.Vector2;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkArea;
@@ -17,13 +17,14 @@ import java.util.List;
  * Represents a tile on the game board.
  */
 public class Tile {
+    private final TileConfig config;
+    private final Game game;
+
     private Vector2 position;
     private Chunk[] chunks;
-    private TileExcelConfig config;
-    private Game game;
     private TileRotation rotation;
 
-    public Tile(TileExcelConfig config, Game game) {
+    public Tile(TileConfig config, Game game) {
         chunks = new Chunk[ChunkId.values().length];
         this.config = config;
         this.game = game;
@@ -226,7 +227,7 @@ public class Tile {
      * Gets the tile's config.
      * @return The tile's config.
      */
-    public TileExcelConfig getConfig() {
+    public TileConfig getConfig() {
         return config;
     }
 

@@ -13,8 +13,8 @@ import java.util.*;
 /**
  * Represents a tile excel configuration.
  */
-public class TileExcelConfig {
-    public TileChunkExcelConfig[] chunks;
+public class TileConfig {
+    public TileChunkConfig[] chunks;
     public String model;
     public String expansion;
     public EnumSet<TileFlags> flags;
@@ -28,7 +28,7 @@ public class TileExcelConfig {
      * @param flags The flags of tile.
      * @param count The count of tile in the stack.
      */
-    public TileExcelConfig(TileChunkExcelConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
+    public TileConfig(TileChunkConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
         this.chunks = chunks;
         this.model = model;
         this.expansion = expansion;
@@ -40,7 +40,7 @@ public class TileExcelConfig {
      * Creates a tile excel configuration from the given excel node.
      * @param node The excel node.
      */
-    public TileExcelConfig(ExcelNode node) {
+    public TileConfig(ExcelNode node) {
         ExcelNode chunkExcel = node.getChild("Chunks");
         ExcelNode chunkTypesExcel = chunkExcel.getChild("Types");
         ExcelNode chunkReferencesExcel = chunkExcel.getChild("References");
@@ -62,12 +62,12 @@ public class TileExcelConfig {
             chunkTypes[chunkId.ordinal()] = ChunkType.valueOf(getCellValue(typeNode, chunkId));
         }
 
-        chunks = new TileChunkExcelConfig[ChunkId.values().length];
+        chunks = new TileChunkConfig[ChunkId.values().length];
 
         for (ChunkId chunkId : ChunkId.values()) {
             ChunkType type = chunkTypes[chunkId.ordinal()];
 
-            chunks[chunkId.ordinal()] = new TileChunkExcelConfig(type);
+            chunks[chunkId.ordinal()] = new TileChunkConfig(type);
         }
 
         HashMap<String, ArrayList<ChunkId>> zones = new HashMap<>();

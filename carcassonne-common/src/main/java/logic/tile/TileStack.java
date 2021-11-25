@@ -2,7 +2,7 @@ package logic.tile;
 
 import logic.Game;
 import logic.config.GameConfig;
-import logic.config.excel.TileExcelConfig;
+import logic.config.excel.TileConfig;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -43,7 +43,7 @@ public class TileStack {
      * @param config Configuration to fill the stack with.
      */
     public void fill(GameConfig config) {
-        for (TileExcelConfig tileConfig : config.tiles) {
+        for (TileConfig tileConfig : config.tiles) {
             for (int i = 0; i < tileConfig.count; i++) {
                 tiles.add(tileConfig.createTile(game));
             }

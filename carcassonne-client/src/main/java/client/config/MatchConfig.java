@@ -4,9 +4,17 @@ import excel.ExcelNode;
 
 /**
  * Represents the match configuration.
+ * It's used to know which match the client wants to play.
  */
 public class MatchConfig {
+    /**
+     * Number of matches to play.
+     */
     private final int numMatches;
+
+    /**
+     * Number of players per match.
+     */
     private final int numPlayers;
 
     public MatchConfig(int numMatches, int numPlayers) {

@@ -1,7 +1,7 @@
 package logic.config;
 
 import excel.ExcelNode;
-import logic.config.excel.TileExcelConfig;
+import logic.config.excel.TileConfig;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -13,12 +13,12 @@ import java.util.ArrayList;
  * Represents the game configuration.
  */
 public class GameConfig {
-    public ArrayList<TileExcelConfig> tiles;
+    public ArrayList<TileConfig> tiles;
     public int minPlayers;
     public int maxPlayers;
     public int startingMeepleCount;
 
-    public GameConfig(ArrayList<TileExcelConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
+    public GameConfig(ArrayList<TileConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
         this.tiles = tiles;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
@@ -53,7 +53,7 @@ public class GameConfig {
         try {
             String resourcePath = Path.of(GameConfig.class.getResource(".").toURI()).toString();
 
-            ArrayList<TileExcelConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
+            ArrayList<TileConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
             ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(resourcePath, "game.txt"));
 
             return new GameConfig(tiles,
@@ -71,18 +71,18 @@ public class GameConfig {
      * @param path the path to the tiles
      * @return the tiles configuration
      */
-    private static ArrayList<TileExcelConfig> loadTilesFromDirectory(String path) {
+    private static ArrayList<TileConfig> loadTilesFromDirectory(String path) {
         File root = new File(path);
 
         if (!root.isDirectory()) {
             throw new IllegalArgumentException("Path is not a directory");
         }
 
-        ArrayList<TileExcelConfig> tiles = new ArrayList<>();
+        ArrayList<TileConfig> tiles = new ArrayList<>();
 
         for (File file : root.listFiles()) {
             if (!file.isDirectory()) {
-                tiles.add(new TileExcelConfig(ExcelNode.load(file.toPath())));
+                tiles.add(new TileConfig(ExcelNode.load(file.toPath())));
             }
         }
 

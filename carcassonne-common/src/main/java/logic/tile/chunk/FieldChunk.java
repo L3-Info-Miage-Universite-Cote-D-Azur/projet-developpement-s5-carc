@@ -2,6 +2,9 @@ package logic.tile.chunk;
 
 import logic.tile.Tile;
 
+/**
+ * Represents a field chunk.
+ */
 public class FieldChunk extends Chunk {
     public FieldChunk(Tile parent) {
         super(parent);

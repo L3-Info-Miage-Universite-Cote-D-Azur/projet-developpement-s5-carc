@@ -10,6 +10,9 @@ import network.message.matchmaking.JoinMatchmakingMessage;
 import network.message.matchmaking.MatchmakingDataMessage;
 import network.message.matchmaking.MatchmakingFailedMessage;
 
+/**
+ * Service that manages the matchmaking process.
+ */
 public class MatchmakingService extends ServiceBase implements IMessageHandler {
     /**
      * Indicates if the client is currently in a matchmaking process.

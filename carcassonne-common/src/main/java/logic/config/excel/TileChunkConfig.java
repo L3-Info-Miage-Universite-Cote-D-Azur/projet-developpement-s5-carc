@@ -6,11 +6,11 @@ import logic.tile.Tile;
 /**
  * Represents a tile chunk excel configuration.
  */
-public class TileChunkExcelConfig {
+public class TileChunkConfig {
     private final ChunkType type;
     private TileChunkAreaConfig area;
 
-    public TileChunkExcelConfig(ChunkType type) {
+    public TileChunkConfig(ChunkType type) {
         this.type = type;
     }
 

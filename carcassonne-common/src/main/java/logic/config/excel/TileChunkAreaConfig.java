@@ -5,6 +5,9 @@ import logic.tile.chunk.ChunkType;
 
 import java.util.List;
 
+/**
+ * Contains the configuration attributes for a chunk area.
+ */
 public class TileChunkAreaConfig {
     private final ChunkType chunkType;
     private final List<ChunkId> chunkIds;

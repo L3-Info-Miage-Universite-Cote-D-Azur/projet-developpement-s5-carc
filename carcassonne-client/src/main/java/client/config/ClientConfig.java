@@ -76,6 +76,10 @@ public class ClientConfig {
         return matchConfig;
     }
 
+    /**
+     * Loads the client configuration from the resources.
+     * @return
+     */
     public static ClientConfig loadFromResources() {
         ExcelNode rootNode = null;
         try {

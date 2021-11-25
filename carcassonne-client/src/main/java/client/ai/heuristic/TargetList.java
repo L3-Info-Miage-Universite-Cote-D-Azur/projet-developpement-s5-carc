@@ -3,6 +3,10 @@ package client.ai.heuristic;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * List of targets with a maximum size.
+ * If the list is full, the less scored target is removed.
+ */
 public class TargetList {
     private static final int SIZE = 10;
     private final LinkedList<TargetEntry> entries;

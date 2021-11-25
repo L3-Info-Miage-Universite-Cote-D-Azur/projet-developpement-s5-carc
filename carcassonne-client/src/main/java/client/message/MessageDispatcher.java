@@ -1,25 +1,9 @@
 package client.message;
 
-import client.ai.SimpleAI;
-import client.command.MasterCommandExecutionNotifier;
-import client.listener.GameLogger;
-import client.logger.Logger;
 import client.network.ServerConnection;
-import logic.Game;
-import logic.command.CommandType;
-import logic.player.Player;
 import network.message.Message;
-import network.message.connection.ServerHelloMessage;
-import network.message.game.GameCommandMessage;
-import network.message.game.GameDataMessage;
-import network.message.game.GameResultMessage;
-import network.message.matchmaking.JoinMatchmakingMessage;
-import network.message.matchmaking.MatchmakingDataMessage;
-import network.message.matchmaking.MatchmakingFailedMessage;
-import stream.ByteInputStream;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Handles messages received from the server.

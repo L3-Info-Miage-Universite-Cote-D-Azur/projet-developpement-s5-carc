@@ -2,6 +2,9 @@ package stream;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Stream for writing primitive types to a byte array.
+ */
 public class ByteOutputStream {
     private byte[] buffer;
     private int index;

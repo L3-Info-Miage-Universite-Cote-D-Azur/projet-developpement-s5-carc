@@ -6,8 +6,6 @@ import java.util.Objects;
  * Represents a 2D vector (x,y).
  */
 public final class Vector2 {
-    public static final Vector2 ZERO = new Vector2(0, 0);
-
     private final int x;
     private final int y;
 
