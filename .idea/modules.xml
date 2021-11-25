@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/carcassonne-client/carcassonne-client.iml" filepath="$PROJECT_DIR$/carcassonne-client/carcassonne-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/carcassonne-common/carcassonne-common.iml" filepath="$PROJECT_DIR$/carcassonne-common/carcassonne-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/carcassonne-server/carcassonne-server.iml" filepath="$PROJECT_DIR$/carcassonne-server/carcassonne-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/projet-developpement-s5-blanc-chiappe-le-contel-rihet.iml" filepath="$PROJECT_DIR$/.idea/projet-developpement-s5-blanc-chiappe-le-contel-rihet.iml" />
     </modules>
   </component>
 </project>

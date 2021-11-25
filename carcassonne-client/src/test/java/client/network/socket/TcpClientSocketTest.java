@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TcpClientSocketTest {
-    private static final int ECHO_SERVER_PORT = new Random().nextInt(10000) + 40000;
+    private static final int ECHO_SERVER_PORT = 55555;
+    private static Semaphore semaphore = new Semaphore(0);
 
     @Test
     void testConnectionToServer() throws IOException, InterruptedException {
