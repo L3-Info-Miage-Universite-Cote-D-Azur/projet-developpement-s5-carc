@@ -42,6 +42,7 @@ public class ClientConfig {
 
     /**
      * Returns the hostname of the server.
+     *
      * @return the hostname of the server
      */
     public String getServerHost() {
@@ -50,6 +51,7 @@ public class ClientConfig {
 
     /**
      * Returns the port of the server.
+     *
      * @return the port of the server
      */
     public int getServerPort() {
@@ -58,6 +60,7 @@ public class ClientConfig {
 
     /**
      * Returns the logger configuration.
+     *
      * @return the logger configuration
      */
     public LoggerConfig getLoggerConfig() {
@@ -66,6 +69,7 @@ public class ClientConfig {
 
     /**
      * Returns the match configuration.
+     *
      * @return the match configuration
      */
     public MatchConfig getMatchConfig() {
@@ -73,13 +77,13 @@ public class ClientConfig {
     }
 
     public static ClientConfig loadFromResources() {
+        ExcelNode rootNode = null;
         try {
-            URI uri = ClientConfig.class.getResource("/client/config/config.txt").toURI();
-            ExcelNode rootNode = ExcelNode.load(Path.of(uri));
-            return new ClientConfig(rootNode);
+            Path path = Path.of(ClientConfig.class.getResource("config.txt").toURI());
+            rootNode = ExcelNode.load(path);
         } catch (URISyntaxException e) {
             e.printStackTrace();
-            return null;
         }
+        return new ClientConfig(rootNode);
     }
 }
