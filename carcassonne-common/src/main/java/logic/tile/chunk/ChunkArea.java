@@ -1,13 +1,12 @@
 package logic.tile.chunk;
 
 import logic.board.GameBoard;
+import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a chunk area.
@@ -41,7 +40,6 @@ public class ChunkArea {
         for (Chunk chunk : chunks) {
             chunk.setArea(this);
         }
-
     }
 
     /**
@@ -63,6 +61,14 @@ public class ChunkArea {
     }
 
     /**
+     * Gets the area type.
+     * @return The area type.
+     */
+    public ChunkType getType() {
+        return type;
+    }
+
+    /**
      * Returns whether the area is closed.
      *
      * @return True if the area is closed, false otherwise.
@@ -72,12 +78,21 @@ public class ChunkArea {
     }
 
     /**
+     * Checks if the given area can be merged.
+     * @param other The other area to merge with.
+     * @return True if the areas can be merged, false otherwise.
+     */
+    public boolean canBeMerged(ChunkArea other) {
+        return type == other.type;
+    }
+
+    /**
      * Merges two areas together.
      *
      * @param other The other area to merge with.
      */
     public void merge(ChunkArea other) {
-        if (other.type != type) {
+        if (!canBeMerged(other)) {
             throw new IllegalArgumentException("Cannot merge areas of different types.");
         }
 
@@ -88,52 +103,64 @@ public class ChunkArea {
             chunk.setArea(this);
         }
 
-        checkClosure();
+        updateClosure();
     }
 
     /**
-     * Called when the parent tile of the area is placed on the board.
+     * Updates the closure of the area.
      */
-    public void onBoard() {
-        checkClosure();
+    private void updateClosure() {
+        closed = checkClosed();
+
+        if (closed) {
+            onClosed();
+        }
     }
 
     /**
      * Checks if the area is closed.
+     * By default, it is closed if there are no free tile edges.
+     * @return True if the area is closed, false otherwise.
      */
-    private void checkClosure() {
-        if (closed) {
-            return;
-        }
+    protected boolean checkClosed() {
+        /* By default, the area is closed if there is no free tile edge. */
+        return !hasFreeTileEdge();
+    }
 
-        GameBoard board = tiles.iterator().next().getGame().getBoard();
+    /**
+     * Gets the remaining tile edges that can be used to continue the area.
+     * @return The remaining tile edges.
+     */
+    public int getFreeEdges() {
+        return getFreeEdges(tiles, chunks);
+    }
 
-        // Checks if we have a continuation of this area on any edge of the tiles.
-        // If yes, then the area is not closed as we can continue on the edge.
-        closed = tiles.stream().allMatch(t -> {
-            for (TileEdge edge : TileEdge.values()) {
-                // Check if we have a chunk from this tile that is on this edge.
-                if (Arrays.stream(edge.getChunkIds()).map(c -> t.getChunk(c)).anyMatch(c -> c.getArea() == this)) {
-                    if (board.getTileAt(t.getPosition().add(edge.getValue())) == null) {
-                        // We can continue on this edge -> not closed.
-                        return false;
-                    }
-                }
-            }
+    /**
+     * Gets the remaining tile edges that can be used to continue the area including the tile to place if we merge the given area.
+     * @return The remaining tile edges.
+     */
+    public int getFreeEdges(ChunkArea simulatedMergingArea) {
+        Set<Tile> tiles = new HashSet<>(this.tiles);
+        Set<Chunk> chunks = new HashSet<>(this.chunks);
 
-            // No edge can be continued -> Need to check the next tile.
-            return true;
-        });
+        tiles.addAll(simulatedMergingArea.tiles);
+        chunks.addAll(simulatedMergingArea.chunks);
 
-        if (closed) {
-            onAreaClosed();
-        }
+        return getFreeEdges(tiles, chunks);
+    }
+
+    /**
+     * Gets whether remaining tile edges can be used to continue the area.
+     * @return
+     */
+    private boolean hasFreeTileEdge() {
+        return getFreeEdges() >= 1;
     }
 
     /**
      * Called when the area is closed.
      */
-    private void onAreaClosed() {
+    private void onClosed() {
         List<Chunk> chunksWithMeeple = chunks.stream().filter(c -> c.hasMeeple()).toList();
 
         if (chunksWithMeeple.size() >= 1) {
@@ -147,6 +174,50 @@ public class ChunkArea {
                 chunk.setMeeple(null);
             }
         }
+    }
+
+    /**
+     * Gets whether the area has one or more meeples.
+     * @return
+     */
+    public boolean hasMeeple() {
+        for (Chunk chunk : chunks) {
+            if (chunk.hasMeeple()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Called when the parent tile of the area is placed on the board.
+     */
+    public void onBoard() {
+        updateClosure();
+    }
+
+    /**
+     * Gets the remaining tile edges that can be used to continue the area including the tile to place.
+     * @return The remaining tile edges.
+     */
+    private static int getFreeEdges(Set<Tile> tiles, Set<Chunk> chunks) {
+        int count = 0;
+
+        for (Tile tile : tiles) {
+            for (TileEdge edge : TileEdge.values()) {
+                // Check if we have a chunk from this tile that is on this edge.
+                if (Arrays.stream(edge.getChunkIds()).map(tile::getChunk).anyMatch(chunks::contains)) {
+                    Vector2 edgePos = tile.getPosition().add(edge.getValue());
+
+                    if (tiles.stream().noneMatch(t -> t.getPosition().equals(edgePos))) {
+                        // We can continue on this edge -> not closed.
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return count;
     }
 
     @Override

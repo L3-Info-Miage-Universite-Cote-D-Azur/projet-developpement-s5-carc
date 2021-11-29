@@ -54,41 +54,33 @@ public class SimpleAI extends AI {
      * @return The position to place the tile.
      */
     @Override
-    public Vector2 findPositionForTile(Tile tile) {
-        LinkedList<SelectableTilePosition> freePoints = findAllFreePositionsForTile(tile);
+    public TilePosition findPositionForTile(Tile tile) {
+        LinkedList<TilePosition> freePoints = findAllFreePositionsForTile(tile);
 
-        if (freePoints.size() == 0) {
+        if (freePoints.isEmpty()) {
             return null;
         }
 
-        SelectableTilePosition positionPicked = freePoints.get(random.nextInt(freePoints.size()));
-        tile.setRotation(positionPicked.rotation);
-
-        return positionPicked.position;
+        return freePoints.get(random.nextInt(freePoints.size()));
     }
 
-    private LinkedList<SelectableTilePosition> findAllFreePositionsForTile(Tile tile) {
+    /**
+     * Finds all free positions for the tile.
+     * @param tile The tile to find free positions for.
+     * @return A list of all free positions for the tile.
+     */
+    private LinkedList<TilePosition> findAllFreePositionsForTile(Tile tile) {
         GameBoard board = player.getGame().getBoard();
-        LinkedList<SelectableTilePosition> freePoints = new LinkedList<>();
+        LinkedList<TilePosition> freePoints = new LinkedList<>();
 
         for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
             tile.rotate();
 
             for (Vector2 freePosition : board.findFreePlacesForTile(tile)) {
-                freePoints.add(new SelectableTilePosition(freePosition, tile.getRotation()));
+                freePoints.add(new TilePosition(freePosition, tile.getRotation()));
             }
         }
 
         return freePoints;
-    }
-
-    private class SelectableTilePosition {
-        private final Vector2 position;
-        private final TileRotation rotation;
-
-        public SelectableTilePosition(Vector2 position, TileRotation rotation) {
-            this.position = position;
-            this.rotation = rotation;
-        }
     }
 }

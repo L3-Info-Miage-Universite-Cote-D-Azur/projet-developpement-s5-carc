@@ -10,6 +10,11 @@ public enum ChunkType {
     ROAD,
 
     /**
+     * The chunk contains a road end.
+     */
+    ROAD_END,
+
+    /**
      * The chunk contains a town.
      */
     TOWN,
@@ -23,9 +28,4 @@ public enum ChunkType {
      * The chunk contains a field.
      */
     FIELD,
-
-    /**
-     * The chunk contains a road end.
-     */
-    ROAD_END
 }

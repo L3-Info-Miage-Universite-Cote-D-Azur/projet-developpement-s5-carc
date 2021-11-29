@@ -1,29 +1,46 @@
 package client.ai.heuristic;
 
 import client.ai.AI;
+import client.ai.TilePosition;
+import client.ai.heuristic.evaluator.HeuristicMeeplePlacementEvaluator;
+import client.ai.heuristic.evaluator.HeuristicTileEvaluator;
+import client.ai.target.TargetList;
+import logic.Game;
 import logic.math.Vector2;
 import logic.player.Player;
 import logic.tile.Tile;
+import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
 
 /**
  * AI that uses a heuristic to determine the best move to make.
  */
 public class HeuristicAI extends AI {
     /**
-     * Threshold of the max area free edges before
-     * the area is not considered in closing status.
+     * Maximum number of entries in the target list picker.
      */
-    private static int AREA_CLOSING_THRESHOLD = 2;
+    private static int TARGET_LIST_MAX_SIZE = 100;
 
     /**
-     * Earned heuristic score when a tile can be placed
-     * on a free edge of a closing area status.
+     * Minimum of score to consider a meeple placement.
      */
-    private static int AREA_CLOSING_SCORE = 150;
+    private static int MEEPLE_PLACEMENT_MIN_SCORE = 10;
+
+    private final HeuristicTileEvaluator tileEvaluator;
+    private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
 
     public HeuristicAI(Player player) {
         super(player);
+
+        Game game = player.getGame();
+
+        if (player.getGame() == null) {
+            throw new IllegalArgumentException("Player must be in a game.");
+        }
+
+        this.tileEvaluator = new HeuristicTileEvaluator(game);
+        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game);
     }
 
     /**
@@ -33,24 +50,45 @@ public class HeuristicAI extends AI {
      * @return
      */
     @Override
-    protected Vector2 findPositionForTile(Tile tile) {
-        return null;
-    }
+    protected TilePosition findPositionForTile(Tile tile) {
+        TargetList<TilePosition> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
 
-    @Override
-    protected Chunk pickChunkToPlaceMeeple() {
-        return null;
+        for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
+            tile.rotate();
+            TileRotation rotation = tile.getRotation();
+
+            for (Vector2 freePlace : getGame().getBoard().findFreePlacesForTile(tile)) {
+                targetList.add(new TilePosition(freePlace, rotation), tileEvaluator.evaluate(tile, freePlace));
+            }
+        }
+
+        return targetList.pick();
     }
 
     /**
-     * Calculates the heuristic score for the given tile.
+     * Picks a tile's chunk where the meeple can be placed.
+     * Returns null if no chunk should be placed.
      *
-     * @param tile The tile to calculate the score for.
-     * @return The heuristic score.
+     * @return The chunk where the meeple can be placed.
      */
-    private int calculateHeuristicScore(Tile tile) {
-        int score = 0;
-        // TODO
-        return score;
+    @Override
+    protected Chunk pickChunkToPlaceMeeple() {
+        TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
+
+        for (Tile tile : getGame().getBoard().getTiles()) {
+            for (ChunkId chunkId : ChunkId.values()) {
+                Chunk chunk = tile.getChunk(chunkId);
+
+                if (!chunk.getArea().hasMeeple()) {
+                    int score = meeplePlacementEvaluator.evaluate(chunk);
+
+                    if (score >= MEEPLE_PLACEMENT_MIN_SCORE) {
+                        targetList.add(chunk, score);
+                    }
+                }
+            }
+        }
+
+        return targetList.pick();
     }
 }

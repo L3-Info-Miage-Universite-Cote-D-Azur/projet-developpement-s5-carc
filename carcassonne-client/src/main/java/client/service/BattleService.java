@@ -2,6 +2,7 @@ package client.service;
 
 import client.Client;
 import client.ai.SimpleAI;
+import client.ai.heuristic.HeuristicAI;
 import client.command.MasterCommandExecutionNotifier;
 import client.listener.GameLogger;
 import client.logger.Logger;
@@ -72,7 +73,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         Player ownPlayer = gameView.getPlayerById(client.getAuthenticationService().getUserId());
 
         if (ownPlayer != null) {
-            ownPlayer.setListener(new SimpleAI(ownPlayer));
+            ownPlayer.setListener(new HeuristicAI(ownPlayer));
         } else {
             Logger.warn(LoggerCategory.SERVICE, "Own player not found!");
         }

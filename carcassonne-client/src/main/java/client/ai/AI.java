@@ -1,10 +1,10 @@
 package client.ai;
 
+import logic.Game;
 import logic.command.EndTurnCommand;
 import logic.command.PlaceMeepleCommand;
 import logic.command.PlaceTileDrawnCommand;
 import logic.command.RotateTileDrawnCommand;
-import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceTileState;
@@ -28,10 +28,10 @@ public abstract class AI implements IPlayerListener {
     public void onWaitingPlaceTile() {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) player.getGame().getState();
         Tile tileDrawn = placeTileState.getTileDrawn();
-        Vector2 position = findPositionForTile(tileDrawn);
+        TilePosition position = findPositionForTile(tileDrawn);
 
-        player.getGame().getCommandExecutor().execute(new RotateTileDrawnCommand(tileDrawn.getRotation()));
-        player.getGame().getCommandExecutor().execute(new PlaceTileDrawnCommand(position));
+        player.getGame().getCommandExecutor().execute(new RotateTileDrawnCommand(position.getRotation()));
+        player.getGame().getCommandExecutor().execute(new PlaceTileDrawnCommand(position.getPosition()));
     }
 
     /**
@@ -58,12 +58,20 @@ public abstract class AI implements IPlayerListener {
     }
 
     /**
+     * Gets the game's instance.
+     * @return The game's instance.
+     */
+    public Game getGame() {
+        return player.getGame();
+    }
+
+    /**
      * Finds a position for the given tile.
      *
      * @param tile The tile to find a position for.
      * @return The position where the tile can be placed.
      */
-    protected abstract Vector2 findPositionForTile(Tile tile);
+    protected abstract TilePosition findPositionForTile(Tile tile);
 
     /**
      * Picks a tile's chunk where the meeple can be placed.
