@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GameStatisticsService extends ServiceBase {
     private static final String SAVE_DIRECTORY = "stats";
     private static final String DETAILS_FILENAME = "game_details_%d.txt";
-    private static final String VIEW_FILENAME = "game_view_%d.png";
+    private static final String VIEW_FILENAME = "game_view_%d.jpg";
 
     private final ArrayList<GameStatistics> statistics;
 

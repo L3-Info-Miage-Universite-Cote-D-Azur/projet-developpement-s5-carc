@@ -208,20 +208,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
     }
 
     /**
-     * Draw a chunk
-     *
-     * @param g            The graphics to draw into
-     * @param tilePosition The position of the tile associated with the chunk
-     * @param chunkType    The type of the chunk to draw
-     * @param chunkId      The id of the chunk to draw
-     */
-    private static void drawChunk(Graphics g, Vector2 tilePosition, ChunkType chunkType, ChunkId chunkId) {
-        g.setColor(modifyAlphaColor(chunksColor.get(chunkType), 0.5f));
-        Polygon polygon = chunksGeo.get(chunkId);
-        g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
-    }
-
-    /**
      * Draw zone with a unique color
      *
      * @param g            The graphics to draw into
@@ -233,7 +219,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         ChunkArea chunkArea = chunk.getArea();
 
         if (!colorZone.containsKey(chunkArea))
-            colorZone.put(chunkArea, generateColor(0.5f));
+            colorZone.put(chunkArea, generateColor(0.35f));
 
         g.setColor(colorZone.get(chunkArea));
         Polygon polygon = chunksGeo.get(chunk.getCurrentId());
@@ -273,17 +259,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
         float g = rand.nextFloat();
         float b = rand.nextFloat();
         return new Color(r, g, b, opacity);
-    }
-
-    /**
-     * Modify the opacity of a color
-     *
-     * @param color   The color to change opacity of
-     * @param opacity The opacity wanted (0-1)
-     * @return the color with the new opacity
-     */
-    public static Color modifyAlphaColor(Color color, float opacity) {
-        return new Color(color.getRed(), color.getGreen(), color.getBlue(), opacity);
     }
 
     /**
@@ -335,7 +310,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     public static BufferedImage createLayer(Game game, Bounds boardBounds) {
         Bounds layerBounds = boardBounds.scale(tileWidth, tileHeight).reverseY();
-        BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D layerGraphics = layer.createGraphics();
         render(game, layerGraphics, layerBounds);
@@ -370,9 +345,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
 
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
-
-                // Show chunk
-                //drawChunk(graphics, tileImagePosition, chunk.getType(), chunkId);
 
                 // Show zones
                 drawZone(graphics, tileImagePosition, chunk, colorZone);

@@ -90,7 +90,7 @@ public class GameStatistics {
         synchronized (writeLock) {
             try {
                 createDetailsExcel().saveToFile(detailsFile);
-                ImageIO.write(boardView, "png", viewFile);
+                ImageIO.write(boardView, "jpg", viewFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }
