@@ -259,7 +259,11 @@ public class GameBoard {
 
         for (int i = 0; i < tileCount; i++) {
             Tile tile = ByteStreamHelper.decodeTile(stream, game);
-            place(tile);
+            tiles.put(tile.getPosition(), tile);
+        }
+
+        for (Tile tile : tiles.values()) {
+            tile.onBoard();
         }
     }
 }

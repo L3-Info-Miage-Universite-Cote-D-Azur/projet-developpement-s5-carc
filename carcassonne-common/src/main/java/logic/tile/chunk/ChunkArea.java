@@ -1,6 +1,5 @@
 package logic.tile.chunk;
 
-import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
@@ -124,7 +123,7 @@ public class ChunkArea {
      */
     protected boolean checkClosed() {
         /* By default, the area is closed if there is no free tile edge. */
-        return !hasFreeTileEdge();
+        return !hasFreeEdge();
     }
 
     /**
@@ -153,7 +152,7 @@ public class ChunkArea {
      * Gets whether remaining tile edges can be used to continue the area.
      * @return
      */
-    private boolean hasFreeTileEdge() {
+    private boolean hasFreeEdge() {
         return getFreeEdges() >= 1;
     }
 

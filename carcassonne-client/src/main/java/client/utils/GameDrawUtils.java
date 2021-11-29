@@ -163,7 +163,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
             maxY = Math.max(maxY, y);
         }
 
-        return new Bounds(minX, minY, maxX, maxY);
+        return new Bounds(minX - 2, minY - 2, maxX + 2, maxY + 2);
     }
 
     /**

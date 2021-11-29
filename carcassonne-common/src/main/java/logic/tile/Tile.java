@@ -276,7 +276,10 @@ public class Tile {
     @Override
     public String toString() {
         return "Tile{" +
-                "chunks=" + Arrays.toString(chunks) +
+                "position=" + position +
+                ", model=" + config.model +
+                ", rotation=" + rotation +
+                // ", chunks=" + Arrays.toString(chunks) +
                 ", flags=" + config.flags +
                 '}';
     }
