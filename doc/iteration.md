@@ -57,10 +57,11 @@ Voici nos super itérations pour notre super projet !
 - Livraison 7
   - Ajout de fonctionnalités de jeu
     - Ajout des princesses
-    - Ajout des nouvelles tuiles "Abbaye dans la ville", "Tunnel" et "Portail Magique"
     - Ajout du dragon et volcan
+    - Ajout du comptage des points à la fin de la partie
+  - Ajout d'une IA semi-logique
 
 - Livraison 8
   - Ajout de fonctionnalités de jeu
     - Ajout des tuiles marquées par le dragon
-  - Ajout d'une IA semi-logique
+    - Ajout des nouvelles tuiles "Abbaye dans la ville", "Tunnel" et "Portail Magique"
