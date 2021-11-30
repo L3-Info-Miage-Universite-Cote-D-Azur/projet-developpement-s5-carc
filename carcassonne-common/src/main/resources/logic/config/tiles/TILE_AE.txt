@@ -5,7 +5,7 @@ Chunks
 		FIELD				FIELD
 		FIELD		VOLCANO		FIELD
 		FIELD				FIELD
-			FIELD	FIELD	FIELD
+			FIELD	FIELD	FIELD	
 	References					
 		Name				
 			A	A	A	
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AE				
 	Expansion					
-	Flags	NONE				
+	Flags					
 	Count	1				

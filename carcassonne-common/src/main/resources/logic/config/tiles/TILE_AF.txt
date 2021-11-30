@@ -5,7 +5,7 @@ Chunks
 		FIELD				FIELD
 		FIELD		ROAD		VOLCANO
 		FIELD				FIELD
-			FIELD	ROAD	FIELD
+			FIELD	ROAD	FIELD	
 	References					
 		Name				
 			C	A	C	
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AF				
 	Expansion					
-	Flags	NONE				
+	Flags					
 	Count	1				
