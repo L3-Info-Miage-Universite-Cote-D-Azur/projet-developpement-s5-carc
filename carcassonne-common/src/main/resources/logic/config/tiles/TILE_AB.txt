@@ -5,14 +5,14 @@ Chunks
 		FIELD				TOWN
 		FIELD		FIELD		TOWN
 		FIELD				TOWN
-			TOWN	TOWN	TOWN
+			TOWN	TOWN	TOWN	
 	References					
 		Name				
-			C	C	C	
-		A				C
-		A		A		C
-		A				C
-			C	C	C	
+			A	A	A	
+		B				D
+		B		C		D
+		B				D
+			D	D	D	
 Data						
 	Name	Value				
 	Model	AB				

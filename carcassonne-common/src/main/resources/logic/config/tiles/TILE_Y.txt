@@ -13,7 +13,7 @@ Chunks
 		A		A		B
 		A				C
 			C	B	C	
-Data						
+Data
 	Name	Value				
 	Model	Y				
 	Expansion					
