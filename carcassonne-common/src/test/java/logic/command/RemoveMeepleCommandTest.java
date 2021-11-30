@@ -15,7 +15,6 @@ class RemoveMeepleCommandTest {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new RemoveMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
     }
 }

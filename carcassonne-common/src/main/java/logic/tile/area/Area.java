@@ -13,12 +13,11 @@ import java.util.*;
  * Represents a chunk area.
  * It contains the list of chunks in the area.
  */
-public class Area {
+public abstract class Area {
     private static int uniqueId;
 
     private final HashSet<Chunk> chunks;
     private final HashSet<Tile> tiles;
-    private final ChunkType type;
     private final int id;
 
     private boolean closed;
@@ -29,7 +28,6 @@ public class Area {
     public Area(List<Chunk> chunks) {
         Chunk firstChunk = chunks.get(0);
 
-        this.type = firstChunk.getType();
         this.chunks = new HashSet<>(chunks);
 
         id = uniqueId++;
@@ -65,9 +63,14 @@ public class Area {
      * Gets the area type.
      * @return The area type.
      */
-    public ChunkType getType() {
-        return type;
-    }
+    public abstract ChunkType getType();
+
+    /**
+     * Checks if the given area can be merged.
+     * @param other The other area to merge with.
+     * @return True if the areas can be merged, false otherwise.
+     */
+    public abstract boolean canBeMerged(Area other);
 
     /**
      * Returns whether the area is closed.
@@ -76,15 +79,6 @@ public class Area {
      */
     public boolean isClosed() {
         return closed;
-    }
-
-    /**
-     * Checks if the given area can be merged.
-     * @param other The other area to merge with.
-     * @return True if the areas can be merged, false otherwise.
-     */
-    public boolean canBeMerged(Area other) {
-        return type == other.type;
     }
 
     /**
@@ -167,7 +161,7 @@ public class Area {
         if (chunksWithMeeple.size() >= 1) {
             // TODO: Change score earn by chunk type.
             Meeple meeple = chunksWithMeeple.get(0).getMeeple();
-            meeple.getOwner().addScore(tiles.size(), type);
+            meeple.getOwner().addScore(tiles.size(), getType());
 
             /* As the area points are counted, we can remove the meeples from the area. */
             for (Chunk chunk : chunksWithMeeple) {
@@ -201,7 +195,7 @@ public class Area {
      * Gets the remaining tile edges that can be used to continue the area including the tile to place.
      * @return The remaining tile edges.
      */
-    private static int getFreeEdges(Set<Tile> tiles, Set<Chunk> chunks) {
+    protected int getFreeEdges(Set<Tile> tiles, Set<Chunk> chunks) {
         int count = 0;
 
         for (Tile tile : tiles) {

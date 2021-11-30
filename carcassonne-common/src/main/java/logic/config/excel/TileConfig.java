@@ -4,7 +4,7 @@ import excel.ExcelNode;
 import logic.Game;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
-import logic.tile.area.Area;
+import logic.tile.area.AreaFactory;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
@@ -193,7 +193,7 @@ public class TileConfig {
         }
 
         for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
-            new Area(areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList());
+            AreaFactory.create((areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList()));
         }
 
         return tile;

@@ -52,7 +52,7 @@ public abstract class AI implements IPlayerListener {
             Chunk chunk = pickChunkToPlaceMeeple();
 
             if (chunk != null) {
-                player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent(), chunk.getCurrentId()));
+                player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getCurrentId()));
             }
         }
     }

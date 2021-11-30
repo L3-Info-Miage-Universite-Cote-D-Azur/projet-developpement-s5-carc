@@ -59,7 +59,7 @@ public class TestUtils {
 
         @Override
         public void onWaitingExtraAction() {
-            game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]));
+            game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.values()[random.nextInt(ChunkId.values().length)]));
             game.getCommandExecutor().execute(new EndTurnCommand());
         }
 

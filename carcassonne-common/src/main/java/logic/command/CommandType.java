@@ -6,10 +6,9 @@ package logic.command;
 public enum CommandType {
     PLACE_TILE_DRAWN(1, PlaceTileDrawnCommand.class),
     PLACE_MEEPLE(2, PlaceMeepleCommand.class),
-    REMOVE_MEEPLE(3, RemoveMeepleCommand.class),
-    END_TURN(4, EndTurnCommand.class),
-    MASTER_NEXT_TURN_DATA(5, MasterNextTurnDataCommand.class),
-    ROTATE_TILE_DRAWN(6, RotateTileDrawnCommand.class);
+    END_TURN(3, EndTurnCommand.class),
+    MASTER_NEXT_TURN_DATA(4, MasterNextTurnDataCommand.class),
+    ROTATE_TILE_DRAWN(5, RotateTileDrawnCommand.class);
 
     private final int id;
     private final Class<? extends ICommand> commandClass;

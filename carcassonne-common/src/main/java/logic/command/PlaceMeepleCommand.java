@@ -16,25 +16,12 @@ import stream.ByteOutputStream;
  * Command to place a meeple on a tile.
  */
 public class PlaceMeepleCommand implements ICommand {
-    private Vector2 tilePosition;
     private ChunkId chunkId;
 
     public PlaceMeepleCommand() {
     }
 
-    public PlaceMeepleCommand(Tile tile, ChunkId chunkId) {
-        this.tilePosition = tile.getPosition();
-        this.chunkId = chunkId;
-    }
-
-    /**
-     * Constructor PlaceMeepleCommand
-     *
-     * @param tilePosition
-     * @param chunkId
-     */
-    public PlaceMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
-        this.tilePosition = tilePosition;
+    public PlaceMeepleCommand(ChunkId chunkId) {
         this.chunkId = chunkId;
     }
 
@@ -55,8 +42,6 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        stream.writeInt(tilePosition.getX());
-        stream.writeInt(tilePosition.getY());
         stream.writeInt(chunkId.ordinal());
     }
 
@@ -67,7 +52,6 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        tilePosition = new Vector2(stream.readInt(), stream.readInt());
         chunkId = ChunkId.values()[stream.readInt()];
     }
 
@@ -92,25 +76,12 @@ public class PlaceMeepleCommand implements ICommand {
             return false;
         }
 
-        Tile tile = game.getBoard().getTileAt(tilePosition);
-
-        if (tile == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist.");
-            return false;
-        }
-
+        Tile tile = extraActionState.getTileDrawn();
         Chunk chunk = tile.getChunk(chunkId);
 
-        if (chunk.hasMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk %s already has a meeple.", chunkId);
+        if (chunk.getArea().hasMeeple()) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Meeple already present in the area.");
             return false;
-        }
-
-        for (Chunk chunkInArea : chunk.getArea().getChunks()) {
-            if (chunkInArea.hasMeeple()) {
-                game.getCommandExecutor().getListener().onCommandFailed(this, "Meeple already present in the area.");
-                return false;
-            }
         }
 
         return true;
@@ -136,7 +107,7 @@ public class PlaceMeepleCommand implements ICommand {
     public void execute(Game game) {
         GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
         Player player = game.getTurnExecutor();
-        Tile tile = game.getBoard().getTileAt(tilePosition);
+        Tile tile = extraActionState.getTileDrawn();
         Chunk chunk = tile.getChunk(chunkId);
 
         chunk.setMeeple(new Meeple(player));
