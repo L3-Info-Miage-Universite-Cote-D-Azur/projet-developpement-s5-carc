@@ -2,7 +2,11 @@ package logic.dragon;
 
 import logic.board.GameBoard;
 import logic.math.Vector2;
+import logic.tile.Direction;
+import logic.tile.Tile;
 import logic.tile.TileFlags;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -37,6 +41,25 @@ public final class Dragon {
         }
 
         path.add(position);
+        checkAreas();
+    }
+
+    /**
+     * Removes the meeple in the areas of the dragon.
+     */
+    private void checkAreas() {
+        Tile tile = board.getTileAt(getPosition());
+
+        if (!tile.hasFlag(TileFlags.PRINCESS)) {
+            for (ChunkId chunkId : ChunkId.values()) {
+                Chunk chunk = tile.getChunk(chunkId);
+
+                if (chunk.hasMeeple()) {
+                    chunk.getMeeple().getOwner().decreasePlayedMeeples();
+                    chunk.setMeeple(null);
+                }
+            }
+        }
     }
 
     /**
@@ -45,15 +68,6 @@ public final class Dragon {
      */
     public Vector2 getPosition() {
         return path.get(path.size() - 1);
-    }
-
-    /**
-     * Gets whether it has moved to the specified position.
-     * @param position the position to check
-     * @return
-     */
-    public boolean hasMovedAt(Vector2 position) {
-        return path.contains(position);
     }
 
     /**
@@ -73,19 +87,15 @@ public final class Dragon {
     public boolean isBlocked() {
         Vector2 position = getPosition();
 
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) {
-                    continue;
-                }
+        for (Direction direction : Direction.values()) {
+            Vector2 movePosition = position.add(direction.value());
 
-                if (canMoveTo(position.add(new Vector2(i, j)))) {
-                    return true;
-                }
+            if (canMoveTo(movePosition)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     /**

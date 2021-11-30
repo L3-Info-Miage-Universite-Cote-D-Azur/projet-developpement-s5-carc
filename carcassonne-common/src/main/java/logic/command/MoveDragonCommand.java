@@ -98,5 +98,6 @@ public class MoveDragonCommand implements ICommand {
     public void execute(Game game) {
         Dragon dragon = game.getBoard().getDragon();
         dragon.moveTo(dragon.getPosition().add(direction.value()));
+        game.getState().complete();
     }
 }

@@ -25,6 +25,8 @@ public class GameTurnMoveDragonState extends GameState {
             if (board.getDragon().isBlocked()) {
                 board.destructDragon();
                 complete();
+            } else {
+                game.getTurnExecutor().getListener().onWaitingDragonMove();
             }
         } else {
             complete();
