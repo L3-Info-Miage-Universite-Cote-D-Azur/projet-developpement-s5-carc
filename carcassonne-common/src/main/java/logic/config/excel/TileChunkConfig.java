@@ -2,7 +2,6 @@ package logic.config.excel;
 
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkFactory;
 import logic.tile.chunk.ChunkType;
 
 /**
@@ -38,6 +37,6 @@ public class TileChunkConfig {
      * @return The tile chunk.
      */
     public Chunk createChunk(Tile tile) {
-        return ChunkFactory.createByType(type, tile);
+        return new Chunk(type, tile);
     }
 }
