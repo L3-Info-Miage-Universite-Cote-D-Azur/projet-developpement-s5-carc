@@ -1,6 +1,7 @@
 package logic.board;
 
 import logic.Game;
+import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
@@ -28,6 +29,12 @@ public class GameBoard {
      * Collection of all the tiles on the board.
      */
     private final HashMap<Vector2, Tile> tiles;
+
+    /**
+     * Current dragon that is on the board.
+     * Null if there is no dragon on the board.
+     */
+    private Dragon dragon;
 
     public GameBoard() {
         this.tiles = new HashMap<>();
@@ -232,6 +239,24 @@ public class GameBoard {
      */
     public List<Tile> getTiles() {
         return tiles.values().stream().toList();
+    }
+
+    /**
+     * Returns whether the board has a dragon.
+     *
+     * @return true if the board has a dragon, false otherwise
+     */
+    public boolean hasDragon() {
+        return dragon != null;
+    }
+
+    /**
+     * Gets the current dragon on the board.
+     *
+     * @return the current dragon on the board
+     */
+    public Dragon getDragon() {
+        return dragon;
     }
 
     /**

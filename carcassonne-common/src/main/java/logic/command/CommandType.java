@@ -8,7 +8,8 @@ public enum CommandType {
     PLACE_MEEPLE(2, PlaceMeepleCommand.class),
     END_TURN(3, EndTurnCommand.class),
     MASTER_NEXT_TURN_DATA(4, MasterNextTurnDataCommand.class),
-    ROTATE_TILE_DRAWN(5, RotateTileDrawnCommand.class);
+    ROTATE_TILE_DRAWN(5, RotateTileDrawnCommand.class),
+    MOVE_DRAGON(6, MoveDragonCommand.class);
 
     private final int id;
     private final Class<? extends ICommand> commandClass;
