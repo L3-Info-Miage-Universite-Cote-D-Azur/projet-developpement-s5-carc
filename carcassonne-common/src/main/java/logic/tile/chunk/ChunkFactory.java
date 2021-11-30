@@ -20,6 +20,7 @@ public class ChunkFactory {
             case ABBEY -> new AbbeyChunk(parent);
             case FIELD -> new FieldChunk(parent);
             case ROAD_END -> new RoadEndChunk(parent);
+            case VOLCANO -> new VolcanoChunk(parent);
         };
     }
 }

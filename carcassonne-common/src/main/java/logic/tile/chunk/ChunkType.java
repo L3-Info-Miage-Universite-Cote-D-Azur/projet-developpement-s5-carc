@@ -28,4 +28,9 @@ public enum ChunkType {
      * The chunk contains a field.
      */
     FIELD,
+
+    /**
+     * The chunk contains a volcano.
+     */
+    VOLCANO,
 }
