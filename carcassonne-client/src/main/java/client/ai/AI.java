@@ -1,10 +1,7 @@
 package client.ai;
 
 import logic.Game;
-import logic.command.PlaceMeepleCommand;
-import logic.command.PlaceTileDrawnCommand;
-import logic.command.RotateTileDrawnCommand;
-import logic.command.SkipMeeplePlacementCommand;
+import logic.command.*;
 import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
@@ -56,7 +53,13 @@ public abstract class AI implements IPlayerListener {
      */
     @Override
     public void onWaitingDragonMove() {
+        Direction direction = findDirectionForDragon(player.getGame().getBoard().getDragon());
 
+        if (direction == null) {
+            throw new IllegalStateException("No direction found for dragon.");
+        }
+
+        player.getGame().getCommandExecutor().execute(new MoveDragonCommand(direction));
     }
 
     /**
