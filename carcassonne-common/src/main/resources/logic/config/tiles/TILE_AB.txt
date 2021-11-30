@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AB				
 	Expansion					
-	Flags	PRINCESS, SHIELD				
+	Flags	PRINCESS,SHIELD				
 	Count	1				
