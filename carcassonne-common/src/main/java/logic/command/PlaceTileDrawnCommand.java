@@ -66,7 +66,7 @@ public class PlaceTileDrawnCommand implements ICommand {
         GameBoard board = game.getBoard();
 
         if (board.getStartingTile() == null) {
-            if (!tile.hasFlags(TileFlags.STARTING)) {
+            if (!tile.hasFlag(TileFlags.STARTING)) {
                 game.getCommandExecutor().getListener().onCommandFailed(this, "Starting tile must be placed before another tile can be placed.");
                 return false;
             }
@@ -76,7 +76,7 @@ public class PlaceTileDrawnCommand implements ICommand {
                 return false;
             }
         } else {
-            if (tile.hasFlags(TileFlags.STARTING)) {
+            if (tile.hasFlag(TileFlags.STARTING)) {
                 game.getCommandExecutor().getListener().onCommandFailed(this, "Try to place two starting tile!");
                 return false;
             }

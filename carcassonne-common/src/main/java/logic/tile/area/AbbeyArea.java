@@ -39,6 +39,16 @@ public class AbbeyArea extends Area {
     }
 
     /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    @Override
+    public int getClosingPoints() {
+        // Abbey area is 9 tiles.
+        return 1 * 9;
+    }
+
+    /**
      * Gets the remaining tile edges that can be used to continue the area including the tile to place.
      * @return The remaining tile edges.
      */

@@ -115,7 +115,7 @@ public class TestUtils {
         }
 
         private Vector2 findPositionForTile(Tile tile) {
-            if (tile.hasFlags(TileFlags.STARTING)) {
+            if (tile.hasFlag(TileFlags.STARTING)) {
                 return GameBoard.STARTING_TILE_POSITION;
             }
 

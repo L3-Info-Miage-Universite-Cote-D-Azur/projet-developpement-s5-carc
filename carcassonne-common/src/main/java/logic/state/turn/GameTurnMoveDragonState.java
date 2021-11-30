@@ -23,7 +23,7 @@ public class GameTurnMoveDragonState extends GameState {
 
         if (board.hasDragon()) {
             if (board.getDragon().isBlocked()) {
-                board.setDragon(null);
+                board.destructDragon();
                 complete();
             }
         } else {

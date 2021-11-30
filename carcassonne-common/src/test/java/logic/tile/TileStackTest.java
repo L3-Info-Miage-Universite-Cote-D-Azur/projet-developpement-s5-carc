@@ -84,6 +84,6 @@ class TileStackTest {
         stack.fill(config);
         stack.shuffle();
 
-        assertTrue(stack.remove().hasFlags(TileFlags.STARTING));
+        assertTrue(stack.remove().hasFlag(TileFlags.STARTING));
     }
 }

@@ -33,4 +33,23 @@ public class RoadEndArea extends Area {
     public boolean canBeMerged(Area other) {
         return false;
     }
+
+    /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    @Override
+    public int getClosingPoints() {
+        return 0;
+    }
+
+    /**
+     * Checks if the area is closed.
+     * By default, it is closed if there are no free tile edges.
+     * @return True if the area is closed, false otherwise.
+     */
+    @Override
+    protected boolean checkClosed() {
+        return false;
+    }
 }

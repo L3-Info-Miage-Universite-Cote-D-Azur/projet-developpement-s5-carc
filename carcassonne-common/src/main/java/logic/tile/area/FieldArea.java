@@ -35,6 +35,15 @@ public class FieldArea extends Area {
     }
 
     /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    @Override
+    public int getClosingPoints() {
+        return 0;
+    }
+
+    /**
      * Returns whether the area is closed.
      *
      * @return True if the area is closed, false otherwise.

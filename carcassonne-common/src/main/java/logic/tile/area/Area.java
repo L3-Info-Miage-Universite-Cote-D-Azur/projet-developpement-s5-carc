@@ -1,13 +1,17 @@
 package logic.tile.area;
 
+import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
+import logic.player.Player;
 import logic.tile.Tile;
 import logic.tile.Direction;
+import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a chunk area.
@@ -18,6 +22,7 @@ public abstract class Area {
 
     private final HashSet<Chunk> chunks;
     private final HashSet<Tile> tiles;
+    private final Tile baseTile;
     private final int id;
 
     private boolean closed;
@@ -34,7 +39,8 @@ public abstract class Area {
         tiles = new HashSet<>();
         closed = false;
 
-        tiles.add(firstChunk.getParent());
+        baseTile = firstChunk.getParent();
+        tiles.add(baseTile);
 
         for (Chunk chunk : chunks) {
             chunk.setArea(this);
@@ -73,12 +79,51 @@ public abstract class Area {
     public abstract boolean canBeMerged(Area other);
 
     /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    public abstract int getClosingPoints();
+
+    /**
      * Returns whether the area is closed.
      *
      * @return True if the area is closed, false otherwise.
      */
     public boolean isClosed() {
         return closed;
+    }
+
+    /**
+     * Gets the board instance.
+     * @return
+     */
+    public GameBoard getBoard() {
+        return baseTile.getGame().getBoard();
+    }
+
+    /**
+     * Gets the base position of the area.
+     * @return The base position of the area.
+     */
+    public Tile getBaseTile() {
+        return baseTile;
+    }
+
+    /**
+     * Gets the number of tiles in the area.
+     * @return The number of tiles in the area.
+     */
+    public int getNumTiles() {
+        return tiles.size();
+    }
+
+    /**
+     * Gets the number of tiles with the given flags in the area.
+     * @param flag the flag to check.
+     * @return The number of tiles in the area.
+     */
+    public int getNumTiles(TileFlags flag) {
+        return (int) tiles.stream().filter(t -> t.hasFlag(flag)).count();
     }
 
     /**
@@ -97,17 +142,17 @@ public abstract class Area {
         for (Chunk chunk : other.chunks) {
             chunk.setArea(this);
         }
-
-        updateClosure();
     }
 
     /**
      * Updates the closure of the area.
      */
-    private void updateClosure() {
-        closed = checkClosed();
-
+    public void updateClosure() {
         if (closed) {
+            return;
+        }
+
+        if (checkClosed()) {
             onClosed();
         }
     }
@@ -155,20 +200,57 @@ public abstract class Area {
     /**
      * Called when the area is closed.
      */
-    private void onClosed() {
-        List<Chunk> chunksWithMeeple = chunks.stream().filter(c -> c.hasMeeple()).toList();
+    protected void onClosed() {
+        closed = true;
+        evaluatePoints();
+    }
 
-        if (chunksWithMeeple.size() >= 1) {
-            // TODO: Change score earn by chunk type.
-            Meeple meeple = chunksWithMeeple.get(0).getMeeple();
-            meeple.getOwner().addScore(tiles.size(), getType());
+    /**
+     * Evaluates the area points.
+     */
+    protected void evaluatePoints() {
+        for (Player winner : getEvaluationWinners()) {
+            winner.addScore(getClosingPoints(), getType());
+        }
 
-            /* As the area points are counted, we can remove the meeples from the area. */
-            for (Chunk chunk : chunksWithMeeple) {
-                meeple.getOwner().decreasePlayedMeeples();
+        /* As the area evaluation is done, we can remove the meeples in the area. */
+        for (Chunk chunk : chunks) {
+            if (chunk.hasMeeple()) {
+                chunk.getMeeple().getOwner().decreasePlayedMeeples();
                 chunk.setMeeple(null);
             }
         }
+    }
+
+    /**
+     * Returns the players who will receive the area closure evaluation points.
+     * @return The player list.
+     */
+    private List<Player> getEvaluationWinners() {
+        /* Get all meeples from chunks */
+        List<Meeple> meeples = getMeeples();
+
+        /* If there is no meeples in the area, there is no winner. */
+        if (meeples.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        /* Map the number of meeples by the player instance */
+        Map<Player, Integer> numMeeplesPerPlayer = meeples.stream().collect(Collectors.groupingBy(m -> m.getOwner(), Collectors.summingInt(c -> 1)));
+
+        /* Get the highest number of meeples */
+        int highestNumMeeples = numMeeplesPerPlayer.values().stream().max(Integer::compareTo).orElse(0);
+
+        /* Get the players who have the highest number of meeples */
+        return numMeeplesPerPlayer.entrySet().stream().filter(e -> e.getValue() == highestNumMeeples).map(Map.Entry::getKey).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the list of meeples that are in the area.
+     * @return The list of meeples.
+     */
+    public List<Meeple> getMeeples() {
+        return chunks.stream().filter(c -> c.hasMeeple()).map(c -> c.getMeeple()).toList();
     }
 
     /**
@@ -182,13 +264,6 @@ public abstract class Area {
             }
         }
         return false;
-    }
-
-    /**
-     * Called when the parent tile of the area is placed on the board.
-     */
-    public void onBoard() {
-        updateClosure();
     }
 
     /**

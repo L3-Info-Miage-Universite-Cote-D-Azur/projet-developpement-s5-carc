@@ -1,5 +1,6 @@
 package logic.tile.area;
 
+import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
 
@@ -32,5 +33,14 @@ public class TownArea extends Area {
     @Override
     public boolean canBeMerged(Area other) {
         return other.getType() == ChunkType.TOWN;
+    }
+
+    /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    @Override
+    public int getClosingPoints() {
+        return 2 * getNumTiles() + 2 * getNumTiles(TileFlags.SHIELD);
     }
 }

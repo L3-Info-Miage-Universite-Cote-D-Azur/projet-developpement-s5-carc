@@ -33,4 +33,13 @@ public class RoadArea extends Area {
     public boolean canBeMerged(Area other) {
         return other.getType() == ChunkType.ROAD;
     }
+
+    /**
+     * Gets the points earned by the area closing.
+     * @return The points earned by the area closing.
+     */
+    @Override
+    public int getClosingPoints() {
+        return 1 * getNumTiles();
+    }
 }

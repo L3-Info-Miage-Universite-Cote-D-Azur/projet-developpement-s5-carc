@@ -93,7 +93,7 @@ public class TileStack {
      */
     public void shuffle() {
         Collections.shuffle(tiles);
-        Tile startingTile = tiles.stream().filter(f -> f.hasFlags(TileFlags.STARTING)).findAny().orElse(null);
+        Tile startingTile = tiles.stream().filter(f -> f.hasFlag(TileFlags.STARTING)).findAny().orElse(null);
 
         if (startingTile != null) {
             tiles.remove(startingTile);

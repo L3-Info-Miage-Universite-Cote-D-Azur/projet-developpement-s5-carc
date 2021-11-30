@@ -13,6 +13,7 @@ import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents a tile on the game board.
@@ -127,7 +128,7 @@ public class Tile {
      * @param flag The flag to check.
      * @return True if the tile has the specified flag, false otherwise.
      */
-    public boolean hasFlags(TileFlags flag) {
+    public boolean hasFlag(TileFlags flag) {
         return config.flags.contains(flag);
     }
 
@@ -234,10 +235,6 @@ public class Tile {
      * Called when the tile is placed on the board.
      */
     public void onBoard() {
-        for (Area area : Arrays.stream(chunks).map(Chunk::getArea).toList()) {
-            area.onBoard();
-        }
-
         mergeAreas();
     }
 

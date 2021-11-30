@@ -7,14 +7,13 @@ import logic.tile.Tile;
 import logic.tile.Direction;
 import logic.tile.TileFlags;
 import logic.tile.TileRotation;
+import logic.tile.area.Area;
+import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class that represents the game board.
@@ -31,6 +30,14 @@ public class GameBoard {
     private final HashMap<Vector2, Tile> tiles;
 
     /**
+     * To decode the areas properly, we need to encode and decode the tiles
+     * in the same order as the tile are placed on the board.
+     * As the order is not guaranteed using the HashMap, we need to store the
+     * order in a list.
+     */
+    private final ArrayList<Tile> tilesList;
+
+    /**
      * Current dragon that is on the board.
      * Null if there is no dragon on the board.
      */
@@ -38,6 +45,7 @@ public class GameBoard {
 
     public GameBoard() {
         this.tiles = new HashMap<>();
+        this.tilesList = new ArrayList<>();
     }
 
     /**
@@ -45,6 +53,7 @@ public class GameBoard {
      */
     public void clear() {
         this.tiles.clear();
+        this.tilesList.clear();
     }
 
     /**
@@ -64,7 +73,11 @@ public class GameBoard {
         }
 
         tiles.put(tile.getPosition(), tile);
+        tilesList.add(tile);
+
         tile.onBoard();
+
+        updateAreaClosures();
     }
 
     /**
@@ -128,8 +141,8 @@ public class GameBoard {
         Tile startingTile = getStartingTile();
 
         if (startingTile == null) {
-            return tileToPlace.hasFlags(TileFlags.STARTING);
-        } else if (tileToPlace.hasFlags(TileFlags.STARTING)) {
+            return tileToPlace.hasFlag(TileFlags.STARTING);
+        } else if (tileToPlace.hasFlag(TileFlags.STARTING)) {
             return false;
         } else {
             TileRotation originalRotation = tileToPlace.getRotation();
@@ -195,10 +208,10 @@ public class GameBoard {
         Tile startingTile = getStartingTile();
 
         if (startingTile == null) {
-            if (tileToPlace.hasFlags(TileFlags.STARTING)) {
+            if (tileToPlace.hasFlag(TileFlags.STARTING)) {
                 freePoints.add(STARTING_TILE_POSITION);
             }
-        } else if (!tileToPlace.hasFlags(TileFlags.STARTING)) {
+        } else if (!tileToPlace.hasFlag(TileFlags.STARTING)) {
             findFreePlaceForTileFromNode(startingTile, tileToPlace, new HashSet<>(), freePoints);
         }
 
@@ -233,12 +246,29 @@ public class GameBoard {
     }
 
     /**
+     * Updates the area closure states.
+     */
+    public void updateAreaClosures() {
+        for (Area area : getAreas()) {
+            area.updateClosure();
+        }
+    }
+
+    /**
      * Gets all tiles on the board.
      *
-     * @return
+     * @return the list of tiles on the board
      */
     public List<Tile> getTiles() {
-        return tiles.values().stream().toList();
+        return tilesList;
+    }
+
+    /**
+     * Gets all areas on the board.
+     * @return the list of areas
+     */
+    public List<Area> getAreas() {
+        return tilesList.stream().flatMap(t -> Arrays.stream(ChunkId.values()).map(id -> t.getChunk(id)).map(c -> c.getArea())).distinct().toList();
     }
 
     /**
@@ -260,11 +290,18 @@ public class GameBoard {
     }
 
     /**
-     * Sets the current dragon on the board.
-     * @param dragon the dragon to set
+     * Destructs the dragon on the board.
      */
-    public void setDragon(Dragon dragon) {
-        this.dragon = dragon;
+    public void destructDragon() {
+        dragon = null;
+    }
+
+    /**
+     * Spawns the dragon on the board to the specified position.
+     * @param position the position to spawn the dragon
+     */
+    public void spawnDragon(Vector2 position) {
+        dragon = new Dragon(this, position);
     }
 
     /**
@@ -273,10 +310,17 @@ public class GameBoard {
      * @param stream the output stream to encode to
      */
     public void encode(ByteOutputStream stream, Game game) {
-        stream.writeInt(tiles.size());
+        stream.writeInt(tilesList.size());
 
-        for (Tile tile : tiles.values()) {
+        for (Tile tile : tilesList) {
             ByteStreamHelper.encodeTile(stream, tile, game);
+        }
+
+        List<Area> areas = getAreas();
+        stream.writeInt(areas.size());
+
+        for (Area area : areas) {
+            stream.writeBoolean(area.isClosed());
         }
 
         if (dragon != null) {
@@ -293,17 +337,33 @@ public class GameBoard {
      * @param stream the input stream to decode from
      */
     public void decode(ByteInputStream stream, Game game) {
-        tiles.clear();
+        clear();
 
         int tileCount = stream.readInt();
 
         for (int i = 0; i < tileCount; i++) {
-            Tile tile = ByteStreamHelper.decodeTile(stream, game);
-            tiles.put(tile.getPosition(), tile);
+            place(ByteStreamHelper.decodeTile(stream, game));
         }
 
-        for (Tile tile : tiles.values()) {
-            tile.onBoard();
+        List<Area> areas = getAreas();
+        int masterAreaCount = stream.readInt();
+
+        if (masterAreaCount != areas.size()) {
+            throw new IllegalStateException("Master area count does not match area count");
+        }
+
+        for (Area area : areas) {
+            boolean closed = stream.readBoolean();
+
+            if (closed) {
+                if (!area.isClosed()) {
+                    throw new IllegalStateException("Area is not closed");
+                }
+            } else {
+                if (area.isClosed()) {
+                    throw new IllegalStateException("Area is closed");
+                }
+            }
         }
 
         if (stream.readBoolean()) {

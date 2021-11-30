@@ -21,6 +21,12 @@ public final class Dragon {
         this.path = new ArrayList<>();
     }
 
+    public Dragon(GameBoard board, Vector2 position) {
+        this.board = board;
+        this.path = new ArrayList<>();
+        this.path.add(position);
+    }
+
     /**
      * Moves the dragon to the specified position.
      * @param position the position to move to
@@ -56,7 +62,7 @@ public final class Dragon {
      */
     public boolean canMoveTo(Vector2 position) {
         return board.hasTileAt(position) &&
-                !board.getTileAt(position).hasFlags(TileFlags.PRINCESS) &&
+                !board.getTileAt(position).hasFlag(TileFlags.PRINCESS) &&
                 !path.contains(position);
     }
 
