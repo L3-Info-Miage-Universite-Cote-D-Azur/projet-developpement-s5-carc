@@ -6,7 +6,7 @@ import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkArea;
+import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
@@ -120,8 +120,8 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
             Chunk ownChunk = tile.getChunk(ownChunkId);
             Chunk neighborChunk = neighborTile.getChunk(neighborChunkId);
 
-            ChunkArea ownArea = ownChunk.getArea();
-            ChunkArea neighborArea = neighborChunk.getArea();
+            Area ownArea = ownChunk.getArea();
+            Area neighborArea = neighborChunk.getArea();
 
             if (neighborArea.canBeMerged(ownArea)) {
                 evaluateArea(neighborArea, ownArea);
@@ -138,7 +138,7 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
      * @param area The area to evaluate.
      * @return The heuristic score.
      */
-    private void evaluateArea(ChunkArea area, ChunkArea mergeWith) {
+    private void evaluateArea(Area area, Area mergeWith) {
         setMultiplier(AREA_MULTIPLIER.get(area.getType()));
 
         int openEdges = area.getFreeEdges(mergeWith);

@@ -5,13 +5,12 @@ import logic.board.GameBoard;
 import logic.config.excel.TileConfig;
 import logic.math.Vector2;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkArea;
+import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents a tile on the game board.
@@ -190,8 +189,8 @@ public class Tile {
             ChunkId ownChunkId = ownChunkIds[i];
             ChunkId neighborChunkId = oppositeChunkIds[i];
 
-            ChunkArea ownChunkArea = getChunk(ownChunkId).getArea();
-            ChunkArea neighborChunkArea = neighborTile.getChunk(neighborChunkId).getArea();
+            Area ownChunkArea = getChunk(ownChunkId).getArea();
+            Area neighborChunkArea = neighborTile.getChunk(neighborChunkId).getArea();
 
             /* We are checking if the area of this chunk is not merged already. */
             if (ownChunkArea != neighborChunkArea) {
@@ -219,7 +218,7 @@ public class Tile {
      * Called when the tile is placed on the board.
      */
     public void onBoard() {
-        for (ChunkArea area : Arrays.stream(chunks).map(Chunk::getArea).toList()) {
+        for (Area area : Arrays.stream(chunks).map(Chunk::getArea).toList()) {
             area.onBoard();
         }
 

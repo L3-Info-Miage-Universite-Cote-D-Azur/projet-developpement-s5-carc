@@ -2,6 +2,7 @@ package logic.tile.chunk;
 
 import logic.meeple.Meeple;
 import logic.tile.Tile;
+import logic.tile.area.Area;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -15,7 +16,7 @@ public class Chunk {
 
     private ChunkId currentId;
     private Meeple meeple;
-    private ChunkArea area;
+    private Area area;
 
     public Chunk(ChunkType type, Tile parent) {
         this.type = type;
@@ -72,7 +73,7 @@ public class Chunk {
      *
      * @return The chunk area of this chunk.
      */
-    public ChunkArea getArea() {
+    public Area getArea() {
         return area;
     }
 
@@ -81,7 +82,7 @@ public class Chunk {
      *
      * @param area The area to set.
      */
-    public void setArea(ChunkArea area) {
+    public void setArea(Area area) {
         this.area = area;
     }
 

@@ -1,9 +1,11 @@
-package logic.tile.chunk;
+package logic.tile.area;
 
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileEdge;
+import logic.tile.chunk.Chunk;
+import logic.tile.chunk.ChunkType;
 
 import java.util.*;
 
@@ -11,7 +13,7 @@ import java.util.*;
  * Represents a chunk area.
  * It contains the list of chunks in the area.
  */
-public class ChunkArea {
+public class Area {
     private static int uniqueId;
 
     private final HashSet<Chunk> chunks;
@@ -24,7 +26,7 @@ public class ChunkArea {
     /**
      * Constructor for the area.
      */
-    public ChunkArea(List<Chunk> chunks) {
+    public Area(List<Chunk> chunks) {
         Chunk firstChunk = chunks.get(0);
 
         this.type = firstChunk.getType();
@@ -81,7 +83,7 @@ public class ChunkArea {
      * @param other The other area to merge with.
      * @return True if the areas can be merged, false otherwise.
      */
-    public boolean canBeMerged(ChunkArea other) {
+    public boolean canBeMerged(Area other) {
         return type == other.type;
     }
 
@@ -90,7 +92,7 @@ public class ChunkArea {
      *
      * @param other The other area to merge with.
      */
-    public void merge(ChunkArea other) {
+    public void merge(Area other) {
         if (!canBeMerged(other)) {
             throw new IllegalArgumentException("Cannot merge areas of different types.");
         }
@@ -138,7 +140,7 @@ public class ChunkArea {
      * Gets the remaining tile edges that can be used to continue the area including the tile to place if we merge the given area.
      * @return The remaining tile edges.
      */
-    public int getFreeEdges(ChunkArea simulatedMergingArea) {
+    public int getFreeEdges(Area simulatedMergingArea) {
         Set<Tile> tiles = new HashSet<>(this.tiles);
         Set<Chunk> chunks = new HashSet<>(this.chunks);
 

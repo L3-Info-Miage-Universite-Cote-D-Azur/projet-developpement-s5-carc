@@ -7,7 +7,7 @@ import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkArea;
+import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
@@ -215,13 +215,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
      * @param chunk        The chunk of the chunk to draw
      * @param colorZone    The colors of all zone
      */
-    private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<ChunkArea, Color> colorZone) {
-        ChunkArea chunkArea = chunk.getArea();
+    private static void drawZone(Graphics g, Vector2 tilePosition, Chunk chunk, HashMap<Area, Color> colorZone) {
+        Area area = chunk.getArea();
 
-        if (!colorZone.containsKey(chunkArea))
-            colorZone.put(chunkArea, generateColor(0.35f));
+        if (!colorZone.containsKey(area))
+            colorZone.put(area, generateColor(0.35f));
 
-        g.setColor(colorZone.get(chunkArea));
+        g.setColor(colorZone.get(area));
         Polygon polygon = chunksGeo.get(chunk.getCurrentId());
         g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
     }
@@ -328,7 +328,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      */
     public static synchronized void render(Game game, Graphics graphics, Bounds layerBounds) {
         loadImageDatabaseIfNeeded();
-        HashMap<ChunkArea, Color> colorZone = new HashMap<>();
+        HashMap<Area, Color> colorZone = new HashMap<>();
 
         graphics.setFont(new Font("Courier New", Font.CENTER_BASELINE | Font.BOLD, 25));
         graphics.setColor(Color.blue);
