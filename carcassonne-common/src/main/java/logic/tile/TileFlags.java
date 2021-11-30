@@ -12,5 +12,10 @@ public enum TileFlags {
     /**
      * The tile is a shield tile.
      */
-    SHIELD
+    SHIELD,
+
+    /**
+     * The tile is a princess tile.
+     */
+    PRINCESS
 }
