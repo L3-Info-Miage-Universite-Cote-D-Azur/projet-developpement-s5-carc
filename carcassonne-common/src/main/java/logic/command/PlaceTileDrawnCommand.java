@@ -9,6 +9,7 @@ import logic.tile.Tile;
 import logic.tile.TileFlags;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 /**
  * Command to place the tile drawn during the turn to the board.
@@ -40,8 +41,7 @@ public class PlaceTileDrawnCommand implements ICommand {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        stream.writeInt(position.getX());
-        stream.writeInt(position.getY());
+        ByteStreamHelper.encodeVector(stream, position);
     }
 
     /**
@@ -51,7 +51,7 @@ public class PlaceTileDrawnCommand implements ICommand {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        position = new Vector2(stream.readInt(), stream.readInt());
+        position = ByteStreamHelper.decodeVector(stream);
     }
 
     /**

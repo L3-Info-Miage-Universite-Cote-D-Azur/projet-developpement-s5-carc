@@ -1,6 +1,7 @@
 package stream;
 
 import logic.Game;
+import logic.math.Vector2;
 import logic.tile.Tile;
 
 /**
@@ -33,5 +34,24 @@ public class ByteStreamHelper {
         Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile(game);
         tile.decode(stream);
         return tile;
+    }
+
+    /**
+     * Encodes a vector into a byte-stream.
+     * @param stream The byte-stream to write to.
+     * @param vector The vector to encode.
+     */
+    public static void encodeVector(ByteOutputStream stream, Vector2 vector) {
+        stream.writeInt(vector.getX());
+        stream.writeInt(vector.getY());
+    }
+
+    /**
+     * Decodes a vector from a byte-stream.
+     * @param stream The byte-stream to read from.
+     * @return The decoded vector.
+     */
+    public static Vector2 decodeVector(ByteInputStream stream) {
+        return new Vector2(stream.readInt(), stream.readInt());
     }
 }

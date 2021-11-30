@@ -9,6 +9,7 @@ import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 import java.util.Arrays;
 
@@ -242,8 +243,7 @@ public class Tile {
     public void encode(ByteOutputStream stream) {
         if (position != null) {
             stream.writeBoolean(true);
-            stream.writeInt(position.getX());
-            stream.writeInt(position.getY());
+            ByteStreamHelper.encodeVector(stream, position);
             stream.writeInt(rotation.ordinal());
         } else {
             stream.writeBoolean(false);
@@ -261,7 +261,7 @@ public class Tile {
      */
     public void decode(ByteInputStream stream) {
         if (stream.readBoolean()) {
-            position = new Vector2(stream.readInt(), stream.readInt());
+            position = ByteStreamHelper.decodeVector(stream);
             setRotation(TileRotation.values()[stream.readInt()]);
         } else {
             position = null;
@@ -278,7 +278,6 @@ public class Tile {
                 "position=" + position +
                 ", model=" + config.model +
                 ", rotation=" + rotation +
-                // ", chunks=" + Arrays.toString(chunks) +
                 ", flags=" + config.flags +
                 '}';
     }
