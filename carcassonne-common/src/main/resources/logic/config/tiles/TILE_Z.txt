@@ -1,0 +1,19 @@
+CHUNKS											
+		TOWN	TOWN	TOWN							
+	TOWN				TOWN						
+	TOWN		TOWN		TOWN						
+	TOWN				TOWN						
+		FIELD	FIELD	FIELD							
+REFERENCES											
+		D	D	D							
+	D				D						
+	D		D		D						
+	D				D						
+		B	B	B							
+											
+DATA											
+	NAME	VALUE									
+	MODEL	Z									
+	EXPANSION	NONE									
+	FLAGS	PRINCESS									
+	COUNT	1									

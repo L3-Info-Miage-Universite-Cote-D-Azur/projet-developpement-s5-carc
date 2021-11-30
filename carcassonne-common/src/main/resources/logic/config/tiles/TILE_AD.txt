@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		TOWN				FIELD
+		TOWN		TOWN		FIELD
+		TOWN				FIELD
+			FIELD	FIELD	FIELD
+	References					
+		Name				
+			A	A	A	
+		A				C
+		A		A		C
+		A				C
+			C	C	C	
+Data						
+	Name	Value				
+	Model	AD				
+	Expansion					
+	Flags	PRINCESS				
+	Count	1				
