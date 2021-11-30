@@ -9,14 +9,16 @@ import stream.ByteOutputStream;
  * Represents a chunk of tiles.
  * A chunk is a part of tile grid.
  */
-public abstract class Chunk {
+public class Chunk {
     private final Tile parent;
+    private final ChunkType type;
 
     private ChunkId currentId;
     private Meeple meeple;
     private ChunkArea area;
 
-    public Chunk(Tile parent) {
+    public Chunk(ChunkType type, Tile parent) {
+        this.type = type;
         this.parent = parent;
     }
 
@@ -98,14 +100,18 @@ public abstract class Chunk {
      * @param chunk
      * @return
      */
-    public abstract boolean isCompatibleWith(Chunk chunk);
+    public boolean isCompatibleWith(Chunk chunk) {
+        return chunk.type == type;
+    }
 
     /**
      * Gets the type of this chunk.
      *
      * @return The type of this chunk.
      */
-    public abstract ChunkType getType();
+    public ChunkType getType() {
+        return type;
+    }
 
     /**
      * Encodes this chunk attributes into the given stream.
