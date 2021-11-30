@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			FIELD	FIELD	FIELD	
+		FIELD				FIELD
+		ROAD		VOLCANO		FIELD
+		FIELD				FIELD
+			FIELD	ROAD	FIELD
+	References					
+		Name				
+			C	C	C	
+		C				C
+		A		B		C
+		C				C
+			C	A	C	
+Data						
+	Name	Value				
+	Model	AI				
+	Expansion					
+	Flags	NONE				
+	Count	1				

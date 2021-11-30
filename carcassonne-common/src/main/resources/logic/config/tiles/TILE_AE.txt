@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		FIELD				FIELD
+		FIELD		VOLCANO		FIELD
+		FIELD				FIELD
+			FIELD	FIELD	FIELD
+	References					
+		Name				
+			A	A	A	
+		C				C
+		C		B		C
+		C				C
+			C	C	C	
+Data						
+	Name	Value				
+	Model	AE				
+	Expansion					
+	Flags	NONE				
+	Count	1				
