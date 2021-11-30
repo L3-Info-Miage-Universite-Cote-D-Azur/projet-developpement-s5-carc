@@ -71,6 +71,10 @@ public final class Vector2 {
         return new Vector2(x, -y);
     }
 
+    public int length() {
+        return (int) Math.sqrt(x * x + y * y);
+    }
+
     @Override
     public String toString() {
         return "Vector2(" + x + ", " + y + ")";

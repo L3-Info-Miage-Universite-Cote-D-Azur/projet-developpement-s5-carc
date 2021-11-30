@@ -2,6 +2,7 @@ package client.ai.heuristic;
 
 import client.ai.AI;
 import client.ai.TilePosition;
+import client.ai.heuristic.evaluator.HeuristicDragonEvaluator;
 import client.ai.heuristic.evaluator.HeuristicMeeplePlacementEvaluator;
 import client.ai.heuristic.evaluator.HeuristicTileEvaluator;
 import client.ai.target.TargetList;
@@ -31,6 +32,7 @@ public class HeuristicAI extends AI {
 
     private final HeuristicTileEvaluator tileEvaluator;
     private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
+    private final HeuristicDragonEvaluator dragonEvaluator;
 
     public HeuristicAI(Player player) {
         super(player);
@@ -43,6 +45,7 @@ public class HeuristicAI extends AI {
 
         this.tileEvaluator = new HeuristicTileEvaluator(game);
         this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game);
+        this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
     }
 
     /**
@@ -102,6 +105,16 @@ public class HeuristicAI extends AI {
      */
     @Override
     protected Direction findDirectionForDragon(Dragon dragon) {
-        return null;
+        TargetList<Direction> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
+
+        for (Direction direction : Direction.values()) {
+            Vector2 position = dragon.getPosition().add(direction.value());
+
+            if (dragon.canMoveTo(position)) {
+                targetList.add(direction, dragonEvaluator.evaluate(dragon, position));
+            }
+        }
+
+        return targetList.pick();
     }
 }
