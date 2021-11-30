@@ -43,7 +43,7 @@ public class GameTurnPlaceTileState extends GameState {
      */
     @Override
     public void complete() {
-        game.setState(new GameTurnExtraActionState(game));
+        game.setState(new GameTurnExtraActionState(game, tileDrawn));
     }
 
     /**

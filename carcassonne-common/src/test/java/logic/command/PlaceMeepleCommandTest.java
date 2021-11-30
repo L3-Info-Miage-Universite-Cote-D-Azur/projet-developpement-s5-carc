@@ -26,11 +26,9 @@ public class PlaceMeepleCommandTest {
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
         assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
 
         assertFalse(game.isOver());
-
-        game.getState().complete();
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
