@@ -9,7 +9,8 @@ public class GameStateFactory {
             case START -> new GameStartState(game);
             case TURN_INIT -> new GameTurnInitState(game);
             case TURN_PLACE_TILE -> new GameTurnPlaceTileState(game);
-            case TURN_EXTRA_ACTION -> new GameTurnExtraActionState(game);
+            case TURN_PLACE_MEEPLE -> new GameTurnPlaceMeepleState(game);
+            case TURN_MOVE_DRAGON -> new GameTurnMoveDragonState(game);
             case TURN_WAITING_MASTER_DATA -> new GameTurnWaitingMasterDataState(game);
             case TURN_ENDING -> new GameTurnEndingState(game);
             case OVER -> new GameOverState(game);

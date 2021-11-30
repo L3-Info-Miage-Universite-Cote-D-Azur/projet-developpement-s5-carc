@@ -4,7 +4,7 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.tile.Tile;
-import logic.tile.TileEdge;
+import logic.tile.Direction;
 import logic.tile.chunk.Chunk;
 import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
@@ -89,8 +89,8 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
     public int evaluate(Tile tile) {
         Vector2 position = tile.getPosition();
 
-        for (TileEdge edge : TileEdge.values()) {
-            Tile neighbor = board.getTileAt(position.add(edge.getValue()));
+        for (Direction edge : Direction.values()) {
+            Tile neighbor = board.getTileAt(position.add(edge.value()));
 
             if (neighbor != null) {
                 evaluateNeighbor(tile, neighbor, edge);
@@ -107,7 +107,7 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
      * @param edge The edge connecting the two tiles.
      * @return
      */
-    private void evaluateNeighbor(Tile tile, Tile neighborTile, TileEdge edge) {
+    private void evaluateNeighbor(Tile tile, Tile neighborTile, Direction edge) {
         ChunkId[] ownChunkIds = edge.getChunkIds();
         ChunkId[] neighborChunkIds = edge.negate().getChunkIds();
         

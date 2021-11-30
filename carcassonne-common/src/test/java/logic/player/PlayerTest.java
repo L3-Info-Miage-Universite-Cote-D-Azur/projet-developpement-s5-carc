@@ -33,7 +33,6 @@ class PlayerTest {
         assertEquals(100, player.getTownScore());
 
         assertEquals(0, player.getMeeplesPlayed());
-        assertEquals(0, player.getMeeplesPlayed());
         assertEquals(0, player.getMeeplesRemained());
 
         assertThrows(IllegalArgumentException.class, () -> {

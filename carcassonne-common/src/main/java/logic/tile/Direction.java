@@ -4,9 +4,9 @@ import logic.math.Vector2;
 import logic.tile.chunk.ChunkId;
 
 /**
- * Represents a tile edge.
+ * Represents a direction in the game.
  */
-public enum TileEdge {
+public enum Direction {
     /**
      * Represents the top edge.
      */
@@ -29,7 +29,7 @@ public enum TileEdge {
 
     private final Vector2 value;
 
-    TileEdge(Vector2 value) {
+    Direction(Vector2 value) {
         this.value = value;
     }
 
@@ -38,7 +38,7 @@ public enum TileEdge {
      *
      * @return the value of the edge
      */
-    public Vector2 getValue() {
+    public Vector2 value() {
         return value;
     }
 
@@ -47,7 +47,7 @@ public enum TileEdge {
      *
      * @return the opposite edge
      */
-    public TileEdge negate() {
+    public Direction negate() {
         return switch (this) {
             case TOP -> BOTTOM;
             case BOTTOM -> TOP;
@@ -57,7 +57,7 @@ public enum TileEdge {
     }
 
     /**
-     * Gets the chunks that are adjacent to the edge.
+     * Gets the chunks that are adjacent to the direction.
      *
      * @return
      */

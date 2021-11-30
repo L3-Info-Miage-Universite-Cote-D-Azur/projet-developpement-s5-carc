@@ -1,6 +1,6 @@
 package logic.tile.chunk;
 
-import logic.tile.TileEdge;
+import logic.tile.Direction;
 
 /**
  * A chunk id is a unique identifier for a chunk. It contains the chunk's position in the tile grid.
@@ -9,71 +9,71 @@ public enum ChunkId {
     /**
      * Chunk id for the chunk in the top left corner of the tile grid.
      */
-    NORTH_LEFT(TileEdge.TOP),
+    NORTH_LEFT(Direction.TOP),
 
     /**
      * Chunk id for the chunk in the top middle corner of the tile grid.
      */
-    NORTH_MIDDLE(TileEdge.TOP),
+    NORTH_MIDDLE(Direction.TOP),
 
     /**
      * Chunk id for the chunk in the top right corner of the tile grid.
      */
-    NORTH_RIGHT(TileEdge.TOP),
+    NORTH_RIGHT(Direction.TOP),
 
     /**
      * Chunk id for the chunk in the right top corner of the tile grid.
      */
-    EAST_TOP(TileEdge.RIGHT),
+    EAST_TOP(Direction.RIGHT),
 
     /**
      * Chunk id for the chunk in the right middle corner of the tile grid.
      */
-    EAST_MIDDLE(TileEdge.RIGHT),
+    EAST_MIDDLE(Direction.RIGHT),
 
     /**
      * Chunk id for the chunk in the right bottom corner of the tile grid.
      */
-    EAST_BOTTOM(TileEdge.RIGHT),
+    EAST_BOTTOM(Direction.RIGHT),
 
     /**
      * Chunk id for the chunk in the bottom right corner of the tile grid.
      */
-    SOUTH_RIGHT(TileEdge.BOTTOM),
+    SOUTH_RIGHT(Direction.BOTTOM),
 
     /**
      * Chunk id for the chunk in the bottom middle corner of the tile grid.
      */
-    SOUTH_MIDDLE(TileEdge.BOTTOM),
+    SOUTH_MIDDLE(Direction.BOTTOM),
 
     /**
      * Chunk id for the chunk in the bottom left corner of the tile grid.
      */
-    SOUTH_LEFT(TileEdge.BOTTOM),
+    SOUTH_LEFT(Direction.BOTTOM),
 
     /**
      * Chunk id for the chunk in the left bottom corner of the tile grid.
      */
-    WEST_BOTTOM(TileEdge.LEFT),
+    WEST_BOTTOM(Direction.LEFT),
 
     /**
      * Chunk id for the chunk in the left middle corner of the tile grid.
      */
-    WEST_MIDDLE(TileEdge.LEFT),
+    WEST_MIDDLE(Direction.LEFT),
 
     /**
      * Chunk id for the chunk in the left top corner of the tile grid.
      */
-    WEST_TOP(TileEdge.LEFT),
+    WEST_TOP(Direction.LEFT),
 
     /**
      * Chunk id for the chunk in the middle of the tile grid.
      */
     CENTER_MIDDLE(null);
 
-    private final TileEdge edge;
+    private final Direction edge;
 
-    ChunkId(TileEdge edge) {
+    ChunkId(Direction edge) {
         this.edge = edge;
     }
 
@@ -82,7 +82,7 @@ public enum ChunkId {
      *
      * @return The edge of the tile.
      */
-    public TileEdge getEdge() {
+    public Direction getEdge() {
         return edge;
     }
 }

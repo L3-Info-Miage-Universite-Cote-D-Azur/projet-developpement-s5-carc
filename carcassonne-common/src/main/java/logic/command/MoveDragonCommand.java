@@ -4,23 +4,23 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.dragon.Dragon;
 import logic.math.Vector2;
-import logic.player.Player;
 import logic.state.GameStateType;
-import logic.state.turn.GameTurnExtraActionState;
-import logic.state.turn.GameTurnPlaceTileState;
-import logic.tile.Tile;
-import logic.tile.TileFlags;
-import logic.tile.chunk.Chunk;
+import logic.tile.Direction;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
-
-import java.util.Vector;
 
 /**
  * Command to move dragon
  */
 public class MoveDragonCommand implements ICommand {
-    private Vector2 position;
+    private Direction direction;
+
+    public MoveDragonCommand() {
+    }
+
+    public MoveDragonCommand(Direction direction) {
+        this.direction = direction;
+    }
 
     /**
      * Gets the command type
@@ -39,8 +39,7 @@ public class MoveDragonCommand implements ICommand {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        stream.writeInt(position.getX());
-        stream.writeInt(position.getY());
+        stream.writeInt(direction.ordinal());
     }
 
     /**
@@ -50,7 +49,7 @@ public class MoveDragonCommand implements ICommand {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        position = new Vector2(stream.readInt(), stream.readInt());
+        direction = Direction.values()[stream.readInt()];
     }
 
     /**
@@ -61,14 +60,18 @@ public class MoveDragonCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        Dragon dragon = game.getBoard().getDragon();
-        if(game.getBoard().hasDragon()){
+        GameBoard board = game.getBoard();
+
+        if (!board.hasDragon()){
             game.getCommandExecutor().getListener().onCommandFailed(this, "The dragon not exist yet.");
             return false;
         }
-        Vector2 moveStep = position.subtract(dragon.getPosition());
-        if(Math.abs(moveStep.getX() | moveStep.getY()) == 1){
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Cannot move the dragon so far.");
+
+        Vector2 position = board.getDragon().getPosition().add(direction.value());
+        Dragon dragon = game.getBoard().getDragon();
+
+        if (!dragon.canMoveTo(position)) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "The dragon can't move to this position.");
             return false;
         }
 
@@ -94,7 +97,6 @@ public class MoveDragonCommand implements ICommand {
     @Override
     public void execute(Game game) {
         Dragon dragon = game.getBoard().getDragon();
-
-        dragon.moveTo(position);
+        dragon.moveTo(dragon.getPosition().add(direction.value()));
     }
 }

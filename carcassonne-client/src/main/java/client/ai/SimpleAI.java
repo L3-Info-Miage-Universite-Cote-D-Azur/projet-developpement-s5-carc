@@ -1,13 +1,16 @@
 package client.ai;
 
 import logic.board.GameBoard;
+import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.player.Player;
+import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -45,6 +48,31 @@ public class SimpleAI extends AI {
         }
 
         return null;
+    }
+
+    /**
+     * Finds a position for the given dragon.
+     *
+     * @param dragon The dragon to find a position for.
+     * @return The position where the dragon can be placed.
+     */
+    @Override
+    protected Direction findDirectionForDragon(Dragon dragon) {
+        ArrayList<Direction> freePositions = new ArrayList<>(Direction.values().length);
+
+        for (Direction direction : Direction.values()) {
+            Vector2 position = dragon.getPosition().add(direction.value());
+
+            if (dragon.canMoveTo(position)) {
+                freePositions.add(direction);
+            }
+        }
+
+        if (freePositions.isEmpty()) {
+            return null;
+        }
+
+        return freePositions.get(random.nextInt(freePositions.size()));
     }
 
     /**

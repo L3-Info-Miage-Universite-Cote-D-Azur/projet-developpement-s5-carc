@@ -11,8 +11,14 @@ public interface IPlayerListener {
     void onWaitingPlaceTile();
 
     /**
-     * Called when the player must do extra action turn (e.g. place/remove a meeple).
+     * Called when the game waits for the player to place a meeple.
      * Used to notify the player that it must play.
      */
-    void onWaitingExtraAction();
+    void onWaitingMeeplePlacement();
+
+    /**
+     * Called when the player has to move the dragon.
+     * Used to notify the player that it must place a meeple.
+     */
+    void onWaitingDragonMove();
 }

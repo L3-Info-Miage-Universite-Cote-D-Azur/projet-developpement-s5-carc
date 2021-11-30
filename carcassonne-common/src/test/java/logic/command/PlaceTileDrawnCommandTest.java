@@ -13,7 +13,7 @@ class PlaceTileDrawnCommandTest {
     void testInvalidPosition() {
         Game game = TestUtils.initGameEnv(5, false, true);
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
         assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
     }
 
@@ -27,7 +27,7 @@ class PlaceTileDrawnCommandTest {
     void testOverlapTilePlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
         assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
     }
 }

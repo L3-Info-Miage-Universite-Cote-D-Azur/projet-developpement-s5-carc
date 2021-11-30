@@ -1,13 +1,16 @@
 package client.ai;
 
 import logic.Game;
-import logic.command.EndTurnCommand;
 import logic.command.PlaceMeepleCommand;
 import logic.command.PlaceTileDrawnCommand;
 import logic.command.RotateTileDrawnCommand;
+import logic.command.SkipMeeplePlacementCommand;
+import logic.dragon.Dragon;
+import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceTileState;
+import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 
@@ -35,26 +38,25 @@ public abstract class AI implements IPlayerListener {
     }
 
     /**
-     * Called when the game waiting for the player to plays the extra actions of the turn.
+     * Called when the game waiting for the player to place a meeple.
      */
     @Override
-    public void onWaitingExtraAction() {
-        runMeepleRoutine();
-        player.getGame().getCommandExecutor().execute(new EndTurnCommand());
+    public void onWaitingMeeplePlacement() {
+        Chunk chunk = pickChunkToPlaceMeeple();
+
+        if (chunk != null) {
+            player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
+        } else {
+            player.getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+        }
     }
 
     /**
-     * Runs the routine for placing a meeple.
-     * This routine calls the {@link #pickChunkToPlaceMeeple()} method to find the chunk to place the meeple and then places it.
+     * Called when the game waiting for the player to move the dragon.
      */
-    private void runMeepleRoutine() {
-        if (player.hasRemainingMeeples()) {
-            Chunk chunk = pickChunkToPlaceMeeple();
+    @Override
+    public void onWaitingDragonMove() {
 
-            if (chunk != null) {
-                player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getCurrentId()));
-            }
-        }
     }
 
     /**
@@ -80,4 +82,12 @@ public abstract class AI implements IPlayerListener {
      * @return The chunk where the meeple can be placed.
      */
     protected abstract Chunk pickChunkToPlaceMeeple();
+
+    /**
+     * Finds a direction to move the dragon.
+     *
+     * @param dragon The dragon to find a direction for.
+     * @return The direction where the dragon can be moved.
+     */
+    protected abstract Direction findDirectionForDragon(Dragon dragon);
 }

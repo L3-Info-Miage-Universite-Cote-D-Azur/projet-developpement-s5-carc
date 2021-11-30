@@ -38,7 +38,7 @@ public class GameCommandMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        stream.writeInt(command.getType().getValue());
+        stream.writeInt(command.getType().ordinal());
         command.encode(stream);
     }
 
@@ -49,7 +49,7 @@ public class GameCommandMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        command = CommandFactory.create(CommandType.getCommandType(stream.readInt()));
+        command = CommandFactory.create(CommandType.values()[stream.readInt()]);
         command.decode(stream);
     }
 

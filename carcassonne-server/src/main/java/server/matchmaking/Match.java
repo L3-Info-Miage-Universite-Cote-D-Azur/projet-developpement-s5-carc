@@ -1,12 +1,13 @@
 package server.matchmaking;
 
 import logic.Game;
-import logic.command.EndTurnCommand;
 import logic.command.ICommand;
 import logic.command.MasterNextTurnDataCommand;
 import logic.command.PlaceTileDrawnCommand;
+import logic.command.SkipMeeplePlacementCommand;
 import logic.config.GameConfig;
 import logic.player.Player;
+import logic.state.GameStateType;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import network.message.Message;
@@ -155,7 +156,11 @@ public class Match {
             GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
 
             executeCommand(turnExecutor.getId(), new PlaceTileDrawnCommand(game.getBoard().findFreePlacesForTile(placeTileState.getTileDrawn()).get(0)));
-            executeCommand(turnExecutor.getId(), new EndTurnCommand());
+            executeCommand(turnExecutor.getId(), new SkipMeeplePlacementCommand());
+
+            if (game.getState().getType() == GameStateType.TURN_MOVE_DRAGON) {
+                // TODO
+            }
         }
     }
 

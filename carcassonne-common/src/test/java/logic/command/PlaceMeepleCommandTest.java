@@ -3,6 +3,7 @@ package logic.command;
 import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
+import logic.state.GameStateType;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,7 @@ public class PlaceMeepleCommandTest {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
@@ -24,11 +24,12 @@ public class PlaceMeepleCommandTest {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
 
-        assertFalse(game.isOver());
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+
+        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
@@ -36,8 +37,7 @@ public class PlaceMeepleCommandTest {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new EndTurnCommand()));
+        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 }

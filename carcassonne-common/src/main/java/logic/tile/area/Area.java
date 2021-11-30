@@ -3,7 +3,7 @@ package logic.tile.area;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
-import logic.tile.TileEdge;
+import logic.tile.Direction;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
 
@@ -199,10 +199,10 @@ public abstract class Area {
         int count = 0;
 
         for (Tile tile : tiles) {
-            for (TileEdge edge : TileEdge.values()) {
+            for (Direction edge : Direction.values()) {
                 // Check if we have a chunk from this tile that is on this edge.
                 if (Arrays.stream(edge.getChunkIds()).map(tile::getChunk).anyMatch(chunks::contains)) {
-                    Vector2 edgePos = tile.getPosition().add(edge.getValue());
+                    Vector2 edgePos = tile.getPosition().add(edge.value());
 
                     if (tiles.stream().noneMatch(t -> t.getPosition().equals(edgePos))) {
                         // We can continue on this edge -> not closed.

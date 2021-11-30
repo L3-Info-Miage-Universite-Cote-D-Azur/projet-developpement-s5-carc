@@ -7,6 +7,7 @@ import logic.math.Vector2;
 import logic.tile.chunk.Chunk;
 import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
+import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -131,13 +132,27 @@ public class Tile {
     }
 
     /**
+     * Gets whether the tile has a portal.
+     *
+     * @return True if the tile has a portal, false otherwise.
+     */
+    public boolean isPortal() {
+        for (Chunk chunk : chunks) {
+            if (chunk.getType() == ChunkType.PORTAL) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if the chunks that are connected to the given tile chunks are compatible.
      *
      * @param tile           The tile to check.
      * @param edgeConnection The edge connection which is being checked.
      * @return True if the chunks are compatible, false otherwise.
      */
-    public boolean checkChunkCompatibility(Tile tile, TileEdge edgeConnection) {
+    public boolean checkChunkCompatibility(Tile tile, Direction edgeConnection) {
         ChunkId[] ownChunkIds = edgeConnection.getChunkIds();
         ChunkId[] oppositeChunkIds = edgeConnection.negate().getChunkIds();
 
@@ -162,8 +177,8 @@ public class Tile {
     public boolean canBePlacedAt(Vector2 position) {
         boolean hasContactWithTile = false;
 
-        for (TileEdge edge : TileEdge.values()) {
-            Tile edgeTile = game.getBoard().getTileAt(position.add(edge.getValue()));
+        for (Direction edge : Direction.values()) {
+            Tile edgeTile = game.getBoard().getTileAt(position.add(edge.value()));
 
             if (edgeTile != null) {
                 hasContactWithTile = true;
@@ -182,7 +197,7 @@ public class Tile {
      *
      * @param neighborTile The tile to merge with.
      */
-    public void mergeAreas(Tile neighborTile, TileEdge edgeConnection) {
+    public void mergeAreas(Tile neighborTile, Direction edgeConnection) {
         ChunkId[] ownChunkIds = edgeConnection.getChunkIds();
         ChunkId[] oppositeChunkIds = edgeConnection.negate().getChunkIds();
 
@@ -206,8 +221,8 @@ public class Tile {
     public void mergeAreas() {
         GameBoard board = game.getBoard();
 
-        for (TileEdge edge : TileEdge.values()) {
-            Tile edgeTile = board.getTileAt(position.add(edge.getValue()));
+        for (Direction edge : Direction.values()) {
+            Tile edgeTile = board.getTileAt(position.add(edge.value()));
 
             if (edgeTile != null) {
                 mergeAreas(edgeTile, edge);

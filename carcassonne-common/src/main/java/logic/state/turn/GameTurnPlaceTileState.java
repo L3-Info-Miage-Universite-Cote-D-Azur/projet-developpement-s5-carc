@@ -12,6 +12,9 @@ import stream.ByteStreamHelper;
  * Represents the state of a game turn when a player is placing a tile.
  */
 public class GameTurnPlaceTileState extends GameState {
+    /**
+     * The tile drawn from the stack.
+     */
     private Tile tileDrawn;
 
     public GameTurnPlaceTileState(Game game) {
@@ -23,27 +26,42 @@ public class GameTurnPlaceTileState extends GameState {
         this.tileDrawn = tileDrawn;
     }
 
+    /**
+     * Initializes the state by starting the next turn.
+     */
     @Override
     public void init() {
         game.getTurnExecutor().getListener().onWaitingPlaceTile();
     }
 
+    /**
+     * Encodes the state to a byte stream.
+     * @param stream The stream to encode to.
+     */
     @Override
     public void encode(ByteOutputStream stream) {
         ByteStreamHelper.encodeTile(stream, tileDrawn, game);
     }
 
+    /**
+     * Decodes the state from a byte stream.
+     * @param stream The stream to decode from.
+     */
     @Override
     public void decode(ByteInputStream stream) {
         tileDrawn = ByteStreamHelper.decodeTile(stream, game);
     }
 
     /**
-     * Completes the state by starting the {@link GameTurnExtraActionState}.
+     * Completes the state by starting the {@link GameTurnPlaceMeepleState}.
      */
     @Override
     public void complete() {
-        game.setState(new GameTurnExtraActionState(game, tileDrawn));
+        if (tileDrawn.getPosition() == null) {
+            throw new IllegalStateException("Tile drawn was not placed.");
+        }
+
+        game.setState(new GameTurnPlaceMeepleState(game, tileDrawn.getPosition()));
     }
 
     /**

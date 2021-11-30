@@ -16,10 +16,10 @@ public class GameStateTest {
         assertNull(game.getState());
 
         game.start();
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
         game.setState(new GameStartState(game));
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
     }
 
     @Test
@@ -27,10 +27,10 @@ public class GameStateTest {
         Game game = TestUtils.initGameEnv(5, false, false);
 
         game.start();
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
-        game.getState().complete();
-        assertEquals(GameTurnExtraActionState.class, game.getState().getClass());
+        TestUtils.placeTileRandomly(game);
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
     }
 
     @Test
@@ -38,33 +38,39 @@ public class GameStateTest {
         Game game = TestUtils.initGameEnv(5, false, false);
         game.start();
 
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
         game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
-        assertEquals(GameTurnExtraActionState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
 
         int turnCount = game.getTurnCount();
 
-        game.getState().complete();
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+
         assertEquals(turnCount + 1, game.getTurnCount());
 
         /* Clears the stack so the next state after extra action will be game over */
         game.getStack().clear();
 
-        game.getState().complete();
-        assertEquals(GameTurnExtraActionState.class, game.getState().getClass());
-
-        game.getState().complete();
-        assertEquals(GameOverState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+        TestUtils.placeTileRandomly(game);
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+        TestUtils.assertState(game, GameStateType.OVER);
 
         game = TestUtils.initGameEnv(5, false, false);
         game.start();
         game.setMaster(false);
 
-        game.getState().complete();
-        game.getState().complete();
-        assertEquals(GameTurnWaitingMasterDataState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+        TestUtils.placeTileRandomly(game);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+        TestUtils.assertState(game, GameStateType.TURN_WAITING_MASTER_DATA);
     }
 
     @Test
@@ -73,25 +79,24 @@ public class GameStateTest {
 
         game.start();
         game.setMaster(false);
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
 
-        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
-        assertEquals(GameTurnExtraActionState.class, game.getState().getClass());
-
-        game.getState().complete();
-        assertEquals(GameTurnWaitingMasterDataState.class, game.getState().getClass());
-
-        game.getState().complete();
-        assertEquals(GameTurnPlaceTileState.class, game.getState().getClass());
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+        TestUtils.placeTileRandomly(game);
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+        TestUtils.assertState(game, GameStateType.TURN_WAITING_MASTER_DATA);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_WAITING_MASTER_DATA);
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
         game.getStack().clear();
 
-        game.getState().complete();
-        assertEquals(GameTurnExtraActionState.class, game.getState().getClass());
-        game.getState().complete();
-        assertEquals(GameTurnWaitingMasterDataState.class, game.getState().getClass());
-        game.getState().complete();
-        assertEquals(GameOverState.class, game.getState().getClass());
+        TestUtils.placeTileRandomly(game);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
+        TestUtils.assertState(game, GameStateType.TURN_WAITING_MASTER_DATA);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_WAITING_MASTER_DATA);
+        TestUtils.assertState(game, GameStateType.OVER);
     }
 
     @Test

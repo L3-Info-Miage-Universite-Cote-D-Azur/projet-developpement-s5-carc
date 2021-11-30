@@ -6,8 +6,10 @@ import client.ai.heuristic.evaluator.HeuristicMeeplePlacementEvaluator;
 import client.ai.heuristic.evaluator.HeuristicTileEvaluator;
 import client.ai.target.TargetList;
 import logic.Game;
+import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.player.Player;
+import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
@@ -90,5 +92,16 @@ public class HeuristicAI extends AI {
         }
 
         return targetList.pick();
+    }
+
+    /**
+     * Finds a position for the given dragon.
+     *
+     * @param dragon The dragon to find a position for.
+     * @return The position where the dragon can be placed.
+     */
+    @Override
+    protected Direction findDirectionForDragon(Dragon dragon) {
+        return null;
     }
 }

@@ -2,6 +2,8 @@ package logic.command;
 
 import logic.Game;
 import logic.TestUtils;
+import logic.board.GameBoard;
+import logic.state.GameStateType;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import org.junit.jupiter.api.Test;
@@ -17,8 +19,10 @@ public class MasterNextTurnDataCommandTest {
         game.start();
         game.setMaster(false);
 
-        game.getState().complete();
-        game.getState().complete();
+        TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
+        TestUtils.placeTileRandomly(game);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
+        TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
 
         assertTrue(game.getCommandExecutor().execute(new MasterNextTurnDataCommand(tile, game)));
     }

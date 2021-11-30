@@ -4,7 +4,7 @@ import logic.Game;
 import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.tile.Tile;
-import logic.tile.TileEdge;
+import logic.tile.Direction;
 import logic.tile.TileFlags;
 import logic.tile.TileRotation;
 import stream.ByteInputStream;
@@ -159,8 +159,8 @@ public class GameBoard {
     private boolean hasFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes) {
         Vector2 tilePosition = node.getPosition();
 
-        for (TileEdge edge : TileEdge.values()) {
-            Vector2 edgePos = tilePosition.add(edge.getValue());
+        for (Direction edge : Direction.values()) {
+            Vector2 edgePos = tilePosition.add(edge.value());
 
             if (hasTileAt(edgePos)) {
                 Tile subNode = getTileAt(edgePos);
@@ -216,8 +216,8 @@ public class GameBoard {
     private void findFreePlaceForTileFromNode(Tile node, Tile tileToPlace, HashSet<Tile> parentNodes, List<Vector2> freePoints) {
         Vector2 tilePosition = node.getPosition();
 
-        for (TileEdge edge : TileEdge.values()) {
-            Vector2 edgePos = tilePosition.add(edge.getValue());
+        for (Direction edge : Direction.values()) {
+            Vector2 edgePos = tilePosition.add(edge.value());
 
             if (hasTileAt(edgePos)) {
                 Tile subNode = getTileAt(edgePos);
@@ -260,6 +260,14 @@ public class GameBoard {
     }
 
     /**
+     * Sets the current dragon on the board.
+     * @param dragon the dragon to set
+     */
+    public void setDragon(Dragon dragon) {
+        this.dragon = dragon;
+    }
+
+    /**
      * Encodes the board into the specified output stream.
      *
      * @param stream the output stream to encode to
@@ -269,6 +277,13 @@ public class GameBoard {
 
         for (Tile tile : tiles.values()) {
             ByteStreamHelper.encodeTile(stream, tile, game);
+        }
+
+        if (dragon != null) {
+            stream.writeBoolean(true);
+            dragon.encode(stream);
+        } else {
+            stream.writeBoolean(false);
         }
     }
 
@@ -289,6 +304,13 @@ public class GameBoard {
 
         for (Tile tile : tiles.values()) {
             tile.onBoard();
+        }
+
+        if (stream.readBoolean()) {
+            dragon = new Dragon(this);
+            dragon.decode(stream);
+        } else {
+            dragon = null;
         }
     }
 }

@@ -11,11 +11,14 @@ public class CommandFactory {
      * @return the command
      */
     public static ICommand create(CommandType type) {
-        try {
-            return type.getCommandClass().getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return switch (type) {
+            case PLACE_TILE_DRAWN -> new PlaceTileDrawnCommand();
+            case PLACE_MEEPLE -> new PlaceMeepleCommand();
+            case SKIP_MEEPLE_PLACEMENT -> new SkipMeeplePlacementCommand();
+            case MASTER_NEXT_TURN_DATA -> new MasterNextTurnDataCommand();
+            case ROTATE_TILE_DRAWN -> new RotateTileDrawnCommand();
+            case MOVE_DRAGON -> new MoveDragonCommand();
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        };
     }
 }

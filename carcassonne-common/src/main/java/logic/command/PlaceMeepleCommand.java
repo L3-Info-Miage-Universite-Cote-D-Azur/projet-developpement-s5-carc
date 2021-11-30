@@ -5,23 +5,26 @@ import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
 import logic.state.GameStateType;
-import logic.state.turn.GameTurnExtraActionState;
+import logic.state.turn.GameTurnPlaceMeepleState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 /**
  * Command to place a meeple on a tile.
  */
 public class PlaceMeepleCommand implements ICommand {
+    private Vector2 tilePosition;
     private ChunkId chunkId;
 
     public PlaceMeepleCommand() {
     }
 
-    public PlaceMeepleCommand(ChunkId chunkId) {
+    public PlaceMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
+        this.tilePosition = tilePosition;
         this.chunkId = chunkId;
     }
 
@@ -42,6 +45,7 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void encode(ByteOutputStream stream) {
+        ByteStreamHelper.encodeVector(stream, tilePosition);
         stream.writeInt(chunkId.ordinal());
     }
 
@@ -52,6 +56,7 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void decode(ByteInputStream stream) {
+        tilePosition = ByteStreamHelper.decodeVector(stream);
         chunkId = ChunkId.values()[stream.readInt()];
     }
 
@@ -62,21 +67,16 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
+        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
 
-        if (extraActionState.hasPlacedMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Player has already placed a meeple.");
+        Tile tile = game.getBoard().getTileAt(tilePosition);
+        Tile tileDrawn = game.getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
+
+        if (tile != tileDrawn && !tileDrawn.isPortal()) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile is not the tile drawn and the tile drawn is not a portal.");
             return false;
         }
 
-        Player player = game.getTurnExecutor();
-
-        if (!player.hasRemainingMeeples()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Player has no meeple left.");
-            return false;
-        }
-
-        Tile tile = extraActionState.getTileDrawn();
         Chunk chunk = tile.getChunk(chunkId);
 
         if (chunk.getArea().hasMeeple()) {
@@ -94,7 +94,7 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public GameStateType getRequiredState() {
-        return GameStateType.TURN_EXTRA_ACTION;
+        return GameStateType.TURN_PLACE_MEEPLE;
     }
 
     /**
@@ -105,14 +105,14 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public void execute(Game game) {
-        GameTurnExtraActionState extraActionState = (GameTurnExtraActionState) game.getState();
+        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
         Player player = game.getTurnExecutor();
-        Tile tile = extraActionState.getTileDrawn();
+        Tile tile = game.getBoard().getTileAt(tilePosition);
         Chunk chunk = tile.getChunk(chunkId);
 
         chunk.setMeeple(new Meeple(player));
         player.increasePlayedMeeples();
-        extraActionState.setPlacedMeeple();
+        placeMeepleState.complete();
 
         game.getListener().onMeeplePlaced(player, tile, chunkId);
     }

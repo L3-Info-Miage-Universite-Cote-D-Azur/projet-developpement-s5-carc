@@ -1,7 +1,6 @@
 package client.service;
 
 import client.Client;
-import client.ai.SimpleAI;
 import client.ai.heuristic.HeuristicAI;
 import client.command.MasterCommandExecutionNotifier;
 import client.listener.GameLogger;
@@ -83,7 +82,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
         switch (currentState.getType()) {
             case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
-            case TURN_EXTRA_ACTION -> gameView.getTurnExecutor().getListener().onWaitingExtraAction();
+            case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
         }
     }
 

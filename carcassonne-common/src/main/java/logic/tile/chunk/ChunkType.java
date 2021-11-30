@@ -5,32 +5,37 @@ package logic.tile.chunk;
  */
 public enum ChunkType {
     /**
-     * The chunk contains a road.
+     * The chunk is a road.
      */
     ROAD,
 
     /**
-     * The chunk contains a road end.
+     * The chunk is a road end.
      */
     ROAD_END,
 
     /**
-     * The chunk contains a town.
+     * The chunk is a town.
      */
     TOWN,
 
     /**
-     * The chunk contains a abbey.
+     * The chunk is an abbey.
      */
     ABBEY,
 
     /**
-     * The chunk contains a field.
+     * The chunk is a field.
      */
     FIELD,
 
     /**
-     * The chunk contains a volcano.
+     * The chunk is a volcano.
      */
     VOLCANO,
+
+    /**
+     * The chunk is a portal.
+     */
+    PORTAL,
 }

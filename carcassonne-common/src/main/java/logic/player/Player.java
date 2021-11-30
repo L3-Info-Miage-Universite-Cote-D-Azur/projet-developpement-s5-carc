@@ -27,7 +27,12 @@ public class Player implements Comparable {
             }
 
             @Override
-            public void onWaitingExtraAction() {
+            public void onWaitingMeeplePlacement() {
+
+            }
+
+            @Override
+            public void onWaitingDragonMove() {
 
             }
         };
@@ -45,7 +50,12 @@ public class Player implements Comparable {
             }
 
             @Override
-            public void onWaitingExtraAction() {
+            public void onWaitingMeeplePlacement() {
+
+            }
+
+            @Override
+            public void onWaitingDragonMove() {
 
             }
         };

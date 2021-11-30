@@ -23,18 +23,26 @@ public class GameTurnEndingState extends GameState {
         game.setState(new GameTurnInitState(game));
     }
 
+    /**
+     * Encodes the state to a byte stream.
+     * @param stream The stream to encode to.
+     */
     @Override
     public void encode(ByteOutputStream stream) {
 
     }
 
+    /**
+     * Decodes the state from a byte stream.
+     * @param stream The stream to decode from.
+     */
     @Override
     public void decode(ByteInputStream stream) {
 
     }
 
     /**
-     * Completes the state by starting the next turn.
+     * Should not be called.
      */
     @Override
     public void complete() {
