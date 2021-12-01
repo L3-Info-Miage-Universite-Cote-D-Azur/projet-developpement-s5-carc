@@ -67,7 +67,7 @@ public class GameTurnPlaceMeepleState extends GameState {
      */
     @Override
     public void complete() {
-        game.setState(new GameTurnMoveDragonState(game));
+        game.setState(new GameTurnMoveDragonState(game, tilePosition));
     }
 
     /**
