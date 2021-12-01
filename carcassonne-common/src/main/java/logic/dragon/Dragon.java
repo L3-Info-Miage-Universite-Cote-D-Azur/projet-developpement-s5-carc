@@ -17,6 +17,8 @@ import java.util.ArrayList;
  * Class representing the dragon spawned by the volcano.
  */
 public final class Dragon {
+    public static final int NUM_MOVES = 6;
+
     private final GameBoard board;
     private final ArrayList<Vector2> path;
 
@@ -50,14 +52,12 @@ public final class Dragon {
     private void checkAreas() {
         Tile tile = board.getTileAt(getPosition());
 
-        if (!tile.hasFlag(TileFlags.PRINCESS)) {
-            for (ChunkId chunkId : ChunkId.values()) {
-                Chunk chunk = tile.getChunk(chunkId);
+        for (ChunkId chunkId : ChunkId.values()) {
+            Chunk chunk = tile.getChunk(chunkId);
 
-                if (chunk.hasMeeple()) {
-                    chunk.getMeeple().getOwner().decreasePlayedMeeples();
-                    chunk.setMeeple(null);
-                }
+            if (chunk.hasMeeple()) {
+                chunk.getMeeple().getOwner().decreasePlayedMeeples();
+                chunk.setMeeple(null);
             }
         }
     }
@@ -75,9 +75,7 @@ public final class Dragon {
      * @return true if the dragon can move to the specified position, false otherwise
      */
     public boolean canMoveTo(Vector2 position) {
-        return board.hasTileAt(position) &&
-                !board.getTileAt(position).hasFlag(TileFlags.PRINCESS) &&
-                !path.contains(position);
+        return board.hasTileAt(position) && !path.contains(position);
     }
 
     /**
@@ -96,6 +94,14 @@ public final class Dragon {
         }
 
         return true;
+    }
+
+    /**
+     * Returns whether the dragon has finished moving.
+     * @return true if the dragon has finished moving, false otherwise
+     */
+    public boolean hasFinished() {
+        return path.size() == NUM_MOVES;
     }
 
     /**
