@@ -17,5 +17,10 @@ public enum TileFlags {
     /**
      * The tile is a princess tile.
      */
-    PRINCESS
+    PRINCESS,
+
+    /**
+     * The tile is a dragon tile.
+     */
+    DRAGON,
 }
