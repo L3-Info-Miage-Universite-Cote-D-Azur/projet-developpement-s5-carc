@@ -15,9 +15,9 @@ public class TcpAcceptHandler implements CompletionHandler<AsynchronousSocketCha
     private final AsynchronousServerSocketChannel channel;
     private final ClientConnectionManager connectionManager;
 
-    public TcpAcceptHandler(AsynchronousServerSocketChannel channel) {
+    public TcpAcceptHandler(AsynchronousServerSocketChannel channel, ClientConnectionManager connectionManager) {
         this.channel = channel;
-        this.connectionManager = Server.getInstance().getConnectionManager();
+        this.connectionManager = connectionManager;
     }
 
     /**

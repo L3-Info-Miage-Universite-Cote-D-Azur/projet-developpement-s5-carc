@@ -79,14 +79,17 @@ public class ClientConnection {
      * The stream used to store data to be sent to the socket.
      */
     private final ResizableByteBuffer sendStream;
+
     /**
      * The connection's id.
      */
     private final int id;
+
     /**
      * Session data of the client.
      */
     private ClientSession session;
+
     /**
      * The last time the connection was received data.
      */

@@ -24,8 +24,8 @@ public class Server {
         }
 
         instance = this;
-        serverSocket = new TcpServerSocket(host, port);
         connectionManager = new ClientConnectionManager();
+        serverSocket = new TcpServerSocket(host, port, connectionManager);
         gameConfig = GameConfig.loadFromResources();
         matchmaking = new HashMap<>();
     }
