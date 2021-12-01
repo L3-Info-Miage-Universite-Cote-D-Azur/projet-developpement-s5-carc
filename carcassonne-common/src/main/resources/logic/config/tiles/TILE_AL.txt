@@ -16,6 +16,6 @@ Chunks
 Data						
 	Name	Value				
 	Model	AL				
-	Expansion					
-	Flags	DRAGON				
+	Expansion
+	Flags   DRAGON
 	Count	1				
