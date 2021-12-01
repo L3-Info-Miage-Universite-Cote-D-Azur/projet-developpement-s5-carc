@@ -11,7 +11,7 @@ import java.util.Map;
 public class ImageDatabase {
     private final int width;
     private final int height;
-    private Map<String, BufferedImage> assets;
+    private final Map<String, BufferedImage> assets;
 
     public ImageDatabase(int width, int height) {
         this.width = width;

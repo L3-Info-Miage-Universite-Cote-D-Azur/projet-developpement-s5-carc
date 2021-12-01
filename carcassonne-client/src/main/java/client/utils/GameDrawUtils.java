@@ -2,6 +2,7 @@ package client.utils;
 
 import logic.Game;
 import logic.board.GameBoard;
+import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
@@ -9,7 +10,6 @@ import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
-import logic.tile.chunk.ChunkType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -23,17 +23,18 @@ import java.util.Random;
  * Class for drawing the game.
  */
 public class GameDrawUtils implements ChunkPositionConstant {
-    private static final int tileWidth = 160;
-    private static final int tileHeight = 160;
-    private static final int meepleWidth = 27;
-    private static final int meepleHeight = 27;
-    private static final int extraWidth = 40;
-    private static final int extraHeight = 40;
+    private static final int TILE_WIDTH = 160;
+    private static final int TILE_HEIGHT = 160;
+    private static final int MEEPLE_WIDTH = 27;
+    private static final int MEEPLE_HEIGHT = 27;
+    private static final int EXTRA_WIDTH = 40;
+    private static final int EXTRA_HEIGHT = 40;
 
     private static final Random rand = new Random();
 
     private static ImageDatabase tileDatabase;
     private static ImageDatabase meepleDatabase;
+    private static ImageDatabase dragonDatabase;
     private static ImageDatabase extraDatabase;
 
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
@@ -66,20 +67,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
         put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
     }};
-    private static final HashMap<ChunkType, Color> chunksColor = new HashMap<>() {{
-        put(ChunkType.ROAD, Color.gray);
-        put(ChunkType.ROAD_END, Color.darkGray);
-        put(ChunkType.FIELD, Color.green);
-        put(ChunkType.TOWN, Color.ORANGE);
-        put(ChunkType.ABBEY, Color.CYAN);
-    }};
 
     /**
      * Loads the images for the rendering and stores them in the image database.
      */
     private static void loadImageDatabaseIfNeeded() {
         if (tileDatabase == null) {
-            tileDatabase = new ImageDatabase(tileWidth, tileHeight);
+            tileDatabase = new ImageDatabase(TILE_WIDTH, TILE_HEIGHT);
 
             for (File file : new File("models/tiles").listFiles()) {
                 if (file.isFile()) {
@@ -98,7 +92,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         }
 
         if (meepleDatabase == null) {
-            meepleDatabase = new ImageDatabase(meepleWidth, meepleHeight);
+            meepleDatabase = new ImageDatabase(MEEPLE_WIDTH, MEEPLE_HEIGHT);
 
             for (File file : new File("models/meeples").listFiles()) {
                 if (file.isFile()) {
@@ -111,8 +105,22 @@ public class GameDrawUtils implements ChunkPositionConstant {
             }
         }
 
+        if (dragonDatabase == null) {
+            dragonDatabase = new ImageDatabase(TILE_WIDTH, TILE_HEIGHT);
+
+            for (File file : new File("models/dragons").listFiles()) {
+                if (file.isFile()) {
+                    try {
+                        dragonDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         if (extraDatabase == null) {
-            extraDatabase = new ImageDatabase(extraWidth, extraHeight);
+            extraDatabase = new ImageDatabase(EXTRA_WIDTH, EXTRA_HEIGHT);
 
             for (File file : new File("models/pattern").listFiles()) {
                 if (file.isFile()) {
@@ -169,11 +177,11 @@ public class GameDrawUtils implements ChunkPositionConstant {
     /**
      * Gets the position where the tile should be drawn.
      *
-     * @param tile The tile to get the position for.
+     * @param vector2 The tile position to get the position for.
      * @return The position where the tile should be drawn.
      */
-    private static Vector2 getTilePosition(Tile tile) {
-        return new Vector2(tile.getPosition().getX() * tileWidth, tile.getPosition().getY() * tileHeight);
+    private static Vector2 getTilePosition(Vector2 vector2) {
+        return new Vector2(vector2.getX() * TILE_WIDTH, vector2.getY() * TILE_HEIGHT);
     }
 
     /**
@@ -276,19 +284,19 @@ public class GameDrawUtils implements ChunkPositionConstant {
     }
 
     private static void drawTileBorderUp(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX() + tileWidth, tilePosition.getY());
+        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX() + TILE_WIDTH, tilePosition.getY());
     }
 
     private static void drawTileBorderDown(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY() + tileHeight - 1, tilePosition.getX() + tileWidth, tilePosition.getY() + tileHeight - 1);
+        g.drawLine(tilePosition.getX(), tilePosition.getY() + TILE_HEIGHT - 1, tilePosition.getX() + TILE_WIDTH, tilePosition.getY() + TILE_HEIGHT - 1);
     }
 
     private static void drawTileBorderLeft(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX(), tilePosition.getY() + tileHeight);
+        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX(), tilePosition.getY() + TILE_HEIGHT);
     }
 
     private static void drawTileBorderRight(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX() + tileWidth - 1, tilePosition.getY(), tilePosition.getX() + tileWidth - 1, tilePosition.getY() + tileHeight);
+        g.drawLine(tilePosition.getX() + TILE_WIDTH - 1, tilePosition.getY(), tilePosition.getX() + TILE_WIDTH - 1, tilePosition.getY() + TILE_HEIGHT);
     }
 
     /**
@@ -309,7 +317,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      * @return The image layer representing the specified game instance.
      */
     public static BufferedImage createLayer(Game game, Bounds boardBounds) {
-        Bounds layerBounds = boardBounds.scale(tileWidth, tileHeight).reverseY();
+        Bounds layerBounds = boardBounds.scale(TILE_WIDTH, TILE_HEIGHT).reverseY();
         BufferedImage layer = new BufferedImage(layerBounds.getWidth(), layerBounds.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D layerGraphics = layer.createGraphics();
@@ -334,14 +342,14 @@ public class GameDrawUtils implements ChunkPositionConstant {
         graphics.setColor(Color.blue);
 
         for (Tile tile : game.getBoard().getTiles()) {
-            Vector2 tileImagePosition = getTilePosition(tile).reverseY().subtract(layerBounds.start);
+            Vector2 tileImagePosition = getTilePosition(tile.getPosition()).reverseY().subtract(layerBounds.start);
             BufferedImage tileImage = tileDatabase.get(getTileSpriteModel(tile));
 
             assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
-            assert tileImagePosition.getX() + tileWidth <= layerBounds.getWidth() && tileImagePosition.getY() + tileHeight <= layerBounds.getHeight();
+            assert tileImagePosition.getX() + TILE_WIDTH <= layerBounds.getWidth() && tileImagePosition.getY() + TILE_HEIGHT <= layerBounds.getHeight();
 
             graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
-            graphics.drawString(tile.getConfig().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + tileWidth / 4, tileImagePosition.getY() + tileHeight / 2);
+            graphics.drawString(tile.getConfig().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + TILE_WIDTH / 4, tileImagePosition.getY() + TILE_HEIGHT / 2);
 
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
@@ -364,6 +372,15 @@ public class GameDrawUtils implements ChunkPositionConstant {
                     //graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
                 }
             }
+        }
+
+        GameBoard gameBoard = game.getBoard();
+        if (gameBoard.hasDragon()) {
+            Dragon dragon = gameBoard.getDragon();
+            Vector2 dragonImagePosition = getTilePosition(dragon.getPosition()).reverseY().subtract(layerBounds.start);
+            BufferedImage dragonImage = dragonDatabase.get("dragon");
+            graphics.setColor(Color.blue);
+            graphics.drawImage(dragonImage, dragonImagePosition.getX(), dragonImagePosition.getY(), null);
         }
     }
 }
