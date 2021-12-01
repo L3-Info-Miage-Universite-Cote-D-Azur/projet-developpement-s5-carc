@@ -67,11 +67,10 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the dragon's position to move.
-     * @param dragon the dragon to evaluate.
      * @param position the position to evaluate.
      * @return the evaluation score.
      */
-    public int evaluate(Dragon dragon, Vector2 position) {
+    public int evaluate(Vector2 position) {
         evaluateTiles(position);
         return finalizeScore();
     }
@@ -84,7 +83,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
         for (Tile tile : game.getBoard().getTiles()) {
             if (isOwnTile(tile)) {
                 evaluateOwnTiles(position, tile);
-            } else {
+            } else if (isEnemyTile(tile)) {
                 evaluateEnemyTiles(position, tile);
             }
         }
@@ -139,5 +138,28 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns whether the given tile is owned by an enemy.
+     * @param tile the tile to check.
+     * @return whether the given tile is owned by an enemy.
+     */
+    private boolean isEnemyTile(Tile tile) {
+        boolean hasMeeple = false;
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            Chunk chunk = tile.getChunk(chunkId);
+
+            if (chunk.hasMeeple()) {
+                hasMeeple = true;
+
+                if (chunk.getMeeple().getOwner() == player) {
+                    return false;
+                }
+            }
+        }
+
+        return hasMeeple;
     }
 }
