@@ -111,7 +111,7 @@ public class HeuristicAI extends AI {
             Vector2 position = dragon.getPosition().add(direction.value());
 
             if (dragon.canMoveTo(position)) {
-                targetList.add(direction, dragonEvaluator.evaluate(dragon, position));
+                targetList.add(direction, dragonEvaluator.evaluate(position));
             }
         }
 

@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AL				
 	Expansion		
-	Flags   DRAGON
+	Flags	DRAGON
 	Count	1				

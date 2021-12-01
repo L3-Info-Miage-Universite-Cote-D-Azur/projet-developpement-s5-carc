@@ -168,8 +168,12 @@ public class TileConfig {
      */
     private void loadData(ExcelNode node) {
         model = node.getRow("Model").getValue("Value");
+
+        System.out.println("Loading tile data for " + model);
+
         expansion = node.getRow("Expansion").getValue("Value");
         flags = EnumSet.noneOf(TileFlags.class);
+
 
         for (String flag : node.getRow("Flags").getValue("Value").split(",")) {
             if (flag.length() != 0) {
