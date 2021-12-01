@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		FIELD				FIELD
+		FIELD		FIELD		FIELD
+		FIELD				FIELD
+			FIELD	FIELD	FIELD
+	References					
+		Name				
+			C	C	C	
+		A				A
+		A		A		A
+		A				A
+			A	A	A	
+Data						
+	Name	Value				
+	Model	AP				
+	Expansion					
+	Flags	DRAGON				
+	Count	1				
