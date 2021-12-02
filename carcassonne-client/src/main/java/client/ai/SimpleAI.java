@@ -34,7 +34,7 @@ public class SimpleAI extends AI {
      * @return The chunk where the meeple can be placed.
      */
     @Override
-    protected Chunk pickChunkToPlaceMeeple() {
+    protected Chunk findChunkToPlaceMeeple(Tile tileDrawn) {
         if (random.nextInt(100) >= MEEPLE_PLACEMENT_PROBABILITY) {
             GameBoard board = player.getGame().getBoard();
             Tile tilePicked = board.getTiles().get(random.nextInt(board.getTileCount()));

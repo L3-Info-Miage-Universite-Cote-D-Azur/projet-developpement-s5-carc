@@ -44,7 +44,7 @@ public class HeuristicAI extends AI {
         }
 
         this.tileEvaluator = new HeuristicTileEvaluator(game);
-        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game);
+        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game, player);
         this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
     }
 
@@ -71,30 +71,44 @@ public class HeuristicAI extends AI {
     }
 
     /**
-     * Picks a tile's chunk where the meeple can be placed.
+     * Finds a tile's chunk where the meeple can be placed.
      * Returns null if no chunk should be placed.
      *
      * @return The chunk where the meeple can be placed.
      */
     @Override
-    protected Chunk pickChunkToPlaceMeeple() {
+    protected Chunk findChunkToPlaceMeeple(Tile tileDrawn) {
         TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
 
-        for (Tile tile : getGame().getBoard().getTiles()) {
-            for (ChunkId chunkId : ChunkId.values()) {
-                Chunk chunk = tile.getChunk(chunkId);
-
-                if (!chunk.getArea().hasMeeple()) {
-                    int score = meeplePlacementEvaluator.evaluate(chunk);
-
-                    if (score >= MEEPLE_PLACEMENT_MIN_SCORE) {
-                        targetList.add(chunk, score);
-                    }
-                }
+        if (tileDrawn.isPortal()) {
+            for (Tile tile : getGame().getBoard().getTiles()) {
+                findChunkToPlaceMeeple(tile, targetList);
             }
+        } else {
+            findChunkToPlaceMeeple(tileDrawn, targetList);
         }
 
         return targetList.pick();
+    }
+
+    /**
+     * Finds a tile's chunk where the meeple can be placed.
+     *
+     * @param tile The tile to find a chunk for.
+     * @param targetList The target list to add the chunks to.
+     */
+    private void findChunkToPlaceMeeple(Tile tile, TargetList<Chunk> targetList) {
+        for (ChunkId chunkId : ChunkId.values()) {
+            Chunk chunk = tile.getChunk(chunkId);
+
+            if (!chunk.getArea().hasMeeple()) {
+                int score = meeplePlacementEvaluator.evaluate(chunk);
+
+                if (score >= MEEPLE_PLACEMENT_MIN_SCORE) {
+                    targetList.add(chunk, score);
+                }
+            }
+        }
     }
 
     /**

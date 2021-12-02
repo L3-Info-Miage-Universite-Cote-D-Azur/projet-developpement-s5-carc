@@ -254,6 +254,15 @@ public abstract class Area {
     }
 
     /**
+     * Gets the list of meeples of the given player in the area.
+     * @param player The player.
+     * @return The list of meeples.
+     */
+    public List<Meeple> getMeeples(Player player) {
+        return chunks.stream().filter(c -> c.hasMeeple() && c.getMeeple().getOwner() == player).map(c -> c.getMeeple()).toList();
+    }
+
+    /**
      * Gets whether the area has one or more meeples.
      * @return
      */

@@ -11,6 +11,11 @@ import java.util.Set;
 
 public class AbbeyArea extends Area {
     /**
+     * Number of neighbours required to complete the area.
+     */
+    public static int NUM_NEIGHBORS_REQUIRED = 9;
+
+    /**
      * Constructor for the area.
      *
      * @param chunks
@@ -45,7 +50,7 @@ public class AbbeyArea extends Area {
     @Override
     public int getClosingPoints() {
         // Abbey area is 9 tiles.
-        return 1 * 9;
+        return 1 * NUM_NEIGHBORS_REQUIRED;
     }
 
     /**

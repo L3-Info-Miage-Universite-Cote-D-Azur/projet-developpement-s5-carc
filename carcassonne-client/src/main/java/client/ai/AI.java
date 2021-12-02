@@ -3,9 +3,9 @@ package client.ai;
 import logic.Game;
 import logic.command.*;
 import logic.dragon.Dragon;
-import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
+import logic.state.turn.GameTurnPlaceMeepleState;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Direction;
 import logic.tile.Tile;
@@ -39,7 +39,8 @@ public abstract class AI implements IPlayerListener {
      */
     @Override
     public void onWaitingMeeplePlacement() {
-        Chunk chunk = pickChunkToPlaceMeeple();
+        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) player.getGame().getState();
+        Chunk chunk = findChunkToPlaceMeeple(getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition()));
 
         if (chunk != null) {
             player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
@@ -84,7 +85,7 @@ public abstract class AI implements IPlayerListener {
      *
      * @return The chunk where the meeple can be placed.
      */
-    protected abstract Chunk pickChunkToPlaceMeeple();
+    protected abstract Chunk findChunkToPlaceMeeple(Tile tileDrawn);
 
     /**
      * Finds a direction to move the dragon.
