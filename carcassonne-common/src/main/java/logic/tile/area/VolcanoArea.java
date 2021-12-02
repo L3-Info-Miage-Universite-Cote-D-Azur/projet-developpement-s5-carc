@@ -53,4 +53,14 @@ public class VolcanoArea extends Area {
     protected boolean checkClosed() {
         return true;
     }
+
+    /**
+     * Called when the area is created and the tile is placed
+     * to spawn the dragon.
+     */
+    @Override
+    protected void onClosed() {
+        super.onClosed();
+        getBoard().spawnDragon(getBaseTile().getPosition());
+    }
 }

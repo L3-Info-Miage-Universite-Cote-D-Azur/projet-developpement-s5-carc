@@ -236,10 +236,6 @@ public class Tile {
      */
     public void onBoard() {
         mergeAreas();
-
-        if (hasFlag(TileFlags.DRAGON)) {
-            game.getBoard().spawnDragon(position);
-        }
     }
 
     /**
