@@ -1,0 +1,1 @@
+mvn -pl carcassonne-server exec:java
