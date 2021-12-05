@@ -19,6 +19,14 @@ public class Matchmaking {
     }
 
     /**
+     * Gets the number of players in the queue.
+     * @return the number of players in the queue
+     */
+    public int getPlayersInQueue() {
+        return queue.size();
+    }
+
+    /**
      * Adds a client to the queue.
      *
      * @param client
@@ -55,21 +63,29 @@ public class Matchmaking {
                 sessions[i] = queue.remove(0);
             }
 
-            Match match = new Match(++matchIdCounter, sessions);
-
-            for (ClientSession session : sessions) {
-                session.setMatch(match);
-                session.setMatchmaking(null);
-            }
-
-            match.startGame();
+            createMatch(sessions);
         }
+    }
+
+    /**
+     * Creates a match with the given client sessions.
+     * @param sessions the client sessions
+     */
+    protected synchronized void createMatch(ClientSession[] sessions) {
+        Match match = new Match(++matchIdCounter, sessions);
+
+        for (ClientSession session : sessions) {
+            session.setMatch(match);
+            session.setMatchmaking(null);
+        }
+
+        match.startGame();
     }
 
     /**
      * Notifies the clients of the matchmaking progress.
      */
-    private synchronized void notifyMatchmakingProgress() {
+    protected synchronized void notifyMatchmakingProgress() {
         for (ClientSession session : queue) {
             session.getConnection().send(new MatchmakingDataMessage(queue.size(), numPlayersRequired));
         }
