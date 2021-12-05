@@ -1,5 +1,7 @@
 package server.network;
 
+import server.logger.Logger;
+
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -86,6 +88,9 @@ public class ClientConnectionManager {
         connections.put(nextConnectionId, connection);
         nextConnectionId++;
         connection.startIO();
+
+        Logger.debug("Connection %d created. IP:%s", connection.getId(), connection.getRemoteAddress());
+
         return connection;
     }
 

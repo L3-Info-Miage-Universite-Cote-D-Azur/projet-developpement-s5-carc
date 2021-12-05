@@ -109,8 +109,6 @@ public class ClientConnection {
         this.receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
         this.sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
         this.lastRead = LocalDateTime.now();
-
-        Logger.debug("Connection %d created. IP:%s", id, getRemoteAddress());
     }
 
     public void startIO() {
@@ -211,7 +209,7 @@ public class ClientConnection {
             if (read == -1) {
                 break;
             } else if (read == -2) {
-                Logger.warn("Connection %d: Packet is too big, closing connection.", id);
+                Logger.warn("Connection %d: Packet header invalid, closing connection.", id);
                 close();
                 return;
             } else if (read == -3) {
