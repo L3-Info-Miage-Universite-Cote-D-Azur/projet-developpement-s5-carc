@@ -363,10 +363,8 @@ public class Game {
 
             if (master) {
                 stack.decode(stream, this);
-                this.master = true;
             } else {
                 stack.clear();
-                this.master = false;
             }
 
             state = GameStateFactory.createByType(GameStateType.values()[stream.readInt()], this);
@@ -374,6 +372,8 @@ public class Game {
         } else {
             state = null;
         }
+
+        this.master = master;
     }
 
     /**

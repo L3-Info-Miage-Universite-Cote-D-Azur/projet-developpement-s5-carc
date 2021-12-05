@@ -30,8 +30,6 @@ public class Match {
         this.sessions = sessions;
         this.game = new Game(GameConfig.loadFromResources());
 
-        game.getCommandExecutor().setListener(new SlaveCommandExecutionNotifier(this));
-
         for (ClientSession session : sessions) {
             game.addPlayer(new Player(session.getUserId()));
         }
@@ -75,7 +73,7 @@ public class Match {
             Player player = game.getPlayerById(session.getUserId());
             player.setListener(new OfflinePlayerAI(game));
 
-            if (game.getTurnExecutor() == player) {
+            if (game.isStarted() && game.getTurnExecutor() == player) {
                 switch (game.getState().getType()) {
                     case TURN_PLACE_TILE -> player.getListener().onWaitingPlaceTile();
                     case TURN_PLACE_MEEPLE -> player.getListener().onWaitingMeeplePlacement();
@@ -90,7 +88,7 @@ public class Match {
      *
      * @param message
      */
-    private void sendMessageToConnectedClients(Message message) {
+    protected void sendMessageToConnectedClients(Message message) {
         for (ClientSession session : sessions) {
             if (session != null) {
                 session.getConnection().send(message);
@@ -129,6 +127,16 @@ public class Match {
     }
 
     /**
+     * Creates a snapshot of the game instance.
+     * @return the snapshot
+     */
+    private byte[] createSnapshot(boolean masterData) {
+        ByteOutputStream stream = new ByteOutputStream(1024);
+        game.encode(stream, masterData);
+        return stream.toByteArray();
+    }
+
+    /**
      * Notifies the connected clients that the command has been executed.
      *
      * @param command the executed command
@@ -142,20 +150,31 @@ public class Match {
      */
     public void start() {
         game.start();
+
+        /* Listeners are attached after game starting to avoid sending of commands & game result before the game data message. */
         game.setListener(new MatchGameListener(this));
+        game.getCommandExecutor().setListener(new SlaveCommandExecutionNotifier(this));
 
-        ByteOutputStream stream = new ByteOutputStream(1000);
-        game.encode(stream, false);
-        sendMessageToConnectedClients(new GameDataMessage(stream.toByteArray()));
+        sendMessageToConnectedClients(new GameDataMessage(createSnapshot(false)));
+
+        /* As listeners are attached later, we need to check manually if the game is over. */
+        if (game.isOver()) {
+            onGameOver();
+        }
     }
 
+    /**
+     * Called when the game is over.
+     */
     public void onGameOver() {
-        ByteOutputStream stream = new ByteOutputStream(1000);
-        game.encode(stream, true);
         destroy();
-        sendMessageToConnectedClients(new GameResultMessage(stream.toByteArray()));
+        sendMessageToConnectedClients(new GameResultMessage(createSnapshot(true)));
     }
 
+    /**
+     * Called when a game turn is started.
+     * @param tileDrawn the drawn tile
+     */
     public void onGameTurnStarted(Tile tileDrawn) {
         sendMessageToConnectedClients(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(tileDrawn.getConfig())));
     }
