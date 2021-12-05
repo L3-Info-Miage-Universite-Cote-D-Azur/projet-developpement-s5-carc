@@ -1,6 +1,7 @@
 package logic.dragon;
 
 import logic.board.GameBoard;
+import logic.command.RemoveMeepleCommand;
 import logic.math.Vector2;
 import logic.tile.Direction;
 import logic.tile.Tile;
@@ -56,8 +57,7 @@ public final class Dragon {
             Chunk chunk = tile.getChunk(chunkId);
 
             if (chunk.hasMeeple()) {
-                chunk.getMeeple().getOwner().decreasePlayedMeeples();
-                chunk.setMeeple(null);
+                RemoveMeepleCommand.removeMeeple(chunk);
             }
         }
     }

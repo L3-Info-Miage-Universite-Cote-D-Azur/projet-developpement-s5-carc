@@ -1,6 +1,7 @@
 package logic.tile.area;
 
 import logic.board.GameBoard;
+import logic.command.RemoveMeepleCommand;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
@@ -216,8 +217,7 @@ public abstract class Area {
         /* As the area evaluation is done, we can remove the meeples in the area. */
         for (Chunk chunk : chunks) {
             if (chunk.hasMeeple()) {
-                chunk.getMeeple().getOwner().decreasePlayedMeeples();
-                chunk.setMeeple(null);
+                RemoveMeepleCommand.removeMeeple(chunk);
             }
         }
     }
@@ -273,6 +273,15 @@ public abstract class Area {
             }
         }
         return false;
+    }
+
+    /**
+     * Gets whether the area has the given tile.
+     * @param tile The tile.
+     * @return
+     */
+    public boolean hasTile(Tile tile) {
+        return tiles.contains(tile);
     }
 
     /**
