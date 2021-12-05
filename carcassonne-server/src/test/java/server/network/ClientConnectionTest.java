@@ -40,18 +40,18 @@ public class ClientConnectionTest {
         readBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
         readBuffer.put(getPacketBytes(Packet.create(new ServerHelloMessage())));
 
-        clientConnection.onRead(readBuffer.position());
+        clientConnection.onReceive(readBuffer.position());
 
         assertTrue(hasReceivedMessage[0]);
         assertTrue(hasReceivedMessage[1]);
         assertFalse(hasClosed[0]);
 
-        clientConnection.onRead(readBuffer.position());
+        clientConnection.onReceive(readBuffer.position());
 
         // Put wrong data to check if the connection is closed
         readBuffer.put(new byte[32]);
 
-        clientConnection.onRead(readBuffer.position());
+        clientConnection.onReceive(readBuffer.position());
 
         assertTrue(hasClosed[0]);
     }

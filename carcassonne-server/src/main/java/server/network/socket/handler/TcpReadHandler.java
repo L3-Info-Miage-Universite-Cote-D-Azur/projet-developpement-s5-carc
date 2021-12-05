@@ -29,7 +29,7 @@ public class TcpReadHandler implements CompletionHandler<Integer, ClientConnecti
         if (read == -1) {
             connection.close();
         } else {
-            connection.onRead(read.intValue());
+            connection.onReceive(read.intValue());
 
             if (connection.isConnected()) {
                 channel.read(buffer, connection, this);

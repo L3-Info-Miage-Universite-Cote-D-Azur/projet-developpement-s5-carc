@@ -193,7 +193,7 @@ public class ClientConnection {
      *
      * @param length The length of the data received.
      */
-    public void onRead(int length) {
+    public void onReceive(int length) {
         readBuffer.position(length);
         readBuffer.flip();
         receiveStream.put(readBuffer.array(), 0, length);
