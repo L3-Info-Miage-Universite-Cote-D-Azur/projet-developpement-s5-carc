@@ -4,6 +4,7 @@ import logic.board.GameBoard;
 import logic.command.MoveDragonCommand;
 import logic.command.PlaceMeepleCommand;
 import logic.command.PlaceTileDrawnCommand;
+import logic.command.SkipMeeplePlacementCommand;
 import logic.config.GameConfig;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
@@ -38,6 +39,12 @@ public class TestUtils {
 
         if (startGame) {
             game.start();
+
+            if (attachFakeAI) {
+                if (game.getState().getType() != GameStateType.OVER) {
+                    throw new IllegalStateException("Game state is not OVER");
+                }
+            }
         }
 
         return game;
@@ -102,7 +109,9 @@ public class TestUtils {
 
         @Override
         public void onWaitingMeeplePlacement() {
-            game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]));
+            if (random.nextInt(100) < 95 || !game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]))) {
+                game.getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+            }
         }
 
         @Override

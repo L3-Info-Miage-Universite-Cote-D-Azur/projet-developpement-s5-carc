@@ -300,8 +300,8 @@ public class GameBoard {
      * Spawns the dragon on the board to the specified position.
      * @param position the position to spawn the dragon
      */
-    public void spawnDragon(Vector2 position) {
-        dragon = new Dragon(this, position);
+    public Dragon spawnDragon(Vector2 position) {
+        return dragon = new Dragon(this, position);
     }
 
     /**
