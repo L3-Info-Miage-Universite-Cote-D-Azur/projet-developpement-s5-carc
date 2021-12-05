@@ -79,7 +79,7 @@ public class Matchmaking {
             session.setMatchmaking(null);
         }
 
-        match.startGame();
+        match.start();
     }
 
     /**

@@ -38,7 +38,7 @@ public class ClientSession {
 
         if (currentMatch != null) {
             synchronized (currentMatch) {
-                currentMatch.removePlayer(this);
+                currentMatch.onPlayerDisconnected(this);
             }
         }
     }
@@ -70,7 +70,7 @@ public class ClientSession {
     public synchronized void setMatch(Match currentMatch) {
         if (destroyed) {
             synchronized (currentMatch) {
-                currentMatch.removePlayer(this);
+                currentMatch.onPlayerDisconnected(this);
             }
         } else {
             this.currentMatch = currentMatch;

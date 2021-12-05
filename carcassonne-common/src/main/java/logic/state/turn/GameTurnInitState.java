@@ -28,7 +28,7 @@ public class GameTurnInitState extends GameState {
 
             if (board.hasFreePlaceForTile(tile)) {
                 game.increaseTurnCount();
-                game.getListener().onTurnStarted(game.getTurnCount());
+                game.getListener().onTurnStarted(game.getTurnCount(), tile);
                 game.setState(new GameTurnPlaceTileState(game, tile));
                 return;
             }

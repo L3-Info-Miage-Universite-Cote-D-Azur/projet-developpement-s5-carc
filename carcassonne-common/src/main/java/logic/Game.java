@@ -54,7 +54,7 @@ public class Game {
             }
 
             @Override
-            public void onTurnStarted(int id) {
+            public void onTurnStarted(int id, Tile tileDrawn) {
 
             }
 

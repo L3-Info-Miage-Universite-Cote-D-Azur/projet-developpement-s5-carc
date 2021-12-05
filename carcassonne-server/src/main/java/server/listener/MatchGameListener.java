@@ -24,14 +24,16 @@ public class MatchGameListener implements IGameListener {
     @Override
     public void onGameOver() {
         Logger.info("Match %d: Game over", match.getId());
+        match.onGameOver();
     }
 
     /**
      * Called when the turn is started.
      */
     @Override
-    public void onTurnStarted(int id) {
+    public void onTurnStarted(int id, Tile tileDrawn) {
         Logger.info("Match %d: Turn %d started", match.getId(), id);
+        match.onGameTurnStarted(tileDrawn);
     }
 
     /**
@@ -42,15 +44,9 @@ public class MatchGameListener implements IGameListener {
         Logger.info("Match %d: Turn %d ended", match.getId(), id);
     }
 
-
     @Override
     public void onStateChanged(GameState state) {
         Logger.info("Match %d: State changed to %s", match.getId(), state.getType());
-
-        switch (state.getType()) {
-            case TURN_PLACE_TILE -> match.onGameTurnStarted(((GameTurnPlaceTileState) state).getTileDrawn());
-            case OVER -> match.onGameOver();
-        }
     }
 
     @Override

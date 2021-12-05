@@ -39,7 +39,7 @@ public class GameLogger implements IGameListener {
      * Called when the turn is started.
      */
     @Override
-    public void onTurnStarted(int id) {
+    public void onTurnStarted(int id, Tile tileDrawn) {
         Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- TURN %d STARTED ---", id);
     }
 

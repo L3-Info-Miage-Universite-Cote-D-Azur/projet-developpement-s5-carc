@@ -2,10 +2,7 @@ package network.message;
 
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
-import network.message.game.GameCommandMessage;
-import network.message.game.GameCommandRequestMessage;
-import network.message.game.GameDataMessage;
-import network.message.game.GameResultMessage;
+import network.message.game.*;
 import network.message.matchmaking.*;
 
 /**
@@ -26,7 +23,8 @@ public enum MessageType {
     GAME_DATA(220, GameDataMessage.class),
     GAME_COMMAND_REQUEST(121, GameCommandRequestMessage.class),
     GAME_COMMAND(221, GameCommandMessage.class),
-    GAME_RESULT(222, GameResultMessage.class);
+    GAME_RESULT(222, GameResultMessage.class),
+    GAME_MASTER_NEXT_TURN_DATA(223, GameMasterNextTurnDataMessage.class);
 
     /**
      * The message type value.

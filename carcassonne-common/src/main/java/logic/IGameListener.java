@@ -22,7 +22,7 @@ public interface IGameListener {
     /**
      * Called when the turn is started.
      */
-    void onTurnStarted(int id);
+    void onTurnStarted(int id, Tile tileDrawn);
 
     /**
      * Called when the turn is ended.

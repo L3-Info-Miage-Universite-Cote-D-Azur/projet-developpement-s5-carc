@@ -1,22 +1,19 @@
 package server.matchmaking;
 
 import logic.Game;
-import logic.command.ICommand;
-import logic.command.MasterNextTurnDataCommand;
-import logic.command.PlaceTileDrawnCommand;
-import logic.command.SkipMeeplePlacementCommand;
+import logic.command.*;
 import logic.config.GameConfig;
 import logic.player.Player;
-import logic.state.GameStateType;
-import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
+import network.message.game.GameMasterNextTurnDataMessage;
 import network.message.game.GameResultMessage;
 import server.command.SlaveCommandExecutionNotifier;
 import server.listener.MatchGameListener;
 import server.logger.Logger;
+import server.player.OfflinePlayerAI;
 import server.session.ClientSession;
 import stream.ByteOutputStream;
 
@@ -61,35 +58,31 @@ public class Match {
     }
 
     /**
-     * Removes the player from the connected sessions.
+     * Called when a player has been disconnected.
      *
-     * @param session the session to remove
+     * @param session the player session
      */
-    public void removePlayer(ClientSession session) {
+    public void onPlayerDisconnected(ClientSession session) {
         for (int i = 0; i < sessions.length; i++) {
             if (sessions[i] == session) {
                 sessions[i] = null;
             }
         }
 
-        if (game.isStarted() && !game.isOver()) {
-            autoPlayIfCurrentPlayerIsOffline();
-        }
-    }
+        if (!game.isOver()) {
+            Logger.info("Match %d: Player %d disconnected.", id, session.getUserId());
 
-    /**
-     * Gets the session by the user id.
-     *
-     * @param userId
-     * @return
-     */
-    private ClientSession getSessionByUserId(int userId) {
-        for (ClientSession session : sessions) {
-            if (session != null && session.getUserId() == userId) {
-                return session;
+            Player player = game.getPlayerById(session.getUserId());
+            player.setListener(new OfflinePlayerAI(game));
+
+            if (game.getTurnExecutor() == player) {
+                switch (game.getState().getType()) {
+                    case TURN_PLACE_TILE -> player.getListener().onWaitingPlaceTile();
+                    case TURN_PLACE_MEEPLE -> player.getListener().onWaitingMeeplePlacement();
+                    case TURN_MOVE_DRAGON -> player.getListener().onWaitingDragonMove();
+                }
             }
         }
-        return null;
     }
 
     /**
@@ -145,26 +138,9 @@ public class Match {
     }
 
     /**
-     * Auto plays the game if the current player who must play is offline.
+     * Starts the match.
      */
-    private void autoPlayIfCurrentPlayerIsOffline() {
-        Player turnExecutor = game.getTurnExecutor();
-
-        if (getSessionByUserId(turnExecutor.getId()) == null) {
-            Logger.info("Player %d left the game. Tile to draw will be placed randomly to continue the game.", turnExecutor.getId());
-
-            GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
-
-            executeCommand(turnExecutor.getId(), new PlaceTileDrawnCommand(game.getBoard().findFreePlacesForTile(placeTileState.getTileDrawn()).get(0)));
-            executeCommand(turnExecutor.getId(), new SkipMeeplePlacementCommand());
-
-            if (game.getState().getType() == GameStateType.TURN_MOVE_DRAGON) {
-                // TODO
-            }
-        }
-    }
-
-    public void startGame() {
+    public void start() {
         game.start();
         game.setListener(new MatchGameListener(this));
 
@@ -181,6 +157,6 @@ public class Match {
     }
 
     public void onGameTurnStarted(Tile tileDrawn) {
-        notifyCommandExecutionToConnectedClients(new MasterNextTurnDataCommand(tileDrawn, game));
+        sendMessageToConnectedClients(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(tileDrawn.getConfig())));
     }
 }

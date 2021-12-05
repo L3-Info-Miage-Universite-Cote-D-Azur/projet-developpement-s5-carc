@@ -12,11 +12,15 @@ import logic.command.CommandType;
 import logic.config.GameConfig;
 import logic.player.Player;
 import logic.state.GameState;
+import logic.tile.Tile;
 import network.message.Message;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
+import network.message.game.GameMasterNextTurnDataMessage;
 import network.message.game.GameResultMessage;
 import stream.ByteInputStream;
+
+import java.util.ArrayList;
 
 /**
  * Services that manages the game battle.
@@ -46,6 +50,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         switch (message.getType()) {
             case GAME_DATA -> onGameData((GameDataMessage) message);
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
+            case GAME_MASTER_NEXT_TURN_DATA -> onGameMasterNextTurnData((GameMasterNextTurnDataMessage) message);
             case GAME_RESULT -> onGameResult((GameResultMessage) message);
         }
     }
@@ -82,7 +87,8 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
         switch (currentState.getType()) {
             case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
-            case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
+            case TURN_PLACE_MEEPLE -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
+            case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingDragonMove();
         }
     }
 
@@ -93,10 +99,22 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      * @param message
      */
     private void onGameCommand(GameCommandMessage message) {
-        if (message.getCommand().getType() == CommandType.MASTER_NEXT_TURN_DATA || gameView.getTurnExecutor().getId() != client.getAuthenticationService().getUserId()) {
+        if (gameView.getTurnExecutor().getId() != client.getAuthenticationService().getUserId()) {
             Logger.debug(LoggerCategory.SERVICE, "Server command %s received and executed.", message.getCommand().getType());
             message.getCommand().execute(gameView);
         }
+    }
+
+    /**
+     * Handles a game master next turn data message.
+     *
+     * @param message
+     */
+    private void onGameMasterNextTurnData(GameMasterNextTurnDataMessage message) {
+        gameView.getStack().fill(new ArrayList<Tile>() {{
+            add(gameView.getConfig().tiles.get(message.getTileConfigIndex()).createTile(gameView));
+        }});
+        gameView.getState().complete();
     }
 
     /**
