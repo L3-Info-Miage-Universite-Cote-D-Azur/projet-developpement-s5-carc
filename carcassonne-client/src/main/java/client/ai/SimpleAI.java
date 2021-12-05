@@ -7,6 +7,7 @@ import logic.player.Player;
 import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
+import logic.tile.area.Area;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
@@ -19,6 +20,7 @@ import java.util.Random;
  */
 public class SimpleAI extends AI {
     private static final int MEEPLE_PLACEMENT_PROBABILITY = 80;
+    private static final int MEEPLE_REMOVING_PROBABILITY = 75;
 
     protected final Random random;
 
@@ -28,7 +30,7 @@ public class SimpleAI extends AI {
     }
 
     /**
-     * Picks a tile's chunk where the meeple can be placed.
+     * Finds a tile's chunk where the meeple can be placed.
      * Returns null if no chunk should be placed.
      *
      * @return The chunk where the meeple can be placed.
@@ -47,6 +49,26 @@ public class SimpleAI extends AI {
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Finds a tile's chunk where the meeple can be removed.
+     * Returns null if no chunk should be removed.
+     *
+     * @return The chunk where the meeple can be placed.
+     */
+    @Override
+    protected Chunk findChunkToRemoveMeeple(Tile tileDrawn) {
+        if (random.nextInt(100) >= MEEPLE_REMOVING_PROBABILITY) {
+            for (Area area : tileDrawn.getAreas()) {
+                for (Chunk chunk : area.getChunks()) {
+                    if (chunk.hasMeeple()) {
+                        return chunk;
+                    }
+                }
+            }
+        }
         return null;
     }
 

@@ -194,6 +194,14 @@ public class Tile {
     }
 
     /**
+     * Gets the areas that are connected to the tile.
+     * @return The areas that are connected to the tile.
+     */
+    public List<Area> getAreas() {
+        return Arrays.stream(chunks).map(Chunk::getArea).distinct().toList();
+    }
+
+    /**
      * Tries to merge the chunk areas with the areas that are connected to the given edge.
      *
      * @param neighborTile The tile to merge with.

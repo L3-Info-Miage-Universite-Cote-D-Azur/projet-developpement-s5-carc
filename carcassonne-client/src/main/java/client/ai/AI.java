@@ -9,6 +9,7 @@ import logic.state.turn.GameTurnPlaceMeepleState;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Direction;
 import logic.tile.Tile;
+import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 
 /**
@@ -40,6 +41,17 @@ public abstract class AI implements IPlayerListener {
     @Override
     public void onWaitingMeeplePlacement() {
         GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) player.getGame().getState();
+        Tile tileDrawn = getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
+
+        if (tileDrawn.hasFlag(TileFlags.PRINCESS)) {
+            Chunk chunkToRemoveMeeple = findChunkToRemoveMeeple(tileDrawn);
+
+            if (chunkToRemoveMeeple != null) {
+                player.getGame().getCommandExecutor().execute(new RemoveMeepleCommand(chunkToRemoveMeeple.getParent().getPosition(), chunkToRemoveMeeple.getCurrentId()));
+                return;
+            }
+        }
+
         Chunk chunk = findChunkToPlaceMeeple(getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition()));
 
         if (chunk != null) {
@@ -80,12 +92,20 @@ public abstract class AI implements IPlayerListener {
     protected abstract TilePosition findPositionForTile(Tile tile);
 
     /**
-     * Picks a tile's chunk where the meeple can be placed.
+     * Finds a tile's chunk where the meeple can be placed.
      * Returns null if no chunk should be placed.
      *
      * @return The chunk where the meeple can be placed.
      */
     protected abstract Chunk findChunkToPlaceMeeple(Tile tileDrawn);
+
+    /**
+     * Finds a tile's chunk where the meeple can be removed.
+     * Returns null if no chunk should be removed.
+     *
+     * @return The chunk where the meeple can be placed.
+     */
+    protected abstract Chunk findChunkToRemoveMeeple(Tile tileDrawn);
 
     /**
      * Finds a direction to move the dragon.

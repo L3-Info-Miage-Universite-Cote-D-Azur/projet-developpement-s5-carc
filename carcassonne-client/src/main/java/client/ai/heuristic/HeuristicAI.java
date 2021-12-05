@@ -4,6 +4,7 @@ import client.ai.AI;
 import client.ai.TilePosition;
 import client.ai.heuristic.evaluator.HeuristicDragonEvaluator;
 import client.ai.heuristic.evaluator.HeuristicMeeplePlacementEvaluator;
+import client.ai.heuristic.evaluator.HeuristicMeepleRemovalEvaluator;
 import client.ai.heuristic.evaluator.HeuristicTileEvaluator;
 import client.ai.target.TargetList;
 import logic.Game;
@@ -13,6 +14,7 @@ import logic.player.Player;
 import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
+import logic.tile.area.Area;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
@@ -30,8 +32,14 @@ public class HeuristicAI extends AI {
      */
     private static int MEEPLE_PLACEMENT_MIN_SCORE = 10;
 
+    /**
+     * Minimum of score to consider a meeple removal.
+     */
+    private static int MEEPLE_REMOVAL_MIN_SCORE = 10;
+
     private final HeuristicTileEvaluator tileEvaluator;
     private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
+    private final HeuristicMeepleRemovalEvaluator meepleRemovalEvaluator;
     private final HeuristicDragonEvaluator dragonEvaluator;
 
     public HeuristicAI(Player player) {
@@ -45,6 +53,7 @@ public class HeuristicAI extends AI {
 
         this.tileEvaluator = new HeuristicTileEvaluator(game);
         this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game, player);
+        this.meepleRemovalEvaluator = new HeuristicMeepleRemovalEvaluator(game, player);
         this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
     }
 
@@ -109,6 +118,31 @@ public class HeuristicAI extends AI {
                 }
             }
         }
+    }
+
+    /**
+     * Finds a tile's chunk where the meeple can be removed.
+     * Returns null if no chunk should be removed.
+     *
+     * @return The chunk where the meeple can be placed.
+     */
+    @Override
+    protected Chunk findChunkToRemoveMeeple(Tile tileDrawn) {
+        TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
+
+        for (Area area : tileDrawn.getAreas()) {
+            for (Chunk chunk : area.getChunks()) {
+                if (chunk.hasMeeple()) {
+                    int score = meepleRemovalEvaluator.evaluate(chunk);
+
+                    if (score >= MEEPLE_REMOVAL_MIN_SCORE) {
+                        targetList.add(chunk, score);
+                    }
+                }
+            }
+        }
+
+        return targetList.pick();
     }
 
     /**
