@@ -39,6 +39,7 @@ public class MatchmakingTest {
     @Test
     void testCreateMatch() {
         final Integer[] numMatchmakingProgressSent = {0};
+        final Boolean[] matchCreated = {false};
 
         ClientSession session1 = new ClientSession(createFakeClientConnection(1), 1);
         ClientSession session2 = new ClientSession(createFakeClientConnection(2), 2);
@@ -48,6 +49,7 @@ public class MatchmakingTest {
             protected synchronized void createMatch(ClientSession[] sessions) {
                 assertEquals(session1, sessions[0]);
                 assertEquals(session2, sessions[1]);
+                matchCreated[0] = true;
             }
 
             @Override
@@ -59,6 +61,7 @@ public class MatchmakingTest {
         matchmaking.add(session1);
         matchmaking.add(session2);
 
+        assertTrue(matchCreated[0]);
         assertEquals(0, matchmaking.getPlayersInQueue());
         assertEquals(2, numMatchmakingProgressSent[0]);
     }
