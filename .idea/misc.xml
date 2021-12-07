@@ -13,6 +13,7 @@
       <set>
         <option value="$PROJECT_DIR$/carcassonne-logic/pom.xml" />
         <option value="$PROJECT_DIR$/carcassonne-network-common/pom.xml" />
+        <option value="$PROJECT_DIR$/report/pom.xml" />
       </set>
     </option>
   </component>

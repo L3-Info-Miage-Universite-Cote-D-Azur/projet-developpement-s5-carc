@@ -9,6 +9,7 @@ import logic.tile.TileFlags;
 import logic.tile.TileRotation;
 import logic.tile.area.Area;
 import logic.tile.chunk.ChunkId;
+import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -278,6 +279,22 @@ public class GameBoard {
      */
     public boolean hasDragon() {
         return dragon != null;
+    }
+
+    /**
+     * Returns whether the board has a volcano.
+     *
+     * @return true if the board has a dragon, false otherwise
+     */
+    public boolean hasVolcano() {
+        for (Tile tile : tilesList) {
+            for (ChunkId id : ChunkId.values()) {
+                if (tile.getChunk(id).getType() == ChunkType.VOLCANO) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
