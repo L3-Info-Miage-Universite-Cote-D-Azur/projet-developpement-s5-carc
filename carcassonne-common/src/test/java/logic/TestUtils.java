@@ -103,8 +103,8 @@ public class TestUtils {
             Tile tile = placeTileState.getTileDrawn();
             Vector2 pos = findPositionForTile(tile);
 
-            assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(pos)));
             lastTilePos = pos;
+            assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(pos)));
         }
 
         @Override

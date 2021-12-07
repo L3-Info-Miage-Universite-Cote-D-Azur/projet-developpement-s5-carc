@@ -70,6 +70,12 @@ public class PlaceMeepleCommand implements ICommand {
         GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
 
         Tile tile = game.getBoard().getTileAt(tilePosition);
+
+        if (tile == null) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist");
+            return false;
+        }
+
         Tile tileDrawn = game.getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
 
         if (tile != tileDrawn && !tileDrawn.hasPortal()) {
