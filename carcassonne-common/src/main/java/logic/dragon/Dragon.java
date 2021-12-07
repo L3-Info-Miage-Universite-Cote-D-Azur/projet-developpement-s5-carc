@@ -75,7 +75,7 @@ public final class Dragon {
      * @return true if the dragon can move to the specified position, false otherwise
      */
     public boolean canMoveTo(Vector2 position) {
-        return board.hasTileAt(position) && !path.contains(position);
+        return board.hasTileAt(position) && !path.contains(position) && getPosition().subtract(position).sqrLength() == 1;
     }
 
     /**
