@@ -12,13 +12,14 @@
         <module>carcassonne-client</module>
         <module>carcassonne-server</module>
         <module>carcassonne-common</module>
+        <module>report</module>
     </modules>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
         <jackson.version>2.12.4</jackson.version>
-        <sonar.coverage.jacoco.xmlReportPaths>./target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -87,11 +88,12 @@
                     <execution>
                         <id>report</id>
                         <goals>
-                            <goal>report</goal>
+                            <goal>report-aggregate</goal>
                         </goals>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
-            </plugin>      
+            </plugin>    
         </plugins>
     </build>
 
