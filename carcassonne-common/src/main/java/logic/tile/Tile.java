@@ -147,12 +147,7 @@ public class Tile {
      * @return True if the tile has a volcano, false otherwise.
      */
     public boolean hasVolcano() {
-        for (Chunk chunk : chunks) {
-            if (chunk.getType() == ChunkType.VOLCANO) {
-                return true;
-            }
-        }
-        return false;
+        return config.flags.contains(TileFlags.VOLCANO);
     }
 
     /**
@@ -253,6 +248,10 @@ public class Tile {
      */
     public void onBoard() {
         mergeAreas();
+
+        if (hasVolcano()) {
+            game.getBoard().spawnDragon(getPosition());
+        }
     }
 
     /**

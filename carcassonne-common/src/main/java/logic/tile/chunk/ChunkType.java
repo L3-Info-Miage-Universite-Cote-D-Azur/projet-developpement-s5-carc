@@ -27,10 +27,5 @@ public enum ChunkType {
     /**
      * The chunk is a field.
      */
-    FIELD,
-
-    /**
-     * The chunk is a volcano.
-     */
-    VOLCANO
+    FIELD
 }
