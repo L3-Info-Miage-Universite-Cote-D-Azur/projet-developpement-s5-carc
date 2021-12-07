@@ -71,8 +71,12 @@ public final class Vector2 {
         return new Vector2(x, -y);
     }
 
+    public int sqrLength() {
+        return x * x + y * y;
+    }
+
     public int length() {
-        return (int) Math.sqrt(x * x + y * y);
+        return (int) Math.sqrt(sqrLength());
     }
 
     @Override
