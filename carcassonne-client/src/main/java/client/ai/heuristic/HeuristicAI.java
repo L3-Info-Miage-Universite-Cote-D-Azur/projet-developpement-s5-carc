@@ -89,7 +89,7 @@ public class HeuristicAI extends AI {
     protected Chunk findChunkToPlaceMeeple(Tile tileDrawn) {
         TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
 
-        if (tileDrawn.isPortal()) {
+        if (tileDrawn.hasPortal()) {
             for (Tile tile : getGame().getBoard().getTiles()) {
                 findChunkToPlaceMeeple(tile, targetList);
             }

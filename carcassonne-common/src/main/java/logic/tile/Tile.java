@@ -137,9 +137,23 @@ public class Tile {
      *
      * @return True if the tile has a portal, false otherwise.
      */
-    public boolean isPortal() {
+    public boolean hasPortal() {
         for (Chunk chunk : chunks) {
             if (chunk.getType() == ChunkType.PORTAL) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Gets whether the tile has a volcano.
+     *
+     * @return True if the tile has a volcano, false otherwise.
+     */
+    public boolean hasVolcano() {
+        for (Chunk chunk : chunks) {
+            if (chunk.getType() == ChunkType.VOLCANO) {
                 return true;
             }
         }

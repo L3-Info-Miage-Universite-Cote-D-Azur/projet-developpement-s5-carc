@@ -72,7 +72,7 @@ public class PlaceMeepleCommand implements ICommand {
         Tile tile = game.getBoard().getTileAt(tilePosition);
         Tile tileDrawn = game.getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
 
-        if (tile != tileDrawn && !tileDrawn.isPortal()) {
+        if (tile != tileDrawn && !tileDrawn.hasPortal()) {
             game.getCommandExecutor().getListener().onCommandFailed(this, "Tile is not the tile drawn and the tile drawn is not a portal.");
             return false;
         }

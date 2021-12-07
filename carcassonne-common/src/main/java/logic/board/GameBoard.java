@@ -285,17 +285,10 @@ public class GameBoard {
     /**
      * Returns whether the board has a volcano.
      *
-     * @return true if the board has a dragon, false otherwise
+     * @return true if the board has a volcano, false otherwise
      */
     public boolean hasVolcano() {
-        for (Tile tile : tilesList) {
-            for (ChunkId id : ChunkId.values()) {
-                if (tile.getChunk(id).getType() == ChunkType.VOLCANO) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return tilesList.stream().anyMatch(t -> t.hasVolcano());
     }
 
     /**
