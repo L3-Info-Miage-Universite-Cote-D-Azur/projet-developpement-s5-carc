@@ -11,7 +11,6 @@ import logic.tile.TileRotation;
 import logic.tile.area.Area;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
-import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -256,7 +255,7 @@ public class GameBoard {
     /**
      * Updates the area closure states.
      */
-    public void updateAreaClosures() {
+    public void checkAreaClosures() {
         for (Area area : getAreas()) {
             area.updateClosure();
         }
@@ -366,12 +365,12 @@ public class GameBoard {
             ByteStreamHelper.encodeTile(stream, tile, game);
         }
 
-        List<Area> areas = getAreas();
+        /*List<Area> areas = getAreas();
         stream.writeInt(areas.size());
 
         for (Area area : areas) {
             stream.writeBoolean(area.isClosed());
-        }
+        }*/
 
         if (dragon != null) {
             stream.writeBoolean(true);
@@ -402,7 +401,7 @@ public class GameBoard {
             place(ByteStreamHelper.decodeTile(stream, game));
         }
 
-        List<Area> areas = getAreas();
+        /*List<Area> areas = getAreas();
         int masterAreaCount = stream.readInt();
 
         if (masterAreaCount != areas.size()) {
@@ -421,7 +420,7 @@ public class GameBoard {
                     throw new IllegalStateException("Area is closed");
                 }
             }
-        }
+        }*/
 
         if (stream.readBoolean()) {
             dragon = new Dragon(this);

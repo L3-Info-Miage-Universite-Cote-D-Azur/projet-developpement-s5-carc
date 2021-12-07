@@ -19,7 +19,7 @@ public class GameTurnEndingState extends GameState {
      */
     @Override
     public void init() {
-        game.getBoard().updateAreaClosures();
+        game.getBoard().checkAreaClosures();
         game.getListener().onTurnEnded(game.getTurnCount());
         game.setState(new GameTurnInitState(game));
     }

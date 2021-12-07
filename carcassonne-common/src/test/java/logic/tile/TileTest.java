@@ -73,6 +73,8 @@ public class TileTest {
         game.getBoard().place(tile1);
         game.getBoard().place(tile2);
         game.getBoard().place(tile3);
+        game.getBoard().checkAreaClosures();
+
         assertTrue(tile1.getChunk(ChunkId.EAST_MIDDLE).getArea().isClosed());
         assertFalse(tile1.getChunk(ChunkId.WEST_MIDDLE).getArea().isClosed());
     }

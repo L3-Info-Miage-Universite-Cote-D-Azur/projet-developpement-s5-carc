@@ -14,6 +14,7 @@ public class CommandFactory {
         return switch (type) {
             case PLACE_TILE_DRAWN -> new PlaceTileDrawnCommand();
             case PLACE_MEEPLE -> new PlaceMeepleCommand();
+            case PLACE_FAIRY -> new PlaceFairyCommand();
             case REMOVE_MEEPLE -> new RemoveMeepleCommand();
             case SKIP_MEEPLE_PLACEMENT -> new SkipMeeplePlacementCommand();
             case ROTATE_TILE_DRAWN -> new RotateTileDrawnCommand();
