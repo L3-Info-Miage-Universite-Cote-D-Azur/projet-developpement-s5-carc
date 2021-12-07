@@ -78,8 +78,6 @@ public class GameBoard {
         tilesList.add(tile);
 
         tile.onBoard();
-
-        updateAreaClosures();
     }
 
     /**
