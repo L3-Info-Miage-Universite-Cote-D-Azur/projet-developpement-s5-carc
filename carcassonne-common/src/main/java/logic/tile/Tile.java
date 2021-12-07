@@ -138,12 +138,7 @@ public class Tile {
      * @return True if the tile has a portal, false otherwise.
      */
     public boolean hasPortal() {
-        for (Chunk chunk : chunks) {
-            if (chunk.getType() == ChunkType.PORTAL) {
-                return true;
-            }
-        }
-        return false;
+        return config.flags.contains(TileFlags.PORTAL);
     }
 
     /**

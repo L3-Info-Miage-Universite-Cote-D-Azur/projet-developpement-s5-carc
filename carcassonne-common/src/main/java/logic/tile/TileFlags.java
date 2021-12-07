@@ -23,4 +23,9 @@ public enum TileFlags {
      * The tile is a dragon tile.
      */
     DRAGON,
+
+    /**
+     * The tile has a portal.
+     */
+    PORTAL
 }

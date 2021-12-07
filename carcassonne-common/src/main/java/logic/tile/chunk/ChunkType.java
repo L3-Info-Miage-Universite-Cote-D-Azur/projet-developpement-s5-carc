@@ -32,10 +32,5 @@ public enum ChunkType {
     /**
      * The chunk is a volcano.
      */
-    VOLCANO,
-
-    /**
-     * The chunk is a portal.
-     */
-    PORTAL,
+    VOLCANO
 }
