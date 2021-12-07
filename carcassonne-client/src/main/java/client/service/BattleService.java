@@ -111,9 +111,9 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      * @param message
      */
     private void onGameMasterNextTurnData(GameMasterNextTurnDataMessage message) {
-        gameView.getStack().fill(new ArrayList<Tile>() {{
-            add(gameView.getConfig().tiles.get(message.getTileConfigIndex()).createTile(gameView));
-        }});
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(gameView.getConfig().tiles.get(message.getTileConfigIndex()).createTile(gameView));
+        gameView.getStack().fill(tiles);
         gameView.getState().complete();
     }
 

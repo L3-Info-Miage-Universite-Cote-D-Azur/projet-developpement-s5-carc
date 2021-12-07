@@ -28,29 +28,29 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
     /**
      * Score penalty for each free edges in an area.
      */
-    private static int AREA_CLOSING_EDGE_SCORE = 50;
+    private static final int AREA_CLOSING_EDGE_SCORE = 50;
 
     /**
      * Score penalty for each free edges in an area.
      */
-    private static int AREA_OPEN_EDGE_PENALTY = 25;
+    private static final int AREA_OPEN_EDGE_PENALTY = 25;
 
     /**
      * Minimum of free edges in an area before the evaluator
      * gives a score penalty.
      */
-    private static int AREA_OPEN_EDGE_PENALTY_THRESHOLD = 3;
+    private static final int AREA_OPEN_EDGE_PENALTY_THRESHOLD = 3;
 
     /**
      * When a tile can be connected to multiple existing areas,
      * The current score is divided by this value to favour it.
      */
-    private static int MULTIPLE_AREA_CONNECTION_MULTIPLIER = 2;
+    private static final int MULTIPLE_AREA_CONNECTION_MULTIPLIER = 2;
 
     /**
      * Multiplier for the heuristic score gained by the area type.
      */
-    public static Map<ChunkType, Integer> AREA_MULTIPLIER = new HashMap<>() {{
+    public static final Map<ChunkType, Integer> AREA_MULTIPLIER = new HashMap<>() {{
         put(ChunkType.ROAD_END, 0);
 
         put(ChunkType.FIELD, 1);

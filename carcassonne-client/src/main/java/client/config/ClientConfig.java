@@ -43,14 +43,13 @@ public class ClientConfig {
      * @return
      */
     public static ClientConfig loadFromResources() {
-        ExcelNode rootNode = null;
         try {
             String resourcePath = Path.of(ClientConfig.class.getResource(".").toURI()).toString();
-            rootNode = ExcelNode.load(Path.of(resourcePath, "config.txt"));
+            ExcelNode rootNode = ExcelNode.load(Path.of(resourcePath, "config.txt"));
+            return new ClientConfig(rootNode);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            return null;
         }
-        return new ClientConfig(rootNode);
     }
 
     /**

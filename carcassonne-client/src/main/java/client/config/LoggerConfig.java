@@ -5,6 +5,7 @@ import excel.ExcelNode;
 import excel.ExcelRow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,13 +45,13 @@ public class LoggerConfig {
      * @return the default configuration
      */
     public static LoggerConfig getDefaultConfig() {
-        return new LoggerConfig(LogLevel.INFO, new ArrayList<>() {{
-            add("91m");
-            add("92m");
-            add("93m");
-            add("94m");
-            add("95m");
-        }});
+        return new LoggerConfig(LogLevel.INFO, Arrays.asList(new String[] {
+                "91m",
+                "92m",
+                "93m",
+                "94m",
+                "95m",
+        }));
     }
 
     /**

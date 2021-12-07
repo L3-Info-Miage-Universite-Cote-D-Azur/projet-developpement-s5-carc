@@ -42,7 +42,6 @@ public class GameConfig {
                     Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue("Value")),
                     Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             return null;
         }
     }
