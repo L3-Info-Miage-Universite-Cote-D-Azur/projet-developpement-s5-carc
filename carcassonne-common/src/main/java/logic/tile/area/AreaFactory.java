@@ -21,7 +21,6 @@ public class AreaFactory {
             case TOWN -> new TownArea(chunks);
             case ABBEY -> new AbbeyArea(chunks);
             case FIELD -> new FieldArea(chunks);
-            case VOLCANO -> new VolcanoArea(chunks);
             default -> throw new IllegalStateException("Unexpected chunk type.");
         };
     }

@@ -27,5 +27,10 @@ public enum TileFlags {
     /**
      * The tile has a portal.
      */
-    PORTAL
+    PORTAL,
+
+    /**
+     * The tile is a volcano.
+     */
+    VOLCANO,
 }
