@@ -3,19 +3,19 @@ Chunks
 		Name				
 			TOWN	TOWN	TOWN	
 		TOWN				FIELD
-		TOWN		VOLCANO		FIELD
+		TOWN		FIELD		FIELD
 		TOWN				FIELD
 			FIELD	FIELD	FIELD	
 	References					
 		Name				
 			A	A	A	
 		D				C
-		D		B		C
+		D		C		C
 		D				C
 			C	C	C	
 Data						
 	Name	Value				
 	Model	AJ				
 	Expansion					
-	Flags					
+	Flags	VOLCANO
 	Count	1				
