@@ -55,6 +55,7 @@ public class GameBoard {
     public void clear() {
         this.tiles.clear();
         this.tilesList.clear();
+        this.dragon = null;
     }
 
     /**

@@ -385,9 +385,10 @@ public class Game {
         ByteOutputStream encodeStream = new ByteOutputStream(1000);
         Game game = new Game(config);
         encode(encodeStream, master);
+        Game gameNew = new Game(config);
         ByteInputStream decodeStream = new ByteInputStream(encodeStream.getBytes(), encodeStream.getLength());
-        game.decode(decodeStream, master);
+        gameNew.decode(decodeStream, master);
         assert decodeStream.getBytesLeft() == 0;
-        return game;
+        return gameNew;
     }
 }

@@ -37,6 +37,7 @@ public class GameTurnInitState extends GameState {
                         tilesToRefill = new ArrayList<>();
                     }
                     tilesToRefill.add(tile);
+                    continue;
                 }
             }
 
