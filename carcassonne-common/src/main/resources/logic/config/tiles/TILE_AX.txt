@@ -8,11 +8,11 @@ Chunks
 			FIELD	FIELD	FIELD
 	References					
 		Name				
-			F	B	F	
+			A	C	B
+		A				B
+		D		Z		E
 		F				F
-		C		D		A
-		E				F
-			E	A	F	
+			F	F	F
 Data						
 	Name	Value				
 	Model	AX				
