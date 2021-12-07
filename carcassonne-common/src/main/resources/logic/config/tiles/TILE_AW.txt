@@ -1,0 +1,21 @@
+Chunks						
+	Types					
+		Name				
+			TOWN	TOWN	TOWN	
+		TOWN				FIELD
+		TOWN		TOWN		ROAD
+		TOWN				PORTAL
+			FIELD	ROAD	PORTAL
+	References					
+		Name				
+			D	D	D	
+		D				C
+		D		D		A
+		D				B
+			C	A	B	
+Data						
+	Name	Value				
+	Model	AW				
+	Expansion					
+	Flags					
+	Count	1				
