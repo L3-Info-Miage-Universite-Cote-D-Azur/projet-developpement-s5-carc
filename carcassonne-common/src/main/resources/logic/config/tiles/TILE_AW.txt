@@ -4,8 +4,8 @@ Chunks
 			TOWN	TOWN	TOWN	
 		TOWN				FIELD
 		TOWN		TOWN		ROAD
-		TOWN				PORTAL
-			FIELD	ROAD	PORTAL
+		TOWN				FIELD
+			FIELD	ROAD	FIELD
 	References					
 		Name				
 			D	D	D	
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AW				
 	Expansion					
-	Flags					
+	Flags   PORTAL
 	Count	1				

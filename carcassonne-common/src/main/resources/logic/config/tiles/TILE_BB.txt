@@ -3,7 +3,7 @@ Chunks
 		Name				
 			TOWN	TOWN	TOWN	
 		FIELD				FIELD
-		ROAD		ROAD		PORTAL
+		ROAD		ROAD		FIELD
 		FIELD				FIELD
 			FIELD	ROAD	FIELD
 	References					
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	BB				
 	Expansion					
-	Flags					
+	Flags	PORTAL
 	Count	1				

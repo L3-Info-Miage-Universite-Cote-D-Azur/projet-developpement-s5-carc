@@ -5,7 +5,7 @@ Chunks
 		TOWN				TOWN
 		TOWN		TOWN		TOWN
 		TOWN				TOWN
-			FIELD	PORTAL	FIELD
+			FIELD	FIELD	FIELD
 	References					
 		Name				
 			C	C	C	
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AY				
 	Expansion					
-	Flags					
+	Flags	PORTAL
 	Count	1				
