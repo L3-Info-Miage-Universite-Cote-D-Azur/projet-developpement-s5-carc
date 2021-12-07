@@ -4,7 +4,6 @@ import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
 import logic.state.GameStateType;
-import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

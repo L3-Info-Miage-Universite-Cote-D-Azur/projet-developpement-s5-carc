@@ -103,7 +103,7 @@ public class HeuristicAI extends AI {
     /**
      * Finds a tile's chunk where the meeple can be placed.
      *
-     * @param tile The tile to find a chunk for.
+     * @param tile       The tile to find a chunk for.
      * @param targetList The target list to add the chunks to.
      */
     private void findChunkToPlaceMeeple(Tile tile, TargetList<Chunk> targetList) {

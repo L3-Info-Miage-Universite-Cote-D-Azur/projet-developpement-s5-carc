@@ -7,8 +7,8 @@ import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
-import logic.tile.chunk.Chunk;
 import logic.tile.area.Area;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
 import javax.imageio.ImageIO;
@@ -31,12 +31,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
     private static final int EXTRA_HEIGHT = 40;
 
     private static final Random rand = new Random();
-
-    private static ImageDatabase tileDatabase;
-    private static ImageDatabase meepleDatabase;
-    private static ImageDatabase dragonDatabase;
-    private static ImageDatabase extraDatabase;
-
     private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
         put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
         put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
@@ -67,6 +61,10 @@ public class GameDrawUtils implements ChunkPositionConstant {
         put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
         put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
     }};
+    private static ImageDatabase tileDatabase;
+    private static ImageDatabase meepleDatabase;
+    private static ImageDatabase dragonDatabase;
+    private static ImageDatabase extraDatabase;
 
     /**
      * Loads the images for the rendering and stores them in the image database.

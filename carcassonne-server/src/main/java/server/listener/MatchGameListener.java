@@ -1,12 +1,9 @@
 package server.listener;
 
 import logic.IGameListener;
-import logic.player.Player;
 import logic.state.GameState;
-import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkId;
 import server.logger.Logger;
 import server.matchmaking.Match;
 

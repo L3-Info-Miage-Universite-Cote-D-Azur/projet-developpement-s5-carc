@@ -45,7 +45,7 @@ public class LoggerConfig {
      * @return the default configuration
      */
     public static LoggerConfig getDefaultConfig() {
-        return new LoggerConfig(LogLevel.INFO, Arrays.asList(new String[] {
+        return new LoggerConfig(LogLevel.INFO, Arrays.asList(new String[]{
                 "91m",
                 "92m",
                 "93m",

@@ -17,6 +17,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DragonTest {
+    private static List<Tile> findNeighborTiles(GameBoard board, Vector2 position) {
+        return Arrays.stream(Direction.values()).map(d -> d.value().add(position)).filter(p -> board.hasTileAt(p)).map(p -> board.getTileAt(p)).toList();
+    }
+
     @Test
     void testMoveTo() {
         Game game = TestUtils.initGameEnv(2, true, true);
@@ -49,7 +53,6 @@ public class DragonTest {
         assertEquals(null, newTile.getChunk(ChunkId.CENTER_MIDDLE).getMeeple());
         assertEquals(null, newTile.getChunk(ChunkId.EAST_BOTTOM).getMeeple());
     }
-
 
     @Test
     void testMoveOnWrongPosition() {
@@ -114,9 +117,5 @@ public class DragonTest {
         assertTrue(dragon.canMoveTo(new Vector2(0, 1)));
         dragon.moveTo(new Vector2(0, 1));
         assertTrue(dragon.isBlocked());
-    }
-
-    private static List<Tile> findNeighborTiles(GameBoard board, Vector2 position) {
-        return Arrays.stream(Direction.values()).map(d -> d.value().add(position)).filter(p -> board.hasTileAt(p)).map(p -> board.getTileAt(p)).toList();
     }
 }

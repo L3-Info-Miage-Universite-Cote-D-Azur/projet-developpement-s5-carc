@@ -17,6 +17,7 @@ public class RoadEndArea extends Area {
 
     /**
      * Gets the area type.
+     *
      * @return The area type.
      */
     @Override
@@ -26,6 +27,7 @@ public class RoadEndArea extends Area {
 
     /**
      * Checks if the given area can be merged.
+     *
      * @param other The other area to merge with.
      * @return True if the areas can be merged, false otherwise.
      */
@@ -36,6 +38,7 @@ public class RoadEndArea extends Area {
 
     /**
      * Gets the points earned by the area closing.
+     *
      * @return The points earned by the area closing.
      */
     @Override
@@ -46,6 +49,7 @@ public class RoadEndArea extends Area {
     /**
      * Checks if the area is closed.
      * By default, it is closed if there are no free tile edges.
+     *
      * @return True if the area is closed, false otherwise.
      */
     @Override

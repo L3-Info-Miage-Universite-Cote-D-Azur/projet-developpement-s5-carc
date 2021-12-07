@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MatchTest {
     @Test
     void testSendGameDataWhenStarting() {
-        ClientSession[] players = new ClientSession[] {
+        ClientSession[] players = new ClientSession[]{
                 new ClientSession(null, 1),
                 new ClientSession(null, 2),
         };
 
-        final Boolean[] completed = new Boolean[] {false};
+        final Boolean[] completed = new Boolean[]{false};
 
         Match match = new Match(1, players) {
             @Override
@@ -35,12 +35,12 @@ public class MatchTest {
 
     @Test
     void testSendGameMasterNextTurnDataWhenNewTurnStarted() {
-        ClientSession[] players = new ClientSession[] {
+        ClientSession[] players = new ClientSession[]{
                 new ClientSession(null, 1),
                 new ClientSession(null, 2),
         };
 
-        final Boolean[] completed = new Boolean[] {false};
+        final Boolean[] completed = new Boolean[]{false};
 
         Match match = new Match(1, players) {
             @Override
@@ -59,12 +59,12 @@ public class MatchTest {
 
     @Test
     void testSendGameResultWhenMatchOver() {
-        ClientSession[] players = new ClientSession[] {
+        ClientSession[] players = new ClientSession[]{
                 new ClientSession(null, 1),
                 new ClientSession(null, 2),
         };
 
-        final Boolean[] completed = new Boolean[] {false};
+        final Boolean[] completed = new Boolean[]{false};
 
         Match match = new Match(1, players) {
             @Override
@@ -83,12 +83,12 @@ public class MatchTest {
 
     @Test
     void testAutoCompleteWhenPlayersOffline() {
-        ClientSession[] players = new ClientSession[] {
-            new ClientSession(null, 1),
-            new ClientSession(null, 2),
+        ClientSession[] players = new ClientSession[]{
+                new ClientSession(null, 1),
+                new ClientSession(null, 2),
         };
 
-        final Boolean[] completed = new Boolean[] {false};
+        final Boolean[] completed = new Boolean[]{false};
 
         Match match = new Match(1, players) {
             @Override

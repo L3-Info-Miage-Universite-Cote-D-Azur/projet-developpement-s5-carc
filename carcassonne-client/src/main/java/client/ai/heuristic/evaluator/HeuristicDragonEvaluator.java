@@ -1,7 +1,6 @@
 package client.ai.heuristic.evaluator;
 
 import logic.Game;
-import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.player.Player;
 import logic.tile.Tile;
@@ -11,7 +10,7 @@ import logic.tile.chunk.ChunkId;
 /**
  * Evaluates the heuristic value of a dragon position.
  * Used to determine the best position of a dragon.
- *
+ * <p>
  * The evaluator favours :
  * - positions that are far away from the own tiles.
  * - positions that are close to the enemy tiles.
@@ -67,6 +66,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the dragon's position to move.
+     *
      * @param position the position to evaluate.
      * @return the evaluation score.
      */
@@ -77,6 +77,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the tiles' proximity to the given position.
+     *
      * @param position the position to evaluate.
      */
     private void evaluateTiles(Vector2 position) {
@@ -94,7 +95,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
      * Severely penalizes positions too close to our tiles.
      *
      * @param position the position to evaluate.
-     * @param tile the tile to evaluate.
+     * @param tile     the tile to evaluate.
      */
     private void evaluateOwnTiles(Vector2 position, Tile tile) {
         int distance = tile.getPosition().subtract(position).length();
@@ -126,6 +127,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
 
     /**
      * Returns whether the given tile is owned by the player.
+     *
      * @param tile the tile to check.
      * @return whether the given tile is owned by the player.
      */
@@ -142,6 +144,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
 
     /**
      * Returns whether the given tile is owned by an enemy.
+     *
      * @param tile the tile to check.
      * @return whether the given tile is owned by an enemy.
      */

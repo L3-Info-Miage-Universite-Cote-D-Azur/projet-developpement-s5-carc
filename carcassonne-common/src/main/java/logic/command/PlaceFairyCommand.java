@@ -3,8 +3,6 @@ package logic.command;
 import logic.Game;
 import logic.dragon.Fairy;
 import logic.math.Vector2;
-import logic.meeple.Meeple;
-import logic.player.Player;
 import logic.state.GameStateType;
 import logic.state.turn.GameTurnPlaceMeepleState;
 import logic.tile.Tile;

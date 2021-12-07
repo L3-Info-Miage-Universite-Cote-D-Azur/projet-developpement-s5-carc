@@ -44,6 +44,7 @@ public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the removal of a meeple from a chunk.
+     *
      * @param chunk The chunk to evaluate.
      * @return The score of the removal.
      */
@@ -54,6 +55,7 @@ public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the removal of a meeple from an area.
+     *
      * @param area The area to evaluate.
      * @return The score of the removal.
      */

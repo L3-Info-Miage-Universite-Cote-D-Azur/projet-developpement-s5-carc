@@ -3,7 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.Socket;
 
-public class SimpleTcpClient  {
+public class SimpleTcpClient {
     private final Socket socket;
 
     public SimpleTcpClient(String host, int port) throws IOException {

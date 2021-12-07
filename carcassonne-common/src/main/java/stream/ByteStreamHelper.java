@@ -38,6 +38,7 @@ public class ByteStreamHelper {
 
     /**
      * Encodes a vector into a byte-stream.
+     *
      * @param stream The byte-stream to write to.
      * @param vector The vector to encode.
      */
@@ -48,6 +49,7 @@ public class ByteStreamHelper {
 
     /**
      * Decodes a vector from a byte-stream.
+     *
      * @param stream The byte-stream to read from.
      * @return The decoded vector.
      */

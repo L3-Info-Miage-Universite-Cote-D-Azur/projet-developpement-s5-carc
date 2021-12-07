@@ -1,7 +1,7 @@
 package server.matchmaking;
 
 import logic.Game;
-import logic.command.*;
+import logic.command.ICommand;
 import logic.config.GameConfig;
 import logic.player.Player;
 import logic.tile.Tile;
@@ -128,6 +128,7 @@ public class Match {
 
     /**
      * Creates a snapshot of the game instance.
+     *
      * @return the snapshot
      */
     private byte[] createSnapshot(boolean masterData) {
@@ -173,6 +174,7 @@ public class Match {
 
     /**
      * Called when a game turn is started.
+     *
      * @param tileDrawn the drawn tile
      */
     public void onGameTurnStarted(Tile tileDrawn) {

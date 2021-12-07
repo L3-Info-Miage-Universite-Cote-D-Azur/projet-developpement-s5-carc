@@ -1,7 +1,6 @@
 package logic.tile.area;
 
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkType;
 
 import java.util.List;
 
@@ -11,6 +10,7 @@ import java.util.List;
 public class AreaFactory {
     /**
      * Creates an area from a list of chunks.
+     *
      * @param chunks The list of chunks to create the area from.
      * @return The created area.
      */

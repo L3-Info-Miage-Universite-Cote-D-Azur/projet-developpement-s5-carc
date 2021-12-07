@@ -1,19 +1,17 @@
 package logic.command;
 
 import logic.Game;
-import logic.TestUtils;
-import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
-import logic.state.GameStateType;
 import logic.state.turn.GameTurnPlaceMeepleState;
 import logic.tile.Tile;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RemoveMeepleCommandTest {
 

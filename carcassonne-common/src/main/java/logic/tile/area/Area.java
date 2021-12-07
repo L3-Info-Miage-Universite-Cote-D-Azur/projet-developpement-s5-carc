@@ -5,8 +5,8 @@ import logic.command.RemoveMeepleCommand;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
-import logic.tile.Tile;
 import logic.tile.Direction;
+import logic.tile.Tile;
 import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
@@ -68,12 +68,14 @@ public abstract class Area {
 
     /**
      * Gets the area type.
+     *
      * @return The area type.
      */
     public abstract ChunkType getType();
 
     /**
      * Checks if the given area can be merged.
+     *
      * @param other The other area to merge with.
      * @return True if the areas can be merged, false otherwise.
      */
@@ -81,6 +83,7 @@ public abstract class Area {
 
     /**
      * Gets the points earned by the area closing.
+     *
      * @return The points earned by the area closing.
      */
     public abstract int getClosingPoints();
@@ -96,6 +99,7 @@ public abstract class Area {
 
     /**
      * Gets the board instance.
+     *
      * @return
      */
     public GameBoard getBoard() {
@@ -104,6 +108,7 @@ public abstract class Area {
 
     /**
      * Gets the base position of the area.
+     *
      * @return The base position of the area.
      */
     public Tile getBaseTile() {
@@ -112,6 +117,7 @@ public abstract class Area {
 
     /**
      * Gets the number of tiles in the area.
+     *
      * @return The number of tiles in the area.
      */
     public int getNumTiles() {
@@ -120,6 +126,7 @@ public abstract class Area {
 
     /**
      * Gets the number of tiles with the given flags in the area.
+     *
      * @param flag the flag to check.
      * @return The number of tiles in the area.
      */
@@ -161,6 +168,7 @@ public abstract class Area {
     /**
      * Checks if the area is closed.
      * By default, it is closed if there are no free tile edges.
+     *
      * @return True if the area is closed, false otherwise.
      */
     protected boolean checkClosed() {
@@ -170,6 +178,7 @@ public abstract class Area {
 
     /**
      * Gets the remaining tile edges that can be used to continue the area.
+     *
      * @return The remaining tile edges.
      */
     public int getFreeEdges() {
@@ -178,6 +187,7 @@ public abstract class Area {
 
     /**
      * Gets the remaining tile edges that can be used to continue the area including the tile to place if we merge the given area.
+     *
      * @return The remaining tile edges.
      */
     public int getFreeEdges(Area simulatedMergingArea) {
@@ -192,6 +202,7 @@ public abstract class Area {
 
     /**
      * Gets whether remaining tile edges can be used to continue the area.
+     *
      * @return
      */
     private boolean hasFreeEdge() {
@@ -224,6 +235,7 @@ public abstract class Area {
 
     /**
      * Returns the players who will receive the area closure evaluation points.
+     *
      * @return The player list.
      */
     private List<Player> getEvaluationWinners() {
@@ -247,6 +259,7 @@ public abstract class Area {
 
     /**
      * Gets the list of meeples that are in the area.
+     *
      * @return The list of meeples.
      */
     public List<Meeple> getMeeples() {
@@ -255,6 +268,7 @@ public abstract class Area {
 
     /**
      * Gets the list of meeples of the given player in the area.
+     *
      * @param player The player.
      * @return The list of meeples.
      */
@@ -264,6 +278,7 @@ public abstract class Area {
 
     /**
      * Gets whether the area has one or more meeples.
+     *
      * @return
      */
     public boolean hasMeeple() {
@@ -277,6 +292,7 @@ public abstract class Area {
 
     /**
      * Gets whether the area has the given tile.
+     *
      * @param tile The tile.
      * @return
      */
@@ -286,6 +302,7 @@ public abstract class Area {
 
     /**
      * Gets the remaining tile edges that can be used to continue the area including the tile to place.
+     *
      * @return The remaining tile edges.
      */
     protected int getFreeEdges(Set<Tile> tiles, Set<Chunk> chunks) {

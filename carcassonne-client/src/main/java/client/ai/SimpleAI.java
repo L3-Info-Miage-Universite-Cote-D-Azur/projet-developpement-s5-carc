@@ -116,6 +116,7 @@ public class SimpleAI extends AI {
 
     /**
      * Finds all free positions for the tile.
+     *
      * @param tile The tile to find free positions for.
      * @return A list of all free positions for the tile.
      */

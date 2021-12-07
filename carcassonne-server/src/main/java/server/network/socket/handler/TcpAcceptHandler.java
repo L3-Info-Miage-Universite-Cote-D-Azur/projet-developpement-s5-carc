@@ -1,6 +1,5 @@
 package server.network.socket.handler;
 
-import server.Server;
 import server.logger.Logger;
 import server.network.ClientConnectionManager;
 

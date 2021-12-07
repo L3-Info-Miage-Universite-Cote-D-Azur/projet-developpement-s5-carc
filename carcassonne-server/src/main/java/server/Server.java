@@ -31,6 +31,15 @@ public class Server {
     }
 
     /**
+     * Returns the server's instance.
+     *
+     * @return the server's instance
+     */
+    public static Server getInstance() {
+        return instance;
+    }
+
+    /**
      * Destroys the server.
      */
     public void destroy() {
@@ -39,15 +48,6 @@ public class Server {
         if (instance == this) {
             instance = null;
         }
-    }
-
-    /**
-     * Returns the server's instance.
-     *
-     * @return the server's instance
-     */
-    public static Server getInstance() {
-        return instance;
     }
 
     /**

@@ -8,7 +8,6 @@ import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
 import logic.Game;
-import logic.command.CommandType;
 import logic.config.GameConfig;
 import logic.player.Player;
 import logic.state.GameState;

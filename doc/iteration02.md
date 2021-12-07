@@ -1,8 +1,9 @@
 # Livraison 2
+
 - # En terme de fonctionnalités livrées et issues faites
     - Ajout de tuiles (Issue #15)
-      - Tuile de départ (Issue #13)
-      - Tuile de route (Issue #14)
+        - Tuile de départ (Issue #13)
+        - Tuile de route (Issue #14)
     - Mise à jour de l'IA primitive (Issue #17)
         - Placement de la tuile de départ pour le joueur de départ (Issue #16)
     - Mise à jour des composants de jeu (Issue #20)

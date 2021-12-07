@@ -10,10 +10,10 @@ import stream.ByteStreamHelper;
 
 /**
  * Represents the state of a game turn when a player needs to place a meeple.
- *
+ * <p>
  * The player can complete the state by executing the {@link logic.command.PlaceMeepleCommand}
  * or by skipping the placement with the {@link logic.command.SkipMeeplePlacementCommand}.
- *
+ * <p>
  * State skipped if the player has no meeples left.
  */
 public class GameTurnPlaceMeepleState extends GameState {
@@ -46,6 +46,7 @@ public class GameTurnPlaceMeepleState extends GameState {
 
     /**
      * Encodes the state to a byte stream.
+     *
      * @param stream The stream to encode to.
      */
     @Override
@@ -55,6 +56,7 @@ public class GameTurnPlaceMeepleState extends GameState {
 
     /**
      * Decodes the state from a byte stream.
+     *
      * @param stream The stream to decode from.
      */
     @Override
@@ -82,6 +84,7 @@ public class GameTurnPlaceMeepleState extends GameState {
 
     /**
      * Returns the position of the tile placed during this turn.
+     *
      * @return The position of the tile placed during this turn.
      */
     public Vector2 getTileDrawnPosition() {

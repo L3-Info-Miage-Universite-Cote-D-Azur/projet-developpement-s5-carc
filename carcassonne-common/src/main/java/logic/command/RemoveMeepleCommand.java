@@ -27,6 +27,26 @@ public class RemoveMeepleCommand implements ICommand {
     }
 
     /**
+     * Removes the meeple from the chunk.
+     *
+     * @param chunk the chunk
+     */
+    public static void removeMeeple(Chunk chunk) {
+        Game game = chunk.getParent().getGame();
+        GameBoard board = game.getBoard();
+
+        Meeple meeple = chunk.getMeeple();
+        chunk.setMeeple(null);
+        meeple.getOwner().decreasePlayedMeeples();
+
+        if (board.hasFairy() && board.getFairy().getChunk() == chunk) {
+            board.destructFairy();
+        }
+
+        game.getListener().onMeepleRemoved(chunk);
+    }
+
+    /**
      * Gets the command type.
      *
      * @return the command type
@@ -120,24 +140,5 @@ public class RemoveMeepleCommand implements ICommand {
     public void execute(Game game) {
         removeMeeple(game.getBoard().getTileAt(tilePosition).getChunk(tileChunkId));
         game.getState().complete();
-    }
-
-    /**
-     * Removes the meeple from the chunk.
-     * @param chunk the chunk
-     */
-    public static void removeMeeple(Chunk chunk) {
-        Game game = chunk.getParent().getGame();
-        GameBoard board = game.getBoard();
-
-        Meeple meeple = chunk.getMeeple();
-        chunk.setMeeple(null);
-        meeple.getOwner().decreasePlayedMeeples();
-
-        if (board.hasFairy() && board.getFairy().getChunk() == chunk) {
-            board.destructFairy();
-        }
-
-        game.getListener().onMeepleRemoved(chunk);
     }
 }

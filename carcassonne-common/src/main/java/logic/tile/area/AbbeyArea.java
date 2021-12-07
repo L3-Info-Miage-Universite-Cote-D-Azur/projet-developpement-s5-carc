@@ -26,6 +26,7 @@ public class AbbeyArea extends Area {
 
     /**
      * Gets the area type.
+     *
      * @return The area type.
      */
     @Override
@@ -35,6 +36,7 @@ public class AbbeyArea extends Area {
 
     /**
      * Checks if the given area can be merged.
+     *
      * @param other The other area to merge with.
      * @return True if the areas can be merged, false otherwise.
      */
@@ -45,6 +47,7 @@ public class AbbeyArea extends Area {
 
     /**
      * Gets the points earned by the area closing.
+     *
      * @return The points earned by the area closing.
      */
     @Override
@@ -55,6 +58,7 @@ public class AbbeyArea extends Area {
 
     /**
      * Gets the remaining tile edges that can be used to continue the area including the tile to place.
+     *
      * @return The remaining tile edges.
      */
     @Override

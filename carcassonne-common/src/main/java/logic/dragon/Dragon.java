@@ -5,7 +5,6 @@ import logic.command.RemoveMeepleCommand;
 import logic.math.Vector2;
 import logic.tile.Direction;
 import logic.tile.Tile;
-import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
@@ -36,6 +35,7 @@ public final class Dragon {
 
     /**
      * Moves the dragon to the specified position.
+     *
      * @param position the position to move to
      */
     public void moveTo(Vector2 position) {
@@ -64,6 +64,7 @@ public final class Dragon {
 
     /**
      * Gets the current dragon position.
+     *
      * @return the current dragon position
      */
     public Vector2 getPosition() {
@@ -72,6 +73,7 @@ public final class Dragon {
 
     /**
      * Gets whether the dragon can move to the specified position.
+     *
      * @return true if the dragon can move to the specified position, false otherwise
      */
     public boolean canMoveTo(Vector2 position) {
@@ -80,6 +82,7 @@ public final class Dragon {
 
     /**
      * Gets whether the dragon has moved at all.
+     *
      * @return true if the dragon has moved at all, false otherwise
      */
     public boolean isBlocked() {
@@ -98,6 +101,7 @@ public final class Dragon {
 
     /**
      * Returns whether the dragon has finished moving.
+     *
      * @return true if the dragon has finished moving, false otherwise
      */
     public boolean hasFinished() {
@@ -106,6 +110,7 @@ public final class Dragon {
 
     /**
      * Encodes the dragon into a byte stream.
+     *
      * @param stream the byte stream to encode the dragon into
      */
     public void encode(ByteOutputStream stream) {
@@ -118,6 +123,7 @@ public final class Dragon {
 
     /**
      * Decodes the dragon from a byte stream.
+     *
      * @param stream the byte stream to decode the dragon from
      */
     public void decode(ByteInputStream stream) {

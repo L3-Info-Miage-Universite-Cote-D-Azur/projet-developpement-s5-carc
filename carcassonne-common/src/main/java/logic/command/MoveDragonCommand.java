@@ -62,7 +62,7 @@ public class MoveDragonCommand implements ICommand {
     public boolean canBeExecuted(Game game) {
         GameBoard board = game.getBoard();
 
-        if (!board.hasDragon()){
+        if (!board.hasDragon()) {
             game.getCommandExecutor().getListener().onCommandFailed(this, "The dragon not exist yet.");
             return false;
         }

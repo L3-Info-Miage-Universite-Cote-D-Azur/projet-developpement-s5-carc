@@ -4,8 +4,8 @@ import logic.Game;
 import logic.dragon.Dragon;
 import logic.dragon.Fairy;
 import logic.math.Vector2;
-import logic.tile.Tile;
 import logic.tile.Direction;
+import logic.tile.Tile;
 import logic.tile.TileFlags;
 import logic.tile.TileRotation;
 import logic.tile.area.Area;
@@ -272,6 +272,7 @@ public class GameBoard {
 
     /**
      * Gets all areas on the board.
+     *
      * @return the list of areas
      */
     public List<Area> getAreas() {
@@ -339,6 +340,7 @@ public class GameBoard {
 
     /**
      * Spawns the dragon on the board to the specified position.
+     *
      * @param position the position to spawn the dragon
      */
     public Dragon spawnDragon(Vector2 position) {
@@ -347,6 +349,7 @@ public class GameBoard {
 
     /**
      * Spawns the fairy on the board to the specified position.
+     *
      * @param chunk the chunk to spawn the fairy
      */
     public Fairy spawnFairy(Chunk chunk) {

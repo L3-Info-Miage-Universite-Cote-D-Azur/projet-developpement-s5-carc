@@ -48,6 +48,7 @@ public class GameTurnMoveDragonState extends GameState {
 
     /**
      * Encodes the state to a byte stream.
+     *
      * @param stream The stream to encode to.
      */
     @Override
@@ -57,6 +58,7 @@ public class GameTurnMoveDragonState extends GameState {
 
     /**
      * Decodes the state from a byte stream.
+     *
      * @param stream The stream to decode from.
      */
     @Override

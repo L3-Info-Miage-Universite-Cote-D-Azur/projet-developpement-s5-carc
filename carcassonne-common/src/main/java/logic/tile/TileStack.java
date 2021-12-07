@@ -103,8 +103,9 @@ public class TileStack {
 
     /**
      * Encodes the stack into a byte stream.
+     *
      * @param stream Stream to encode the stack into.
-     * @param game Game to encode the stack for.
+     * @param game   Game to encode the stack for.
      */
     public void encode(ByteOutputStream stream, Game game) {
         stream.writeInt(tiles.size());
@@ -116,8 +117,9 @@ public class TileStack {
 
     /**
      * Decodes the stack from a byte stream.
+     *
      * @param stream Stream to decode the stack from.
-     * @param game Game to decode the stack for.
+     * @param game   Game to decode the stack for.
      */
     public void decode(ByteInputStream stream, Game game) {
         tiles.clear();

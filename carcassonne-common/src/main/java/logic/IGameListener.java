@@ -1,10 +1,8 @@
 package logic;
 
-import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkId;
 
 /**
  * Interface for the game listener. Allowing the game to notify some events to listener.

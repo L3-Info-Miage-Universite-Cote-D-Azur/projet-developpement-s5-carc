@@ -20,6 +20,7 @@ public class Matchmaking {
 
     /**
      * Gets the number of players in the queue.
+     *
      * @return the number of players in the queue
      */
     public int getPlayersInQueue() {
@@ -69,6 +70,7 @@ public class Matchmaking {
 
     /**
      * Creates a match with the given client sessions.
+     *
      * @param sessions the client sessions
      */
     protected synchronized void createMatch(ClientSession[] sessions) {

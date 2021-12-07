@@ -4,10 +4,9 @@ import logic.Game;
 import logic.board.GameBoard;
 import logic.config.excel.TileConfig;
 import logic.math.Vector2;
-import logic.tile.chunk.Chunk;
 import logic.tile.area.Area;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
-import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
@@ -199,6 +198,7 @@ public class Tile {
 
     /**
      * Gets the areas that are connected to the tile.
+     *
      * @return The areas that are connected to the tile.
      */
     public List<Area> getAreas() {

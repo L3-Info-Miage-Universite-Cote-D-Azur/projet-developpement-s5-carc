@@ -11,9 +11,28 @@ import stream.ByteOutputStream;
 import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ClientConnectionTest {
+    private static byte[] getPacketBytes(Packet packet) {
+        ByteOutputStream stream = new ByteOutputStream(64);
+        packet.encode(stream);
+        return stream.toByteArray();
+    }
+
+    private static Object getPrivateField(Object obj, String fieldName) throws Exception {
+        Field field = ClientConnection.class.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        return field.get(obj);
+    }
+
+    private static void setPrivateField(Object obj, String fieldName, Object value) throws Exception {
+        Field field = ClientConnection.class.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(obj, value);
+    }
+
     @Test
     void testOnRead() throws Exception {
         final Boolean[] hasReceivedMessage = {false, false};
@@ -54,23 +73,5 @@ public class ClientConnectionTest {
         clientConnection.onReceive(readBuffer.position());
 
         assertTrue(hasClosed[0]);
-    }
-
-    private static byte[] getPacketBytes(Packet packet) {
-        ByteOutputStream stream = new ByteOutputStream(64);
-        packet.encode(stream);
-        return stream.toByteArray();
-    }
-
-    private static Object getPrivateField(Object obj, String fieldName) throws Exception {
-        Field field = ClientConnection.class.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return field.get(obj);
-    }
-
-    private static void setPrivateField(Object obj, String fieldName, Object value) throws Exception {
-        Field field = ClientConnection.class.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(obj, value);
     }
 }

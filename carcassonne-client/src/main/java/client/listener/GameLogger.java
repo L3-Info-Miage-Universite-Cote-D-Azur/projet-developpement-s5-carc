@@ -4,11 +4,9 @@ import client.logger.Logger;
 import client.logger.LoggerCategory;
 import logic.Game;
 import logic.IGameListener;
-import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkId;
 
 /**
  * GameLogger is a class that implements IGameListener and logs all the events

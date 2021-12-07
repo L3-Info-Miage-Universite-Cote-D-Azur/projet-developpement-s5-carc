@@ -13,6 +13,7 @@ public class HeuristicEvaluator {
 
     /**
      * Adds the given score to the current score.
+     *
      * @param score The score to add.
      */
     protected void addScore(int score) {
@@ -21,6 +22,7 @@ public class HeuristicEvaluator {
 
     /**
      * Removes the given score from the current score.
+     *
      * @param score The score to remove.
      */
     protected void addPenalty(int score) {
@@ -29,6 +31,7 @@ public class HeuristicEvaluator {
 
     /**
      * Multiplies the current score by the given multiplier.
+     *
      * @param multiplier
      */
     protected void multiplyScore(int multiplier) {
@@ -37,6 +40,7 @@ public class HeuristicEvaluator {
 
     /**
      * Finalizes the heuristic score.
+     *
      * @return the final heuristic score.
      */
     protected int finalizeScore() {
@@ -55,6 +59,7 @@ public class HeuristicEvaluator {
 
     /**
      * Sets the multiplier for the heuristic score.
+     *
      * @param multiplier The multiplier to set.
      */
     protected void setMultiplier(int multiplier) {

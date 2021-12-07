@@ -26,6 +26,7 @@ public class Fairy {
 
     /**
      * Gets the board this fairy is on.
+     *
      * @return the board this fairy is on.
      */
     public GameBoard getBoard() {
@@ -34,6 +35,7 @@ public class Fairy {
 
     /**
      * Gets the chunk this fairy is protecting.
+     *
      * @return the chunk this fairy is protecting.
      */
     public Chunk getChunk() {
@@ -42,6 +44,7 @@ public class Fairy {
 
     /**
      * Encodes this fairy into a byte stream.
+     *
      * @param stream the stream to encode this fairy into.
      */
     public void encode(ByteOutputStream stream) {
@@ -51,6 +54,7 @@ public class Fairy {
 
     /**
      * Decodes this fairy from a byte stream.
+     *
      * @param stream the stream to decode this fairy from.
      */
     public void decode(ByteInputStream stream) {

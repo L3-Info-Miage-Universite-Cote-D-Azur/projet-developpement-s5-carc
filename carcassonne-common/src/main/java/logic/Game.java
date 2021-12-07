@@ -13,7 +13,6 @@ import logic.state.GameStateType;
 import logic.tile.Tile;
 import logic.tile.TileStack;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 

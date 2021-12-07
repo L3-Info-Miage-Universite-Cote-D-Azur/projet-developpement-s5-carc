@@ -14,6 +14,7 @@ public final class TargetEntry<E> {
 
     /**
      * Gets the entry of the target.
+     *
      * @return the position of the target
      */
     public E getEntry() {
@@ -22,6 +23,7 @@ public final class TargetEntry<E> {
 
     /**
      * Gets the cost of the target.
+     *
      * @return the cost of the target
      */
     public int getScore() {

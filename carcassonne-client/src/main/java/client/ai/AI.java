@@ -77,6 +77,7 @@ public abstract class AI implements IPlayerListener {
 
     /**
      * Gets the game's instance.
+     *
      * @return The game's instance.
      */
     public Game getGame() {

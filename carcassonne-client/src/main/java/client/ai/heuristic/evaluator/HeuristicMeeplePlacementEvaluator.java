@@ -2,18 +2,16 @@ package client.ai.heuristic.evaluator;
 
 import logic.Game;
 import logic.player.Player;
-import logic.tile.Tile;
 import logic.tile.area.AbbeyArea;
 import logic.tile.area.Area;
 import logic.tile.area.RoadArea;
 import logic.tile.area.TownArea;
 import logic.tile.chunk.Chunk;
-import logic.tile.chunk.ChunkType;
 
 /**
  * Evaluator that evaluates the placement of a meeple on a chunk.
  * Used to determine the best placement of a meeple.
- *
+ * <p>
  * The evaluator favours the placement of a meeple on an abbey, town
  * or road.
  */
@@ -74,6 +72,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the placement of a meeple on the given chunk.
+     *
      * @param chunk The chunk to evaluate.
      * @return the heuristic score.
      */
@@ -97,6 +96,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the placement of a meeple on the given area.
+     *
      * @param area The area to evaluate.
      */
     private void evaluateArea(Area area) {
@@ -117,6 +117,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the current meeples on the area.
+     *
      * @param area The area to evaluate.
      */
     private void evaluateAreaCurrentMeeples(Area area) {
@@ -125,6 +126,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the placement of a meeple on the given abbey area.
+     *
      * @param area The area to evaluate.
      */
     private void evaluateAbbey(AbbeyArea area) {
@@ -133,6 +135,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the placement of a meeple on the given town area.
+     *
      * @param area The area to evaluate.
      */
     private void evaluateTown(TownArea area) {
@@ -149,6 +152,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     /**
      * Evaluates the placement of a meeple on the given road area.
+     *
      * @param area The area to evaluate.
      */
     private void evaluateRoad(RoadArea area) {
