@@ -4,8 +4,8 @@ Chunks
 			FIELD	ROAD	FIELD	
 		FIELD				FIELD
 		ROAD		ROAD_END		ROAD
-		PORTAL				FIELD
-			PORTAL	FIELD	FIELD	
+		FIELD				FIELD
+			FIELD	FIELD	FIELD
 	References					
 		Name				
 			F	B	F	
@@ -17,5 +17,5 @@ Data
 	Name	Value				
 	Model	AX				
 	Expansion					
-	Flags					
+	Flags	PORTAL
 	Count	1				
