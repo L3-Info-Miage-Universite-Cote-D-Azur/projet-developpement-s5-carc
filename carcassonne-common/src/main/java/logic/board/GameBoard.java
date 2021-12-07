@@ -2,12 +2,14 @@ package logic.board;
 
 import logic.Game;
 import logic.dragon.Dragon;
+import logic.dragon.Fairy;
 import logic.math.Vector2;
 import logic.tile.Tile;
 import logic.tile.Direction;
 import logic.tile.TileFlags;
 import logic.tile.TileRotation;
 import logic.tile.area.Area;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
@@ -44,6 +46,11 @@ public class GameBoard {
      */
     private Dragon dragon;
 
+    /**
+     * Current fairy that is on the board.
+     */
+    private Fairy fairy;
+
     public GameBoard() {
         this.tiles = new HashMap<>();
         this.tilesList = new ArrayList<>();
@@ -56,6 +63,7 @@ public class GameBoard {
         this.tiles.clear();
         this.tilesList.clear();
         this.dragon = null;
+        this.fairy = null;
     }
 
     /**
@@ -281,6 +289,15 @@ public class GameBoard {
     }
 
     /**
+     * Returns whether the board has a fairy.
+     *
+     * @return true if the board has a fairy, false otherwise
+     */
+    public boolean hasFairy() {
+        return fairy != null;
+    }
+
+    /**
      * Returns whether the board has a volcano.
      *
      * @return true if the board has a volcano, false otherwise
@@ -299,10 +316,26 @@ public class GameBoard {
     }
 
     /**
+     * Gets the current fairy on the board.
+     *
+     * @return the current fairy on the board
+     */
+    public Fairy getFairy() {
+        return fairy;
+    }
+
+    /**
      * Destructs the dragon on the board.
      */
     public void destructDragon() {
         dragon = null;
+    }
+
+    /**
+     * Destructs the fairy on the board.
+     */
+    public void destructFairy() {
+        fairy = null;
     }
 
     /**
@@ -311,6 +344,14 @@ public class GameBoard {
      */
     public Dragon spawnDragon(Vector2 position) {
         return dragon = new Dragon(this, position);
+    }
+
+    /**
+     * Spawns the fairy on the board to the specified position.
+     * @param chunk the chunk to spawn the fairy
+     */
+    public Fairy spawnFairy(Chunk chunk) {
+        return fairy = new Fairy(this, chunk);
     }
 
     /**
@@ -335,6 +376,13 @@ public class GameBoard {
         if (dragon != null) {
             stream.writeBoolean(true);
             dragon.encode(stream);
+        } else {
+            stream.writeBoolean(false);
+        }
+
+        if (fairy != null) {
+            stream.writeBoolean(true);
+            fairy.encode(stream);
         } else {
             stream.writeBoolean(false);
         }
@@ -380,6 +428,13 @@ public class GameBoard {
             dragon.decode(stream);
         } else {
             dragon = null;
+        }
+
+        if (stream.readBoolean()) {
+            fairy = new Fairy(this);
+            fairy.decode(stream);
+        } else {
+            fairy = null;
         }
     }
 }

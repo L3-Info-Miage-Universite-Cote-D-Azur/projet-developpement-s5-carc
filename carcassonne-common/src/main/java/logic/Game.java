@@ -12,6 +12,7 @@ import logic.state.GameStateFactory;
 import logic.state.GameStateType;
 import logic.tile.Tile;
 import logic.tile.TileStack;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -73,11 +74,16 @@ public class Game {
             }
 
             @Override
-            public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
+            public void onMeeplePlaced(Chunk chunk) {
             }
 
             @Override
-            public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
+            public void onFairyPlaced(Chunk chunk) {
+
+            }
+
+            @Override
+            public void onMeepleRemoved(Chunk chunk) {
 
             }
         };

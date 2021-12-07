@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.board.GameBoard;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.state.GameStateType;
@@ -99,20 +100,44 @@ public class RemoveMeepleCommand implements ICommand {
         return true;
     }
 
+    /**
+     * Gets the game state required to execute the command.
+     *
+     * @return the game state
+     */
     @Override
     public GameStateType getRequiredState() {
         return GameStateType.TURN_PLACE_MEEPLE;
     }
 
+    /**
+     * Executes the command.
+     *
+     * @param game the game context
+     * @return true if the meeple was removed, false otherwise
+     */
     @Override
     public void execute(Game game) {
         removeMeeple(game.getBoard().getTileAt(tilePosition).getChunk(tileChunkId));
         game.getState().complete();
     }
 
+    /**
+     * Removes the meeple from the chunk.
+     * @param chunk the chunk
+     */
     public static void removeMeeple(Chunk chunk) {
+        Game game = chunk.getParent().getGame();
+        GameBoard board = game.getBoard();
+
         Meeple meeple = chunk.getMeeple();
         chunk.setMeeple(null);
         meeple.getOwner().decreasePlayedMeeples();
+
+        if (board.hasFairy() && board.getFairy().getChunk() == chunk) {
+            board.destructFairy();
+        }
+
+        game.getListener().onMeepleRemoved(chunk);
     }
 }

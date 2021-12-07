@@ -3,6 +3,7 @@ package logic;
 import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
 /**
@@ -46,18 +47,21 @@ public interface IGameListener {
     /**
      * Called when a meeple is placed on a tile.
      *
-     * @param player  The player who placed the meeple.
-     * @param tile    The tile on which the meeple was placed.
-     * @param chunkId The chunk id on which the meeple was placed.
+     * @param chunk The chunk on which the meeple was placed.
      */
-    void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId);
+    void onMeeplePlaced(Chunk chunk);
+
+    /**
+     * Called when a fairy is placed on a chunk
+     *
+     * @param chunk The chunk on which the fairy was placed.
+     */
+    void onFairyPlaced(Chunk chunk);
 
     /**
      * Called when a meeple is removed from a tile.
      *
-     * @param player  The player who removed the meeple.
-     * @param tile    The tile from which the meeple was removed.
-     * @param chunkId The chunk id from which the meeple was removed.
+     * @param chunk The chunk on which the meeple was removed.
      */
-    void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId);
+    void onMeepleRemoved(Chunk chunk);
 }

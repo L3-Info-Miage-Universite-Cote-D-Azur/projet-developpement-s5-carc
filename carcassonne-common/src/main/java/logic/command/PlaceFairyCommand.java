@@ -1,6 +1,7 @@
 package logic.command;
 
 import logic.Game;
+import logic.dragon.Fairy;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.player.Player;
@@ -14,16 +15,16 @@ import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
 /**
- * Command to place a meeple on a tile.
+ * Command to place a fairy on a chunk.
  */
-public class PlaceMeepleCommand implements ICommand {
+public class PlaceFairyCommand implements ICommand {
     private Vector2 tilePosition;
     private ChunkId chunkId;
 
-    public PlaceMeepleCommand() {
+    public PlaceFairyCommand() {
     }
 
-    public PlaceMeepleCommand(Vector2 tilePosition, ChunkId chunkId) {
+    public PlaceFairyCommand(Vector2 tilePosition, ChunkId chunkId) {
         this.tilePosition = tilePosition;
         this.chunkId = chunkId;
     }
@@ -35,7 +36,7 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public CommandType getType() {
-        return CommandType.PLACE_MEEPLE;
+        return CommandType.PLACE_FAIRY;
     }
 
     /**
@@ -67,8 +68,6 @@ public class PlaceMeepleCommand implements ICommand {
      */
     @Override
     public boolean canBeExecuted(Game game) {
-        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
-
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         if (tile == null) {
@@ -76,17 +75,17 @@ public class PlaceMeepleCommand implements ICommand {
             return false;
         }
 
-        Tile tileDrawn = game.getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
+        Chunk chunk = tile.getChunk(chunkId);
 
-        if (tile != tileDrawn && !tileDrawn.hasPortal()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile is not the tile drawn and the tile drawn is not a portal.");
+        if (!chunk.hasMeeple() || chunk.getMeeple().getOwner() != game.getTurnExecutor()) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk does not have a meeple or meeple is not owned by the player");
             return false;
         }
 
-        Chunk chunk = tile.getChunk(chunkId);
+        Fairy fairy = game.getBoard().getFairy();
 
-        if (chunk.getArea().hasMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Meeple already present in the area.");
+        if (fairy != null && fairy.getChunk() == chunk) {
+            game.getCommandExecutor().getListener().onCommandFailed(this, "Fairy is already on this chunk");
             return false;
         }
 
@@ -107,19 +106,17 @@ public class PlaceMeepleCommand implements ICommand {
      * Executes the command.
      *
      * @param game the game context
-     * @return true if the meeple was placed, false otherwise
+     * @return true if the fairy was placed, false otherwise
      */
     @Override
     public void execute(Game game) {
         GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
-        Player player = game.getTurnExecutor();
         Tile tile = game.getBoard().getTileAt(tilePosition);
         Chunk chunk = tile.getChunk(chunkId);
 
-        chunk.setMeeple(new Meeple(player));
-        player.increasePlayedMeeples();
+        game.getBoard().spawnFairy(chunk);
         placeMeepleState.complete();
 
-        game.getListener().onMeeplePlaced(chunk);
+        game.getListener().onFairyPlaced(chunk);
     }
 }

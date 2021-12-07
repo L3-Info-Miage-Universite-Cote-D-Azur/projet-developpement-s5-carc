@@ -5,6 +5,7 @@ import logic.player.Player;
 import logic.state.GameState;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import server.logger.Logger;
 import server.matchmaking.Match;
@@ -55,12 +56,17 @@ public class MatchGameListener implements IGameListener {
     }
 
     @Override
-    public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info("Match %d: Meeple placed at tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+    public void onMeeplePlaced(Chunk chunk) {
+        Logger.info("Match %d: Meeple placed at tile (%d,%d), chunk %s", match.getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 
     @Override
-    public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.info("Match %d: Meeple removed from tile (%d,%d), chunk %s", match.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+    public void onFairyPlaced(Chunk chunk) {
+        Logger.info("Match %d: Fairy placed at tile (%d,%d), chunk %s", match.getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
+    }
+
+    @Override
+    public void onMeepleRemoved(Chunk chunk) {
+        Logger.info("Match %d: Meeple removed from tile (%d,%d), chunk %s", match.getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 }

@@ -7,6 +7,7 @@ import logic.IGameListener;
 import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
+import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 
 /**
@@ -74,24 +75,30 @@ public class GameLogger implements IGameListener {
     /**
      * Invoked when a meeple is placed.
      *
-     * @param player  The player who placed the meeple.
-     * @param tile    The tile on which the meeple was placed.
-     * @param chunkId The chunk id on which the meeple was placed.
+     * @param chunk The chunk on which the meeple was placed.
      */
     @Override
-    public void onMeeplePlaced(Player player, Tile tile, ChunkId chunkId) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple of player %d at tile (%d,%d), chunk %s", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+    public void onMeeplePlaced(Chunk chunk) {
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple of player %d at tile (%d,%d), chunk %s", game.getTurnExecutor().getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
+    }
+
+    /**
+     * Invoked when a fairy is placed.
+     *
+     * @param chunk The chunk on which the fairy was placed.
+     */
+    @Override
+    public void onFairyPlaced(Chunk chunk) {
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place fairy at tile (%d,%d), chunk %s", chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 
     /**
      * Invoked when a meeple is removed.
      *
-     * @param player  The player who removed the meeple.
-     * @param tile    The tile on which the meeple was removed.
-     * @param chunkId The chunk id on which the meeple was removed.
+     * @param chunk The chunk on which the meeple was removed.
      */
     @Override
-    public void onMeepleRemoved(Player player, Tile tile, ChunkId chunkId) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Meeple of player %d at tile (%d,%d), chunk %s is removed", player.getId(), tile.getPosition().getX(), tile.getPosition().getY(), chunkId);
+    public void onMeepleRemoved(Chunk chunk) {
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Meeple of player %d at tile (%d,%d), chunk %s is removed", game.getTurnExecutor().getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 }
