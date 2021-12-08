@@ -47,7 +47,7 @@ public class ServerConnectionTest {
             }
         };
 
-        setPrivateField(serverConnection, "messageDispatcher", new MessageDispatcher(serverConnection) {
+        setPrivateField(serverConnection, "messageDispatcher", new MessageDispatcher() {
             @Override
             public void handle(Message message) {
                 hasReceivedMessage[receivedMessageCount[0]++] = true;
