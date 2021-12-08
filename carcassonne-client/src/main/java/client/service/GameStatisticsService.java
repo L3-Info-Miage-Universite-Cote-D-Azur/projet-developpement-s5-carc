@@ -9,6 +9,7 @@ import logic.Game;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Game statistics service that makes statistics about the match.
@@ -43,10 +44,12 @@ public class GameStatisticsService extends ServiceBase {
         File saveDirectory = new File(SAVE_DIRECTORY);
 
         if (!saveDirectory.exists()) {
-            saveDirectory.mkdir();
+            if (!saveDirectory.mkdir())
+                Logger.warn(LoggerCategory.SERVICE, "Cannot create a folder", saveDirectory);
         } else {
-            for (File file : saveDirectory.listFiles()) {
-                file.delete();
+            for (File file : Objects.requireNonNull(saveDirectory.listFiles())) {
+                if (!file.delete())
+                    Logger.warn(LoggerCategory.SERVICE, "A file cannot be deleted", file);
             }
         }
     }

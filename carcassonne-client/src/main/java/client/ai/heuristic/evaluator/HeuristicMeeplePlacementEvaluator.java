@@ -112,6 +112,8 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
             case ROAD:
                 evaluateRoad(((RoadArea) area));
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + area.getType());
         }
     }
 

@@ -24,13 +24,11 @@ public class GameStatistics {
         this.players = new ArrayList<>();
         this.boardView = GameDrawUtils.createLayer(game);
 
-        ArrayList<Player> sortedPlayersByScore = new ArrayList<>() {{
-            for (int i = 0; i < game.getPlayerCount(); i++) {
-                add(game.getPlayer(i));
-            }
+        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
+        for (int i = 0; i < game.getPlayerCount(); i++)
+            sortedPlayersByScore.add(game.getPlayer(i));
 
-            sort(Player::compareTo);
-        }};
+        sortedPlayersByScore.sort(Player::compareTo);
 
         for (int i = 0; i < sortedPlayersByScore.size(); i++) {
             Player player = game.getPlayer(i);
@@ -50,8 +48,8 @@ public class GameStatistics {
 
         excelNode.addColumn("Name");
 
-        for (int i = 0; i < players.size(); i++) {
-            excelNode.addColumn("Player ID " + players.get(i).getId());
+        for (GameStatisticsPlayer gameStatisticsPlayer : players) {
+            excelNode.addColumn("Player ID " + gameStatisticsPlayer.getId());
         }
 
         ExcelRow positionRow = excelNode.createRow("POSITION");

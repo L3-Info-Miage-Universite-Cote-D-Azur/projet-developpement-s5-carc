@@ -10,7 +10,7 @@ import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -28,14 +28,7 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
     /**
      * Multiplier for the heuristic score gained by the area type.
      */
-    public static final Map<ChunkType, Integer> AREA_MULTIPLIER = new HashMap<>() {{
-        put(ChunkType.ROAD_END, 0);
-
-        put(ChunkType.FIELD, 1);
-        put(ChunkType.ROAD, 2);
-        put(ChunkType.TOWN, 3);
-        put(ChunkType.ABBEY, 4);
-    }};
+    protected static final Map<ChunkType, Integer> AREA_MULTIPLIER;
     /**
      * Score penalty for each free edges in an area.
      */
@@ -54,6 +47,16 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
      * The current score is divided by this value to favour it.
      */
     private static final int MULTIPLE_AREA_CONNECTION_MULTIPLIER = 2;
+
+    static {
+        AREA_MULTIPLIER = new EnumMap<>(ChunkType.class);
+        AREA_MULTIPLIER.put(ChunkType.ROAD_END, 0);
+        AREA_MULTIPLIER.put(ChunkType.FIELD, 1);
+        AREA_MULTIPLIER.put(ChunkType.ROAD, 2);
+        AREA_MULTIPLIER.put(ChunkType.TOWN, 3);
+        AREA_MULTIPLIER.put(ChunkType.ABBEY, 4);
+    }
+
     private final GameBoard board;
 
     public HeuristicTileEvaluator(Game game) {
@@ -133,7 +136,6 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
      * Evaluates the heuristic score for the given area.
      *
      * @param area The area to evaluate.
-     * @return The heuristic score.
      */
     private void evaluateArea(Area area, Area mergeWith) {
         setMultiplier(AREA_MULTIPLIER.get(area.getType()));

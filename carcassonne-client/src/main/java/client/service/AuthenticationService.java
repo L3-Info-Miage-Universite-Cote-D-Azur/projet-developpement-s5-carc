@@ -5,6 +5,7 @@ import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
 import network.message.Message;
+import network.message.MessageType;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
 
@@ -26,8 +27,8 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
      */
     @Override
     public void handleMessage(Message message) {
-        switch (message.getType()) {
-            case SERVER_HELLO -> onServerHello((ServerHelloMessage) message);
+        if (message.getType() == MessageType.SERVER_HELLO) {
+            onServerHello((ServerHelloMessage) message);
         }
     }
 

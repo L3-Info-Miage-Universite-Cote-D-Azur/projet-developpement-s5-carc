@@ -13,8 +13,8 @@ import java.util.List;
  * It contains the color for the foreground texts and if the logger should be enabled.
  */
 public class LoggerConfig {
-    private final LogLevel level;
     private final List<String> playerColors;
+    private LogLevel level;
 
     public LoggerConfig(LogLevel level, List<String> playerColors) {
         this.level = level;
@@ -24,19 +24,19 @@ public class LoggerConfig {
     public LoggerConfig(ExcelNode node) {
         this.level = LogLevel.valueOf(node.getRow("Level").getValue("Value"));
 
-        ArrayList<String> playerColors = new ArrayList<>();
+        ArrayList<String> playerColorsTemp = new ArrayList<>();
 
         for (int i = 1; ; i++) {
             ExcelRow playerColor = node.getRow("Player_" + i);
 
             if (playerColor != null) {
-                playerColors.add(playerColor.getValue("Value"));
+                playerColorsTemp.add(playerColor.getValue("Value"));
             } else {
                 break;
             }
         }
 
-        this.playerColors = playerColors;
+        this.playerColors = playerColorsTemp;
     }
 
     /**
@@ -45,13 +45,11 @@ public class LoggerConfig {
      * @return the default configuration
      */
     public static LoggerConfig getDefaultConfig() {
-        return new LoggerConfig(LogLevel.INFO, Arrays.asList(new String[]{
-                "91m",
+        return new LoggerConfig(LogLevel.INFO, Arrays.asList("91m",
                 "92m",
                 "93m",
                 "94m",
-                "95m",
-        }));
+                "95m"));
     }
 
     /**
@@ -62,6 +60,13 @@ public class LoggerConfig {
      */
     public LogLevel getLevel() {
         return level;
+    }
+
+    /**
+     * Sets the level of the logger.
+     */
+    public void setLevel(LogLevel logLevel) {
+        this.level = logLevel;
     }
 
     /**

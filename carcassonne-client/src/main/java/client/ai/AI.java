@@ -3,8 +3,6 @@ package client.ai;
 import logic.Game;
 import logic.command.*;
 import logic.dragon.Dragon;
-import logic.dragon.Fairy;
-import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceMeepleState;
@@ -20,7 +18,7 @@ import logic.tile.chunk.Chunk;
 public abstract class AI implements IPlayerListener {
     protected final Player player;
 
-    public AI(Player player) {
+    protected AI(Player player) {
         this.player = player;
     }
 

@@ -3,9 +3,15 @@ package client.logger;
 import client.config.LoggerConfig;
 import logic.player.Player;
 
+import static java.lang.System.out;
+
 public class Logger {
+    private static final String ANSI_PREFIX = "\u001B[0";
     private static LoggerConfig config = LoggerConfig.getDefaultConfig();
-    private static String ANSI_PREFIX = "\u001B[0";
+
+    private Logger() {
+        // ignored
+    }
 
     /**
      * Logs a message to the console with the debug color.
@@ -113,14 +119,14 @@ public class Logger {
      */
     private static void print(LoggerCategory category, String message, String ansiColorCode, LogLevel level) {
         if (level.ordinal() >= config.getLevel().ordinal()) {
-            synchronized (System.out) {
-                System.out.print("\u001B[");
-                System.out.print(ansiColorCode);
-                System.out.print(category);
-                System.out.print(": ");
-                System.out.print(message);
-                System.out.print(ANSI_PREFIX);
-                System.out.println("0m");
+            synchronized (out) {
+                out.print("\u001B[");
+                out.print(ansiColorCode);
+                out.print(category);
+                out.print(": ");
+                out.print(message);
+                out.print(ANSI_PREFIX);
+                out.println("0m");
             }
         }
     }
@@ -132,5 +138,9 @@ public class Logger {
      */
     public static void setConfig(LoggerConfig config) {
         Logger.config = config;
+    }
+
+    public static void setLevel(LogLevel logLevel) {
+        config.setLevel(logLevel);
     }
 }

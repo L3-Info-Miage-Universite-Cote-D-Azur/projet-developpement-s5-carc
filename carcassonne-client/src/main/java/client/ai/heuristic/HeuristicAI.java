@@ -66,7 +66,6 @@ public class HeuristicAI extends AI {
      * Finds the best position for the given tile to be placed.
      *
      * @param tile The tile to find a position for.
-     
      * @return The best position for the tile to be placed.
      */
     @Override

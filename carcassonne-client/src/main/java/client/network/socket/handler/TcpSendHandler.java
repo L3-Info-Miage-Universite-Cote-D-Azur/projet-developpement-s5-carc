@@ -19,7 +19,7 @@ public class TcpSendHandler implements CompletionHandler<Integer, ITcpClientSock
         if (result == -1) {
             listener.onDisconnected();
         } else {
-            listener.onSend(result.intValue());
+            listener.onSend(result);
         }
     }
 

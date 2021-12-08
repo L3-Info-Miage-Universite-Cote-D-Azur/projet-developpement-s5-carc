@@ -21,7 +21,6 @@ import java.util.Random;
 public class SimpleAI extends AI {
     private static final int MEEPLE_PLACEMENT_PROBABILITY = 80;
     private static final int MEEPLE_REMOVING_PROBABILITY = 75;
-    private static final int FAIRY_PLACEMENT_PROBABILITY = 50;
 
     protected final Random random;
 

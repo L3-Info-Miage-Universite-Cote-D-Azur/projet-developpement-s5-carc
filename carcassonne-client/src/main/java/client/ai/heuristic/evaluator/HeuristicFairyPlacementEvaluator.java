@@ -44,7 +44,6 @@ public class HeuristicFairyPlacementEvaluator extends HeuristicEvaluator {
      * Evaluates the placement of a fairy on the given chunk.
      *
      * @param chunk The chunk to evaluate.
-     * @return the heuristic score.
      */
     private void evaluateChunk(Chunk chunk) {
         GameBoard board = game.getBoard();

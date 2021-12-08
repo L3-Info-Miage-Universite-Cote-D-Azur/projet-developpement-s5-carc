@@ -44,10 +44,10 @@ public class HeuristicEvaluator {
      * @return the final heuristic score.
      */
     protected int finalizeScore() {
-        int score = this.score;
+        int scoreTemp = this.score;
         this.score = 0;
         this.resetMultiplier();
-        return score;
+        return scoreTemp;
     }
 
     /**

@@ -28,7 +28,9 @@ public class MasterCommandExecutionNotifier implements ICommandExecutorListener 
     }
 
     /**
-     * @param command
+     * Notifies the master that a command has failed.
+     *
+     * @param command The failed command
      * @param reason  The reason of the failure.
      */
     @Override

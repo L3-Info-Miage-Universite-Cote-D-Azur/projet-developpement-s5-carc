@@ -4,17 +4,35 @@ import logic.math.Vector2;
 
 import java.util.Arrays;
 
+/**
+ * Polygon geometry shape
+ */
 public class Polygon {
-    private Vector2[] vectors;
+    private final Vector2[] vectors;
 
+    /**
+     * @param vectors All vectors of the polygon
+     */
     public Polygon(Vector2... vectors) {
         this.vectors = vectors;
     }
 
+    /**
+     * Get a specific vector
+     *
+     * @param i The index of the vector
+     * @return The vector of the index
+     */
     public Vector2 getVector(int i) {
         return vectors[i];
     }
 
+    /**
+     * Get x axe of all vectors
+     *
+     * @param offset The offset of the vector
+     * @return The x axe of all vectors
+     */
     public int[] getXs(int offset) {
         int[] xs = new int[vectors.length];
         for (int i = 0; i < xs.length; i++)
@@ -23,6 +41,12 @@ public class Polygon {
         return xs;
     }
 
+    /**
+     * Get y axe of all vectors
+     *
+     * @param offset The offset of the vector
+     * @return The y axe of all vectors
+     */
     public int[] getYs(int offset) {
         int[] ys = new int[vectors.length];
         for (int i = 0; i < ys.length; i++)
@@ -31,6 +55,11 @@ public class Polygon {
         return ys;
     }
 
+    /**
+     * Get the number vectors
+     *
+     * @return The number of vectors
+     */
     public int getVectorCount() {
         return vectors.length;
     }

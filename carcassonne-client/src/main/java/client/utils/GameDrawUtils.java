@@ -16,64 +16,86 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
+
+import static client.utils.ChunkPositionConstant.*;
 
 /**
  * Class for drawing the game.
  */
-public class GameDrawUtils implements ChunkPositionConstant {
+public class GameDrawUtils {
     private static final int TILE_WIDTH = 160;
     private static final int TILE_HEIGHT = 160;
     private static final int MEEPLE_WIDTH = 27;
     private static final int MEEPLE_HEIGHT = 27;
     private static final int EXTRA_WIDTH = 40;
     private static final int EXTRA_HEIGHT = 40;
+    private static final String EXTRA_PATH = "models/pattern";
+    private static final String DRAGONS_PATH = "models/dragons";
+    private static final String MEEPLE_PATH = "models/meeples";
+    private static final String TILE_PATH = "models/tiles";
 
     private static final Random rand = new Random();
-    private static final HashMap<ChunkId, Vector2> meepleOffset = new HashMap<>() {{
-        put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
-        put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
-        put(ChunkId.NORTH_RIGHT, new Vector2(106, 0));
-        put(ChunkId.SOUTH_LEFT, new Vector2(27, 133));
-        put(ChunkId.SOUTH_MIDDLE, new Vector2(67, 124));
-        put(ChunkId.SOUTH_RIGHT, new Vector2(106, 133));
-        put(ChunkId.WEST_TOP, new Vector2(0, 27));
-        put(ChunkId.WEST_MIDDLE, new Vector2(18, 71));
-        put(ChunkId.WEST_BOTTOM, new Vector2(0, 106));
-        put(ChunkId.EAST_TOP, new Vector2(133, 27));
-        put(ChunkId.EAST_MIDDLE, new Vector2(124, 71));
-        put(ChunkId.EAST_BOTTOM, new Vector2(133, 106));
-        put(ChunkId.CENTER_MIDDLE, new Vector2(67, 67));
-    }};
-    private static final HashMap<ChunkId, Polygon> chunksGeo = new HashMap<>() {{
-        put(ChunkId.NORTH_LEFT, new Polygon(A, B, F)); // ABF
-        put(ChunkId.NORTH_MIDDLE, new Polygon(B, C, G, F)); // BCGF
-        put(ChunkId.NORTH_RIGHT, new Polygon(C, D, G)); // CDG
-        put(ChunkId.SOUTH_LEFT, new Polygon(M, J, N)); // MJN
-        put(ChunkId.SOUTH_MIDDLE, new Polygon(J, K, O, N)); // JKON
-        put(ChunkId.SOUTH_RIGHT, new Polygon(K, P, O)); // KPO
-        put(ChunkId.WEST_TOP, new Polygon(A, E, F)); // AEF
-        put(ChunkId.WEST_MIDDLE, new Polygon(E, F, J, I)); // EFJI
-        put(ChunkId.WEST_BOTTOM, new Polygon(I, J, M)); // IJM
-        put(ChunkId.EAST_TOP, new Polygon(G, H, D)); // GHD
-        put(ChunkId.EAST_MIDDLE, new Polygon(G, H, L, K)); // GHLK
-        put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
-        put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
-    }};
+    private static final EnumMap<ChunkId, Vector2> meepleOffset;
+    private static final EnumMap<ChunkId, Polygon> chunksGeo;
     private static ImageDatabase tileDatabase;
     private static ImageDatabase meepleDatabase;
     private static ImageDatabase dragonDatabase;
     private static ImageDatabase extraDatabase;
 
+    static {
+        meepleOffset = new EnumMap<>(ChunkId.class);
+        meepleOffset.put(ChunkId.NORTH_LEFT, new Vector2(27, 0));
+        meepleOffset.put(ChunkId.NORTH_MIDDLE, new Vector2(67, 18));
+        meepleOffset.put(ChunkId.NORTH_RIGHT, new Vector2(106, 0));
+        meepleOffset.put(ChunkId.SOUTH_LEFT, new Vector2(27, 133));
+        meepleOffset.put(ChunkId.SOUTH_MIDDLE, new Vector2(67, 124));
+        meepleOffset.put(ChunkId.SOUTH_RIGHT, new Vector2(106, 133));
+        meepleOffset.put(ChunkId.WEST_TOP, new Vector2(0, 27));
+        meepleOffset.put(ChunkId.WEST_MIDDLE, new Vector2(18, 71));
+        meepleOffset.put(ChunkId.WEST_BOTTOM, new Vector2(0, 106));
+        meepleOffset.put(ChunkId.EAST_TOP, new Vector2(133, 27));
+        meepleOffset.put(ChunkId.EAST_MIDDLE, new Vector2(124, 71));
+        meepleOffset.put(ChunkId.EAST_BOTTOM, new Vector2(133, 106));
+        meepleOffset.put(ChunkId.CENTER_MIDDLE, new Vector2(67, 67));
+
+        chunksGeo = new EnumMap<>(ChunkId.class);
+        chunksGeo.put(ChunkId.NORTH_LEFT, new Polygon(A, B, F)); // ABF
+        chunksGeo.put(ChunkId.NORTH_MIDDLE, new Polygon(B, C, G, F)); // BCGF
+        chunksGeo.put(ChunkId.NORTH_RIGHT, new Polygon(C, D, G)); // CDG
+        chunksGeo.put(ChunkId.SOUTH_LEFT, new Polygon(M, J, N)); // MJN
+        chunksGeo.put(ChunkId.SOUTH_MIDDLE, new Polygon(J, K, O, N)); // JKON
+        chunksGeo.put(ChunkId.SOUTH_RIGHT, new Polygon(K, P, O)); // KPO
+        chunksGeo.put(ChunkId.WEST_TOP, new Polygon(A, E, F)); // AEF
+        chunksGeo.put(ChunkId.WEST_MIDDLE, new Polygon(E, F, J, I)); // EFJI
+        chunksGeo.put(ChunkId.WEST_BOTTOM, new Polygon(I, J, M)); // IJM
+        chunksGeo.put(ChunkId.EAST_TOP, new Polygon(G, H, D)); // GHD
+        chunksGeo.put(ChunkId.EAST_MIDDLE, new Polygon(G, H, L, K)); // GHLK
+        chunksGeo.put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
+        chunksGeo.put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
+    }
+    private GameDrawUtils() {
+        // ignored
+    }
+
     /**
      * Loads the images for the rendering and stores them in the image database.
      */
     private static void loadImageDatabaseIfNeeded() {
+        loadTileDatabase();
+        loadMeepleDatabase();
+        loadDragonDatabase();
+        loadExtraDatabase();
+    }
+
+    private static void loadTileDatabase() {
         if (tileDatabase == null) {
             tileDatabase = new ImageDatabase(TILE_WIDTH, TILE_HEIGHT);
 
-            for (File file : new File("models/tiles").listFiles()) {
+            for (File file : Objects.requireNonNull(new File(TILE_PATH).listFiles())) {
                 if (file.isFile()) {
                     try {
                         BufferedImage image = ImageIO.read(file);
@@ -88,11 +110,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+    }
 
+    private static void loadMeepleDatabase() {
         if (meepleDatabase == null) {
             meepleDatabase = new ImageDatabase(MEEPLE_WIDTH, MEEPLE_HEIGHT);
 
-            for (File file : new File("models/meeples").listFiles()) {
+            for (File file : Objects.requireNonNull(new File(MEEPLE_PATH).listFiles())) {
                 if (file.isFile()) {
                     try {
                         meepleDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
@@ -102,11 +126,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+    }
 
+    private static void loadDragonDatabase() {
         if (dragonDatabase == null) {
             dragonDatabase = new ImageDatabase(TILE_WIDTH, TILE_HEIGHT);
 
-            for (File file : new File("models/dragons").listFiles()) {
+            for (File file : Objects.requireNonNull(new File(DRAGONS_PATH).listFiles())) {
                 if (file.isFile()) {
                     try {
                         dragonDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
@@ -116,11 +142,13 @@ public class GameDrawUtils implements ChunkPositionConstant {
                 }
             }
         }
+    }
 
+    private static void loadExtraDatabase() {
         if (extraDatabase == null) {
             extraDatabase = new ImageDatabase(EXTRA_WIDTH, EXTRA_HEIGHT);
 
-            for (File file : new File("models/pattern").listFiles()) {
+            for (File file : Objects.requireNonNull(new File(EXTRA_PATH).listFiles())) {
                 if (file.isFile()) {
                     try {
                         extraDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
@@ -140,7 +168,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         Graphics2D g = newImage.createGraphics();
 
         g.translate((width - height) / 2, (height - width) / 2);
-        g.rotate(Math.toRadians(angle), height / 2, width / 2);
+        g.rotate(Math.toRadians(angle), height / 2d, width / 2d);
         g.drawImage(image, 0, 0, null);
         g.dispose();
 
@@ -336,7 +364,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
         loadImageDatabaseIfNeeded();
         HashMap<Area, Color> colorZone = new HashMap<>();
 
-        graphics.setFont(new Font("Courier New", Font.CENTER_BASELINE | Font.BOLD, 25));
+        graphics.setFont(new Font("Courier New", Font.BOLD, 25));
         graphics.setColor(Color.blue);
 
         for (Tile tile : game.getBoard().getTiles()) {
@@ -344,7 +372,8 @@ public class GameDrawUtils implements ChunkPositionConstant {
             BufferedImage tileImage = tileDatabase.get(getTileSpriteModel(tile));
 
             assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
-            assert tileImagePosition.getX() + TILE_WIDTH <= layerBounds.getWidth() && tileImagePosition.getY() + TILE_HEIGHT <= layerBounds.getHeight();
+            if (tileImagePosition.getX() + TILE_WIDTH > layerBounds.getWidth() || tileImagePosition.getY() + TILE_HEIGHT > layerBounds.getHeight())
+                throw new AssertionError();
 
             graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
             graphics.drawString(tile.getConfig().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + TILE_WIDTH / 4, tileImagePosition.getY() + TILE_HEIGHT / 2);
@@ -367,7 +396,6 @@ public class GameDrawUtils implements ChunkPositionConstant {
                     BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(game.getPlayerIndex(meeple.getOwner())));
                     graphics.setColor(Color.blue);
                     graphics.drawImage(meepleImage, meepleImagePosition.getX(), meepleImagePosition.getY(), null);
-                    //graphics.drawString(chunkId.name(), tileImagePosition.getX(), tileImagePosition.getY());
                 }
             }
         }

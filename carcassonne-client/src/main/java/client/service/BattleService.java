@@ -51,6 +51,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
             case GAME_MASTER_NEXT_TURN_DATA -> onGameMasterNextTurnData((GameMasterNextTurnDataMessage) message);
             case GAME_RESULT -> onGameResult((GameResultMessage) message);
+            default -> throw new IllegalStateException("Unexpected value: " + message.getType());
         }
     }
 
@@ -88,6 +89,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
             case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
             case TURN_PLACE_MEEPLE -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
             case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingDragonMove();
+            default -> throw new IllegalStateException("Unexpected value: " + currentState.getType());
         }
     }
 
@@ -139,7 +141,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      */
     @Override
     public void onConnect() {
-
+        // ignored
     }
 
     /**

@@ -8,7 +8,7 @@ import client.Client;
 public abstract class ServiceBase {
     public final Client client;
 
-    public ServiceBase(Client client) {
+    protected ServiceBase(Client client) {
         this.client = client;
     }
 

@@ -53,6 +53,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
             case MATCHMAKING_DATA -> onMatchmakingData((MatchmakingDataMessage) message);
             case MATCHMAKING_FAILED -> onMatchmakingFailed((MatchmakingFailedMessage) message);
             case GAME_DATA -> onMatchmakingCompleted((GameDataMessage) message);
+            default -> throw new IllegalStateException("Unexpected value: " + message.getType());
         }
     }
 
@@ -92,7 +93,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
      */
     @Override
     public void onConnect() {
-
+        // ignored
     }
 
     /**

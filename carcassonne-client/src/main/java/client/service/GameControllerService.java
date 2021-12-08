@@ -28,6 +28,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
         switch (message.getType()) {
             case SERVER_HELLO -> onAuthenticated();
             case GAME_RESULT -> onBattleOver();
+            default -> throw new IllegalStateException("Unexpected value: " + message.getType());
         }
     }
 

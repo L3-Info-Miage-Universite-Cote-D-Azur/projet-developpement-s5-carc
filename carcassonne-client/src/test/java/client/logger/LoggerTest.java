@@ -1,13 +1,11 @@
 package client.logger;
 
 import client.config.LoggerConfig;
-import logic.player.Player;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +15,7 @@ class LoggerTest {
     static ByteArrayOutputStream baos;
 
     @BeforeAll
-    static void initialized(){
+    static void initialized() {
         Logger.setConfig(LoggerConfig.getDefaultConfig());
         baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
@@ -25,7 +23,7 @@ class LoggerTest {
     }
 
     @AfterAll
-    static void deinitialized(){
+    static void deinitialized() {
         System.out.flush();
         System.setOut(old);
     }

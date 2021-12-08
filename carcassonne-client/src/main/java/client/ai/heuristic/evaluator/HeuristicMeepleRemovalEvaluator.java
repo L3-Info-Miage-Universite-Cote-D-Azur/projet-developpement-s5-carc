@@ -57,7 +57,6 @@ public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
      * Evaluates the removal of a meeple from an area.
      *
      * @param area The area to evaluate.
-     * @return The score of the removal.
      */
     private void evaluateArea(Area area) {
         int ownMeeples = 0;

@@ -29,7 +29,7 @@ public class TcpReadHandler implements CompletionHandler<Integer, ITcpClientSock
         if (result == -1) {
             listener.onDisconnected();
         } else {
-            listener.onReceive(result.intValue());
+            listener.onReceive(result);
 
             if (channel.isOpen()) {
                 channel.read(buffer, listener, this);
