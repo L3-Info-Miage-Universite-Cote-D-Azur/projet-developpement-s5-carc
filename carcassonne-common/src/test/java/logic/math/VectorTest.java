@@ -112,6 +112,14 @@ class VectorTest {
     }
 
     @Test
+    void testSqrLength() {
+        Vector2 vector0 = new Vector2(100, 100);
+        double vectorFinal = 20000;
+        double vectorResult = vector0.sqrLength();
+        assertEquals(vectorResult, vectorFinal);
+    }
+
+    @Test
     void testLength() {
         Vector2 vector0 = new Vector2(100, 100);
         assertEquals((int) Math.sqrt(20000), vector0.length());
