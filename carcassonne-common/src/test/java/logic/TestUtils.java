@@ -104,20 +104,20 @@ public class TestUtils {
             Vector2 pos = findPositionForTile(tile);
 
             lastTilePos = pos;
-            assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(pos)));
+            assertTrue(game.executeCommand(new PlaceTileDrawnCommand(pos)));
         }
 
         @Override
         public void onWaitingMeeplePlacement() {
-            if (random.nextInt(100) < 95 || !game.getCommandExecutor().execute(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]))) {
-                game.getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+            if (random.nextInt(100) < 95 || !game.executeCommand(new PlaceMeepleCommand(lastTilePos, ChunkId.values()[random.nextInt(ChunkId.values().length)]))) {
+                game.executeCommand(new SkipMeeplePlacementCommand());
             }
         }
 
         @Override
         public void onWaitingDragonMove() {
             do {
-                if (game.getCommandExecutor().execute(new MoveDragonCommand(Direction.values()[random.nextInt(Direction.values().length)]))) {
+                if (game.executeCommand(new MoveDragonCommand(Direction.values()[random.nextInt(Direction.values().length)]))) {
                     break;
                 }
             } while (true);

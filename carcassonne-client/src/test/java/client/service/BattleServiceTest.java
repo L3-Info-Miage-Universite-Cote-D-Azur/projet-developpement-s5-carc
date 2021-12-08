@@ -3,18 +3,21 @@ package client.service;
 import client.Client;
 import client.ClientTestUtils;
 import client.ai.heuristic.HeuristicAI;
-import client.config.ClientConfig;
 import logic.Game;
+import logic.IGameListener;
 import logic.board.GameBoard;
 import logic.command.ICommand;
-import logic.command.ICommandExecutorListener;
 import logic.command.PlaceTileDrawnCommand;
 import logic.command.SkipMeeplePlacementCommand;
-import logic.config.GameConfig;
+import logic.dragon.Dragon;
+import logic.dragon.Fairy;
+import logic.meeple.Meeple;
 import logic.player.IPlayerListener;
 import logic.player.Player;
+import logic.state.GameState;
 import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Tile;
+import logic.tile.chunk.Chunk;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
@@ -100,25 +103,90 @@ public class BattleServiceTest {
             }
         });
 
-        game.getCommandExecutor().setListener(new ICommandExecutorListener() {
+        game.setListener(new IGameListener() {
+            @Override
+            public void onTurnStarted(int turn, Tile tileDrawn) {
+
+            }
+
+            @Override
+            public void onTurnEnded(int turn) {
+
+            }
+
+            @Override
+            public void onGameStarted() {
+
+            }
+
+            @Override
+            public void onGameEnded() {
+
+            }
+
+            @Override
+            public void onStateChanged(GameState state) {
+
+            }
+
+            @Override
+            public void onTilePlaced(Tile tile) {
+
+            }
+
+            @Override
+            public void onTileRotated(Tile tile) {
+
+            }
+
+            @Override
+            public void onMeeplePlaced(Chunk chunk, Meeple meeple) {
+
+            }
+
+            @Override
+            public void onMeepleRemoved(Chunk chunk, Meeple meeple) {
+
+            }
+
+            @Override
+            public void onFairySpawned(Fairy fairy) {
+
+            }
+
+            @Override
+            public void onFairyDeath(Fairy fairy) {
+
+            }
+
+            @Override
+            public void onDragonSpawned(Dragon dragon) {
+
+            }
+
+            @Override
+            public void onDragonDeath(Dragon dragon) {
+
+            }
+
+            @Override
+            public void onDragonMove(Dragon dragon) {
+
+            }
+
             @Override
             public void onCommandExecuted(ICommand command) {
                 battleService.handleMessage(new GameCommandMessage(command));
             }
 
             @Override
-            public void onCommandFailed(ICommand command, String reason) {
-
-            }
-
-            @Override
-            public void onCommandFailed(ICommand command, String reason, Object... args) {
+            public void onCommandFailed(ICommand command, int errorCode) {
 
             }
         });
 
-        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
-        game.getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+        game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
+        game.executeCommand(new SkipMeeplePlacementCommand());
 
         battleService.handleMessage(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(((GameTurnPlaceTileState )game.getState()).getTileDrawn().getConfig())));
 

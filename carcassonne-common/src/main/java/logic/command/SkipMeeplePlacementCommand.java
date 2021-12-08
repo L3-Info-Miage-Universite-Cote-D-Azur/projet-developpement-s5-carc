@@ -38,13 +38,13 @@ public class SkipMeeplePlacementCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
-        return true;
+    public int canBeExecuted(Game game) {
+        return ERROR_SUCCESS;
     }
 
     /**

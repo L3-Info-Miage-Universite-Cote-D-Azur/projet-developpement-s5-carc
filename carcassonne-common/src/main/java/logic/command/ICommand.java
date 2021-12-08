@@ -9,6 +9,8 @@ import stream.ByteOutputStream;
  * Interface for all commands.
  */
 public interface ICommand {
+    int ERROR_SUCCESS = 0;
+
     /**
      * Gets the command type.
      *
@@ -31,11 +33,11 @@ public interface ICommand {
     void decode(ByteInputStream stream);
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
-    boolean canBeExecuted(Game game);
+    int canBeExecuted(Game game);
 
     /**
      * Gets the game state required to execute the command.

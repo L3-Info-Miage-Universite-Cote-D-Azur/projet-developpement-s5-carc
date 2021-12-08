@@ -3,6 +3,7 @@ package logic.command;
 import logic.Game;
 import logic.state.GameStateType;
 import logic.state.turn.GameTurnPlaceTileState;
+import logic.tile.Tile;
 import logic.tile.TileRotation;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -51,13 +52,13 @@ public class RotateTileDrawnCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
-        return rotation != null;
+    public int canBeExecuted(Game game) {
+        return ERROR_SUCCESS;
     }
 
     /**
@@ -78,6 +79,8 @@ public class RotateTileDrawnCommand implements ICommand {
     @Override
     public void execute(Game game) {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
-        placeTileState.getTileDrawn().setRotation(rotation);
+        Tile tile = placeTileState.getTileDrawn();
+        tile.setRotation(rotation);
+        game.getListener().onTileRotated(tile);
     }
 }

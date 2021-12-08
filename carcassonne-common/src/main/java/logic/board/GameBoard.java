@@ -40,6 +40,11 @@ public class GameBoard {
     private final ArrayList<Tile> tilesList;
 
     /**
+     * The game this board belongs to.
+     */
+    private final Game game;
+
+    /**
      * Current dragon that is on the board.
      * Null if there is no dragon on the board.
      */
@@ -50,7 +55,8 @@ public class GameBoard {
      */
     private Fairy fairy;
 
-    public GameBoard() {
+    public GameBoard(Game game) {
+        this.game = game;
         this.tiles = new HashMap<>();
         this.tilesList = new ArrayList<>();
     }
@@ -329,17 +335,23 @@ public class GameBoard {
     }
 
     /**
-     * Destructs the dragon on the board.
+     * Kills the dragon on the board.
      */
-    public void destructDragon() {
-        dragon = null;
+    public void killDragon() {
+        if (dragon != null) {
+            game.getListener().onDragonDeath(dragon);
+            dragon = null;
+        }
     }
 
     /**
-     * Destructs the fairy on the board.
+     * Kills the fairy on the board.
      */
-    public void destructFairy() {
-        fairy = null;
+    public void killFairy() {
+        if (fairy != null) {
+            game.getListener().onFairyDeath(fairy);
+            fairy = null;
+        }
     }
 
     /**
@@ -348,7 +360,9 @@ public class GameBoard {
      * @param position the position to spawn the dragon
      */
     public Dragon spawnDragon(Vector2 position) {
-        return dragon = new Dragon(this, position);
+        dragon = new Dragon(this, position);
+        game.getListener().onDragonSpawned(dragon);
+        return dragon;
     }
 
     /**
@@ -357,7 +371,9 @@ public class GameBoard {
      * @param chunk the chunk to spawn the fairy
      */
     public Fairy spawnFairy(Chunk chunk) {
-        return fairy = new Fairy(this, chunk);
+        fairy = new Fairy(this, chunk);
+        game.getListener().onFairySpawned(fairy);
+        return fairy;
     }
 
     /**
@@ -365,7 +381,7 @@ public class GameBoard {
      *
      * @param stream the output stream to encode to
      */
-    public void encode(ByteOutputStream stream, Game game) {
+    public void encode(ByteOutputStream stream) {
         stream.writeInt(tilesList.size());
 
         for (Tile tile : tilesList) {
@@ -392,7 +408,7 @@ public class GameBoard {
      *
      * @param stream the input stream to decode from
      */
-    public void decode(ByteInputStream stream, Game game) {
+    public void decode(ByteInputStream stream) {
         clear();
 
         int tileCount = stream.readInt();

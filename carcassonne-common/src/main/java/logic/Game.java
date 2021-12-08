@@ -1,10 +1,13 @@
 package logic;
 
 import logic.board.GameBoard;
-import logic.command.CommandExecutor;
+import logic.command.ICommand;
 import logic.config.GameConfig;
+import logic.dragon.Dragon;
+import logic.dragon.Fairy;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
+import logic.meeple.Meeple;
 import logic.player.Player;
 import logic.state.GameStartState;
 import logic.state.GameState;
@@ -18,48 +21,78 @@ import stream.ByteOutputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * The Game class is the main class of the game. It contains all the logic of the game.
  */
 public class Game {
+    /**
+     * Game configuration of the game.
+     */
     private final GameConfig config;
-    private final GameBoard board;
-    private final TileStack stack;
-    private final ArrayList<Player> players;
-    private final CommandExecutor commandExecutor;
 
+    /**
+     * Game board of the game.
+     * Contains all the tiles, the dragon and fairy.
+     */
+    private final GameBoard board;
+
+    /**
+     * Tile stack of the game.
+     */
+    private final TileStack stack;
+
+    /**
+     * List of players of the game.
+     */
+    private final ArrayList<Player> players;
+
+    /**
+     * Current state of the game.
+     */
     private GameState state;
+
+    /**
+     * Listener of the game.
+     * Used to notify when an event in the game happens.
+     */
     private IGameListener listener;
 
-    private boolean master;
+    /**
+     * Counter of the number of turns.
+     */
     private int turnCount;
+
+    /**
+     * Indicates if this game instance is a master version of the game.
+     */
+    private boolean master;
 
     public Game(GameConfig config) {
         this.config = config;
-        this.board = new GameBoard();
+        this.board = new GameBoard(this);
         this.stack = new TileStack(this);
         this.players = new ArrayList<>(config.maxPlayers);
-        this.commandExecutor = new CommandExecutor(this);
         this.master = true;
         this.listener = new IGameListener() {
+            @Override
+            public void onTurnStarted(int turn, Tile tileDrawn) {
+
+            }
+
+            @Override
+            public void onTurnEnded(int turn) {
+
+            }
+
             @Override
             public void onGameStarted() {
 
             }
 
             @Override
-            public void onGameOver() {
-
-            }
-
-            @Override
-            public void onTurnStarted(int id, Tile tileDrawn) {
-
-            }
-
-            @Override
-            public void onTurnEnded(int id) {
+            public void onGameEnded() {
 
             }
 
@@ -70,18 +103,56 @@ public class Game {
 
             @Override
             public void onTilePlaced(Tile tile) {
+
             }
 
             @Override
-            public void onMeeplePlaced(Chunk chunk) {
+            public void onTileRotated(Tile tile) {
+
             }
 
             @Override
-            public void onFairyPlaced(Chunk chunk) {
+            public void onMeeplePlaced(Chunk chunk, Meeple meeple) {
+
             }
 
             @Override
-            public void onMeepleRemoved(Chunk chunk) {
+            public void onMeepleRemoved(Chunk chunk, Meeple meeple) {
+
+            }
+
+            @Override
+            public void onFairySpawned(Fairy fairy) {
+
+            }
+
+            @Override
+            public void onFairyDeath(Fairy fairy) {
+
+            }
+
+            @Override
+            public void onDragonSpawned(Dragon dragon) {
+
+            }
+
+            @Override
+            public void onDragonDeath(Dragon dragon) {
+
+            }
+
+            @Override
+            public void onDragonMove(Dragon dragon) {
+
+            }
+
+            @Override
+            public void onCommandExecuted(ICommand command) {
+
+            }
+
+            @Override
+            public void onCommandFailed(ICommand command, int errorCode) {
 
             }
         };
@@ -255,15 +326,6 @@ public class Game {
     }
 
     /**
-     * Gets the command executor.
-     *
-     * @return the command executor
-     */
-    public CommandExecutor getCommandExecutor() {
-        return commandExecutor;
-    }
-
-    /**
      * Determines if the game is the master version (aka server / offline game).
      *
      * @return if the game is the master version
@@ -295,6 +357,21 @@ public class Game {
      */
     public void increaseTurnCount() {
         turnCount++;
+    }
+
+    /**
+     * Executes the given command to the game.
+     *
+     * @param command The command to execute.
+     * @return true if the command was executed successfully, false otherwise.
+     */
+    public boolean executeCommand(ICommand command) {
+        if (command.getRequiredState() == state.getType() && command.canBeExecuted(this) == ICommand.ERROR_SUCCESS) {
+            listener.onCommandExecuted(command);
+            command.execute(this);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -331,7 +408,7 @@ public class Game {
         if (state != null) {
             stream.writeBoolean(true);
 
-            board.encode(stream, this);
+            board.encode(stream);
 
             if (master) {
                 stack.encode(stream, this);
@@ -363,7 +440,7 @@ public class Game {
         }
 
         if (stream.readBoolean()) {
-            board.decode(stream, this);
+            board.decode(stream);
 
             if (master) {
                 stack.decode(stream, this);
@@ -378,6 +455,10 @@ public class Game {
         }
 
         this.master = master;
+
+        if (state.getType() == GameStateType.START) {
+            state.init();
+        }
     }
 
     /**

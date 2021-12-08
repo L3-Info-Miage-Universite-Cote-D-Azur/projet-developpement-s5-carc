@@ -13,24 +13,24 @@ class PlaceTileDrawnCommandTest {
     @Test
     void testInvalidPosition() {
         Game game = TestUtils.initGameEnv(5, false, true);
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new SkipMeeplePlacementCommand()));
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
-        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
+        assertFalse(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
     }
 
     @Test
     void testNoStartingTilePlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
-        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
+        assertFalse(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION.add(10, 10))));
     }
 
     @Test
     void testOverlapTilePlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new SkipMeeplePlacementCommand()));
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
-        assertFalse(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertFalse(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
     }
 }

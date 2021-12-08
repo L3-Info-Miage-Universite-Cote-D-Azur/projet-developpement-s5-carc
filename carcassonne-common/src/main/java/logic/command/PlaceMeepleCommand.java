@@ -17,6 +17,10 @@ import stream.ByteStreamHelper;
  * Command to place a meeple on a tile.
  */
 public class PlaceMeepleCommand implements ICommand {
+    public static final int ERROR_TILE_NOT_FOUND = -1;
+    public static final int ERROR_TILE_NOT_VALID = -2;
+    public static final int ERROR_CHUNK_NOT_VALID = -3;
+
     private Vector2 tilePosition;
     private ChunkId chunkId;
 
@@ -61,36 +65,33 @@ public class PlaceMeepleCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
+    public int canBeExecuted(Game game) {
         GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
 
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         if (tile == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist");
-            return false;
+            return ERROR_TILE_NOT_FOUND;
         }
 
         Tile tileDrawn = game.getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
 
         if (tile != tileDrawn && !tileDrawn.hasPortal()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile is not the tile drawn and the tile drawn is not a portal.");
-            return false;
+            return ERROR_TILE_NOT_VALID;
         }
 
         Chunk chunk = tile.getChunk(chunkId);
 
         if (chunk.getArea().hasMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Meeple already present in the area.");
-            return false;
+            return ERROR_CHUNK_NOT_VALID;
         }
 
-        return true;
+        return ERROR_SUCCESS;
     }
 
     /**
@@ -118,8 +119,8 @@ public class PlaceMeepleCommand implements ICommand {
 
         chunk.setMeeple(new Meeple(player));
         player.increasePlayedMeeples();
-        placeMeepleState.complete();
+        game.getListener().onMeeplePlaced(chunk, chunk.getMeeple());
 
-        game.getListener().onMeeplePlaced(chunk);
+        placeMeepleState.complete();
     }
 }

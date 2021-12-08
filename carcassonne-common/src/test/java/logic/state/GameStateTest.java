@@ -41,7 +41,7 @@ public class GameStateTest {
 
         TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
-        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
+        game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
         TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
 
         int turnCount = game.getTurnCount();

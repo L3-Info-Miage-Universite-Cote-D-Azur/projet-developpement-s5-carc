@@ -14,9 +14,9 @@ public class SkipMeeplePlacementCommandTest {
     public void testPlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
         TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
-        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertTrue(game.executeCommand(new SkipMeeplePlacementCommand()));
 
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
         TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
@@ -26,21 +26,21 @@ public class SkipMeeplePlacementCommandTest {
     public void testPlacementOnOccupiedTile() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new SkipMeeplePlacementCommand()));
 
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
         TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
 
-        assertFalse(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertFalse(game.executeCommand(new SkipMeeplePlacementCommand()));
     }
 
     @Test
     public void testMultiplePlacementsOnSameTurn() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
-        assertFalse(game.getCommandExecutor().execute(new SkipMeeplePlacementCommand()));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new SkipMeeplePlacementCommand()));
+        assertFalse(game.executeCommand(new SkipMeeplePlacementCommand()));
     }
 }

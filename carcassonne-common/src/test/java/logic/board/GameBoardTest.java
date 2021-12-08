@@ -12,7 +12,7 @@ class GameBoardTest {
     @Test
     void testPlace() {
         Game game = TestUtils.initGameEnv(2, false, true);
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = game.getBoard();
         assertTrue(gameBoard.isEmpty());
 
         Tile tile = game.getStack().peek();
@@ -28,7 +28,7 @@ class GameBoardTest {
     @Test
     void testPlaceThrowIfOverlap() {
         Game game = TestUtils.initGameEnv(2, false, true);
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = game.getBoard();
         assertTrue(gameBoard.isEmpty());
 
         Vector2 overlapPosition = new Vector2(0, 0);

@@ -11,8 +11,8 @@ import stream.ByteOutputStream;
  * The master data is required because we need to know the next tile in
  * the stack to start the next turn.
  */
-public class GameTurnWaitingMasterDataState extends GameState {
-    public GameTurnWaitingMasterDataState(Game game) {
+public class GameWaitingMasterDataState extends GameState {
+    public GameWaitingMasterDataState(Game game) {
         super(game);
     }
 
@@ -46,7 +46,7 @@ public class GameTurnWaitingMasterDataState extends GameState {
      */
     @Override
     public void complete() {
-        game.setState(new GameTurnEndingState(game));
+        game.setState(new GameTurnInitState(game));
     }
 
     /**

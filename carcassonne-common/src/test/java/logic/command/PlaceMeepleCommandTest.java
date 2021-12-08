@@ -17,23 +17,23 @@ public class PlaceMeepleCommandTest {
     public void testPlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
     public void testPlacementOnOccupiedTile() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
 
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_MOVE_DRAGON);
         TestUtils.assertState(game, GameStateType.TURN_PLACE_TILE);
         TestUtils.placeTileRandomly(game);
         TestUtils.assertState(game, GameStateType.TURN_PLACE_MEEPLE);
 
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
@@ -48,8 +48,8 @@ public class PlaceMeepleCommandTest {
 
         GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) game.getState();
 
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(placeMeepleState.getTileDrawnPosition(), ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceMeepleCommand(placeMeepleState.getTileDrawnPosition(), ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
@@ -64,15 +64,15 @@ public class PlaceMeepleCommandTest {
 
         TestUtils.placeTileRandomly(game);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 
     @Test
     public void testMultiplePlacementsOnSameTurn() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
-        assertTrue(game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        assertTrue(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
-        assertFalse(game.getCommandExecutor().execute(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
+        assertTrue(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new PlaceMeepleCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 }

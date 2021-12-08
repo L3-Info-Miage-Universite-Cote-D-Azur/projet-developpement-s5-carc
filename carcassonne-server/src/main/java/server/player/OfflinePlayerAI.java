@@ -30,7 +30,7 @@ public class OfflinePlayerAI implements IPlayerListener {
         LinkedList<Vector2> freeTiles = null;
 
         for (TileRotation rotation : TileRotation.values()) {
-            game.getCommandExecutor().execute(new RotateTileDrawnCommand(rotation));
+            game.executeCommand(new RotateTileDrawnCommand(rotation));
             freeTiles = game.getBoard().findFreePlacesForTile(tileDrawn);
 
             if (!freeTiles.isEmpty()) {
@@ -38,12 +38,12 @@ public class OfflinePlayerAI implements IPlayerListener {
             }
         }
 
-        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(freeTiles.getFirst()));
+        game.executeCommand(new PlaceTileDrawnCommand(freeTiles.getFirst()));
     }
 
     @Override
     public void onWaitingMeeplePlacement() {
-        game.getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+        game.executeCommand(new SkipMeeplePlacementCommand());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class OfflinePlayerAI implements IPlayerListener {
             Vector2 position = dragon.getPosition().add(direction.value());
 
             if (dragon.canMoveTo(position)) {
-                game.getCommandExecutor().execute(new MoveDragonCommand(direction));
+                game.executeCommand(new MoveDragonCommand(direction));
                 break;
             }
         }

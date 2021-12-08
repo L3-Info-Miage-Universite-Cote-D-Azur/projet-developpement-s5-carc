@@ -22,7 +22,7 @@ public class MatchTest {
             protected void sendMessageToConnectedClients(Message message) {
                 if (message.getType() == MessageType.GAME_DATA) {
                     completed[0] = true;
-                } else {
+                } else if (!completed[0]) {
                     throw new RuntimeException("Unexpected message type");
                 }
             }
@@ -76,7 +76,7 @@ public class MatchTest {
         };
 
         match.start();
-        match.onGameOver();
+        match.onGameEnded();
 
         assertTrue(completed[0]);
     }

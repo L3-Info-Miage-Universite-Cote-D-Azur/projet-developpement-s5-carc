@@ -31,8 +31,8 @@ public abstract class AI implements IPlayerListener {
         Tile tileDrawn = placeTileState.getTileDrawn();
         TilePosition position = findPositionForTile(tileDrawn);
 
-        player.getGame().getCommandExecutor().execute(new RotateTileDrawnCommand(position.getRotation()));
-        player.getGame().getCommandExecutor().execute(new PlaceTileDrawnCommand(position.getPosition()));
+        player.getGame().executeCommand(new RotateTileDrawnCommand(position.getRotation()));
+        player.getGame().executeCommand(new PlaceTileDrawnCommand(position.getPosition()));
     }
 
     /**
@@ -47,7 +47,7 @@ public abstract class AI implements IPlayerListener {
             Chunk chunkToRemoveMeeple = findChunkToRemoveMeeple(tileDrawn);
 
             if (chunkToRemoveMeeple != null) {
-                getGame().getCommandExecutor().execute(new RemoveMeepleCommand(chunkToRemoveMeeple.getParent().getPosition(), chunkToRemoveMeeple.getCurrentId()));
+                getGame().executeCommand(new RemoveMeepleCommand(chunkToRemoveMeeple.getParent().getPosition(), chunkToRemoveMeeple.getCurrentId()));
                 return;
             }
         }
@@ -55,14 +55,14 @@ public abstract class AI implements IPlayerListener {
         Chunk chunk = findChunkToPlaceMeeple(getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition()));
 
         if (chunk != null) {
-            getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
+            getGame().executeCommand(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
         } else {
             Chunk fairyChunk = findChunkToPlaceFairy();
 
             if (fairyChunk != null) {
-                getGame().getCommandExecutor().execute(new PlaceFairyCommand(fairyChunk.getParent().getPosition(), fairyChunk.getCurrentId()));
+                getGame().executeCommand(new PlaceFairyCommand(fairyChunk.getParent().getPosition(), fairyChunk.getCurrentId()));
             } else {
-                getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+                getGame().executeCommand(new SkipMeeplePlacementCommand());
             }
         }
     }
@@ -78,7 +78,7 @@ public abstract class AI implements IPlayerListener {
             throw new IllegalStateException("No direction found for dragon.");
         }
 
-        player.getGame().getCommandExecutor().execute(new MoveDragonCommand(direction));
+        player.getGame().executeCommand(new MoveDragonCommand(direction));
     }
 
     /**

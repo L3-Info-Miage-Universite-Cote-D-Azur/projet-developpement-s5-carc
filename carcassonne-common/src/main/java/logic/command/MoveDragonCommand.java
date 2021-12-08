@@ -13,6 +13,9 @@ import stream.ByteOutputStream;
  * Command to move dragon
  */
 public class MoveDragonCommand implements ICommand {
+    public static final int ERROR_NO_DRAGON = -1;
+    public static final int ERROR_CANNOT_MOVE = -2;
+
     private Direction direction;
 
     public MoveDragonCommand() {
@@ -53,29 +56,26 @@ public class MoveDragonCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @param game
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
+    public int canBeExecuted(Game game) {
         GameBoard board = game.getBoard();
 
         if (!board.hasDragon()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "The dragon not exist yet.");
-            return false;
+            return ERROR_NO_DRAGON;
         }
 
         Vector2 position = board.getDragon().getPosition().add(direction.value());
         Dragon dragon = game.getBoard().getDragon();
 
         if (!dragon.canMoveTo(position)) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "The dragon can't move to this position.");
-            return false;
+            return ERROR_CANNOT_MOVE;
         }
 
-        return true;
+        return ERROR_SUCCESS;
     }
 
     /**
@@ -98,6 +98,7 @@ public class MoveDragonCommand implements ICommand {
     public void execute(Game game) {
         Dragon dragon = game.getBoard().getDragon();
         dragon.moveTo(dragon.getPosition().add(direction.value()));
+        game.getListener().onDragonMove(dragon);
         game.getState().complete();
     }
 }

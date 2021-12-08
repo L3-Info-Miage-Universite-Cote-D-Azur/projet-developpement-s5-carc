@@ -17,8 +17,8 @@ public class PlaceFairyCommandTest {
 
         TestUtils.placeTileRandomly(game);
 
-        assertFalse(game.getCommandExecutor().execute(new PlaceFairyCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new PlaceFairyCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
         game.getBoard().getTileAt(GameBoard.STARTING_TILE_POSITION).getChunk(ChunkId.CENTER_MIDDLE).setMeeple(new Meeple(game.getTurnExecutor()));
-        assertTrue(game.getCommandExecutor().execute(new PlaceFairyCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
+        assertTrue(game.executeCommand(new PlaceFairyCommand(GameBoard.STARTING_TILE_POSITION, ChunkId.CENTER_MIDDLE)));
     }
 }

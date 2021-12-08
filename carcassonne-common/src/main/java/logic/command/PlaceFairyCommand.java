@@ -16,6 +16,10 @@ import stream.ByteStreamHelper;
  * Command to place a fairy on a chunk.
  */
 public class PlaceFairyCommand implements ICommand {
+    public static final int ERROR_TILE_NOT_FOUND = -1;
+    public static final int ERROR_MEEPLE_NOT_OWNED = -2;
+    public static final int ERROR_ALREADY_IN_POSITION = -3;
+
     private Vector2 tilePosition;
     private ChunkId chunkId;
 
@@ -60,34 +64,31 @@ public class PlaceFairyCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
+    public int canBeExecuted(Game game) {
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         if (tile == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist");
-            return false;
+            return ERROR_TILE_NOT_FOUND;
         }
 
         Chunk chunk = tile.getChunk(chunkId);
 
         if (!chunk.hasMeeple() || chunk.getMeeple().getOwner() != game.getTurnExecutor()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk does not have a meeple or meeple is not owned by the player");
-            return false;
+            return ERROR_MEEPLE_NOT_OWNED;
         }
 
         Fairy fairy = game.getBoard().getFairy();
 
         if (fairy != null && fairy.getChunk() == chunk) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Fairy is already on this chunk");
-            return false;
+            return ERROR_ALREADY_IN_POSITION;
         }
 
-        return true;
+        return ERROR_SUCCESS;
     }
 
     /**
@@ -113,8 +114,7 @@ public class PlaceFairyCommand implements ICommand {
         Chunk chunk = tile.getChunk(chunkId);
 
         game.getBoard().spawnFairy(chunk);
-        placeMeepleState.complete();
 
-        game.getListener().onFairyPlaced(chunk);
+        placeMeepleState.complete();
     }
 }

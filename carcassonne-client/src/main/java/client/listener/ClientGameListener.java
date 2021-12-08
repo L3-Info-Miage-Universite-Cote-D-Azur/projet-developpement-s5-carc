@@ -1,5 +1,9 @@
-package server.listener;
+package client.listener;
 
+import client.Client;
+import client.logger.Logger;
+import client.logger.LoggerCategory;
+import logic.Game;
 import logic.IGameListener;
 import logic.command.ICommand;
 import logic.dragon.Dragon;
@@ -8,25 +12,26 @@ import logic.meeple.Meeple;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
-import server.logger.Logger;
-import server.matchmaking.Match;
+import network.message.game.GameCommandRequestMessage;
 
-public class MatchGameListener implements IGameListener {
-    private final Match match;
+public class ClientGameListener implements IGameListener {
+    private final Client client;
+    private final Game game;
 
-    public MatchGameListener(Match match) {
-        this.match = match;
+    public ClientGameListener(Client client, Game game) {
+        this.client = client;
+        this.game = game;
     }
 
     /**
      * Called when a new turn is started.
-     * @param turn The turn number.
+     *
+     * @param turn      The turn number.
      * @param tileDrawn The tile drawn.
      */
     @Override
     public void onTurnStarted(int turn, Tile tileDrawn) {
-        Logger.info("Match %d: Turn %d started", match.getId(), turn);
-        match.onTurnStarted(tileDrawn);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- TURN %d STARTED ---", turn);
     }
 
     /**
@@ -36,7 +41,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onTurnEnded(int turn) {
-        Logger.info("Match %d: Turn %d ended", match.getId(), turn);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- TURN %d ENDED ---", turn);
     }
 
     /**
@@ -44,8 +49,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onGameStarted() {
-        Logger.info("Match %d: Game started", match.getId());
-        match.onGameStarted();
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME STARTED ---");
     }
 
     /**
@@ -53,8 +57,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onGameEnded() {
-        Logger.info("Match %d: Game ended", match.getId());
-        match.onGameEnded();
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME OVER ---");
     }
 
     /**
@@ -64,7 +67,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onStateChanged(GameState state) {
-        Logger.debug("Match %d: State changed to %s", match.getId(), state.getType());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Game state changed to %s", state.getType());
     }
 
     /**
@@ -74,7 +77,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onTilePlaced(Tile tile) {
-        Logger.info("Match %d: Tile %s placed", match.getId(), tile);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place tile %s at (%d,%d)", tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
     }
 
     /**
@@ -84,7 +87,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onTileRotated(Tile tile) {
-        Logger.info("Match %d: Tile %s rotated", match.getId(), tile);
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Rotate tile %s to ", tile.getConfig().model, tile.getRotation());
     }
 
     /**
@@ -95,7 +98,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onMeeplePlaced(Chunk chunk, Meeple meeple) {
-        Logger.info("Match %d: Meeple of player %s placed on chunk %s", match.getId(), meeple.getOwner().getId(), chunk.getCurrentId());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple at tile (%d,%d), chunk %s", chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 
     /**
@@ -106,7 +109,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onMeepleRemoved(Chunk chunk, Meeple meeple) {
-        Logger.info("Match %d: Meeple of player %s removed from chunk %s", match.getId(), meeple.getOwner().getId(), chunk.getCurrentId());
+        Logger.info(LoggerCategory.GAME, "Meeple of player %d has been removed from tile (%d,%d), chunk %s", meeple.getOwner().getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 
     /**
@@ -116,7 +119,8 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onFairySpawned(Fairy fairy) {
-        Logger.info("Match %d: Fairy spawned at %s, chunk %s", match.getId(), fairy.getTilePosition(), fairy.getChunk().getCurrentId());
+        Chunk chunk = fairy.getChunk();
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place fairy at tile (%d,%d), chunk %s", chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
     }
 
     /**
@@ -126,7 +130,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onFairyDeath(Fairy fairy) {
-        Logger.info("Match %d: Fairy removed", match.getId());
+        Logger.info(LoggerCategory.GAME, "Fairy removed from the board");
     }
 
     /**
@@ -136,7 +140,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onDragonSpawned(Dragon dragon) {
-        Logger.info("Match %d: Dragon spawned at %s", match.getId(), dragon.getPosition());
+        Logger.info(LoggerCategory.GAME, "Dragon spawned on the board at %s", dragon.getPosition());
     }
 
     /**
@@ -146,7 +150,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onDragonDeath(Dragon dragon) {
-        Logger.info("Match %d: Dragon removed", match.getId());
+        Logger.info(LoggerCategory.GAME, "Dragon removed from the board");
     }
 
     /**
@@ -156,7 +160,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onDragonMove(Dragon dragon) {
-        Logger.info("Match %d: Dragon moved to %s", match.getId(), dragon.getPosition());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Dragon moved to %s", dragon.getPosition());
     }
 
     /**
@@ -166,8 +170,7 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onCommandExecuted(ICommand command) {
-        Logger.debug("Match %d: Command %s executed", match.getId(), command);
-        match.onCommandExecuted(command);
+        client.getServerConnection().send(new GameCommandRequestMessage(command));
     }
 
     /**
@@ -178,6 +181,6 @@ public class MatchGameListener implements IGameListener {
      */
     @Override
     public void onCommandFailed(ICommand command, int errorCode) {
-        Logger.warn("Match %d: Command %s failed with error code %d", match.getId(), command, errorCode);
+        Logger.warn(LoggerCategory.GAME, "Game: command failed: %s, error %s", command.getClass().getName(), errorCode);
     }
 }

@@ -15,6 +15,12 @@ import stream.ByteStreamHelper;
  * Command to place the tile drawn during the turn to the board.
  */
 public class PlaceTileDrawnCommand implements ICommand {
+    public static final int ERROR_STARTING_TILE_ATTEMPTED = -1;
+    public static final int ERROR_STARTING_TILE_POSITION_INVALID = -2;
+    public static final int ERROR_TILE_INVALID = -3;
+    public static final int ERROR_TILE_POSITION_INVALID = -4;
+    public static final int ERROR_TILE_POSITION_OCCUPIED = -5;
+
     private Vector2 position;
 
     public PlaceTileDrawnCommand() {
@@ -55,44 +61,39 @@ public class PlaceTileDrawnCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
+    public int canBeExecuted(Game game) {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
         Tile tile = placeTileState.getTileDrawn();
         GameBoard board = game.getBoard();
 
         if (board.getStartingTile() == null) {
             if (!tile.hasFlag(TileFlags.STARTING)) {
-                game.getCommandExecutor().getListener().onCommandFailed(this, "Starting tile must be placed before another tile can be placed.");
-                return false;
+                return ERROR_STARTING_TILE_ATTEMPTED;
             }
 
             if (!position.equals(GameBoard.STARTING_TILE_POSITION)) {
-                game.getCommandExecutor().getListener().onCommandFailed(this, "Starting tile must be at (0,0).");
-                return false;
+                return ERROR_STARTING_TILE_POSITION_INVALID;
             }
         } else {
             if (tile.hasFlag(TileFlags.STARTING)) {
-                game.getCommandExecutor().getListener().onCommandFailed(this, "Try to place two starting tile!");
-                return false;
+                return ERROR_TILE_INVALID;
             }
 
             if (!tile.canBePlacedAt(position)) {
-                game.getCommandExecutor().getListener().onCommandFailed(this, "Tile cannot be placed here.");
-                return false;
+                return ERROR_TILE_POSITION_INVALID;
             }
         }
 
         if (board.hasTileAt(position)) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Try to place a tile on another.");
-            return false;
+            return ERROR_TILE_POSITION_OCCUPIED;
         }
 
-        return true;
+        return ERROR_SUCCESS;
     }
 
     /**

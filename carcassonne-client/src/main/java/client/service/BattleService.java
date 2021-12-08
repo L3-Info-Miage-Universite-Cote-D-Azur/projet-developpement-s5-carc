@@ -2,8 +2,7 @@ package client.service;
 
 import client.Client;
 import client.ai.heuristic.HeuristicAI;
-import client.command.MasterCommandExecutionNotifier;
-import client.listener.GameLogger;
+import client.listener.ClientGameListener;
 import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
@@ -66,11 +65,8 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         gameView = new Game(client.getGameConfig());
         gameView.decode(new ByteInputStream(message.getData(), message.getData().length), false);
 
-        /* Attach a listener to the game view command executor so the server is notified that we are trying to execute a command. */
-        gameView.getCommandExecutor().setListener(new MasterCommandExecutionNotifier(client));
-
-        /* Attach a listener to the game view so we logs the game events. */
-        gameView.setListener(new GameLogger(gameView));
+        /* Attach a listener to the game view */
+        gameView.setListener(new ClientGameListener(client, gameView));
 
         /* Attach your AI as listener of our player. */
         Player ownPlayer = gameView.getPlayerById(client.getAuthenticationService().getUserId());
@@ -84,10 +80,12 @@ public class BattleService extends ServiceBase implements IMessageHandler {
         /* As we restore the game view from the server snapshot, we need to call the player listeners if the current state needs it. */
         GameState currentState = gameView.getState();
 
-        switch (currentState.getType()) {
-            case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
-            case TURN_PLACE_MEEPLE -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
-            case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingDragonMove();
+        if (currentState != null) {
+            switch (currentState.getType()) {
+                case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
+                case TURN_PLACE_MEEPLE -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
+                case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingDragonMove();
+            }
         }
     }
 
@@ -95,7 +93,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      * Handles a game command message.
      * Command musts be executed if it's not our turn (because we already executed the command locally) or if it's a master command.
      *
-     * @param message
+     * @param message The message to handle.
      */
     private void onGameCommand(GameCommandMessage message) {
         if (gameView.getTurnExecutor().getId() != client.getAuthenticationService().getUserId()) {
@@ -107,7 +105,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
     /**
      * Handles a game master next turn data message.
      *
-     * @param message
+     * @param message The message to handle.
      */
     private void onGameMasterNextTurnData(GameMasterNextTurnDataMessage message) {
         ArrayList<Tile> tiles = new ArrayList<>();
@@ -119,7 +117,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
     /**
      * Handles a game result message.
      *
-     * @param message
+     * @param message The message to handle.
      */
     private void onGameResult(GameResultMessage message) {
         Logger.info(LoggerCategory.SERVICE, "Battle game result received.");

@@ -36,7 +36,7 @@ public class GameTurnMoveDragonState extends GameState {
             Dragon dragon = board.getDragon();
 
             if (dragon.isBlocked() || dragon.hasFinished()) {
-                board.destructDragon();
+                board.killDragon();
                 complete();
             } else {
                 game.getTurnExecutor().getListener().onWaitingDragonMove();
@@ -71,9 +71,7 @@ public class GameTurnMoveDragonState extends GameState {
      */
     @Override
     public void complete() {
-        game.setState(game.isMaster()
-                ? new GameTurnEndingState(game)
-                : new GameTurnWaitingMasterDataState(game));
+        game.setState(new GameTurnEndingState(game));
     }
 
     @Override

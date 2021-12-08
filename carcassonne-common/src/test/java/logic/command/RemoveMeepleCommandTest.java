@@ -34,7 +34,7 @@ class RemoveMeepleCommandTest {
         game.getBoard().place(tile1);
         game.setState(new GameTurnPlaceMeepleState(game, tile1.getPosition()));
 
-        assertFalse(game.getCommandExecutor().execute(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.CENTER_MIDDLE)));
 
         Tile tile2 = config.tiles.stream().filter(t -> t.model.equals("AA")).findFirst().get().createTile(game);
 
@@ -43,8 +43,8 @@ class RemoveMeepleCommandTest {
 
         game.setState(new GameTurnPlaceMeepleState(game, tile2.getPosition()));
 
-        assertFalse(game.getCommandExecutor().execute(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.NORTH_RIGHT)));
-        assertFalse(game.getCommandExecutor().execute(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.SOUTH_MIDDLE)));
-        assertTrue(game.getCommandExecutor().execute(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.CENTER_MIDDLE)));
+        assertFalse(game.executeCommand(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.NORTH_RIGHT)));
+        assertFalse(game.executeCommand(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.SOUTH_MIDDLE)));
+        assertTrue(game.executeCommand(new RemoveMeepleCommand(tile1.getPosition(), ChunkId.CENTER_MIDDLE)));
     }
 }

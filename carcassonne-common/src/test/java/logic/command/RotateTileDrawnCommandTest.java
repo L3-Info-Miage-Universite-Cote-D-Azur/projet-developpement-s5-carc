@@ -17,13 +17,13 @@ public class RotateTileDrawnCommandTest {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
         Tile tileDrawn = placeTileState.getTileDrawn();
 
-        game.getCommandExecutor().execute(new RotateTileDrawnCommand(TileRotation.UP));
+        game.executeCommand(new RotateTileDrawnCommand(TileRotation.UP));
         assertEquals(tileDrawn.getRotation(), TileRotation.UP);
-        game.getCommandExecutor().execute(new RotateTileDrawnCommand(TileRotation.RIGHT));
+        game.executeCommand(new RotateTileDrawnCommand(TileRotation.RIGHT));
         assertEquals(tileDrawn.getRotation(), TileRotation.RIGHT);
-        game.getCommandExecutor().execute(new RotateTileDrawnCommand(TileRotation.LEFT));
+        game.executeCommand(new RotateTileDrawnCommand(TileRotation.LEFT));
         assertEquals(tileDrawn.getRotation(), TileRotation.LEFT);
-        game.getCommandExecutor().execute(new RotateTileDrawnCommand(TileRotation.DOWN));
+        game.executeCommand(new RotateTileDrawnCommand(TileRotation.DOWN));
         assertEquals(tileDrawn.getRotation(), TileRotation.DOWN);
     }
 }

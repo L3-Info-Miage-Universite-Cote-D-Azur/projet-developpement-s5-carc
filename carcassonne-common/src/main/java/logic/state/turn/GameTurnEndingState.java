@@ -21,7 +21,7 @@ public class GameTurnEndingState extends GameState {
     public void init() {
         game.getBoard().checkAreaClosures();
         game.getListener().onTurnEnded(game.getTurnCount());
-        game.setState(new GameTurnInitState(game));
+        game.setState(game.isMaster() ? new GameTurnInitState(game) : new GameWaitingMasterDataState(game));
     }
 
     /**

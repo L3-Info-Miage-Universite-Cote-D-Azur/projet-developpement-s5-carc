@@ -11,7 +11,7 @@ public class GameStateFactory {
             case TURN_PLACE_TILE -> new GameTurnPlaceTileState(game);
             case TURN_PLACE_MEEPLE -> new GameTurnPlaceMeepleState(game);
             case TURN_MOVE_DRAGON -> new GameTurnMoveDragonState(game);
-            case TURN_WAITING_MASTER_DATA -> new GameTurnWaitingMasterDataState(game);
+            case TURN_WAITING_MASTER_DATA -> new GameWaitingMasterDataState(game);
             case TURN_ENDING -> new GameTurnEndingState(game);
             case OVER -> new GameOverState(game);
             default -> throw new IllegalArgumentException("Unknown game state type: " + type);

@@ -14,7 +14,7 @@ public class GameOverState extends GameState {
 
     @Override
     public void init() {
-        game.getListener().onGameOver();
+        game.getListener().onGameEnded();
     }
 
     @Override

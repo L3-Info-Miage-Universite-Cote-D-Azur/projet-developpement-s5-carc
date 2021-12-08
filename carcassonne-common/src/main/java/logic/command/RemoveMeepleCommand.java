@@ -15,6 +15,12 @@ import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
 public class RemoveMeepleCommand implements ICommand {
+    public static final int ERROR_TILE_DRAWN_NOT_PRINCESS = -1;
+    public static final int ERROR_TARGET_TILE_NOT_FOUND = -2;
+    public static final int ERROR_TARGET_CHUNK_NOT_FOUND = -3;
+    public static final int ERROR_TARGET_MEEPLE_NOT_FOUND = -4;
+    public static final int ERROR_AREA_MISMATCH = -5;
+
     private Vector2 tilePosition;
     private ChunkId tileChunkId;
 
@@ -40,10 +46,10 @@ public class RemoveMeepleCommand implements ICommand {
         meeple.getOwner().decreasePlayedMeeples();
 
         if (board.hasFairy() && board.getFairy().getChunk() == chunk) {
-            board.destructFairy();
+            board.killFairy();
         }
 
-        game.getListener().onMeepleRemoved(chunk);
+        game.getListener().onMeepleRemoved(chunk, meeple);
     }
 
     /**
@@ -79,45 +85,40 @@ public class RemoveMeepleCommand implements ICommand {
     }
 
     /**
-     * Checks if the command is valid and can be executed.
+     * Checks whether the command is valid and can be executed.
      *
-     * @return true if the command is valid
+     * @return {@link #ERROR_SUCCESS} whether the command can be executed, otherwise an error code.
      */
     @Override
-    public boolean canBeExecuted(Game game) {
+    public int canBeExecuted(Game game) {
         GameTurnPlaceMeepleState state = (GameTurnPlaceMeepleState) game.getState();
         Tile tileDrawn = game.getBoard().getTileAt(state.getTileDrawnPosition());
 
         if (!tileDrawn.hasFlag(TileFlags.PRINCESS)) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "You can only remove a meeple when the drawn tile is a princess.");
-            return false;
+            return ERROR_TILE_DRAWN_NOT_PRINCESS;
         }
 
         Tile tile = game.getBoard().getTileAt(tilePosition);
 
         if (tile == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Tile does not exist.");
-            return false;
+            return ERROR_TARGET_TILE_NOT_FOUND;
         }
 
         Chunk chunk = tile.getChunk(tileChunkId);
 
         if (chunk == null) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk does not exist.");
-            return false;
+            return ERROR_TARGET_CHUNK_NOT_FOUND;
         }
 
         if (!chunk.hasMeeple()) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "Chunk does not have a meeple.");
-            return false;
+            return ERROR_TARGET_MEEPLE_NOT_FOUND;
         }
 
         if (!chunk.getArea().hasTile(tileDrawn)) {
-            game.getCommandExecutor().getListener().onCommandFailed(this, "You can only remove a meeple from a chunk tile is on the same area as the drawn tile.");
-            return false;
+            return ERROR_AREA_MISMATCH;
         }
 
-        return true;
+        return ERROR_SUCCESS;
     }
 
     /**

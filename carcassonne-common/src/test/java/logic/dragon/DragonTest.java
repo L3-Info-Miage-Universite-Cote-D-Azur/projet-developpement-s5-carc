@@ -77,7 +77,7 @@ public class DragonTest {
 
         assertFalse(dragon.canMoveTo(neighborTiles.get(0).getPosition()));
 
-        board.destructFairy();
+        board.killFairy();
 
         dragon.moveTo(neighborTiles.get(0).getPosition());
 

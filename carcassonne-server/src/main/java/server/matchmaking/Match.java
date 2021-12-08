@@ -10,7 +10,6 @@ import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
 import network.message.game.GameResultMessage;
-import server.command.SlaveCommandExecutionNotifier;
 import server.listener.MatchGameListener;
 import server.logger.Logger;
 import server.player.OfflinePlayerAI;
@@ -29,6 +28,8 @@ public class Match {
         this.id = id;
         this.sessions = sessions;
         this.game = new Game(GameConfig.loadFromResources());
+
+        game.setListener(new MatchGameListener(this));
 
         for (ClientSession session : sessions) {
             game.addPlayer(new Player(session.getUserId()));
@@ -97,6 +98,13 @@ public class Match {
     }
 
     /**
+     * Starts the match.
+     */
+    public void start() {
+        game.start();
+    }
+
+    /**
      * Executes a command in the master game and notify the connected clients if successful.
      *
      * @param userId  the executor user id
@@ -116,14 +124,14 @@ public class Match {
             return;
         }
 
-        if (!command.canBeExecuted(game)) {
+        if (command.canBeExecuted(game) != ICommand.ERROR_SUCCESS) {
             Logger.warn("Player %d tried to execute command %s but it is not executable.", userId, command.getType());
             return;
         }
 
         Logger.debug("Player %d executed command %s", userId, command.getType());
 
-        game.getCommandExecutor().execute(command);
+        game.executeCommand(command);
     }
 
     /**
@@ -138,46 +146,38 @@ public class Match {
     }
 
     /**
-     * Notifies the connected clients that the command has been executed.
+     * Called when a command has been executed successfully.
+     * It notifies the connected clients that the command has been executed.
      *
-     * @param command the executed command
+     * @param command the executed command.
      */
-    public void notifyCommandExecutionToConnectedClients(ICommand command) {
+    public void onCommandExecuted(ICommand command) {
         sendMessageToConnectedClients(new GameCommandMessage(command));
     }
 
     /**
-     * Starts the match.
+     * Called when the game has been started.
+     * It sends to the connected clients the game snapshot.
      */
-    public void start() {
-        game.start();
-
-        /* Listeners are attached after game starting to avoid sending of commands & game result before the game data message. */
-        game.setListener(new MatchGameListener(this));
-        game.getCommandExecutor().setListener(new SlaveCommandExecutionNotifier(this));
-
+    public void onGameStarted() {
         sendMessageToConnectedClients(new GameDataMessage(createSnapshot(false)));
-
-        /* As listeners are attached later, we need to check manually if the game is over. */
-        if (game.isOver()) {
-            onGameOver();
-        }
     }
 
     /**
-     * Called when the game is over.
+     * Called when the game has been ended.
+     * It sends to the connected clients the game result and destroys the references to this match.
      */
-    public void onGameOver() {
+    public void onGameEnded() {
         destroy();
         sendMessageToConnectedClients(new GameResultMessage(createSnapshot(true)));
     }
 
     /**
-     * Called when a game turn is started.
+     * Called when a turn is started.
      *
      * @param tileDrawn the drawn tile
      */
-    public void onGameTurnStarted(Tile tileDrawn) {
+    public void onTurnStarted(Tile tileDrawn) {
         sendMessageToConnectedClients(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(tileDrawn.getConfig())));
     }
 }
