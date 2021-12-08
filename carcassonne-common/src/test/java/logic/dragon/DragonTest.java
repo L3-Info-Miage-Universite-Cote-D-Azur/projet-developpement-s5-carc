@@ -73,6 +73,12 @@ public class DragonTest {
             assertTrue(dragon.canMoveTo(tile.getPosition()));
         }
 
+        board.spawnFairy(neighborTiles.get(0).getChunk(ChunkId.CENTER_MIDDLE));
+
+        assertFalse(dragon.canMoveTo(neighborTiles.get(0).getPosition()));
+
+        board.destructFairy();
+
         dragon.moveTo(neighborTiles.get(0).getPosition());
 
         /* Cannot move on the previous position */

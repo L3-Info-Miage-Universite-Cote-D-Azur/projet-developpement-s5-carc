@@ -2,10 +2,7 @@ package client.ai.heuristic;
 
 import client.ai.AI;
 import client.ai.TilePosition;
-import client.ai.heuristic.evaluator.HeuristicDragonEvaluator;
-import client.ai.heuristic.evaluator.HeuristicMeeplePlacementEvaluator;
-import client.ai.heuristic.evaluator.HeuristicMeepleRemovalEvaluator;
-import client.ai.heuristic.evaluator.HeuristicTileEvaluator;
+import client.ai.heuristic.evaluator.*;
 import client.ai.target.TargetList;
 import logic.Game;
 import logic.dragon.Dragon;
@@ -37,9 +34,15 @@ public class HeuristicAI extends AI {
      */
     private static int MEEPLE_REMOVAL_MIN_SCORE = 10;
 
+    /**
+     * Minimum of score to consider a fairy placement.
+     */
+    private static int FAIRY_PLACEMENT_MIN_SCORE = 10;
+
     private final HeuristicTileEvaluator tileEvaluator;
     private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
     private final HeuristicMeepleRemovalEvaluator meepleRemovalEvaluator;
+    private final HeuristicFairyPlacementEvaluator fairyPlacementEvaluator;
     private final HeuristicDragonEvaluator dragonEvaluator;
 
     public HeuristicAI(Player player) {
@@ -54,6 +57,7 @@ public class HeuristicAI extends AI {
         this.tileEvaluator = new HeuristicTileEvaluator(game);
         this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game, player);
         this.meepleRemovalEvaluator = new HeuristicMeepleRemovalEvaluator(game, player);
+        this.fairyPlacementEvaluator = new HeuristicFairyPlacementEvaluator(game, player);
         this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
     }
 
@@ -138,6 +142,30 @@ public class HeuristicAI extends AI {
                     if (score >= MEEPLE_REMOVAL_MIN_SCORE) {
                         targetList.add(chunk, score);
                     }
+                }
+            }
+        }
+
+        return targetList.pick();
+    }
+
+    /**
+     * Finds a tile's chunk where the fairy can be placed.
+     * Returns null if no chunk should be placed.
+     *
+     * @return The chunk where the fairy can be placed.
+     */
+    @Override
+    protected Chunk findChunkToPlaceFairy() {
+        TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
+
+        for (Tile tile : getGame().getBoard().getTiles()) {
+            for (ChunkId chunkId : ChunkId.values()) {
+                Chunk chunk = tile.getChunk(chunkId);
+                int score = fairyPlacementEvaluator.evaluate(chunk);
+
+                if (score >= FAIRY_PLACEMENT_MIN_SCORE) {
+                    targetList.add(chunk, score);
                 }
             }
         }

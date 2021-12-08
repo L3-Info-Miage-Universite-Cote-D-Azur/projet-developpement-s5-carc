@@ -259,6 +259,8 @@ public class GameBoard {
         for (Area area : getAreas()) {
             area.updateClosure();
         }
+
+        fairy.evaluate();
     }
 
     /**
@@ -368,13 +370,6 @@ public class GameBoard {
             ByteStreamHelper.encodeTile(stream, tile, game);
         }
 
-        /*List<Area> areas = getAreas();
-        stream.writeInt(areas.size());
-
-        for (Area area : areas) {
-            stream.writeBoolean(area.isClosed());
-        }*/
-
         if (dragon != null) {
             stream.writeBoolean(true);
             dragon.encode(stream);
@@ -403,27 +398,6 @@ public class GameBoard {
         for (int i = 0; i < tileCount; i++) {
             place(ByteStreamHelper.decodeTile(stream, game));
         }
-
-        /*List<Area> areas = getAreas();
-        int masterAreaCount = stream.readInt();
-
-        if (masterAreaCount != areas.size()) {
-            throw new IllegalStateException("Master area count does not match area count");
-        }
-
-        for (Area area : areas) {
-            boolean closed = stream.readBoolean();
-
-            if (closed) {
-                if (!area.isClosed()) {
-                    throw new IllegalStateException("Area is not closed");
-                }
-            } else {
-                if (area.isClosed()) {
-                    throw new IllegalStateException("Area is closed");
-                }
-            }
-        }*/
 
         if (stream.readBoolean()) {
             dragon = new Dragon(this);

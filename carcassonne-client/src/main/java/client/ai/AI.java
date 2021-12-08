@@ -3,6 +3,7 @@ package client.ai;
 import logic.Game;
 import logic.command.*;
 import logic.dragon.Dragon;
+import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
 import logic.state.turn.GameTurnPlaceMeepleState;
@@ -57,7 +58,13 @@ public abstract class AI implements IPlayerListener {
         if (chunk != null) {
             player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
         } else {
-            player.getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+            Chunk fairyChunk = findChunkToPlaceFairy();
+
+            if (fairyChunk != null) {
+                player.getGame().getCommandExecutor().execute(new PlaceFairyCommand(fairyChunk.getParent().getPosition(), fairyChunk.getCurrentId()));
+            } else {
+                player.getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+            }
         }
     }
 
@@ -107,6 +114,14 @@ public abstract class AI implements IPlayerListener {
      * @return The chunk where the meeple can be placed.
      */
     protected abstract Chunk findChunkToRemoveMeeple(Tile tileDrawn);
+
+    /**
+     * Finds a tile's chunk where the fairy can be placed.
+     * Returns null if no fairy should be placed.
+     *
+     * @return The chunk where the fairy can be placed.
+     */
+    protected abstract Chunk findChunkToPlaceFairy();
 
     /**
      * Finds a direction to move the dragon.

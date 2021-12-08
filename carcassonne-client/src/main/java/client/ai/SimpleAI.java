@@ -21,6 +21,7 @@ import java.util.Random;
 public class SimpleAI extends AI {
     private static final int MEEPLE_PLACEMENT_PROBABILITY = 80;
     private static final int MEEPLE_REMOVING_PROBABILITY = 75;
+    private static final int FAIRY_PLACEMENT_PROBABILITY = 50;
 
     protected final Random random;
 
@@ -66,6 +67,24 @@ public class SimpleAI extends AI {
                     if (chunk.hasMeeple()) {
                         return chunk;
                     }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds a tile's chunk where the fairy can be placed.
+     * Returns null if no chunk should be placed.
+     *
+     * @return The chunk where the fairy can be placed.
+     */
+    @Override
+    protected Chunk findChunkToPlaceFairy() {
+        if (random.nextInt(100) >= MEEPLE_REMOVING_PROBABILITY) {
+            for (Tile tile : getGame().getBoard().getTiles()) {
+                for (ChunkId chunkId : ChunkId.values()) {
+                    return tile.getChunk(chunkId);
                 }
             }
         }

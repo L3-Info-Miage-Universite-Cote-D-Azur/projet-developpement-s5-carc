@@ -78,7 +78,6 @@ public class Game {
 
             @Override
             public void onFairyPlaced(Chunk chunk) {
-
             }
 
             @Override
