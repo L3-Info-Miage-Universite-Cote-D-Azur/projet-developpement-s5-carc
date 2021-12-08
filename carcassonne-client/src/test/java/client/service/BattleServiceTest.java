@@ -13,6 +13,8 @@ import logic.command.SkipMeeplePlacementCommand;
 import logic.config.GameConfig;
 import logic.player.IPlayerListener;
 import logic.player.Player;
+import logic.state.turn.GameTurnPlaceTileState;
+import logic.tile.Tile;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
@@ -98,9 +100,27 @@ public class BattleServiceTest {
             }
         });
 
-        battleService.handleMessage(new GameCommandMessage(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
-        battleService.handleMessage(new GameCommandMessage(new SkipMeeplePlacementCommand()));
-        battleService.handleMessage(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(game.getStack().remove().getConfig())));
+        game.getCommandExecutor().setListener(new ICommandExecutorListener() {
+            @Override
+            public void onCommandExecuted(ICommand command) {
+                battleService.handleMessage(new GameCommandMessage(command));
+            }
+
+            @Override
+            public void onCommandFailed(ICommand command, String reason) {
+
+            }
+
+            @Override
+            public void onCommandFailed(ICommand command, String reason, Object... args) {
+
+            }
+        });
+
+        game.getCommandExecutor().execute(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
+        game.getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+
+        battleService.handleMessage(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(((GameTurnPlaceTileState )game.getState()).getTileDrawn().getConfig())));
 
         assertEquals(2, gameView.getTurnCount());
         assertEquals(gameView.getPlayer(1), gameView.getTurnExecutor());
