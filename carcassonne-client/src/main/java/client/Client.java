@@ -73,7 +73,7 @@ public class Client {
      *
      * @param service the service
      */
-    private void recordService(ServiceBase service) {
+    public void recordService(ServiceBase service) {
         this.services.put(service.getClass(), service);
 
         if (service instanceof IMessageHandler messageHandler) {
@@ -86,7 +86,7 @@ public class Client {
      *
      * @return the server connection
      */
-    public final ServerConnection getServerConnection() {
+    public ServerConnection getServerConnection() {
         return serverConnection;
     }
 

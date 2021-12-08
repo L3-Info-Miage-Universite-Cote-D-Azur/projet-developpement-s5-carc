@@ -57,7 +57,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
     /**
      * Handles a game data message.
      *
-     * @param message
+     * @param message The message to handle.
      */
     private void onGameData(GameDataMessage message) {
         Logger.info(LoggerCategory.SERVICE, "Battle game data received. Waiting my turn...");
@@ -148,5 +148,13 @@ public class BattleService extends ServiceBase implements IMessageHandler {
     @Override
     public void onDisconnect() {
         gameView = null;
+    }
+
+    /**
+     * Gets the game view.
+     * @return The game view.
+     */
+    public Game getGameView() {
+        return gameView;
     }
 }
