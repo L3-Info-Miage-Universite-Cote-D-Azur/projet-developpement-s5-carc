@@ -22,7 +22,7 @@ public class ClientConnectionManager {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
 
                 for (ClientConnection connection : connections.values()) {
@@ -63,7 +63,7 @@ public class ClientConnectionManager {
         try {
             connectionCheckerThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
