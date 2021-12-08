@@ -53,6 +53,24 @@ class GameTest {
     }
 
     @Test
+    void testPlayerList() {
+        Game game = new Game(config);
+
+        Player player1 = new Player(501);
+        Player player2 = new Player(502);
+
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+
+        assertEquals(2, game.getPlayerCount());
+        assertEquals(player1, game.getPlayer(0));
+        assertEquals(player2, game.getPlayer(1));
+
+        assertEquals(0, game.getPlayerIndex(player1));
+        assertEquals(1, game.getPlayerIndex(player2));
+    }
+
+    @Test
     void testIsGameFinished() {
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
