@@ -102,7 +102,6 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
      * @param tile         The tile to evaluate.
      * @param neighborTile The neighbor to evaluate.
      * @param edge         The edge connecting the two tiles.
-     * @return
      */
     private void evaluateNeighbor(Tile tile, Tile neighborTile, Direction edge) {
         ChunkId[] ownChunkIds = edge.getChunkIds();

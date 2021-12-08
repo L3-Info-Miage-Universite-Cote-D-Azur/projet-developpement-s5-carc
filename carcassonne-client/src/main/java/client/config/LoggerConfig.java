@@ -58,7 +58,7 @@ public class LoggerConfig {
      * Gets the level of the logger.
      * If the log level is lower than the logger level, the log will be ignored.
      *
-     * @return
+     * @return the level of the logger
      */
     public LogLevel getLevel() {
         return level;

@@ -89,7 +89,7 @@ public class Chunk {
     /**
      * Determines if this chunk has a meeple.
      *
-     * @return
+     * @return True if this chunk has a meeple, false otherwise.
      */
     public boolean hasMeeple() {
         return meeple != null;
@@ -98,8 +98,8 @@ public class Chunk {
     /**
      * Determines if this chunk is compatible with the given chunk.
      *
-     * @param chunk
-     * @return
+     * @param chunk The chunk to check compatibility with.
+     * @return True if this chunk is compatible with the given chunk, false otherwise.
      */
     public boolean isCompatibleWith(Chunk chunk) {
         return chunk.type == type;

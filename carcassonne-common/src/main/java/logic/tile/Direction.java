@@ -59,7 +59,7 @@ public enum Direction {
     /**
      * Gets the chunks that are adjacent to the direction.
      *
-     * @return
+     * @return the chunks that are adjacent to the direction
      */
     public ChunkId[] getChunkIds() {
         return switch (this) {

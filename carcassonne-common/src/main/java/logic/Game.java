@@ -102,7 +102,7 @@ public class Game {
     /**
      * Returns if the game is ended.
      *
-     * @return
+     * @return if the game is ended
      */
     public boolean isOver() {
         return state != null && state.getType() == GameStateType.OVER;
@@ -266,7 +266,7 @@ public class Game {
     /**
      * Determines if the game is the master version (aka server / offline game).
      *
-     * @return
+     * @return if the game is the master version
      */
     public boolean isMaster() {
         return master;
@@ -275,7 +275,7 @@ public class Game {
     /**
      * Sets the game as the master version (aka server / offline game).
      *
-     * @param master
+     * @param master if the game is the master version
      */
     public void setMaster(boolean master) {
         this.master = master;

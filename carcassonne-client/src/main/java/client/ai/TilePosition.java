@@ -18,7 +18,7 @@ public final class TilePosition {
     /**
      * Gets the position of the tile.
      *
-     * @return
+     * @return The position of the tile.
      */
     public Vector2 getPosition() {
         return position;
@@ -27,7 +27,7 @@ public final class TilePosition {
     /**
      * Gets the rotation of the tile.
      *
-     * @return
+     * @return The rotation of the tile.
      */
     public TileRotation getRotation() {
         return rotation;

@@ -40,7 +40,7 @@ public class ClientConfig {
     /**
      * Loads the client configuration from the resources.
      *
-     * @return
+     * @return the client configuration
      */
     public static ClientConfig loadFromResources() {
         try {

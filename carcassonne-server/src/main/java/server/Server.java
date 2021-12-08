@@ -69,7 +69,7 @@ public class Server {
     /**
      * Returns the server's TCP server socket.
      *
-     * @return
+     * @return the server's TCP server socket
      */
     public TcpServerSocket getServerSocket() {
         return serverSocket;
@@ -78,7 +78,7 @@ public class Server {
     /**
      * Returns the server's client connection manager.
      *
-     * @return
+     * @return the server's client connection manager
      */
     public ClientConnectionManager getConnectionManager() {
         return connectionManager;
@@ -87,7 +87,7 @@ public class Server {
     /**
      * Returns the server's game config.
      *
-     * @return
+     * @return the server's game config
      */
     public GameConfig getGameConfig() {
         return gameConfig;
@@ -96,7 +96,7 @@ public class Server {
     /**
      * Returns the server's matchmaking.
      *
-     * @return
+     * @return the server's matchmaking
      */
     public Matchmaking getMatchmaking(int matchCapacity) {
         if (matchCapacity < gameConfig.minPlayers)

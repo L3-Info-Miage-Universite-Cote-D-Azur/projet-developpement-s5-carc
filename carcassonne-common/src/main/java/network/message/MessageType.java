@@ -63,7 +63,7 @@ public enum MessageType {
     /**
      * Returns the message class.
      *
-     * @return
+     * @return the message class.
      */
     public Class<? extends Message> getMessageClass() {
         return messageClass;

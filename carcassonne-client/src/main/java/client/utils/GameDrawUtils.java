@@ -207,7 +207,7 @@ public class GameDrawUtils implements ChunkPositionConstant {
      * Gets the sprite model to use for the specified tile and rotation.
      *
      * @param tile The tile to get the sprite model for.
-     * @return
+     * @return The sprite model to use for the specified tile and rotation.
      */
     private static String getTileSpriteModel(Tile tile) {
         return String.format("%s_%s", tile.getConfig().model, tile.getRotation().ordinal() * TileRotation.ANGLE_ROTATION);

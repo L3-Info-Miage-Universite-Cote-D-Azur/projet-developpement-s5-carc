@@ -100,7 +100,7 @@ public abstract class Area {
     /**
      * Gets the board instance.
      *
-     * @return
+     * @return The board instance.
      */
     public GameBoard getBoard() {
         return baseTile.getGame().getBoard();
@@ -203,7 +203,7 @@ public abstract class Area {
     /**
      * Gets whether remaining tile edges can be used to continue the area.
      *
-     * @return
+     * @return True if there are remaining tile edges, false otherwise.
      */
     private boolean hasFreeEdge() {
         return getFreeEdges() >= 1;
@@ -279,7 +279,7 @@ public abstract class Area {
     /**
      * Gets whether the area has one or more meeples.
      *
-     * @return
+     * @return True if the area has one or more meeples, false otherwise.
      */
     public boolean hasMeeple() {
         for (Chunk chunk : chunks) {
@@ -294,7 +294,7 @@ public abstract class Area {
      * Gets whether the area has the given tile.
      *
      * @param tile The tile.
-     * @return
+     * @return True if the area has the given tile, false otherwise.
      */
     public boolean hasTile(Tile tile) {
         return tiles.contains(tile);

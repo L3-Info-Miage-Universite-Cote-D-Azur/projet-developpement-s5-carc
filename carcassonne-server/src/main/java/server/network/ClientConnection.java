@@ -273,7 +273,7 @@ public class ClientConnection {
     /**
      * Gets if the connection is alive.
      *
-     * @return
+     * @return True if the connection is alive, false otherwise.
      */
     public boolean isConnected() {
         return channel.isOpen() && lastRead.isAfter(LocalDateTime.now().minusSeconds(LAST_PACKET_TIMEOUT));
