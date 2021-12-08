@@ -23,22 +23,22 @@ public class HeuristicAI extends AI {
     /**
      * Maximum number of entries in the target list picker.
      */
-    private static int TARGET_LIST_MAX_SIZE = 100;
+    private static final int TARGET_LIST_MAX_SIZE = 100;
 
     /**
      * Minimum of score to consider a meeple placement.
      */
-    private static int MEEPLE_PLACEMENT_MIN_SCORE = 10;
+    private static final int MEEPLE_PLACEMENT_MIN_SCORE = 10;
 
     /**
      * Minimum of score to consider a meeple removal.
      */
-    private static int MEEPLE_REMOVAL_MIN_SCORE = 10;
+    private static final int MEEPLE_REMOVAL_MIN_SCORE = 10;
 
     /**
      * Minimum of score to consider a fairy placement.
      */
-    private static int FAIRY_PLACEMENT_MIN_SCORE = 10;
+    private static final int FAIRY_PLACEMENT_MIN_SCORE = 10;
 
     private final HeuristicTileEvaluator tileEvaluator;
     private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
@@ -66,6 +66,7 @@ public class HeuristicAI extends AI {
      * Finds the best position for the given tile to be placed.
      *
      * @param tile The tile to find a position for.
+     
      * @return The best position for the tile to be placed.
      */
     @Override
