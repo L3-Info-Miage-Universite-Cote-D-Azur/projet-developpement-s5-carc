@@ -1,11 +1,17 @@
 package logic.tile;
 
 import logic.Game;
+import logic.TestUtils;
+import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.math.Vector2;
+import logic.tile.area.Area;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +61,30 @@ public class TileTest {
 
         tile.setPosition(new Vector2(1, 2));
         assertTrue(tile.isOnBoard());
+    }
+
+    @Test
+    void testAreasInTile() {
+        Game game = TestUtils.initGameEnv(2, true, true);
+        Tile tile = game.getBoard().getTileAt(GameBoard.STARTING_TILE_POSITION);
+
+        ArrayList<Area> areasFound = new ArrayList<>();
+
+        for (ChunkId chunkId : ChunkId.values()) {
+            Chunk chunk = tile.getChunk(chunkId);
+
+            if (!areasFound.contains(chunk.getArea())) {
+                areasFound.add(chunk.getArea());
+            }
+        }
+
+        List<Area> areasReturned = tile.getAreas();
+
+        assertEquals(areasFound.size(), areasReturned.size());
+
+        for (Area area : areasFound) {
+            assertTrue(areasReturned.contains(area));
+        }
     }
 
     @Test
