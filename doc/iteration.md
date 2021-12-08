@@ -1,4 +1,4 @@
-# Carcassonne - V1.0.5
+# Carcassonne - V1.1.0
 
 ### Nos supers itérations
 
