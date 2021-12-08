@@ -51,7 +51,6 @@ public class BattleService extends ServiceBase implements IMessageHandler {
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
             case GAME_MASTER_NEXT_TURN_DATA -> onGameMasterNextTurnData((GameMasterNextTurnDataMessage) message);
             case GAME_RESULT -> onGameResult((GameResultMessage) message);
-            default -> throw new IllegalStateException("Unexpected value: " + message.getType());
         }
     }
 
