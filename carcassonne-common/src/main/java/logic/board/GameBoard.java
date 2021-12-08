@@ -260,7 +260,9 @@ public class GameBoard {
             area.updateClosure();
         }
 
-        fairy.evaluate();
+        if (fairy != null) {
+            fairy.evaluate();
+        }
     }
 
     /**

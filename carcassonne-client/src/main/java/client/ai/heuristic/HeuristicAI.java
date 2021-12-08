@@ -5,6 +5,7 @@ import client.ai.TilePosition;
 import client.ai.heuristic.evaluator.*;
 import client.ai.target.TargetList;
 import logic.Game;
+import logic.board.GameBoard;
 import logic.dragon.Dragon;
 import logic.math.Vector2;
 import logic.player.Player;
@@ -158,19 +159,29 @@ public class HeuristicAI extends AI {
     @Override
     protected Chunk findChunkToPlaceFairy() {
         TargetList<Chunk> targetList = new TargetList<>(TARGET_LIST_MAX_SIZE);
+        GameBoard board = getGame().getBoard();
 
-        for (Tile tile : getGame().getBoard().getTiles()) {
+        for (Tile tile : board.getTiles()) {
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
-                int score = fairyPlacementEvaluator.evaluate(chunk);
 
-                if (score >= FAIRY_PLACEMENT_MIN_SCORE) {
-                    targetList.add(chunk, score);
+                if (chunk.hasMeeple() && chunk.getMeeple().getOwner() == player) {
+                    int score = fairyPlacementEvaluator.evaluate(chunk);
+
+                    if (score >= FAIRY_PLACEMENT_MIN_SCORE) {
+                        targetList.add(chunk, score);
+                    }
                 }
             }
         }
 
-        return targetList.pick();
+        Chunk target = targetList.pick();
+
+        if (target == null || board.hasFairy() && board.getFairy().getChunk() == target) {
+            return null;
+        }
+
+        return target;
     }
 
     /**

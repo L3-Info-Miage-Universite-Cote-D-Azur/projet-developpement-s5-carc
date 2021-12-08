@@ -84,7 +84,11 @@ public class SimpleAI extends AI {
         if (random.nextInt(100) >= MEEPLE_REMOVING_PROBABILITY) {
             for (Tile tile : getGame().getBoard().getTiles()) {
                 for (ChunkId chunkId : ChunkId.values()) {
-                    return tile.getChunk(chunkId);
+                    Chunk chunk = tile.getChunk(chunkId);
+
+                    if (chunk.hasMeeple()) {
+                        return chunk;
+                    }
                 }
             }
         }

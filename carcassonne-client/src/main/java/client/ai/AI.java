@@ -3,6 +3,7 @@ package client.ai;
 import logic.Game;
 import logic.command.*;
 import logic.dragon.Dragon;
+import logic.dragon.Fairy;
 import logic.math.Vector2;
 import logic.player.IPlayerListener;
 import logic.player.Player;
@@ -41,14 +42,14 @@ public abstract class AI implements IPlayerListener {
      */
     @Override
     public void onWaitingMeeplePlacement() {
-        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) player.getGame().getState();
+        GameTurnPlaceMeepleState placeMeepleState = (GameTurnPlaceMeepleState) getGame().getState();
         Tile tileDrawn = getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition());
 
         if (tileDrawn.hasFlag(TileFlags.PRINCESS)) {
             Chunk chunkToRemoveMeeple = findChunkToRemoveMeeple(tileDrawn);
 
             if (chunkToRemoveMeeple != null) {
-                player.getGame().getCommandExecutor().execute(new RemoveMeepleCommand(chunkToRemoveMeeple.getParent().getPosition(), chunkToRemoveMeeple.getCurrentId()));
+                getGame().getCommandExecutor().execute(new RemoveMeepleCommand(chunkToRemoveMeeple.getParent().getPosition(), chunkToRemoveMeeple.getCurrentId()));
                 return;
             }
         }
@@ -56,14 +57,14 @@ public abstract class AI implements IPlayerListener {
         Chunk chunk = findChunkToPlaceMeeple(getGame().getBoard().getTileAt(placeMeepleState.getTileDrawnPosition()));
 
         if (chunk != null) {
-            player.getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
+            getGame().getCommandExecutor().execute(new PlaceMeepleCommand(chunk.getParent().getPosition(), chunk.getCurrentId()));
         } else {
             Chunk fairyChunk = findChunkToPlaceFairy();
 
             if (fairyChunk != null) {
-                player.getGame().getCommandExecutor().execute(new PlaceFairyCommand(fairyChunk.getParent().getPosition(), fairyChunk.getCurrentId()));
+                getGame().getCommandExecutor().execute(new PlaceFairyCommand(fairyChunk.getParent().getPosition(), fairyChunk.getCurrentId()));
             } else {
-                player.getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
+                getGame().getCommandExecutor().execute(new SkipMeeplePlacementCommand());
             }
         }
     }
