@@ -7,6 +7,8 @@ import logic.meeple.Meeple;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,5 +27,22 @@ public class FairyTest {
         assertEquals(game.getTurnExecutor().getScore(), 0);
         game.getBoard().getFairy().evaluate();
         assertEquals(game.getTurnExecutor().getScore(), 1);
+    }
+
+    @Test
+    void testEncodeDecode() {
+        Game game = TestUtils.initGameEnv(2, true, true);
+        GameBoard board = game.getBoard();
+
+        board.spawnFairy(board.getTileAt(GameBoard.STARTING_TILE_POSITION).getChunk(ChunkId.CENTER_MIDDLE));
+
+        ByteOutputStream outputStream = new ByteOutputStream(100);
+        board.getFairy().encode(outputStream);
+
+        Fairy copyFairy = new Fairy(board);
+        ByteInputStream readStream = new ByteInputStream(outputStream.getBytes(), outputStream.getLength());
+        copyFairy.decode(readStream);
+
+        assertEquals(copyFairy.getChunk(), board.getFairy().getChunk());
     }
 }
