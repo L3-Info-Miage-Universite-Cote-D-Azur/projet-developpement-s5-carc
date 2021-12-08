@@ -5,6 +5,7 @@ import logic.config.GameConfig;
 import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
+import logic.state.GameOverState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
@@ -155,5 +156,23 @@ class GameTest {
         assertFalse(clonedGame.isMaster());
 
         assertTrue(clonedGame.getStack().isEmpty());
+    }
+
+    @Test
+    public void testGetTurnExecutor() {
+        Game game = new Game(config);
+
+        game.addPlayer(new Player(501));
+        game.addPlayer(new Player(502));
+
+        assertThrows(IllegalStateException.class, game::getTurnExecutor);
+
+        game.start();
+
+        assertNotNull(game.getTurnExecutor());
+
+        game.setState(new GameOverState(game));
+
+        assertThrows(IllegalStateException.class, game::getTurnExecutor);
     }
 }
