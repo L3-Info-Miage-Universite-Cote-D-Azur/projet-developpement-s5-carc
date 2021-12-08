@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class MessageDispatcherTest {
     @Test
     void testDispatchToHandler() {
-        MessageDispatcher dispatcher = new MessageDispatcher(null);
+        MessageDispatcher dispatcher = new MessageDispatcher();
 
         final boolean[] handled = {false,false,false};
 

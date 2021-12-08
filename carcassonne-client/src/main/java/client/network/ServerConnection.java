@@ -59,7 +59,7 @@ public class ServerConnection implements ITcpClientSocketListener {
         readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
         sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
-        messageDispatcher = new MessageDispatcher(this);
+        messageDispatcher = new MessageDispatcher();
     }
 
     /**

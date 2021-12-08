@@ -9,11 +9,9 @@ import java.util.ArrayList;
  * Handles messages received from the server.
  */
 public class MessageDispatcher {
-    private final ServerConnection connection;
     private final ArrayList<IMessageHandler> handlers;
 
-    public MessageDispatcher(ServerConnection connection) {
-        this.connection = connection;
+    public MessageDispatcher() {
         this.handlers = new ArrayList<>();
     }
 
