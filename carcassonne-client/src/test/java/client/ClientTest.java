@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ClientTest {
+class ClientTest {
     @Test
     void testConstructor() throws IOException {
         ClientConfig clientConfig = ClientConfig.loadFromResources();
         GameConfig gameConfig = GameConfig.loadFromResources();
+        assertNotNull(clientConfig);
         Client client = new Client(clientConfig, gameConfig);
 
         assertEquals(AuthenticationService.class, client.getAuthenticationService().getClass());
@@ -30,15 +31,17 @@ public class ClientTest {
     void testNotifyOnStop() throws Exception {
         ClientConfig clientConfig = ClientConfig.loadFromResources();
         GameConfig gameConfig = GameConfig.loadFromResources();
+        assertNotNull(clientConfig);
         Client client = new Client(clientConfig, gameConfig);
 
         try {
             client.start();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         synchronized (client) {
             client.wait(60000);
         }
+        assertTrue(true);
     }
 }

@@ -129,7 +129,7 @@ public class TcpClientSocketTest {
     }
 
     // Echo tcp server
-    public class EchoServer {
+    public static class EchoServer {
         private final ServerSocket serverSocket;
 
         public EchoServer() throws IOException {
