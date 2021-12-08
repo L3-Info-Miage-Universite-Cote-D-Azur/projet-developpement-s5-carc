@@ -376,10 +376,7 @@ public class Game {
             } else {
                 listener.onCommandFailed(command, errorCode);
             }
-        } else {
-            throw new IllegalStateException("The command " + command.getType() + " cannot be executed in the state " + state.getType() + ".");
         }
-
         return false;
     }
 
