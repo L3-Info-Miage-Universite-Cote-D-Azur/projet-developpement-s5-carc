@@ -366,11 +366,20 @@ public class Game {
      * @return true if the command was executed successfully, false otherwise.
      */
     public boolean executeCommand(ICommand command) {
-        if (command.getRequiredState() == state.getType() && command.canBeExecuted(this) == ICommand.ERROR_SUCCESS) {
-            listener.onCommandExecuted(command);
-            command.execute(this);
-            return true;
+        if (command.getRequiredState() == state.getType()) {
+            int errorCode = command.canBeExecuted(this);
+
+            if (errorCode == ICommand.ERROR_SUCCESS) {
+                listener.onCommandExecuted(command);
+                command.execute(this);
+                return true;
+            } else {
+                listener.onCommandFailed(command, errorCode);
+            }
+        } else {
+            throw new IllegalStateException("The command " + command.getType() + " cannot be executed in the state " + state.getType() + ".");
         }
+
         return false;
     }
 
