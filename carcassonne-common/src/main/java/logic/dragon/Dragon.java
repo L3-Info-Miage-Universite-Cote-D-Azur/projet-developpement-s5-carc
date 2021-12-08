@@ -12,6 +12,7 @@ import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing the dragon spawned by the volcano.
@@ -69,6 +70,14 @@ public final class Dragon {
      */
     public Vector2 getPosition() {
         return path.get(path.size() - 1);
+    }
+
+    /**
+     * Gets the path of the dragon.
+     * @return the path of the dragon
+     */
+    public List<Vector2> getPath() {
+        return path;
     }
 
     /**

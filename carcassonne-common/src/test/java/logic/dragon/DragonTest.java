@@ -10,6 +10,8 @@ import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
 
 import java.util.Arrays;
 import java.util.List;
@@ -86,6 +88,12 @@ public class DragonTest {
     }
 
     @Test
+    void testMoveToThrowIfMoveOnPathPosition() {
+        Dragon dragon = new Dragon(null, new Vector2(0, 0));
+        assertThrows(IllegalArgumentException.class, () -> dragon.moveTo(new Vector2(0, 0)));
+    }
+
+    @Test
     void testBlocked() {
         Game game = TestUtils.initGameEnv(2, true, false);
 
@@ -123,5 +131,41 @@ public class DragonTest {
         assertTrue(dragon.canMoveTo(new Vector2(0, 1)));
         dragon.moveTo(new Vector2(0, 1));
         assertTrue(dragon.isBlocked());
+    }
+
+    @Test
+    void testEncodingDecoding() {
+        Game game = TestUtils.initGameEnv(2, true, true);
+        GameBoard board = game.getBoard();
+
+        Dragon dragon = board.spawnDragon(GameBoard.STARTING_TILE_POSITION);
+
+        // fill path
+        for (int i = 0; i < 4; i++) {
+            for (Direction direction : Direction.values()) {
+                Vector2 newPosition = dragon.getPosition().add(direction.value());
+
+                if (dragon.canMoveTo(newPosition)) {
+                    dragon.moveTo(newPosition);
+                    break;
+                }
+            }
+        }
+
+        Dragon copy = new Dragon(board);
+
+        ByteOutputStream out = new ByteOutputStream(10);
+        dragon.encode(out);
+        ByteInputStream in = new ByteInputStream(out.getBytes(), out.getLength());
+        copy.decode(in);
+
+        List<Vector2> originalPath = dragon.getPath();
+        List<Vector2> copyPath = copy.getPath();
+
+        assertEquals(originalPath.size(), copyPath.size());
+
+        for (int i = 0; i < originalPath.size(); i++) {
+            assertEquals(originalPath.get(i), copyPath.get(i));
+        }
     }
 }

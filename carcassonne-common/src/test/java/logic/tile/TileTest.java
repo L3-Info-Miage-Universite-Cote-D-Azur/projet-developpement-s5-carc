@@ -86,26 +86,4 @@ public class TileTest {
             assertTrue(areasReturned.contains(area));
         }
     }
-
-    @Test
-    void testArea() {
-        GameConfig config = GameConfig.loadFromResources();
-        Game game = new Game(config);
-
-        Tile tile1 = config.tiles.stream().filter(t -> t.model.equals("H")).findFirst().get().createTile(game);
-        Tile tile2 = config.tiles.stream().filter(t -> t.model.equals("F")).findFirst().get().createTile(game);
-        Tile tile3 = config.tiles.stream().filter(t -> t.model.equals("I")).findFirst().get().createTile(game);
-
-        tile1.setPosition(new Vector2(0, 0));
-        tile2.setPosition(new Vector2(1, 0));
-        tile3.setPosition(new Vector2(2, 0));
-
-        game.getBoard().place(tile1);
-        game.getBoard().place(tile2);
-        game.getBoard().place(tile3);
-        game.getBoard().checkAreaClosures();
-
-        assertTrue(tile1.getChunk(ChunkId.EAST_MIDDLE).getArea().isClosed());
-        assertFalse(tile1.getChunk(ChunkId.WEST_MIDDLE).getArea().isClosed());
-    }
 }
