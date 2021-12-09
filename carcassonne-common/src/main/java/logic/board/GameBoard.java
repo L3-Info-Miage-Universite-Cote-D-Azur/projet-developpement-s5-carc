@@ -399,6 +399,13 @@ public class GameBoard {
         } else {
             stream.writeBoolean(false);
         }
+
+        List<Area> areas = getAreas();
+        stream.writeInt(areas.size());
+
+        for (Area area : areas) {
+            area.encode(stream);
+        }
     }
 
     /**
@@ -427,6 +434,17 @@ public class GameBoard {
             fairy.decode(stream);
         } else {
             fairy = null;
+        }
+
+        List<Area> areas = getAreas();
+        int areaCount = stream.readInt();
+
+        if (areaCount != areas.size()) {
+            throw new IllegalStateException("Area count does not match with the number of areas in the stream.");
+        }
+
+        for (Area area : areas) {
+            area.decode(stream);
         }
     }
 }

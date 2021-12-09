@@ -62,6 +62,14 @@ public class GameStatistics {
     }
 
     /**
+     * Gets the winner.
+     * @return the winner.
+     */
+    public GameStatisticsPlayer getWinner() {
+        return players.get(0);
+    }
+
+    /**
      * Creates the excel file with the details of statistics.
      *
      * @return the excel file with the details of statistics.

@@ -131,6 +131,10 @@ public class Player implements Comparable<Player> {
             case FIELD -> fieldScore += value;
             default -> throw new IllegalStateException("Unexpected value: " + chunkType);
         }
+
+        if (game != null) {
+            game.getListener().onScoreEarned(this, value);
+        }
     }
 
     /**

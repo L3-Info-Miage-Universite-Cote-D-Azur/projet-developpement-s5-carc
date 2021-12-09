@@ -4,6 +4,7 @@ import logic.command.ICommand;
 import logic.dragon.Dragon;
 import logic.dragon.Fairy;
 import logic.meeple.Meeple;
+import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
@@ -109,6 +110,13 @@ public interface IGameListener {
      * @param dragon The dragon that was moved.
      */
     void onDragonMove(Dragon dragon);
+
+    /**
+     * Called when a player has been earned points.
+     * @param player The player that earned the points.
+     * @param score The score that was earned.
+     */
+    void onScoreEarned(Player player, int score);
 
     //endregion
 

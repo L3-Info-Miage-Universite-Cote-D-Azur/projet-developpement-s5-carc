@@ -2,6 +2,8 @@ package client.service;
 
 import client.Client;
 import client.config.StatsConfig;
+import client.logger.Logger;
+import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
 import client.view.GameBoardView;
 import client.stats.GameStatistics;
@@ -79,6 +81,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
     public void onBattleOver(Game game) {
         final int id = ++statisticsCounter;
         GameStatistics statistics = new GameStatistics(game);
+        Logger.info(LoggerCategory.SERVICE, "Winner is Player %d".formatted(statistics.getWinner().getId()));
         saveStatisticsInBackground(statistics, Integer.toString(id));
 
         if (config.isCreateBoardView()) {

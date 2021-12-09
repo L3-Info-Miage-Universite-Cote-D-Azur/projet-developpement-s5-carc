@@ -9,10 +9,13 @@ import logic.command.ICommand;
 import logic.dragon.Dragon;
 import logic.dragon.Fairy;
 import logic.meeple.Meeple;
+import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import network.message.game.GameCommandRequestMessage;
+
+import java.util.Collections;
 
 public class ClientGameListener implements IGameListener {
     private final Client client;
@@ -49,7 +52,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onGameStarted() {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME STARTED ---");
+        Logger.info(LoggerCategory.GAME, "--- GAME STARTED ---");
     }
 
     /**
@@ -57,7 +60,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onGameEnded() {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "--- GAME OVER ---");
+        Logger.info(LoggerCategory.GAME, "--- GAME OVER ---");
     }
 
     /**
@@ -67,7 +70,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onStateChanged(GameState state) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Game state changed to %s", state.getType());
+        Logger.info(LoggerCategory.GAME, "Game state changed to %s", state.getType());
     }
 
     /**
@@ -161,6 +164,17 @@ public class ClientGameListener implements IGameListener {
     @Override
     public void onDragonMove(Dragon dragon) {
         Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Dragon moved to %s", dragon.getPosition());
+    }
+
+    /**
+     * Called when a player has been earned points.
+     *
+     * @param player The player that earned the points.
+     * @param score  The score that was earned.
+     */
+    @Override
+    public void onScoreEarned(Player player, int score) {
+        Logger.info(LoggerCategory.GAME, "Player %d earned %d points", player.getId(), score);
     }
 
     /**

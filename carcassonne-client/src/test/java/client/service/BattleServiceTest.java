@@ -175,6 +175,11 @@ class BattleServiceTest {
             }
 
             @Override
+            public void onScoreEarned(Player player, int score) {
+
+            }
+
+            @Override
             public void onCommandExecuted(ICommand command) {
                 battleService.handleMessage(new GameCommandMessage(command));
             }

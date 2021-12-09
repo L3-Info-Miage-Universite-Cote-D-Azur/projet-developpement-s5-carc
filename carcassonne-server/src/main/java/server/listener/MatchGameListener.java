@@ -5,6 +5,7 @@ import logic.command.ICommand;
 import logic.dragon.Dragon;
 import logic.dragon.Fairy;
 import logic.meeple.Meeple;
+import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
@@ -158,6 +159,17 @@ public class MatchGameListener implements IGameListener {
     @Override
     public void onDragonMove(Dragon dragon) {
         Logger.info("Match %d: Dragon moved to %s", match.getId(), dragon.getPosition());
+    }
+
+    /**
+     * Called when a player has been earned points.
+     *
+     * @param player The player that earned the points.
+     * @param score  The score that was earned.
+     */
+    @Override
+    public void onScoreEarned(Player player, int score) {
+        Logger.info("Match %d: Player %s earned %d points", match.getId(), player.getId(), score);
     }
 
     /**

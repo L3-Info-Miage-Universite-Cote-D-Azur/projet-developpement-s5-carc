@@ -10,6 +10,9 @@ import logic.tile.Tile;
 import logic.tile.TileFlags;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
+import stream.ByteInputStream;
+import stream.ByteOutputStream;
+import stream.ByteStreamHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,12 +22,9 @@ import java.util.stream.Collectors;
  * It contains the list of chunks in the area.
  */
 public abstract class Area {
-    private static int uniqueId;
-
     private final HashSet<Chunk> chunks;
     private final HashSet<Tile> tiles;
     private final Tile baseTile;
-    private final int id;
 
     private boolean closed;
     private boolean waitingClosingEvaluation;
@@ -37,7 +37,6 @@ public abstract class Area {
 
         this.chunks = new HashSet<>(chunks);
 
-        id = uniqueId++;
         tiles = new HashSet<>();
         closed = false;
 
@@ -65,15 +64,6 @@ public abstract class Area {
      */
     public Set<Tile> getTiles() {
         return tiles;
-    }
-
-    /**
-     * Gets the area unique id.
-     *
-     * @return The unique id.
-     */
-    public int getId() {
-        return id;
     }
 
     /**
@@ -331,22 +321,30 @@ public abstract class Area {
     }
 
     /**
+     * Encodes the area into the given stream.
+     * @param stream The stream to encode the area into.
+     */
+    public void encode(ByteOutputStream stream) {
+        stream.writeBoolean(closed);
+        stream.writeBoolean(waitingClosingEvaluation);
+    }
+
+    /**
+     * Decodes the area from the given stream.
+     * @param stream The stream to decode the area from.
+     */
+    public void decode(ByteInputStream stream) {
+        closed = stream.readBoolean();
+        waitingClosingEvaluation = stream.readBoolean();
+    }
+
+    /**
      * Gets the list of meeples that are in the area.
      *
      * @return The list of meeples.
      */
     public List<Meeple> getMeeples() {
         return chunks.stream().filter(Chunk::hasMeeple).map(Chunk::getMeeple).toList();
-    }
-
-    /**
-     * Gets the list of meeples of the given player in the area.
-     *
-     * @param player The player.
-     * @return The list of meeples.
-     */
-    public List<Meeple> getMeeples(Player player) {
-        return chunks.stream().filter(c -> c.hasMeeple() && c.getMeeple().getOwner() == player).map(Chunk::getMeeple).toList();
     }
 
     /**
@@ -396,10 +394,5 @@ public abstract class Area {
         }
 
         return count;
-    }
-
-    @Override
-    public String toString() {
-        return Integer.toString(id);
     }
 }

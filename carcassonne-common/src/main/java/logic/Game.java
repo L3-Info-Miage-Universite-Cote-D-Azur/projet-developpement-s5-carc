@@ -146,6 +146,11 @@ public class Game {
             }
 
             @Override
+            public void onScoreEarned(Player player, int score) {
+                // ignored
+            }
+
+            @Override
             public void onCommandExecuted(ICommand command) {
                 // ignored
             }
