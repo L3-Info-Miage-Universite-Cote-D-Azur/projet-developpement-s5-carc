@@ -1,5 +1,6 @@
 package client.utils;
 
+import client.view.Bounds;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

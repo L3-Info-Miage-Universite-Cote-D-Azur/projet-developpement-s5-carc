@@ -1,5 +1,6 @@
 package client.utils;
 
+import client.view.ImageDatabase;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
