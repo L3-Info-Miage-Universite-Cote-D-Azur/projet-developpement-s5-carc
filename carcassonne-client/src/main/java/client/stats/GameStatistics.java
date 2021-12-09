@@ -82,7 +82,7 @@ public class GameStatistics {
     }
 
     /**
-     * Saves the excel file with the details statistics.
+     * Saves the excel file with the details of statistics.
      *
      * @param detailsFile the excel file with the details of statistics.
      * @param viewFile    the excel file with the board view.
