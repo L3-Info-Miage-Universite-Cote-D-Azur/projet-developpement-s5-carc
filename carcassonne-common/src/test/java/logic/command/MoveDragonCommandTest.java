@@ -24,7 +24,7 @@ class MoveDragonCommandTest {
 
         /* First tile is always placed to (0,0) position */
         TestUtils.placeTileRandomly(game);
-        game.getBoard().getStartingTile().getConfig().flags.add(TileFlags.DRAGON);
+        game.getBoard().getStartingTile().getConfig().getFlags().add(TileFlags.DRAGON);
         TestUtils.skipStateIfNeeded(game, GameStateType.TURN_PLACE_MEEPLE);
         TestUtils.assertState(game, GameStateType.TURN_MOVE_DRAGON);
 

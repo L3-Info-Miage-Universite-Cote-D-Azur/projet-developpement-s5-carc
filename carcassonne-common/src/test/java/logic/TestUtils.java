@@ -19,6 +19,7 @@ import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -131,7 +132,7 @@ public class TestUtils {
 
             for (int i = 0; i < TileRotation.NUM_ROTATIONS; i++) {
                 tile.rotate();
-                LinkedList<Vector2> positions = game.getBoard().findFreePlacesForTile(tile);
+                List<Vector2> positions = game.getBoard().findFreePlacesForTile(tile);
 
                 if (!positions.isEmpty()) {
                     return positions.get(random.nextInt(positions.size()));

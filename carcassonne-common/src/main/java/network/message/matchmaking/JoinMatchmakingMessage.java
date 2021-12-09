@@ -1,6 +1,6 @@
 package network.message.matchmaking;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent by the client to join the matchmaking queue.
  */
-public class JoinMatchmakingMessage extends Message {
+public class JoinMatchmakingMessage implements IMessage {
     private int matchCapacity;
 
     public JoinMatchmakingMessage() {

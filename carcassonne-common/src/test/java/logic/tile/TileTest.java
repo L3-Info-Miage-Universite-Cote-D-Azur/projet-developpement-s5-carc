@@ -20,7 +20,7 @@ class TileTest {
     void testRotate() {
         GameConfig config = GameConfig.loadFromResources();
         assertNotNull(config);
-        Tile tile = config.tiles.get(0).createTile(null);
+        Tile tile = config.getTile(0).createTile(null);
 
         Chunk[] originalChunkReferences = new Chunk[ChunkId.values().length];
         Chunk[] rotatedChunkReferences = new Chunk[ChunkId.values().length];

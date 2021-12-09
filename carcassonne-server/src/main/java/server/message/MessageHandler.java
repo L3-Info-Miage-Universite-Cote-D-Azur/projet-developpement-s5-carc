@@ -1,6 +1,6 @@
 package server.message;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
 import network.message.game.GameCommandRequestMessage;
@@ -18,7 +18,7 @@ import server.session.ClientSession;
  * Handles messages received from the server.
  */
 public class MessageHandler {
-    private static int FAKE_USER_ID_COUNTER = 0;
+    private static int fakeUserIdCounter = 0;
 
     private final ClientConnection client;
 
@@ -31,7 +31,7 @@ public class MessageHandler {
      *
      * @param message The message to handle.
      */
-    public void handle(Message message) {
+    public void handle(IMessage message) {
         switch (message.getType()) {
             case CLIENT_HELLO -> onClientHello((ClientHelloMessage) message);
             case JOIN_MATCHMAKING -> onJoinMatchmaking((JoinMatchmakingMessage) message);
@@ -52,7 +52,12 @@ public class MessageHandler {
             return;
         }
 
-        int userId = ++FAKE_USER_ID_COUNTER;
+        int userId;
+
+        synchronized (MessageHandler.class) {
+            userId = ++fakeUserIdCounter;
+        }
+
         client.setSession(new ClientSession(client, userId));
         client.send(new ServerHelloMessage(userId));
     }

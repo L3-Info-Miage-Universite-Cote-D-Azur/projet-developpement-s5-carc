@@ -1,6 +1,6 @@
 package network;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageFactory;
 import network.message.MessageType;
 import network.util.Crc32;
@@ -61,7 +61,7 @@ public class Packet {
      * @param message the message to create the packet from
      * @return the packet
      */
-    public static Packet create(Message message) {
+    public static Packet create(IMessage message) {
         ByteOutputStream stream = new ByteOutputStream(20);
         message.encode(stream);
         return new Packet(message.getType(), Crc32.getCrc(stream.getBytes(), 0, stream.getLength()), stream.getLength(), stream.getBytes());
@@ -139,8 +139,8 @@ public class Packet {
      *
      * @return the message
      */
-    public Message getMessage() {
-        Message message = MessageFactory.create(type);
+    public IMessage getMessage() {
+        IMessage message = MessageFactory.create(type);
         assert message != null;
         message.decode(new ByteInputStream(messageData, messageLength));
         return message;

@@ -36,7 +36,7 @@ public class Polygon {
     public int[] getXs(int offset) {
         int[] xs = new int[vectors.length];
         for (int i = 0; i < xs.length; i++)
-            xs[i] = vectors[i].getX() + offset;
+            xs[i] = vectors[i].x() + offset;
 
         return xs;
     }
@@ -50,7 +50,7 @@ public class Polygon {
     public int[] getYs(int offset) {
         int[] ys = new int[vectors.length];
         for (int i = 0; i < ys.length; i++)
-            ys[i] = vectors[i].getY() + offset;
+            ys[i] = vectors[i].y() + offset;
 
         return ys;
     }
@@ -73,7 +73,7 @@ public class Polygon {
             return false;
 
         for (int i = 0; i < vectors.length; i++) {
-            if (vectors[i].getX() == polygon.getVector(i).getX() && vectors[i].getY() == polygon.getVector(i).getY()) {
+            if (vectors[i].x() == polygon.getVector(i).x() && vectors[i].y() == polygon.getVector(i).y()) {
                 continue;
             }
             return false;

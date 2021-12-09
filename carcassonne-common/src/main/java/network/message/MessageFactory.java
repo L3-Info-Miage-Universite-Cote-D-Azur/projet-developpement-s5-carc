@@ -14,7 +14,7 @@ public class MessageFactory {
      * @param type The message type.
      * @return The message instance.
      */
-    public static Message create(MessageType type) {
+    public static IMessage create(MessageType type) {
         try {
             return type.getMessageClass().getDeclaredConstructor().newInstance();
         } catch (Exception e) {

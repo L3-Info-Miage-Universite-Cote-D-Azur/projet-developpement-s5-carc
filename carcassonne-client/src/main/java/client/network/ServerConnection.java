@@ -7,7 +7,7 @@ import client.network.socket.ITcpClientSocketListener;
 import client.network.socket.TcpClientSocket;
 import network.Packet;
 import network.ResizableByteBuffer;
-import network.message.Message;
+import network.message.IMessage;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -163,7 +163,7 @@ public class ServerConnection implements ITcpClientSocketListener {
      *
      * @param message The message to send.
      */
-    public synchronized void send(Message message) {
+    public synchronized void send(IMessage message) {
         Logger.debug(LoggerCategory.NETWORK, "Sending message %s", message);
 
         ByteOutputStream stream = new ByteOutputStream(32);

@@ -149,7 +149,7 @@ public class ExcelNode {
      * Creates a new row.
      */
     public ExcelRow createRow() {
-        ExcelRow row = new ExcelRow(this, rows.size());
+        ExcelRow row = new ExcelRow(this);
         rows.add(row);
         return row;
     }
@@ -165,7 +165,7 @@ public class ExcelNode {
             addColumn("Name");
         }
 
-        ExcelRow row = new ExcelRow(this, rows.size());
+        ExcelRow row = new ExcelRow(this);
         rows.add(row);
         row.add("Name", name);
         return row;
@@ -234,10 +234,10 @@ public class ExcelNode {
                 return rowIndex - 1;
             }
 
-            // TODO Can be replaced by by a If ?
             switch (state) {
                 case LOADING_COLUMNS -> {
                     String firstCell = cells[columnIndex];
+
                     if (!firstCell.equalsIgnoreCase("Name")) {
                         ExcelNode child = new ExcelNode();
                         child.name = cells[columnIndex];
@@ -248,7 +248,7 @@ public class ExcelNode {
                         state = State.LOADING_ROWS;
                     }
                 }
-                case LOADING_ROWS -> loadRow(cells, rowIndex, columnIndex);
+                case LOADING_ROWS -> loadRow(cells, columnIndex);
             }
 
             rowIndex++;
@@ -281,11 +281,10 @@ public class ExcelNode {
      * Loads the row from the specified cells.
      *
      * @param cells      The cells.
-     * @param index      The index.
      * @param childIndex The child index.
      */
-    private void loadRow(String[] cells, int index, int childIndex) {
-        ExcelRow row = new ExcelRow(this, index);
+    private void loadRow(String[] cells, int childIndex) {
+        ExcelRow row = new ExcelRow(this);
 
         for (int i = childIndex; i < cells.length; i++) {
             row.add(cells[i]);

@@ -19,9 +19,9 @@ class AreaTest {
         assertNotNull(config);
         Game game = new Game(config);
 
-        Tile tile1 = config.tiles.stream().filter(t -> t.model.equals("H")).findFirst().get().createTile(game);
-        Tile tile2 = config.tiles.stream().filter(t -> t.model.equals("F")).findFirst().get().createTile(game);
-        Tile tile3 = config.tiles.stream().filter(t -> t.model.equals("I")).findFirst().get().createTile(game);
+        Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("H")).findFirst().get().createTile(game);
+        Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("F")).findFirst().get().createTile(game);
+        Tile tile3 = config.getTiles().stream().filter(t -> t.getModel().equals("I")).findFirst().get().createTile(game);
 
         tile1.setPosition(new Vector2(0, 0));
         tile2.setPosition(new Vector2(1, 0));
@@ -42,7 +42,7 @@ class AreaTest {
         assertNotNull(config);
         Game game = new Game(config);
 
-        Tile tile = config.tiles.stream().filter(t -> t.model.equals("H")).findFirst().get().createTile(game);
+        Tile tile = config.getTiles().stream().filter(t -> t.getModel().equals("H")).findFirst().get().createTile(game);
 
         Chunk fieldChunk = tile.getChunk(ChunkId.CENTER_MIDDLE);
         Chunk townChunk = tile.getChunk(ChunkId.EAST_MIDDLE);

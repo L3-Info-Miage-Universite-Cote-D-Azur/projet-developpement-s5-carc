@@ -34,9 +34,9 @@ public enum MessageType {
     /**
      * The message class.
      */
-    private final Class<? extends Message> messageClass;
+    private final Class<? extends IMessage> messageClass;
 
-    MessageType(int id, Class<? extends Message> messageClass) {
+    MessageType(int id, Class<? extends IMessage> messageClass) {
         this.type = id;
         this.messageClass = messageClass;
     }
@@ -65,7 +65,7 @@ public enum MessageType {
      *
      * @return the message class.
      */
-    public Class<? extends Message> getMessageClass() {
+    public Class<? extends IMessage> getMessageClass() {
         return messageClass;
     }
 }

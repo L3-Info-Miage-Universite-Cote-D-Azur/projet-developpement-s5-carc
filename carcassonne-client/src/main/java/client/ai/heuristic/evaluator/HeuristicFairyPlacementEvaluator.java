@@ -55,7 +55,7 @@ public class HeuristicFairyPlacementEvaluator extends HeuristicEvaluator {
         }
 
         if (board.hasDragon() && chunk.hasMeeple()) {
-            int distance = chunk.getParent().getPosition().subtract(board.getDragon().getPosition()).length();
+            int distance = chunk.getParent().getPosition().subtract(board.getDragon().getPosition()).magnitude();
 
             if (distance <= CHUNK_CLOSE_TO_DRAGON_DISTANCE_THRESHOLD) {
                 addScore(CHUNK_CLOSE_TO_DRAGON_SCORE * (CHUNK_CLOSE_TO_DRAGON_DISTANCE_THRESHOLD - distance + 1));

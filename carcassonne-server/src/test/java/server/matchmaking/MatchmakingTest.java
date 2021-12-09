@@ -1,6 +1,6 @@
 package server.matchmaking;
 
-import network.message.Message;
+import network.message.IMessage;
 import org.junit.jupiter.api.Test;
 import server.network.ClientConnection;
 import server.session.ClientSession;
@@ -12,7 +12,7 @@ class MatchmakingTest {
     private static ClientConnection createFakeClientConnection(int id) {
         return new ClientConnection(null, id) {
             @Override
-            public synchronized void send(Message message) {
+            public synchronized void send(IMessage message) {
             }
         };
     }

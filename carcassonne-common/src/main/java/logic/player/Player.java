@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * The Player class represents the player in the game.
  */
-public class Player implements Comparable {
+public class Player implements Comparable<Player> {
     protected int id;
     protected int roadScore;
     protected int townScore;
@@ -139,13 +139,12 @@ public class Player implements Comparable {
      * @param compareTo The other player to compare to
      * @return returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
      */
-    public int compareTo(Object compareTo) {
-        if (compareTo instanceof Player) {
-            Player other = (Player) compareTo;
-            return getScore() - other.getScore();
-        } else {
-            throw new IllegalArgumentException("Cannot compare to an object that is not a Player.");
+    @Override
+    public int compareTo(Player compareTo) {
+        if (compareTo == null) {
+            throw new NullPointerException("Cannot compare to null.");
         }
+        return getScore() - compareTo.getScore();
     }
 
     /**
@@ -216,7 +215,7 @@ public class Player implements Comparable {
         if (game == null) {
             return 0;
         }
-        return game.getConfig().startingMeepleCount - meeplesPlayed;
+        return game.getConfig().getStartingMeepleCount() - meeplesPlayed;
     }
 
     /**

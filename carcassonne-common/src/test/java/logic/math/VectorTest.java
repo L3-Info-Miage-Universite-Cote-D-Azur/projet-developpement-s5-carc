@@ -9,8 +9,8 @@ class VectorTest {
     void testVector() {
         int n = 10;
         Vector2 vector2 = new Vector2(n, n * 2);
-        assertEquals(n, vector2.getX());
-        assertEquals(n * 2, vector2.getY());
+        assertEquals(n, vector2.x());
+        assertEquals(n * 2, vector2.y());
     }
 
     @Test
@@ -30,14 +30,14 @@ class VectorTest {
     void testGetX() {
         int n = 30;
         Vector2 vector0 = new Vector2(n, n * 2);
-        assertEquals(30, vector0.getX());
+        assertEquals(30, vector0.x());
     }
 
     @Test
     void testGetY() {
         int n = 40;
         Vector2 vector0 = new Vector2(n, n * 2);
-        assertEquals(80, vector0.getY());
+        assertEquals(80, vector0.y());
     }
 
     @Test
@@ -64,7 +64,7 @@ class VectorTest {
         Vector2 vector0 = new Vector2(100, 100);
         Vector2 vector1 = new Vector2(50, 50);
         Vector2 vectorFinal = new Vector2(50, 50);
-        Vector2 vectorResult = vector0.subtract(vector1.getX(), vector1.getY());
+        Vector2 vectorResult = vector0.subtract(vector1.x(), vector1.y());
         assertEquals(vectorResult, vectorFinal);
     }
 
@@ -82,7 +82,7 @@ class VectorTest {
         Vector2 vector0 = new Vector2(100, 100);
         Vector2 vector1 = new Vector2(50, 50);
         Vector2 vectorFinal = new Vector2(5000, 5000);
-        Vector2 vectorResult = vector0.multiply(vector1.getX(), vector1.getY());
+        Vector2 vectorResult = vector0.multiply(vector1.x(), vector1.y());
         assertEquals(vectorResult, vectorFinal);
     }
 
@@ -114,14 +114,14 @@ class VectorTest {
     void testSqrLength() {
         Vector2 vector0 = new Vector2(100, 100);
         double vectorFinal = 20000;
-        double vectorResult = vector0.sqrLength();
+        double vectorResult = vector0.sqrMagnitude();
         assertEquals(vectorResult, vectorFinal);
     }
 
     @Test
     void testLength() {
         Vector2 vector0 = new Vector2(100, 100);
-        assertEquals((int) Math.sqrt(20000), vector0.length());
+        assertEquals((int) Math.sqrt(20000), vector0.magnitude());
     }
 
     @Test

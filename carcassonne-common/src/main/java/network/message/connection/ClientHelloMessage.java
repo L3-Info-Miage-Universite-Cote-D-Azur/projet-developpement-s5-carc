@@ -1,6 +1,6 @@
 package network.message.connection;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent by the client to the server to indicate that it is ready to.
  */
-public class ClientHelloMessage extends Message {
+public class ClientHelloMessage implements IMessage {
     /**
      * Returns the message type.
      *
@@ -26,7 +26,7 @@ public class ClientHelloMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        // TODO
+        // Nothing to encode
     }
 
     /**
@@ -36,7 +36,7 @@ public class ClientHelloMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        // TODO
+        // Nothing to decode
     }
 
     @Override

@@ -56,8 +56,8 @@ public class HeuristicAI extends AI {
         }
 
         this.tileEvaluator = new HeuristicTileEvaluator(game);
-        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(game, player);
-        this.meepleRemovalEvaluator = new HeuristicMeepleRemovalEvaluator(game, player);
+        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(player);
+        this.meepleRemovalEvaluator = new HeuristicMeepleRemovalEvaluator(player);
         this.fairyPlacementEvaluator = new HeuristicFairyPlacementEvaluator(game, player);
         this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
     }

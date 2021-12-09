@@ -13,7 +13,7 @@ import stream.ByteOutputStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MessageTest {
-    private static <E extends Message> E cloneUsingEncodeDecode(E message) {
+    private static <E extends IMessage> E cloneUsingEncodeDecode(E message) {
         ByteOutputStream out = new ByteOutputStream(100);
         message.encode(out);
 
@@ -36,7 +36,7 @@ class MessageTest {
     @Test
     void testFactoryReturnsCorrectMessage() {
         for (MessageType type : MessageType.values()) {
-            Message message = MessageFactory.create(type);
+            IMessage message = MessageFactory.create(type);
             assertNotNull(message);
             assertEquals(type, message.getType());
             assertEquals(type.getMessageClass(), message.getClass());

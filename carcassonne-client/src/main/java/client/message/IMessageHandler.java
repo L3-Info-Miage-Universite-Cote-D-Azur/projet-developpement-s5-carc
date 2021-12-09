@@ -1,6 +1,6 @@
 package client.message;
 
-import network.message.Message;
+import network.message.IMessage;
 
 /**
  * Interface for message handlers.
@@ -11,5 +11,5 @@ public interface IMessageHandler {
      *
      * @param message The message to handle.
      */
-    void handleMessage(Message message);
+    void handleMessage(IMessage message);
 }

@@ -128,7 +128,7 @@ public class Tile {
      * @return True if the tile has the specified flag, false otherwise.
      */
     public boolean hasFlag(TileFlags flag) {
-        return config.flags.contains(flag);
+        return config.hasFlag(flag);
     }
 
     /**
@@ -137,7 +137,7 @@ public class Tile {
      * @return True if the tile has a portal, false otherwise.
      */
     public boolean hasPortal() {
-        return config.flags.contains(TileFlags.PORTAL);
+        return hasFlag(TileFlags.PORTAL);
     }
 
     /**
@@ -146,7 +146,7 @@ public class Tile {
      * @return True if the tile has a volcano, false otherwise.
      */
     public boolean hasVolcano() {
-        return config.flags.contains(TileFlags.VOLCANO);
+        return hasFlag(TileFlags.VOLCANO);
     }
 
     /**
@@ -304,9 +304,9 @@ public class Tile {
     public String toString() {
         return "Tile{" +
                 "position=" + position +
-                ", model=" + config.model +
+                ", model=" + config.getModel() +
                 ", rotation=" + rotation +
-                ", flags=" + config.flags +
+                ", flags=" + config.getFlags() +
                 '}';
     }
 }

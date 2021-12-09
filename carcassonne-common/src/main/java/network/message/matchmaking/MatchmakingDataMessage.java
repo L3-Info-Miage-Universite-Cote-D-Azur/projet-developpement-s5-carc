@@ -1,6 +1,6 @@
 package network.message.matchmaking;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -10,7 +10,7 @@ import stream.ByteOutputStream;
  * It contains the current number of players in the matchmaking and the number of players
  * required to start the game.
  */
-public class MatchmakingDataMessage extends Message {
+public class MatchmakingDataMessage implements IMessage {
     private int numPlayers;
     private int requiredPlayers;
 

@@ -188,7 +188,7 @@ public class BattleServiceTest {
         game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION));
         game.executeCommand(new SkipMeeplePlacementCommand());
 
-        battleService.handleMessage(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(((GameTurnPlaceTileState )game.getState()).getTileDrawn().getConfig())));
+        battleService.handleMessage(new GameMasterNextTurnDataMessage(game.getConfig().getTileIndex(((GameTurnPlaceTileState) game.getState()).getTileDrawn().getConfig())));
 
         assertEquals(2, gameView.getTurnCount());
         assertEquals(gameView.getPlayer(1), gameView.getTurnExecutor());

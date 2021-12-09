@@ -93,7 +93,7 @@ public final class Dragon {
             return false;
         }
 
-        return board.hasTileAt(position) && !path.contains(position) && getPosition().subtract(position).sqrLength() == 1;
+        return board.hasTileAt(position) && !path.contains(position) && getPosition().subtract(position).sqrMagnitude() == 1;
     }
 
     /**

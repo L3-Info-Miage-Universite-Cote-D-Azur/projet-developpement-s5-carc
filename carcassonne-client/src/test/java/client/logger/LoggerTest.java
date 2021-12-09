@@ -32,20 +32,20 @@ class LoggerTest {
     void testOutputLogger() {
         String message = "Bonjour";
 
-        String expected = "\u001B[32mGAME: Bonjour\u001B[00m\n";
+        String expected = "\u001B[36mGAME: Bonjour\u001B[00m\n";
         Logger.setLevel(LogLevel.DEBUG);
         Logger.debug(LoggerCategory.GAME, message);
         assertEquals(expected.trim(), baos.toString().trim());
 
         baos.reset();
 
-        expected = "\u001B[32mNETWORK: Bonjour\u001B[00m\n";
+        expected = "\u001B[36mNETWORK: Bonjour\u001B[00m\n";
         Logger.debug(LoggerCategory.NETWORK, message);
         assertEquals(expected.trim(), baos.toString().trim());
 
         baos.reset();
 
-        expected = "\u001B[32mSERVICE: Bonjour\u001B[00m\n";
+        expected = "\u001B[36mSERVICE: Bonjour\u001B[00m\n";
         Logger.debug(LoggerCategory.SERVICE, message);
         assertEquals(expected.trim(), baos.toString().trim());
 

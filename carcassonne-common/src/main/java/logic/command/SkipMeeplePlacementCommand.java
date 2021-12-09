@@ -24,7 +24,7 @@ public class SkipMeeplePlacementCommand implements ICommand {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        // TODO empty
+        // Nothing to encode.
     }
 
     /**
@@ -34,7 +34,7 @@ public class SkipMeeplePlacementCommand implements ICommand {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        // TODO empty
+        // Nothing to decode.
     }
 
     /**

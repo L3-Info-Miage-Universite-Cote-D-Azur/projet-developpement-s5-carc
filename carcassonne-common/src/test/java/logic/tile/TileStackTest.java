@@ -3,6 +3,7 @@ package logic.tile;
 import logic.Game;
 import logic.TestUtils;
 import logic.config.GameConfig;
+import logic.config.excel.TileConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ class TileStackTest {
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack tileStack = game.getStack();
         assertNotNull(config);
-        Tile testTile = config.tiles.get(0).createTile(game);
+        Tile testTile = config.getTile(0).createTile(game);
 
         tileStack.fill(new ArrayList<>() {{
             add(testTile);
@@ -34,13 +35,13 @@ class TileStackTest {
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack stack = game.getStack();
         stack.fill(config);
-        assertEquals(config.tiles.stream().map(t -> t.count).reduce(Integer::sum).get(), stack.getNumTiles());
+        assertEquals(config.getTiles().stream().map(TileConfig::getCount).reduce(Integer::sum).get(), stack.getNumTiles());
     }
 
     @Test
     void testShuffle() { // If the shuffle works properly
         assertNotNull(config);
-        GameConfig newConfig = new GameConfig(config.tiles.stream().peek(e -> e.count = 100).collect(Collectors.toCollection(ArrayList::new)), config.minPlayers, config.maxPlayers, config.startingMeepleCount);
+        GameConfig newConfig = new GameConfig(config.getTiles().stream().peek(e -> e.setCount(100)).collect(Collectors.toCollection(ArrayList::new)), config.getMinPlayers(), config.getMaxPlayers(), config.getStartingMeepleCount());
 
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack stack = game.getStack();

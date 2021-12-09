@@ -5,7 +5,7 @@ import logic.command.ICommand;
 import logic.config.GameConfig;
 import logic.player.Player;
 import logic.tile.Tile;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
@@ -81,6 +81,7 @@ public class Match {
                     case TURN_PLACE_TILE -> player.getListener().onWaitingPlaceTile();
                     case TURN_PLACE_MEEPLE -> player.getListener().onWaitingMeeplePlacement();
                     case TURN_MOVE_DRAGON -> player.getListener().onWaitingDragonMove();
+                    default -> { }
                 }
             }
         }
@@ -91,7 +92,7 @@ public class Match {
      *
      * @param message
      */
-    protected void sendMessageToConnectedClients(Message message) {
+    protected void sendMessageToConnectedClients(IMessage message) {
         for (ClientSession session : sessions) {
             if (session != null) {
                 session.getConnection().send(message);
@@ -180,6 +181,6 @@ public class Match {
      * @param tileDrawn the drawn tile
      */
     public void onTurnStarted(Tile tileDrawn) {
-        sendMessageToConnectedClients(new GameMasterNextTurnDataMessage(game.getConfig().tiles.indexOf(tileDrawn.getConfig())));
+        sendMessageToConnectedClients(new GameMasterNextTurnDataMessage(game.getConfig().getTiles().indexOf(tileDrawn.getConfig())));
     }
 }

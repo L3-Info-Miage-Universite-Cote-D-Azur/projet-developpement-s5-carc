@@ -1,6 +1,6 @@
 package network.message.connection;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent by the server to the client to inform that the connection is ready to be used.
  */
-public class ServerHelloMessage extends Message {
+public class ServerHelloMessage implements IMessage {
     private int userId;
 
     public ServerHelloMessage() {

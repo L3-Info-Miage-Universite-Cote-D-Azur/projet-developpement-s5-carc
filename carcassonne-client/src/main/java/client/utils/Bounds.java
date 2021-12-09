@@ -28,7 +28,7 @@ public final class Bounds {
      * @return the width of the bounding box.
      */
     public int getWidth() {
-        return end.getX() - start.getX();
+        return end.x() - start.x();
     }
 
     /**
@@ -37,7 +37,7 @@ public final class Bounds {
      * @return the height of the bounding box.
      */
     public int getHeight() {
-        return end.getY() - start.getY();
+        return end.y() - start.y();
     }
 
     /**
@@ -46,7 +46,7 @@ public final class Bounds {
      * @return the reversed bounding box.
      */
     public Bounds reverseY() {
-        return new Bounds(start.getX(), -end.getY(), end.getX(), -start.getY());
+        return new Bounds(start.x(), -end.y(), end.x(), -start.y());
     }
 
     /**
@@ -57,6 +57,6 @@ public final class Bounds {
      * @return the scaled bounding box.
      */
     public Bounds scale(int x, int y) {
-        return new Bounds(start.getX() * x, start.getY() * y, end.getX() * x, end.getY() * y);
+        return new Bounds(start.x() * x, start.y() * y, end.x() * x, end.y() * y);
     }
 }

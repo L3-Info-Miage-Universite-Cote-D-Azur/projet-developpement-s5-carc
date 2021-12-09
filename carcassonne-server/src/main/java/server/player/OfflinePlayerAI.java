@@ -13,7 +13,7 @@ import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class OfflinePlayerAI implements IPlayerListener {
     private final Game game;
@@ -27,7 +27,7 @@ public class OfflinePlayerAI implements IPlayerListener {
         GameTurnPlaceTileState state = (GameTurnPlaceTileState) game.getState();
         Tile tileDrawn = state.getTileDrawn();
 
-        LinkedList<Vector2> freeTiles = null;
+        List<Vector2> freeTiles = null;
 
         for (TileRotation rotation : TileRotation.values()) {
             game.executeCommand(new RotateTileDrawnCommand(rotation));
@@ -39,7 +39,7 @@ public class OfflinePlayerAI implements IPlayerListener {
         }
 
         assert freeTiles != null;
-        game.executeCommand(new PlaceTileDrawnCommand(freeTiles.getFirst()));
+        game.executeCommand(new PlaceTileDrawnCommand(freeTiles.get(0)));
     }
 
     @Override

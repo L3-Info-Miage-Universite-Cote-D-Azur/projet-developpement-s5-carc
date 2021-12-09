@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TargetList<E> {
     private final int capacity;
-    private final LinkedList<TargetEntry> entries;
+    private final LinkedList<TargetEntry<E>> entries;
 
     public TargetList(int size) {
         this.capacity = size;
@@ -22,7 +22,7 @@ public class TargetList<E> {
      * @param entry The position to add.
      */
     public void add(E entry, int cost) {
-        this.entries.add(new TargetEntry(entry, cost));
+        this.entries.add(new TargetEntry<>(entry, cost));
 
         /* As the added entry can be the most costly,
          * we need to throw away after the insertion.
@@ -37,7 +37,7 @@ public class TargetList<E> {
      *
      * @return The current entries in the list.
      */
-    public List<TargetEntry> getEntries() {
+    public List<TargetEntry<E>> getEntries() {
         return entries;
     }
 
@@ -50,12 +50,12 @@ public class TargetList<E> {
         TargetEntry<E> best = null;
 
         for (TargetEntry<E> entry : entries) {
-            if (best == null || entry.getScore() > best.getScore()) {
+            if (best == null || entry.score() > best.score()) {
                 best = entry;
             }
         }
 
-        return best != null ? best.getEntry() : null;
+        return best != null ? best.entry() : null;
     }
 
     /**
@@ -66,9 +66,9 @@ public class TargetList<E> {
         int max = -1;
         int i = 0;
 
-        for (TargetEntry entry : entries) {
-            if (entry.getScore() < max) {
-                max = entry.getScore();
+        for (TargetEntry<E> entry : entries) {
+            if (entry.score() < max) {
+                max = entry.score();
                 index = i;
             }
 

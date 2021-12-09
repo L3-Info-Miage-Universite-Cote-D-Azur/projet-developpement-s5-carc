@@ -14,12 +14,11 @@ import java.util.*;
  * Represents a tile excel configuration.
  */
 public class TileConfig {
-    // TODO Make static final constant or non-public and provide accessors if needed.
-    public TileChunkConfig[] chunks;
-    public String model;
-    public String expansion;
-    public Set<TileFlags> flags;
-    public int count;
+    private TileChunkConfig[] chunks;
+    private String model;
+    private String expansion;
+    private Set<TileFlags> flags;
+    private int count;
 
     /**
      * Creates a tile excel configuration from the given parameters.
@@ -35,6 +34,47 @@ public class TileConfig {
         this.model = model;
         this.expansion = expansion;
         this.flags = flags;
+        this.count = count;
+    }
+
+    /**
+     * Returns whether the tile has the given flag.
+     * @param flag The flag.
+     * @return Whether the tile has the given flag.
+     */
+    public boolean hasFlag(TileFlags flag) {
+        return flags.contains(flag);
+    }
+
+    /**
+     * Gets the flags of the tile.
+     * @return The flags of the tile.
+     */
+    public Set<TileFlags> getFlags() {
+        return flags;
+    }
+
+    /**
+     * Gets the sprite model of the tile.
+     * @return The sprite model of the tile.
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * Gets the number of this tile in the stack.
+     * @return The number of this tile in the stack.
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * Sets the number of this tile in the stack.
+     * @param count The number of this tile in the stack.
+     */
+    public void setCount(int count) {
         this.count = count;
     }
 
@@ -142,12 +182,7 @@ public class TileConfig {
         for (ChunkId chunkId : ChunkId.values()) {
             String referenceId = getCellValue(referenceNode, chunkId);
 
-            // TODO USE ? zones.computeIfAbsent(referenceId, k -> new ArrayList<>());
-            if (!zones.containsKey(referenceId)) {
-                zones.put(referenceId, new ArrayList<>());
-            }
-
-            zones.get(referenceId).add(chunkId);
+            zones.computeIfAbsent(referenceId, k -> new ArrayList<>()).add(chunkId);
         }
 
         for (ArrayList<ChunkId> chunkIds : zones.values()) {

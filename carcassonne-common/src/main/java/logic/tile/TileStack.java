@@ -45,8 +45,8 @@ public class TileStack {
      * @param config Configuration to fill the stack with.
      */
     public void fill(GameConfig config) {
-        for (TileConfig tileConfig : config.tiles) {
-            for (int i = 0; i < tileConfig.count; i++) {
+        for (TileConfig tileConfig : config.getTiles()) {
+            for (int i = 0; i < tileConfig.getCount(); i++) {
                 tiles.add(tileConfig.createTile(game));
             }
         }

@@ -1,6 +1,6 @@
 package server.matchmaking;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import org.junit.jupiter.api.Test;
 import server.session.ClientSession;
@@ -19,7 +19,7 @@ class MatchTest {
 
         Match match = new Match(1, players) {
             @Override
-            protected void sendMessageToConnectedClients(Message message) {
+            protected void sendMessageToConnectedClients(IMessage message) {
                 if (message.getType() == MessageType.GAME_DATA) {
                     completed[0] = true;
                 } else if (!completed[0]) {
@@ -44,7 +44,7 @@ class MatchTest {
 
         Match match = new Match(1, players) {
             @Override
-            protected void sendMessageToConnectedClients(Message message) {
+            protected void sendMessageToConnectedClients(IMessage message) {
                 if (message.getType() == MessageType.GAME_MASTER_NEXT_TURN_DATA) {
                     completed[0] = true;
                 }
@@ -68,7 +68,7 @@ class MatchTest {
 
         Match match = new Match(1, players) {
             @Override
-            protected void sendMessageToConnectedClients(Message message) {
+            protected void sendMessageToConnectedClients(IMessage message) {
                 if (message.getType() == MessageType.GAME_RESULT) {
                     completed[0] = true;
                 }

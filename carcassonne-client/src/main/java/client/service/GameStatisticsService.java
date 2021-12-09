@@ -7,6 +7,8 @@ import client.stats.GameStatistics;
 import logic.Game;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -48,8 +50,11 @@ public class GameStatisticsService extends ServiceBase {
                 Logger.warn(LoggerCategory.SERVICE, "Cannot create a folder", saveDirectory);
         } else {
             for (File file : Objects.requireNonNull(saveDirectory.listFiles())) {
-                if (!file.delete())
-                    Logger.warn(LoggerCategory.SERVICE, "A file cannot be deleted", file);
+                try {
+                    Files.delete(file.toPath());
+                } catch (IOException e) {
+                    Logger.warn(LoggerCategory.SERVICE, "Cannot delete file %s", file);
+                }
             }
         }
     }

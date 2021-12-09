@@ -62,11 +62,9 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
      */
     public static final int LOW_MEEPLE_REMAINING_PENALTY = 15;
 
-    private final Game game;
     private final Player player;
 
-    public HeuristicMeeplePlacementEvaluator(Game game, Player player) {
-        this.game = game;
+    public HeuristicMeeplePlacementEvaluator(Player player) {
         this.player = player;
     }
 
@@ -111,6 +109,9 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
                 break;
             case ROAD:
                 evaluateRoad(((RoadArea) area));
+                break;
+            default:
+                // Do nothing
                 break;
         }
     }

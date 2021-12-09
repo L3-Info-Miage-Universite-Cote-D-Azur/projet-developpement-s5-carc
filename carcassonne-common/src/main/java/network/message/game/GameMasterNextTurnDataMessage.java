@@ -1,6 +1,6 @@
 package network.message.game;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent by the game master to the client to inform it of the next turn.
  */
-public class GameMasterNextTurnDataMessage extends Message {
+public class GameMasterNextTurnDataMessage implements IMessage {
     private int tileConfigIndex;
 
     public GameMasterNextTurnDataMessage() {

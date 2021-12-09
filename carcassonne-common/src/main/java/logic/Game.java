@@ -72,7 +72,7 @@ public class Game {
         this.config = config;
         this.board = new GameBoard(this);
         this.stack = new TileStack(this);
-        this.players = new ArrayList<>(config.maxPlayers);
+        this.players = new ArrayList<>(config.getMaxPlayers());
         this.master = true;
         this.listener = new IGameListener() {
             @Override
@@ -158,8 +158,8 @@ public class Game {
     }
 
     public void start() {
-        if (getPlayerCount() < config.minPlayers) {
-            throw new NotEnoughPlayerException(getPlayerCount(), config.minPlayers);
+        if (getPlayerCount() < config.getMinPlayers()) {
+            throw new NotEnoughPlayerException(getPlayerCount(), config.getMinPlayers());
         }
 
         if (!master) {
@@ -193,7 +193,7 @@ public class Game {
      * @param player the player to add
      */
     public void addPlayer(Player player) {
-        if (getPlayerCount() >= config.maxPlayers) {
+        if (getPlayerCount() >= config.getMaxPlayers()) {
             throw new TooManyPlayerException();
         }
 
@@ -248,7 +248,7 @@ public class Game {
 
         // As a state can be a transition-state, we need to check
         // if the state passed by parameter is still the current state.
-        if (this.state == state) { // TODO ALWAYS TRUE
+        if (this.state == state) {
             listener.onStateChanged(state);
         }
     }
@@ -474,7 +474,6 @@ public class Game {
      */
     public Game clone() {
         ByteOutputStream encodeStream = new ByteOutputStream(1000);
-        Game game = new Game(config); // TODO Useless
         encode(encodeStream, master);
         Game gameNew = new Game(config);
         ByteInputStream decodeStream = new ByteInputStream(encodeStream.getBytes(), encodeStream.getLength());

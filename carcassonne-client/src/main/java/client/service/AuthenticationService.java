@@ -4,7 +4,7 @@ import client.Client;
 import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
@@ -26,7 +26,7 @@ public class AuthenticationService extends ServiceBase implements IMessageHandle
      * @param message The message to handle.
      */
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(IMessage message) {
         if (message.getType() == MessageType.SERVER_HELLO) {
             onServerHello((ServerHelloMessage) message);
         }

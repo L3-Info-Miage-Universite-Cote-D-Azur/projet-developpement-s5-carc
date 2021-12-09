@@ -188,8 +188,8 @@ public class GameDrawUtils {
         int maxY = 0;
 
         for (Tile tile : board.getTiles()) {
-            int x = tile.getPosition().getX();
-            int y = tile.getPosition().getY();
+            int x = tile.getPosition().x();
+            int y = tile.getPosition().y();
 
             minX = Math.min(minX, x);
             minY = Math.min(minY, y);
@@ -207,7 +207,7 @@ public class GameDrawUtils {
      * @return The position where the tile should be drawn.
      */
     private static Vector2 getTilePosition(Vector2 vector2) {
-        return new Vector2(vector2.getX() * TILE_WIDTH, vector2.getY() * TILE_HEIGHT);
+        return new Vector2(vector2.x() * TILE_WIDTH, vector2.y() * TILE_HEIGHT);
     }
 
     /**
@@ -238,7 +238,7 @@ public class GameDrawUtils {
      * @return The sprite model to use for the specified tile and rotation.
      */
     private static String getTileSpriteModel(Tile tile) {
-        return String.format("%s_%s", tile.getConfig().model, tile.getRotation().ordinal() * TileRotation.ANGLE_ROTATION);
+        return String.format("%s_%s", tile.getConfig().getModel(), tile.getRotation().ordinal() * TileRotation.ANGLE_ROTATION);
     }
 
     /**
@@ -257,7 +257,7 @@ public class GameDrawUtils {
 
         g.setColor(colorZone.get(area));
         Polygon polygon = chunksGeo.get(chunk.getCurrentId());
-        g.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
+        g.fillPolygon(polygon.getXs(tilePosition.x()), polygon.getYs(tilePosition.y()), polygon.getVectorCount());
     }
 
     /**
@@ -279,7 +279,7 @@ public class GameDrawUtils {
         TexturePaint patternTexture = new TexturePaint(patternImage, new Rectangle(0, 0, patternImage.getWidth(), patternImage.getHeight()));
         Graphics2D g2 = (Graphics2D) g;
         g2.setPaint(patternTexture);
-        g2.fillPolygon(polygon.getXs(tilePosition.getX()), polygon.getYs(tilePosition.getY()), polygon.getVectorCount());
+        g2.fillPolygon(polygon.getXs(tilePosition.x()), polygon.getYs(tilePosition.y()), polygon.getVectorCount());
     }
 
     /**
@@ -310,19 +310,19 @@ public class GameDrawUtils {
     }
 
     private static void drawTileBorderUp(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX() + TILE_WIDTH, tilePosition.getY());
+        g.drawLine(tilePosition.x(), tilePosition.y(), tilePosition.x() + TILE_WIDTH, tilePosition.y());
     }
 
     private static void drawTileBorderDown(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY() + TILE_HEIGHT - 1, tilePosition.getX() + TILE_WIDTH, tilePosition.getY() + TILE_HEIGHT - 1);
+        g.drawLine(tilePosition.x(), tilePosition.y() + TILE_HEIGHT - 1, tilePosition.x() + TILE_WIDTH, tilePosition.y() + TILE_HEIGHT - 1);
     }
 
     private static void drawTileBorderLeft(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX(), tilePosition.getY(), tilePosition.getX(), tilePosition.getY() + TILE_HEIGHT);
+        g.drawLine(tilePosition.x(), tilePosition.y(), tilePosition.x(), tilePosition.y() + TILE_HEIGHT);
     }
 
     private static void drawTileBorderRight(Graphics g, Vector2 tilePosition) {
-        g.drawLine(tilePosition.getX() + TILE_WIDTH - 1, tilePosition.getY(), tilePosition.getX() + TILE_WIDTH - 1, tilePosition.getY() + TILE_HEIGHT);
+        g.drawLine(tilePosition.x() + TILE_WIDTH - 1, tilePosition.y(), tilePosition.x() + TILE_WIDTH - 1, tilePosition.y() + TILE_HEIGHT);
     }
 
     /**
@@ -371,12 +371,12 @@ public class GameDrawUtils {
             Vector2 tileImagePosition = getTilePosition(tile.getPosition()).reverseY().subtract(layerBounds.start);
             BufferedImage tileImage = tileDatabase.get(getTileSpriteModel(tile));
 
-            assert tileImagePosition.getX() >= 0 && tileImagePosition.getY() >= 0;
-            if (tileImagePosition.getX() + TILE_WIDTH > layerBounds.getWidth() || tileImagePosition.getY() + TILE_HEIGHT > layerBounds.getHeight())
+            assert tileImagePosition.x() >= 0 && tileImagePosition.y() >= 0;
+            if (tileImagePosition.x() + TILE_WIDTH > layerBounds.getWidth() || tileImagePosition.y() + TILE_HEIGHT > layerBounds.getHeight())
                 throw new AssertionError();
 
-            graphics.drawImage(tileImage, tileImagePosition.getX(), tileImagePosition.getY(), null);
-            graphics.drawString(tile.getConfig().model + " " + tile.getPosition().getX() + " " + tile.getPosition().getY(), tileImagePosition.getX() + TILE_WIDTH / 4, tileImagePosition.getY() + TILE_HEIGHT / 2);
+            graphics.drawImage(tileImage, tileImagePosition.x(), tileImagePosition.y(), null);
+            graphics.drawString("%s %d %d".formatted(tile.getConfig().getModel(), tile.getPosition().x(), tile.getPosition().y()), tileImagePosition.x() + TILE_WIDTH / 4, tileImagePosition.y() + TILE_HEIGHT / 2);
 
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
@@ -395,7 +395,7 @@ public class GameDrawUtils {
                     Vector2 meepleImagePosition = getMeeplePosition(tileImagePosition, chunkId);
                     BufferedImage meepleImage = meepleDatabase.get(getOwnMeepleSpriteModel(game.getPlayerIndex(meeple.getOwner())));
                     graphics.setColor(Color.blue);
-                    graphics.drawImage(meepleImage, meepleImagePosition.getX(), meepleImagePosition.getY(), null);
+                    graphics.drawImage(meepleImage, meepleImagePosition.x(), meepleImagePosition.y(), null);
                 }
             }
         }
@@ -406,7 +406,7 @@ public class GameDrawUtils {
             Vector2 dragonImagePosition = getTilePosition(dragon.getPosition()).reverseY().subtract(layerBounds.start);
             BufferedImage dragonImage = dragonDatabase.get("dragon");
             graphics.setColor(Color.blue);
-            graphics.drawImage(dragonImage, dragonImagePosition.getX(), dragonImagePosition.getY(), null);
+            graphics.drawImage(dragonImage, dragonImagePosition.x(), dragonImagePosition.y(), null);
         }
     }
 }

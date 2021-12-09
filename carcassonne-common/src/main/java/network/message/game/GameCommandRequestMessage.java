@@ -3,7 +3,7 @@ package network.message.game;
 import logic.command.CommandFactory;
 import logic.command.CommandType;
 import logic.command.ICommand;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -11,7 +11,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent by the client to the server to request the execution of the specified command.
  */
-public class GameCommandRequestMessage extends Message {
+public class GameCommandRequestMessage implements IMessage {
     private ICommand command;
 
     public GameCommandRequestMessage() {

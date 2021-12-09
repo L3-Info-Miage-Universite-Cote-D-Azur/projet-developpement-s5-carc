@@ -2,7 +2,7 @@ package client.network;
 
 import client.message.MessageDispatcher;
 import network.Packet;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ public class ServerConnectionTest {
 
         setPrivateField(serverConnection, "messageDispatcher", new MessageDispatcher() {
             @Override
-            public void handle(Message message) {
+            public void handle(IMessage message) {
                 hasReceivedMessage[receivedMessageCount[0]++] = true;
             }
         });

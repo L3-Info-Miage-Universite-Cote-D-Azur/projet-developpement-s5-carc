@@ -97,10 +97,10 @@ class DragonTest {
     void testBlocked() {
         Game game = TestUtils.initGameEnv(2, true, false);
 
-        Tile tile1 = game.getConfig().tiles.stream().filter(t -> t.model.equals("S")).findFirst().orElseThrow().createTile(game);
-        Tile tile2 = game.getConfig().tiles.stream().filter(t -> t.model.equals("S")).findFirst().orElseThrow().createTile(game);
-        Tile tile3 = game.getConfig().tiles.stream().filter(t -> t.model.equals("S")).findFirst().orElseThrow().createTile(game);
-        Tile tile4 = game.getConfig().tiles.stream().filter(t -> t.model.equals("S")).findFirst().orElseThrow().createTile(game);
+        Tile tile1 = game.getConfig().getTiles().stream().filter(t -> t.getModel().equals("S")).findFirst().get().createTile(game);
+        Tile tile2 = game.getConfig().getTiles().stream().filter(t -> t.getModel().equals("S")).findFirst().get().createTile(game);
+        Tile tile3 = game.getConfig().getTiles().stream().filter(t -> t.getModel().equals("S")).findFirst().get().createTile(game);
+        Tile tile4 = game.getConfig().getTiles().stream().filter(t -> t.getModel().equals("S")).findFirst().get().createTile(game);
 
         tile1.setPosition(new Vector2(0, 0));
         tile2.setPosition(new Vector2(1, 0));

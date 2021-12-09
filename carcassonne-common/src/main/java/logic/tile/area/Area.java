@@ -254,7 +254,7 @@ public abstract class Area {
         int highestNumMeeples = numMeeplesPerPlayer.values().stream().max(Integer::compareTo).orElse(0);
 
         /* Get the players who have the highest number of meeples */
-        return numMeeplesPerPlayer.entrySet().stream().filter(e -> e.getValue() == highestNumMeeples).map(Map.Entry::getKey).collect(Collectors.toList());
+        return numMeeplesPerPlayer.entrySet().stream().filter(e -> e.getValue() == highestNumMeeples).map(Map.Entry::getKey).toList();
     }
 
     /**

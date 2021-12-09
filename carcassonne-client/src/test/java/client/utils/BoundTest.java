@@ -21,10 +21,10 @@ class BoundTest {
 
     @Test
     void boundTest() {
-        assertEquals(startX, bounds.start.getX());
-        assertEquals(startY, bounds.start.getY());
-        assertEquals(endX, bounds.end.getX());
-        assertEquals(endY, bounds.end.getY());
+        assertEquals(startX, bounds.start.x());
+        assertEquals(startY, bounds.start.y());
+        assertEquals(endX, bounds.end.x());
+        assertEquals(endY, bounds.end.y());
     }
 
     @Test
@@ -36,10 +36,10 @@ class BoundTest {
     @Test
     void reverseTest() {
         Bounds bounds1 = bounds.reverseY();
-        assertEquals(bounds.start.getX(), bounds1.start.getX());
-        assertEquals(-bounds.end.getY(), bounds1.start.getY());
-        assertEquals(bounds.end.getX(), bounds1.end.getX());
-        assertEquals(-bounds.start.getY(), bounds1.end.getY());
+        assertEquals(bounds.start.x(), bounds1.start.x());
+        assertEquals(-bounds.end.y(), bounds1.start.y());
+        assertEquals(bounds.end.x(), bounds1.end.x());
+        assertEquals(-bounds.start.y(), bounds1.end.y());
     }
 
     @Test
@@ -47,9 +47,9 @@ class BoundTest {
         int x = 5;
         int y = 20;
         Bounds bounds1 = bounds.scale(x, y);
-        assertEquals(bounds.start.getX() * x, bounds1.start.getX());
-        assertEquals(bounds.start.getY() * y, bounds1.start.getY());
-        assertEquals(bounds.end.getX() * x, bounds1.end.getX());
-        assertEquals(bounds.end.getY() * y, bounds1.end.getY());
+        assertEquals(bounds.start.x() * x, bounds1.start.x());
+        assertEquals(bounds.start.y() * y, bounds1.start.y());
+        assertEquals(bounds.end.x() * x, bounds1.end.x());
+        assertEquals(bounds.end.y() * y, bounds1.end.y());
     }
 }

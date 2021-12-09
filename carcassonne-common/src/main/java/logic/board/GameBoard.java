@@ -212,8 +212,7 @@ public class GameBoard {
      * @param tileToPlace the tile to place
      * @return a list of free places for the specified tile
      */
-    // TODO Can LinkedList be replaced by a simple List ?
-    public LinkedList<Vector2> findFreePlacesForTile(Tile tileToPlace) {
+    public List<Vector2> findFreePlacesForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
             throw new IllegalArgumentException("Tile must be not null.");
         }

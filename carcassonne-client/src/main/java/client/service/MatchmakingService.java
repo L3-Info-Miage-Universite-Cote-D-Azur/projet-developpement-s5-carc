@@ -4,7 +4,7 @@ import client.Client;
 import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.game.GameDataMessage;
 import network.message.matchmaking.JoinMatchmakingMessage;
 import network.message.matchmaking.MatchmakingDataMessage;
@@ -48,11 +48,12 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
      * @param message The message to handle.
      */
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(IMessage message) {
         switch (message.getType()) {
             case MATCHMAKING_DATA -> onMatchmakingData((MatchmakingDataMessage) message);
             case MATCHMAKING_FAILED -> onMatchmakingFailed((MatchmakingFailedMessage) message);
             case GAME_DATA -> onMatchmakingCompleted((GameDataMessage) message);
+            default -> { }
         }
     }
 
@@ -73,9 +74,9 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
     /**
      * Handles the matchmaking failed message.
      *
-     * @param message
+     * @param ignoredMessage
      */
-    private void onMatchmakingFailed(MatchmakingFailedMessage message) {
+    private void onMatchmakingFailed(MatchmakingFailedMessage ignoredMessage) {
         Logger.error(LoggerCategory.SERVICE, "Matchmaking failed!");
         reset();
     }
@@ -83,7 +84,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
     /**
      * Handles the matchmaking completed message.
      */
-    private void onMatchmakingCompleted(GameDataMessage message) {
+    private void onMatchmakingCompleted(GameDataMessage ignoredMessage) {
         reset();
     }
 
@@ -92,7 +93,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
      */
     @Override
     public void onConnect() {
-        // ignored
+        // Nothing to do.
     }
 
     /**

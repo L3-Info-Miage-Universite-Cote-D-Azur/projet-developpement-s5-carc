@@ -31,7 +31,7 @@ class GameTest {
     @Test
     void testAddPlayer() {
         assertNotNull(config);
-        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, 7);
+        GameConfig gameConfig = new GameConfig(config.getTiles(), 1, 3, 7);
 
         assertNotNull(gameConfig);
         Game game = new Game(gameConfig);
@@ -76,7 +76,7 @@ class GameTest {
     @Test
     void testIsGameFinished() {
         assertNotNull(config);
-        GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
+        GameConfig gameConfig = new GameConfig(config.getTiles(), 1, 3, config.getStartingMeepleCount());
         Game game = new Game(gameConfig);
 
         assertFalse(game.isOver());
@@ -94,7 +94,7 @@ class GameTest {
     @Test
     void testIfThrowExceptionWhenNotEnoughPlayers() {
         assertNotNull(config);
-        Game game = new Game(new GameConfig(config.tiles, 1, 1, config.startingMeepleCount));
+        Game game = new Game(new GameConfig(config.getTiles(), 1, 1, config.getStartingMeepleCount()));
 
         assertThrows(NotEnoughPlayerException.class, game::start);
         assertDoesNotThrow(() -> {

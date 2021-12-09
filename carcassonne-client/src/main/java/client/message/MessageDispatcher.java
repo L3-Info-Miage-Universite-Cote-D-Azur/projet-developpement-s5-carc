@@ -1,7 +1,6 @@
 package client.message;
 
-import client.network.ServerConnection;
-import network.message.Message;
+import network.message.IMessage;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class MessageDispatcher {
      *
      * @param message The message to handle.
      */
-    public void handle(Message message) {
+    public void handle(IMessage message) {
         for (IMessageHandler handler : handlers) {
             handler.handleMessage(message);
         }

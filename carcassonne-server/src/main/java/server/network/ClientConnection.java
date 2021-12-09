@@ -2,7 +2,7 @@ package server.network;
 
 import network.Packet;
 import network.ResizableByteBuffer;
-import network.message.Message;
+import network.message.IMessage;
 import server.Server;
 import server.logger.Logger;
 import server.message.MessageHandler;
@@ -245,7 +245,7 @@ public class ClientConnection {
      *
      * @param message The message to send.
      */
-    public synchronized void send(Message message) {
+    public synchronized void send(IMessage message) {
         Logger.debug("Connection %d: Sending message %s", id, message);
 
         Packet packet = Packet.create(message);

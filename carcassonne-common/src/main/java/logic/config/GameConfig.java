@@ -14,17 +14,66 @@ import java.util.List;
  * Represents the game configuration.
  */
 public class GameConfig {
-    // TODO Make static final constant or non-public and provide accessors if needed.
-    public List<TileConfig> tiles;
-    public int minPlayers;
-    public int maxPlayers;
-    public int startingMeepleCount;
+    private final List<TileConfig> tiles;
+    private final int minPlayers;
+    private final int maxPlayers;
+    private final int startingMeepleCount;
 
     public GameConfig(List<TileConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
         this.tiles = tiles;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.startingMeepleCount = startingMeepleCount;
+    }
+
+    /**
+     * Gets the tile configurations.
+     * @return
+     */
+    public List<TileConfig> getTiles() {
+        return tiles;
+    }
+
+    /**
+     * Gets the tile configuration at the given index.
+     * @param index the index of the tile
+     * @return the tile configuration
+     */
+    public TileConfig getTile(int index) {
+        return tiles.get(index);
+    }
+
+    /**
+     * Gets the index of the given tile in the configuration list.
+     * @param tile the tile to search for
+     * @return the index of the tile in the configuration list
+     */
+    public int getTileIndex(TileConfig tile) {
+        return tiles.indexOf(tile);
+    }
+
+    /**
+     * Gets the number of minimum players.
+     * @return the number of minimum players
+     */
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    /**
+     * Gets the number of maximum players.
+     * @return the number of maximum players
+     */
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    /**
+     * Gets the number of starting meeple count.
+     * @return the number of starting meeple count
+     */
+    public int getStartingMeepleCount() {
+        return startingMeepleCount;
     }
 
     /**
@@ -71,22 +120,5 @@ public class GameConfig {
         }
 
         return tiles;
-    }
-
-    /**
-     * Validates the game configuration.
-     *
-     * @return true if the game configuration is valid, false otherwise
-     */
-    public boolean validate() {
-        if (minPlayers < 1) {
-            return false;
-        }
-
-        if (minPlayers > maxPlayers) {
-            return false;
-        }
-
-        return startingMeepleCount >= 1;
     }
 }

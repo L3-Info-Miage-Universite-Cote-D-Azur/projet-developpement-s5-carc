@@ -57,14 +57,24 @@ public class GameTurnInitState extends GameState {
         game.setState(new GameOverState(game));
     }
 
+    /**
+     * Encodes the state to a byte stream.
+     *
+     * @param stream The stream to encode to.
+     */
     @Override
     public void encode(ByteOutputStream stream) {
-        // TODO
+        // Nothing to encode.
     }
 
+    /**
+     * Decodes the state from a byte stream.
+     *
+     * @param stream The stream to decode from.
+     */
     @Override
     public void decode(ByteInputStream stream) {
-        // TODO
+        // Nothing to decode.
     }
 
     @Override

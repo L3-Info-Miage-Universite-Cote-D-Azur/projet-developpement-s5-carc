@@ -2,7 +2,7 @@ package client.service;
 
 import client.Client;
 import client.message.IMessageHandler;
-import network.message.Message;
+import network.message.IMessage;
 
 /**
  * Services that controls the game.
@@ -24,7 +24,7 @@ public class GameControllerService extends ServiceBase implements IMessageHandle
      * @param message The message to handle.
      */
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(IMessage message) {
         switch (message.getType()) {
             case SERVER_HELLO -> onAuthenticated();
             case GAME_RESULT -> onBattleOver();

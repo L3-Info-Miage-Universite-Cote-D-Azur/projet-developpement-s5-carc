@@ -1,6 +1,6 @@
 package network.message.game;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -9,7 +9,7 @@ import stream.ByteOutputStream;
  * Message sent to the client to send the current game data.
  * It's used to synchronize the client game data with the server game data.
  */
-public class GameDataMessage extends Message {
+public class GameDataMessage implements IMessage {
     /**
      * Serialized game data.
      */

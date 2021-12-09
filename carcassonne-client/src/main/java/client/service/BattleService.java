@@ -11,7 +11,7 @@ import logic.config.GameConfig;
 import logic.player.Player;
 import logic.state.GameState;
 import logic.tile.Tile;
-import network.message.Message;
+import network.message.IMessage;
 import network.message.game.GameCommandMessage;
 import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
@@ -44,7 +44,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      * @param message The message to handle.
      */
     @Override
-    public void handleMessage(Message message) {
+    public void handleMessage(IMessage message) {
         switch (message.getType()) {
             case GAME_DATA -> onGameData((GameDataMessage) message);
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
@@ -109,7 +109,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
      */
     private void onGameMasterNextTurnData(GameMasterNextTurnDataMessage message) {
         ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(gameView.getConfig().tiles.get(message.getTileConfigIndex()).createTile(gameView));
+        tiles.add(gameView.getConfig().getTile(message.getTileConfigIndex()).createTile(gameView));
         gameView.getStack().fill(tiles);
         gameView.getState().complete();
     }

@@ -1,6 +1,6 @@
 package network.message.matchmaking;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -8,7 +8,7 @@ import stream.ByteOutputStream;
 /**
  * Message sent when a matchmaking request failed.
  */
-public class MatchmakingFailedMessage extends Message {
+public class MatchmakingFailedMessage implements IMessage {
     /**
      * Gets the message type of this message.
      *
@@ -26,7 +26,7 @@ public class MatchmakingFailedMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-        // TODO
+        // Nothing to encode.
     }
 
     /**
@@ -36,6 +36,6 @@ public class MatchmakingFailedMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
-        //TODO
+        // Nothing to decode.
     }
 }

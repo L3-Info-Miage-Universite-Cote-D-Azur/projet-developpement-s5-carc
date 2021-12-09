@@ -98,7 +98,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
      * @param tile     the tile to evaluate.
      */
     private void evaluateOwnTiles(Vector2 position, Tile tile) {
-        int distance = tile.getPosition().subtract(position).length();
+        int distance = tile.getPosition().subtract(position).magnitude();
 
         if (distance < OWN_PROXIMITY_THRESHOLD) {
             addPenalty(distance < OWN_PROXIMITY_PANIC_THRESHOLD
@@ -116,7 +116,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
      * @param position the position to evaluate.
      */
     private void evaluateEnemyTiles(Vector2 position, Tile tile) {
-        int distance = tile.getPosition().subtract(position).length();
+        int distance = tile.getPosition().subtract(position).magnitude();
 
         if (distance < ENEMY_PROXIMITY_THRESHOLD) {
             addScore(distance < ENEMY_PROXIMITY_PANIC_THRESHOLD

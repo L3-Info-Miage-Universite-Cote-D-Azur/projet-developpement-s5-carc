@@ -5,6 +5,7 @@ import server.matchmaking.Matchmaking;
 import server.network.ClientConnectionManager;
 import server.network.socket.TcpServerSocket;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -18,12 +19,15 @@ public class Server {
     private final HashMap<Integer, Matchmaking> matchmaking;
     private final GameConfig gameConfig;
 
-    public Server(String host, int port) throws Exception {
-        if (instance != null) {
-            throw new Exception("Server already running");
+    public Server(String host, int port) throws IOException {
+        synchronized (Server.class) {
+            if (instance != null) {
+                throw new IllegalStateException("Server already running");
+            }
+
+            instance = this;
         }
 
-        instance = this;
         connectionManager = new ClientConnectionManager();
         serverSocket = new TcpServerSocket(host, port, connectionManager);
         gameConfig = GameConfig.loadFromResources();
@@ -45,8 +49,10 @@ public class Server {
     public void destroy() {
         this.stop();
 
-        if (instance == this) {
-            instance = null;
+        synchronized (Server.class) {
+            if (instance == this) {
+                instance = null;
+            }
         }
     }
 
@@ -99,15 +105,11 @@ public class Server {
      * @return the server's matchmaking
      */
     public Matchmaking getMatchmaking(int matchCapacity) {
-        if (matchCapacity < gameConfig.minPlayers)
+        if (matchCapacity < gameConfig.getMinPlayers())
             return null;
-        if (matchCapacity > gameConfig.maxPlayers)
+        if (matchCapacity > gameConfig.getMaxPlayers())
             return null;
 
-        if (!matchmaking.containsKey(matchCapacity)) {
-            matchmaking.put(matchCapacity, new Matchmaking(matchCapacity));
-        }
-
-        return matchmaking.get(matchCapacity);
+        return matchmaking.computeIfAbsent(matchCapacity, k -> new Matchmaking(k));
     }
 }

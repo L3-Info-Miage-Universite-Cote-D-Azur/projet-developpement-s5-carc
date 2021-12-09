@@ -1,6 +1,6 @@
 package network.message.game;
 
-import network.message.Message;
+import network.message.IMessage;
 import network.message.MessageType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -9,7 +9,7 @@ import stream.ByteOutputStream;
  * Message sent by the server to the client to inform the client of the result of the game.
  * It contains the winner of the game and the stats of the players.
  */
-public class GameResultMessage extends Message {
+public class GameResultMessage implements IMessage {
     private byte[] data;
 
     public GameResultMessage() {

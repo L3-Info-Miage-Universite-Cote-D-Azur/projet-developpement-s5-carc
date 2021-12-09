@@ -31,8 +31,8 @@ public abstract class AI implements IPlayerListener {
         Tile tileDrawn = placeTileState.getTileDrawn();
         TilePosition position = findPositionForTile(tileDrawn);
 
-        player.getGame().executeCommand(new RotateTileDrawnCommand(position.getRotation()));
-        player.getGame().executeCommand(new PlaceTileDrawnCommand(position.getPosition()));
+        player.getGame().executeCommand(new RotateTileDrawnCommand(position.rotation()));
+        player.getGame().executeCommand(new PlaceTileDrawnCommand(position.position()));
     }
 
     /**

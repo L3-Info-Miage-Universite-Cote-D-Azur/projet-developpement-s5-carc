@@ -77,7 +77,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onTilePlaced(Tile tile) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place tile %s at (%d,%d)", tile.getConfig().model, tile.getPosition().getX(), tile.getPosition().getY());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place tile %s at (%d,%d)", tile.getConfig().getModel(), tile.getPosition().x(), tile.getPosition().y());
     }
 
     /**
@@ -87,7 +87,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onTileRotated(Tile tile) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Rotate tile %s to ", tile.getConfig().model, tile.getRotation());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Rotate tile %s to ", tile.getConfig().getModel(), tile.getRotation());
     }
 
     /**
@@ -98,7 +98,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onMeeplePlaced(Chunk chunk, Meeple meeple) {
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple at tile (%d,%d), chunk %s", chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place meeple at tile (%d,%d), chunk %s", chunk.getParent().getPosition().x(), chunk.getParent().getPosition().y(), chunk.getCurrentId());
     }
 
     /**
@@ -109,7 +109,7 @@ public class ClientGameListener implements IGameListener {
      */
     @Override
     public void onMeepleRemoved(Chunk chunk, Meeple meeple) {
-        Logger.info(LoggerCategory.GAME, "Meeple of player %d has been removed from tile (%d,%d), chunk %s", meeple.getOwner().getId(), chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
+        Logger.info(LoggerCategory.GAME, "Meeple of player %d has been removed from tile (%d,%d), chunk %s", meeple.getOwner().getId(), chunk.getParent().getPosition().x(), chunk.getParent().getPosition().y(), chunk.getCurrentId());
     }
 
     /**
@@ -120,7 +120,7 @@ public class ClientGameListener implements IGameListener {
     @Override
     public void onFairySpawned(Fairy fairy) {
         Chunk chunk = fairy.getChunk();
-        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place fairy at tile (%d,%d), chunk %s", chunk.getParent().getPosition().getX(), chunk.getParent().getPosition().getY(), chunk.getCurrentId());
+        Logger.player(LoggerCategory.GAME, game.getTurnExecutor(), "Place fairy at tile (%d,%d), chunk %s", chunk.getParent().getPosition().x(), chunk.getParent().getPosition().y(), chunk.getCurrentId());
     }
 
     /**

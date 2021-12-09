@@ -8,12 +8,9 @@ import java.util.ArrayList;
 public class ExcelRow {
     private final ExcelNode node;
     private final ArrayList<String> values;
-    private final int index;
-    // TODO Can index be removed ?
 
-    public ExcelRow(ExcelNode node, int index) {
+    public ExcelRow(ExcelNode node) {
         this.node = node;
-        this.index = index;
         this.values = new ArrayList<>();
     }
 

@@ -20,7 +20,7 @@ public class ByteStreamHelper {
      * @param game   The game.
      */
     public static void encodeTile(ByteOutputStream stream, Tile tile, Game game) {
-        int tileConfigIndex = game.getConfig().tiles.indexOf(tile.getConfig());
+        int tileConfigIndex = game.getConfig().getTileIndex(tile.getConfig());
         assert tileConfigIndex != -1;
         stream.writeInt(tileConfigIndex);
         tile.encode(stream);
@@ -35,7 +35,7 @@ public class ByteStreamHelper {
      */
     public static Tile decodeTile(ByteInputStream stream, Game game) {
         int tileConfigIndex = stream.readInt();
-        Tile tile = game.getConfig().tiles.get(tileConfigIndex).createTile(game);
+        Tile tile = game.getConfig().getTile(tileConfigIndex).createTile(game);
         tile.decode(stream);
         return tile;
     }
@@ -47,8 +47,8 @@ public class ByteStreamHelper {
      * @param vector The vector to encode.
      */
     public static void encodeVector(ByteOutputStream stream, Vector2 vector) {
-        stream.writeInt(vector.getX());
-        stream.writeInt(vector.getY());
+        stream.writeInt(vector.x());
+        stream.writeInt(vector.y());
     }
 
     /**

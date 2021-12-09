@@ -42,7 +42,7 @@ public class ResizableByteBuffer {
 
         if (remaining < length) {
             if (this.index + length > this.maxSize) {
-                throw new RuntimeException("Buffer too large");
+                throw new IllegalArgumentException("Buffer too large");
             }
             resize(Math.min((this.index + length) * 2, this.maxSize));
         }

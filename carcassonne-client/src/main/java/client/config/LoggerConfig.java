@@ -85,7 +85,7 @@ public class LoggerConfig {
      * @return the color as ANSI escape code
      */
     public String getDebugColor() {
-        return "32m";
+        return "36m";
     }
 
     /**

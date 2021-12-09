@@ -34,11 +34,9 @@ public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
      */
     public static final int AREA_SCORE_MULTIPLIER = 2;
 
-    private final Game game;
     private final Player player;
 
-    public HeuristicMeepleRemovalEvaluator(Game game, Player player) {
-        this.game = game;
+    public HeuristicMeepleRemovalEvaluator(Player player) {
         this.player = player;
     }
 
