@@ -16,6 +16,7 @@ public class ClientSession {
     private Match currentMatch;
 
     private boolean destroyed;
+    private final Object lockObj = new Object();
 
     public ClientSession(ClientConnection connection, int userId) {
         this.connection = connection;
@@ -51,7 +52,7 @@ public class ClientSession {
         return userId;
     }
 
-    public Matchmaking getMatchmaking() {
+    public synchronized Matchmaking getMatchmaking() {
         return currentMatchmaking;
     }
 
@@ -63,13 +64,13 @@ public class ClientSession {
         }
     }
 
-    public Match getMatch() {
+    public synchronized Match getMatch() {
         return currentMatch;
     }
 
     public synchronized void setMatch(Match currentMatch) {
         if (destroyed) {
-            synchronized (currentMatch) {
+            synchronized (lockObj) {
                 currentMatch.onPlayerDisconnected(this);
             }
         } else {

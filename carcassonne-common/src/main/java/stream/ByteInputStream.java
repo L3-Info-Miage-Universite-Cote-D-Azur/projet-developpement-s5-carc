@@ -50,11 +50,12 @@ public class ByteInputStream {
     }
 
     public byte[] readBytes(int len) {
+        byte[] bytes = null;
         if (len == -1) {
-            return null;
+            return bytes;
         }
 
-        byte[] bytes = new byte[len];
+        bytes = new byte[len];
         System.arraycopy(buf, pos, bytes, 0, len);
         pos += len;
         return bytes;

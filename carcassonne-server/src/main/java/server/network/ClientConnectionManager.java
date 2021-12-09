@@ -60,7 +60,8 @@ public class ClientConnectionManager {
         try {
             connectionCheckerThread.join();
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Logger.error("Interrupted!", e);
+            Thread.currentThread().interrupt();
         }
     }
 
