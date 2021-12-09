@@ -5,26 +5,31 @@ import logic.player.Player;
 /**
  * Represents the statistics of a player.
  */
-public class GameStatisticsPlayer {
+public class GameStatisticsPlayer implements Comparable<GameStatisticsPlayer> {
     private final int id;
-    private final int roadScore;
-    private final int townScore;
-    private final int abbeyScore;
-    private final int fieldScore;
-    private final int remainingMeeples;
-    private final int playedMeeples;
+    private int roadScore;
+    private int townScore;
+    private int abbeyScore;
+    private int fieldScore;
+    private int remainingMeeples;
+    private int playedMeeples;
 
-    private final int order;
-
-    public GameStatisticsPlayer(Player player, int order) {
+    public GameStatisticsPlayer(Player player) {
         this.id = player.getId();
-        this.roadScore = player.getRoadScore();
-        this.townScore = player.getTownScore();
-        this.abbeyScore = player.getAbbeyScore();
-        this.fieldScore = player.getFieldPoints();
-        this.remainingMeeples = player.getMeeplesRemained();
-        this.playedMeeples = player.getMeeplesPlayed();
-        this.order = order;
+        this.append(player);
+    }
+
+    /**
+     * Appends the player's statistics.
+     * @param player the player to append.
+     */
+    public void append(Player player) {
+        this.roadScore += player.getRoadScore();
+        this.townScore += player.getTownScore();
+        this.abbeyScore += player.getAbbeyScore();
+        this.fieldScore += player.getFieldPoints();
+        this.remainingMeeples += player.getMeeplesRemained();
+        this.playedMeeples += player.getMeeplesPlayed();
     }
 
     /**
@@ -100,11 +105,16 @@ public class GameStatisticsPlayer {
     }
 
     /**
-     * Gets the player's order in the ranking.
+     * Compares this player to another player.
      *
-     * @return the player's order in the ranking.
+     * @param other the other player.
+     * @return the comparison result.
      */
-    public int getOrder() {
-        return order;
+    @Override
+    public int compareTo(GameStatisticsPlayer other) {
+        if (other == null) {
+            throw new NullPointerException("The other player cannot be null.");
+        }
+        return Integer.compare(getTotalScore(), other.getTotalScore());
     }
 }

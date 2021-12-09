@@ -10,7 +10,7 @@ public class Logger {
         // ignored
     }
 
-    private static final LogLevel DEFAULT_LEVEL = LogLevel.DEBUG;
+    private static final LogLevel DEFAULT_LEVEL = LogLevel.INFO;
 
     /**
      * Logs a message to the console with the DEBUG level.

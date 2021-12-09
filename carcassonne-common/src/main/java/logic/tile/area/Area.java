@@ -58,6 +58,15 @@ public abstract class Area {
     }
 
     /**
+     * Gets the list of tiles in the area.
+     *
+     * @return The list of tiles.
+     */
+    public Set<Tile> getTiles() {
+        return tiles;
+    }
+
+    /**
      * Gets the area unique id.
      *
      * @return The unique id.
@@ -87,6 +96,13 @@ public abstract class Area {
      * @return The points earned by the area closing.
      */
     public abstract int getClosingPoints();
+
+    /**
+     * Gets the points earned by the area opening.
+     *
+     * @return The points earned by the area opening.
+     */
+    public abstract int getOpenPoints();
 
     /**
      * Returns whether the area is closed.
@@ -214,21 +230,38 @@ public abstract class Area {
      */
     protected void onClosed() {
         closed = true;
-        evaluatePoints();
+        evaluateClosePoints();
     }
 
     /**
-     * Evaluates the area points.
+     * Evaluates the area closing points.
      */
-    protected void evaluatePoints() {
-        for (Player winner : getEvaluationWinners()) {
-            winner.addScore(getClosingPoints(), getType());
+    protected void evaluateClosePoints() {
+        int points = getClosingPoints();
+
+        if (points >= 1) {
+            for (Player winner : getEvaluationWinners()) {
+                winner.addScore(getClosingPoints(), getType());
+            }
         }
 
         /* As the area evaluation is done, we can remove the meeples in the area. */
         for (Chunk chunk : chunks) {
             if (chunk.hasMeeple()) {
                 RemoveMeepleCommand.removeMeeple(chunk);
+            }
+        }
+    }
+
+    /**
+     * Evaluates the area open points.
+     */
+    public void evaluateOpenPoints() {
+        int points = getOpenPoints();
+
+        if (points >= 1) {
+            for (Player winner : getEvaluationWinners()) {
+                winner.addScore(points, getType());
             }
         }
     }

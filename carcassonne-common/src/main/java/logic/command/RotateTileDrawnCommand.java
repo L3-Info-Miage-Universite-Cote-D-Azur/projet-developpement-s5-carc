@@ -12,6 +12,8 @@ import stream.ByteOutputStream;
  * Commands that rotate the tile drawn by the player.
  */
 public class RotateTileDrawnCommand implements ICommand {
+    public static final int ERROR_ROTATING_ON_CURRENT_ROTATION = -1;
+
     private TileRotation rotation;
 
     public RotateTileDrawnCommand() {
@@ -58,6 +60,13 @@ public class RotateTileDrawnCommand implements ICommand {
      */
     @Override
     public int canBeExecuted(Game game) {
+        GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
+        Tile tile = placeTileState.getTileDrawn();
+
+        if (tile.getRotation() == rotation) {
+            return ERROR_ROTATING_ON_CURRENT_ROTATION;
+        }
+
         return ERROR_SUCCESS;
     }
 

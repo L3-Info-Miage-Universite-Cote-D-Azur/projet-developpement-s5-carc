@@ -1,6 +1,9 @@
 package logic.state;
 
 import logic.Game;
+import logic.board.GameBoard;
+import logic.tile.Tile;
+import logic.tile.area.Area;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -14,6 +17,12 @@ public class GameOverState extends GameState {
 
     @Override
     public void init() {
+        GameBoard board = game.getBoard();
+
+        for (Area area : board.getAreas()) {
+            area.evaluateOpenPoints();
+        }
+
         game.getListener().onGameEnded();
     }
 

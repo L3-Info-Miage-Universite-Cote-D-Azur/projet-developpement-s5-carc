@@ -30,7 +30,10 @@ public class OfflinePlayerAI implements IPlayerListener {
         List<Vector2> freeTiles = null;
 
         for (TileRotation rotation : TileRotation.values()) {
-            game.executeCommand(new RotateTileDrawnCommand(rotation));
+            if (rotation != tileDrawn.getRotation()) {
+                game.executeCommand(new RotateTileDrawnCommand(rotation));
+            }
+
             freeTiles = game.getBoard().findFreePlacesForTile(tileDrawn);
 
             if (!freeTiles.isEmpty()) {

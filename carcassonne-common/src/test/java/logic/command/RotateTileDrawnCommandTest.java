@@ -8,7 +8,7 @@ import logic.tile.Tile;
 import logic.tile.TileRotation;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RotateTileDrawnCommandTest {
     @Test
@@ -17,13 +17,13 @@ class RotateTileDrawnCommandTest {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) game.getState();
         Tile tileDrawn = placeTileState.getTileDrawn();
 
-        game.executeCommand(new RotateTileDrawnCommand(TileRotation.UP));
+        assertFalse(game.executeCommand(new RotateTileDrawnCommand(TileRotation.UP)));
         assertEquals(TileRotation.UP, tileDrawn.getRotation());
-        game.executeCommand(new RotateTileDrawnCommand(TileRotation.RIGHT));
+        assertTrue(game.executeCommand(new RotateTileDrawnCommand(TileRotation.RIGHT)));
         assertEquals(TileRotation.RIGHT, tileDrawn.getRotation());
-        game.executeCommand(new RotateTileDrawnCommand(TileRotation.LEFT));
+        assertTrue(game.executeCommand(new RotateTileDrawnCommand(TileRotation.LEFT)));
         assertEquals(TileRotation.LEFT, tileDrawn.getRotation());
-        game.executeCommand(new RotateTileDrawnCommand(TileRotation.DOWN));
+        assertTrue(game.executeCommand(new RotateTileDrawnCommand(TileRotation.DOWN)));
         assertEquals(TileRotation.DOWN, tileDrawn.getRotation());
     }
 }

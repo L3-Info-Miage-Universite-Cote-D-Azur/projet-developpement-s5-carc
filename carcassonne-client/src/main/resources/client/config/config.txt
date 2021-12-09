@@ -4,7 +4,7 @@ Server
 	Port	8080
 Logger
 	Name	Value
-	Level	DEBUG
+	Level	INFO
 	Player_1	35m
 	Player_2	34m
 	Player_3	93m
@@ -14,3 +14,7 @@ Match
 	Name	Value
 	NumMatches	10
 	NumPlayers	2
+Stats
+	Name	Value
+	CreateBoardView	False
+	CreateGlobalStatistics	True

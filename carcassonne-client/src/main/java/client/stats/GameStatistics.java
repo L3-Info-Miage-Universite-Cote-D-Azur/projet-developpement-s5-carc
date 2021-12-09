@@ -12,39 +12,66 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Represents the statistics of the game.
  */
 public class GameStatistics {
     private final ArrayList<GameStatisticsPlayer> players;
-    private final BufferedImage boardView;
+
+    public GameStatistics() {
+        this.players = new ArrayList<>();
+    }
 
     public GameStatistics(Game game) {
         this.players = new ArrayList<>();
-        this.boardView = GameDrawUtils.createLayer(game);
-
-        ArrayList<Player> sortedPlayersByScore = new ArrayList<>();
-        for (int i = 0; i < game.getPlayerCount(); i++)
-            sortedPlayersByScore.add(game.getPlayer(i));
-
-        sortedPlayersByScore.sort(Player::compareTo);
-
-        for (int i = 0; i < sortedPlayersByScore.size(); i++) {
-            Player player = game.getPlayer(i);
-            GameStatisticsPlayer playerStatistics = new GameStatisticsPlayer(player, i + 1);
-
-            this.players.add(playerStatistics);
-        }
+        append(game);
     }
 
     /**
-     * Creates the excel file with the details statistics.
+     * Appends the stat
+     * @param game the game
+     */
+    public void append(Game game) {
+        for (int i = 0; i < game.getPlayerCount(); i++) {
+            Player player = game.getPlayer(i);
+            GameStatisticsPlayer gameStatisticsPlayer = getPlayer(player.getId());
+
+            if (gameStatisticsPlayer == null) {
+                gameStatisticsPlayer = new GameStatisticsPlayer(player);
+                players.add(gameStatisticsPlayer);
+            } else {
+                gameStatisticsPlayer.append(player);
+            }
+        }
+
+        Collections.sort(players, Collections.reverseOrder());
+    }
+
+    /**
+     * Gets the player by id.
+     * @param id the id
+     * @return the player.
+     */
+    public GameStatisticsPlayer getPlayer(int id) {
+        for (GameStatisticsPlayer player : players) {
+            if (player.getId() == id) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Creates the excel file with the details of statistics.
      *
-     * @return the excel file with the details statistics.
+     * @return the excel file with the details of statistics.
      */
     private ExcelNode createDetailsExcel() {
         ExcelNode excelNode = new ExcelNode();
@@ -84,24 +111,12 @@ public class GameStatistics {
     /**
      * Saves the excel file with the details of statistics.
      *
-     * @param detailsFile the excel file with the details of statistics.
-     * @param viewFile    the excel file with the board view.
+     * @param file the excel file with the details of statistics.
      */
-    public void save(File detailsFile, File viewFile) {
+    public void save(File file) {
         try {
-            createDetailsExcel().saveToFile(detailsFile);
-
-            try (FileOutputStream fileOutputStream = new FileOutputStream(viewFile)) {
-                FileChannel channel = fileOutputStream.getChannel();
-                FileLock lock = channel.lock();
-
-                try {
-                    ImageIO.write(boardView, "jpg", fileOutputStream);
-                } finally {
-                    lock.release();
-                }
-            }
-        } catch (Exception e) {
+            createDetailsExcel().saveToFile(file);
+        } catch (IOException e) {
             Logger.error(LoggerCategory.SERVICE, "Failed to save the game statistics. %s", e);
         }
     }

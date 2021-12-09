@@ -41,11 +41,10 @@ public class TcpClientSocket {
     /**
      * Connects to the specified host and port.
      *
-     * @param host The host to connect to.
-     * @param port The port to connect to.
+     * @param serverAddress The address of the server to connect to.
      */
-    public void connect(String host, int port) {
-        socketChannel.connect(new InetSocketAddress(host, port), listener, new TcpConnectHandler());
+    public void connect(InetSocketAddress serverAddress) {
+        socketChannel.connect(serverAddress, listener, new TcpConnectHandler());
     }
 
     /**

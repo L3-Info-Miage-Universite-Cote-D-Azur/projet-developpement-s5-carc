@@ -12,6 +12,7 @@ import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 
 /**
@@ -47,6 +48,11 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     private static final int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
 
+    /**
+     * Number of retries to connect to the server.
+     */
+    private static final int NUM_CONNECTION_RETRIES = 5;
+
     private final TcpClientSocket clientSocket;
     private final ByteBuffer readBuffer;
     private final ResizableByteBuffer receiveStream;
@@ -69,7 +75,7 @@ public class ServerConnection implements ITcpClientSocketListener {
      * @param port The port of the server.
      */
     public void connect(String host, int port) {
-        clientSocket.connect(host, port);
+        clientSocket.connect(new InetSocketAddress(host, port));
     }
 
     /**

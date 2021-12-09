@@ -3,6 +3,7 @@ package client.network.socket;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -59,7 +60,7 @@ public class TcpClientSocketTest {
             }
         });
 
-        clientSocket.connect("localhost", ECHO_SERVER_PORT);
+        clientSocket.connect(new InetSocketAddress("localhost", ECHO_SERVER_PORT));
 
         synchronized (connectedLock) {
             connectedLock.wait(5000);
@@ -117,7 +118,7 @@ public class TcpClientSocketTest {
             }
         });
 
-        clientSocket.connect("localhost", ECHO_SERVER_PORT);
+        clientSocket.connect(new InetSocketAddress("localhost", ECHO_SERVER_PORT));
 
         synchronized (endEvent) {
             endEvent.wait(5000);

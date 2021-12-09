@@ -5,11 +5,15 @@ import excel.ExcelNode;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 
+/**
+ * Represents the client configuration.
+ */
 public class ClientConfig {
     private final String serverHost;
     private final int serverPort;
     private final LoggerConfig loggerConfig;
     private final MatchConfig matchConfig;
+    private final StatsConfig statsConfig;
 
     private ClientConfig(ExcelNode node) {
         ExcelNode serverNode = node.getChild("Server");
@@ -30,11 +34,18 @@ public class ClientConfig {
             throw new IllegalArgumentException("Match node not found");
         }
 
+        ExcelNode statsNode = node.getChild("Stats");
+
+        if (statsNode == null) {
+            throw new IllegalArgumentException("Stats node not found");
+        }
+
         this.serverHost = serverNode.getRow("Host").getValue("Value");
         this.serverPort = Integer.parseInt(serverNode.getRow("Port").getValue("Value"));
 
         this.loggerConfig = new LoggerConfig(loggerNode);
         this.matchConfig = new MatchConfig(matchNode);
+        this.statsConfig = new StatsConfig(statsNode);
     }
 
     /**
@@ -86,5 +97,14 @@ public class ClientConfig {
      */
     public MatchConfig getMatchConfig() {
         return matchConfig;
+    }
+
+    /**
+     * Returns the stats configuration.
+     *
+     * @return the stats configuration
+     */
+    public StatsConfig getStatsConfig() {
+        return statsConfig;
     }
 }

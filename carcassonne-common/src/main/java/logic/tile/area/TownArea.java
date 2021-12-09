@@ -46,4 +46,14 @@ public class TownArea extends Area {
     public int getClosingPoints() {
         return 2 * getNumTiles() + 2 * getNumTiles(TileFlags.SHIELD);
     }
+
+    /**
+     * Gets the points earned by the area opening.
+     *
+     * @return The points earned by the area opening.
+     */
+    @Override
+    public int getOpenPoints() {
+        return 0;
+    }
 }

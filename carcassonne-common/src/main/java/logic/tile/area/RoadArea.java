@@ -45,4 +45,14 @@ public class RoadArea extends Area {
     public int getClosingPoints() {
         return getNumTiles();
     } // getNumTiles() * 1
+
+    /**
+     * Gets the points earned by the area opening.
+     *
+     * @return The points earned by the area opening.
+     */
+    @Override
+    public int getOpenPoints() {
+        return 0;
+    }
 }

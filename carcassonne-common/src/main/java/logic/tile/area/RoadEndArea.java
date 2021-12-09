@@ -47,6 +47,16 @@ public class RoadEndArea extends Area {
     }
 
     /**
+     * Gets the points earned by the area opening.
+     *
+     * @return The points earned by the area opening.
+     */
+    @Override
+    public int getOpenPoints() {
+        return 0;
+    }
+
+    /**
      * Checks if the area is closed.
      * By default, it is closed if there are no free tile edges.
      *

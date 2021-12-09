@@ -1,10 +1,7 @@
 package client.ai.heuristic.evaluator;
 
 import logic.player.Player;
-import logic.tile.area.AbbeyArea;
-import logic.tile.area.Area;
-import logic.tile.area.RoadArea;
-import logic.tile.area.TownArea;
+import logic.tile.area.*;
 import logic.tile.chunk.Chunk;
 
 /**
@@ -29,6 +26,11 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
      * Score earned for each tiles in the town area.
      */
     public static final int ROAD_TILE_COUNT_SCORE = 3;
+
+    /**
+     * Score earned for each tiles in the town area.
+     */
+    public static final int FIELD_TILE_EARN_POINT_SCORE = 5;
 
     /**
      * Penalty for each meeples placed in the area.
@@ -109,8 +111,8 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
             case ROAD:
                 evaluateRoad(((RoadArea) area));
                 break;
-            default:
-                // Do nothing
+            case FIELD:
+                evaluateField(((FieldArea) area));
                 break;
         }
     }
@@ -157,5 +159,14 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
      */
     private void evaluateRoad(RoadArea area) {
         addScore(ROAD_TILE_COUNT_SCORE * area.getNumTiles());
+    }
+
+    /**
+     * Evaluates the placement of a meeple on the given field area.
+     *
+     * @param area The area to evaluate.
+     */
+    private void evaluateField(FieldArea area) {
+        addScore(FIELD_TILE_EARN_POINT_SCORE * area.getNumTiles());
     }
 }

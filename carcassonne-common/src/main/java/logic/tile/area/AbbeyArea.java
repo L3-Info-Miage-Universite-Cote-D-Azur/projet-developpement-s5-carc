@@ -18,7 +18,7 @@ public class AbbeyArea extends Area {
     /**
      * Constructor for the area.
      *
-     * @param chunks
+     * @param chunks The chunks that compose the area.
      */
     public AbbeyArea(List<Chunk> chunks) {
         super(chunks);
@@ -54,6 +54,16 @@ public class AbbeyArea extends Area {
     public int getClosingPoints() {
         // Abbey area is 9 tiles.
         return NUM_NEIGHBORS_REQUIRED; // NUM_NEIGHBORS_REQUIRED * 1
+    }
+
+    /**
+     * Gets the points earned by the area opening.
+     *
+     * @return The points earned by the area opening.
+     */
+    @Override
+    public int getOpenPoints() {
+        return 0;
     }
 
     /**

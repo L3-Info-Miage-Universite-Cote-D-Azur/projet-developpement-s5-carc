@@ -10,6 +10,7 @@ import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileFlags;
+import logic.tile.TileRotation;
 import logic.tile.chunk.Chunk;
 
 /**
@@ -29,9 +30,13 @@ public abstract class AI implements IPlayerListener {
     public void onWaitingPlaceTile() {
         GameTurnPlaceTileState placeTileState = (GameTurnPlaceTileState) player.getGame().getState();
         Tile tileDrawn = placeTileState.getTileDrawn();
+        TileRotation tileDrawnOriginalRotation = tileDrawn.getRotation();
         TilePosition position = findPositionForTile(tileDrawn);
 
-        player.getGame().executeCommand(new RotateTileDrawnCommand(position.rotation()));
+        if (position.rotation() != tileDrawnOriginalRotation) {
+            player.getGame().executeCommand(new RotateTileDrawnCommand(position.rotation()));
+        }
+
         player.getGame().executeCommand(new PlaceTileDrawnCommand(position.position()));
     }
 
