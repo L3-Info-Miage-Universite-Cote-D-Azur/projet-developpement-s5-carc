@@ -4,15 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ServerTest {
+class ServerTest {
     private static final String SERVER_HOST = "localhost";
 
     @Test
     void testConstructorAndSingleton() throws Exception {
-        assertEquals(null, Server.getInstance());
+        assertNull(Server.getInstance());
 
         Server server = new Server(SERVER_HOST, new Random().nextInt(10000) + 40000);
 

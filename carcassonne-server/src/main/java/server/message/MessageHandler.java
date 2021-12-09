@@ -44,9 +44,9 @@ public class MessageHandler {
     /**
      * Handles a client hello message.
      *
-     * @param message The client hello message.
+     * @param ignoredMessage The client hello message.
      */
-    private void onClientHello(ClientHelloMessage message) {
+    private void onClientHello(ClientHelloMessage ignoredMessage) {
         if (client.getSession() != null) {
             Logger.warn("Client already has a session.");
             return;
@@ -94,9 +94,9 @@ public class MessageHandler {
     /**
      * Handles a leave matchmaking message.
      *
-     * @param message The leave matchmaking message.
+     * @param ignoredMessage The leave matchmaking message.
      */
-    private void onLeaveMatchmaking(LeaveMatchmakingMessage message) {
+    private void onLeaveMatchmaking(LeaveMatchmakingMessage ignoredMessage) {
         ClientSession session = client.getSession();
 
         if (session == null) {

@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Represents a TCP client connection manager.
  */
 public class ClientConnectionManager {
-    private ConcurrentHashMap<Integer, ClientConnection> connections;
-    private Thread connectionCheckerThread;
+    private final ConcurrentHashMap<Integer, ClientConnection> connections;
+    private final Thread connectionCheckerThread;
     private int nextConnectionId;
 
     private boolean running;
@@ -19,11 +19,8 @@ public class ClientConnectionManager {
         connections = new ConcurrentHashMap<>();
         connectionCheckerThread = new Thread(() -> {
             while (running) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                // TODO Can I use yield instead ?
+                Thread.yield();
 
                 for (ClientConnection connection : connections.values()) {
                     if (!connection.isConnected()) {

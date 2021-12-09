@@ -8,7 +8,7 @@ import server.session.ClientSession;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MatchmakingTest {
+class MatchmakingTest {
     private static ClientConnection createFakeClientConnection(int id) {
         return new ClientConnection(null, id) {
             @Override

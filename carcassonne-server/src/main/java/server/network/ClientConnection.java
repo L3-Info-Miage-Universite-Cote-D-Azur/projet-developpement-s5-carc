@@ -26,34 +26,34 @@ public class ClientConnection {
      * When the data is read, it'll be stored in the stream receiveStream.
      * If the buffer is full, extra data is handled by the next call to onReceive.
      */
-    private static int READ_BUFFER_SIZE = 1024;
+    private static final int READ_BUFFER_SIZE = 1024;
 
     /**
      * Initial size of the stream used to store data received from socket and to be handled.
      */
-    private static int INITIAL_RECEIVE_STREAM_SIZE = 1024;
+    private static final int INITIAL_RECEIVE_STREAM_SIZE = 1024;
 
     /**
      * Max size of the stream used to store data received from socket and to be handled.
      * If the stream is full, the connection is closed.
      */
-    private static int MAX_RECEIVE_BUFFER_SIZE = 1024 * 1024;
+    private static final int MAX_RECEIVE_BUFFER_SIZE = 1024 * 1024;
 
     /**
      * Timeout before closing the connection if no data is received.
      */
-    private static int LAST_PACKET_TIMEOUT = 60000;
+    private static final int LAST_PACKET_TIMEOUT = 60000;
 
     /**
      * Initial size of the stream used to store data to send to the socket.
      */
-    private static int INITIAL_SEND_STREAM_SIZE = 1024;
+    private static final int INITIAL_SEND_STREAM_SIZE = 1024;
 
     /**
      * Max size of the stream used to store data to send to the socket.
      * If the stream is full, the connection is closed.
      */
-    private static int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
+    private static final int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
 
     /**
      * The socket channel used to communicate with the client.

@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ClientConnectionTest {
+class ClientConnectionTest {
     private static byte[] getPacketBytes(Packet packet) {
         ByteOutputStream stream = new ByteOutputStream(64);
         packet.encode(stream);

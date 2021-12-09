@@ -16,7 +16,7 @@ public class TcpSendHandler implements CompletionHandler<Integer, ClientConnecti
         if (result == -1) {
             connection.close();
         } else {
-            connection.onSend(result.intValue());
+            connection.onSend(result);
         }
     }
 

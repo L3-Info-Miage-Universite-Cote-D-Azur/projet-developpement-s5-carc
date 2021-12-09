@@ -20,7 +20,8 @@ public class MatchGameListener implements IGameListener {
 
     /**
      * Called when a new turn is started.
-     * @param turn The turn number.
+     *
+     * @param turn      The turn number.
      * @param tileDrawn The tile drawn.
      */
     @Override

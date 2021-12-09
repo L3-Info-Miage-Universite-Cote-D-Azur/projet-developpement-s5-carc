@@ -1,9 +1,15 @@
 package server.logger;
 
+import static java.lang.System.out;
+
 /**
  * Logger class that logs messages to the console with different levels of importance.
  */
 public class Logger {
+    private Logger(){
+        // ignored
+    }
+
     private static final LogLevel DEFAULT_LEVEL = LogLevel.DEBUG;
 
     /**
@@ -103,7 +109,7 @@ public class Logger {
      */
     public static void print(String message, String color, LogLevel level) {
         if (level.ordinal() >= DEFAULT_LEVEL.ordinal()) {
-            System.out.println(color + message + "\u001B[0m");
+            out.println(color + message + "\u001B[0m");
         }
     }
 }

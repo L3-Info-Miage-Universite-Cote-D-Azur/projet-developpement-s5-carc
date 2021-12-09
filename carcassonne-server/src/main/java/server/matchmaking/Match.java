@@ -16,6 +16,8 @@ import server.player.OfflinePlayerAI;
 import server.session.ClientSession;
 import stream.ByteOutputStream;
 
+import java.util.Objects;
+
 /**
  * Represents a game in the matchmaking system.
  */
@@ -27,7 +29,7 @@ public class Match {
     public Match(int id, ClientSession[] sessions) {
         this.id = id;
         this.sessions = sessions;
-        this.game = new Game(GameConfig.loadFromResources());
+        this.game = new Game(Objects.requireNonNull(GameConfig.loadFromResources()));
 
         game.setListener(new MatchGameListener(this));
 

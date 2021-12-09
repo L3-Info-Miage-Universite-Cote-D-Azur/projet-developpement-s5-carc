@@ -38,6 +38,7 @@ public class OfflinePlayerAI implements IPlayerListener {
             }
         }
 
+        assert freeTiles != null;
         game.executeCommand(new PlaceTileDrawnCommand(freeTiles.getFirst()));
     }
 

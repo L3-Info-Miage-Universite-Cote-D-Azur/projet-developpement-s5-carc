@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * Represents a matchmaking queue.
  */
 public class Matchmaking {
-    private ArrayList<ClientSession> queue;
-    private int numPlayersRequired;
+    private final ArrayList<ClientSession> queue;
+    private final int numPlayersRequired;
     private int matchIdCounter;
 
     public Matchmaking(int numPlayersRequired) {
@@ -33,7 +33,7 @@ public class Matchmaking {
      * @param client
      */
     public synchronized void add(ClientSession client) {
-        if (queue.indexOf(client) != -1) {
+        if (queue.contains(client)) {
             throw new IllegalArgumentException("Client already in queue");
         }
 
