@@ -16,6 +16,7 @@ public class GameDataMessage extends Message {
     private byte[] data;
 
     public GameDataMessage() {
+        // ignored
     }
 
     public GameDataMessage(byte[] data) {

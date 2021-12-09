@@ -18,9 +18,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DragonTest {
+class DragonTest {
     private static List<Tile> findNeighborTiles(GameBoard board, Vector2 position) {
-        return Arrays.stream(Direction.values()).map(d -> d.value().add(position)).filter(p -> board.hasTileAt(p)).map(p -> board.getTileAt(p)).toList();
+        return Arrays.stream(Direction.values()).map(d -> d.value().add(position)).filter(board::hasTileAt).map(board::getTileAt).toList();
     }
 
     @Test
@@ -52,8 +52,8 @@ public class DragonTest {
 
         Tile newTile = board.getTileAt(newPosition);
 
-        assertEquals(null, newTile.getChunk(ChunkId.CENTER_MIDDLE).getMeeple());
-        assertEquals(null, newTile.getChunk(ChunkId.EAST_BOTTOM).getMeeple());
+        assertNull(newTile.getChunk(ChunkId.CENTER_MIDDLE).getMeeple());
+        assertNull(newTile.getChunk(ChunkId.EAST_BOTTOM).getMeeple());
     }
 
     @Test

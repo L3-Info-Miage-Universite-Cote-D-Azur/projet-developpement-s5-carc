@@ -31,14 +31,12 @@ public class GameTurnInitState extends GameState {
         while (!stack.isEmpty()) {
             Tile tile = stack.remove();
 
-            if (tile.hasFlag(TileFlags.DRAGON)) {
-                if (!board.hasVolcano()) {
-                    if (tilesToRefill == null) {
-                        tilesToRefill = new ArrayList<>();
-                    }
-                    tilesToRefill.add(tile);
-                    continue;
+            if (tile.hasFlag(TileFlags.DRAGON) && !board.hasVolcano()) {
+                if (tilesToRefill == null) {
+                    tilesToRefill = new ArrayList<>();
                 }
+                tilesToRefill.add(tile);
+                continue;
             }
 
             if (board.hasFreePlaceForTile(tile)) {
@@ -61,12 +59,12 @@ public class GameTurnInitState extends GameState {
 
     @Override
     public void encode(ByteOutputStream stream) {
-
+        // TODO
     }
 
     @Override
     public void decode(ByteInputStream stream) {
-
+        // TODO
     }
 
     @Override

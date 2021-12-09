@@ -12,7 +12,7 @@ import stream.ByteOutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FairyTest {
+class FairyTest {
     @Test
     void test() {
         Game game = TestUtils.initGameEnv(2, false, true);
@@ -24,9 +24,9 @@ public class FairyTest {
         game.getBoard().spawnFairy(chunk);
         game.getBoard().getFairy().evaluate();
 
-        assertEquals(game.getTurnExecutor().getScore(), 0);
+        assertEquals(0, game.getTurnExecutor().getScore());
         game.getBoard().getFairy().evaluate();
-        assertEquals(game.getTurnExecutor().getScore(), 1);
+        assertEquals(1, game.getTurnExecutor().getScore());
     }
 
     @Test

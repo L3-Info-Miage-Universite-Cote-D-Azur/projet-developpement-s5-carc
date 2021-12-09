@@ -6,14 +6,15 @@ import java.util.ArrayList;
  * Represents a row in an Excel file.
  */
 public class ExcelRow {
-    private ExcelNode node;
-    private ArrayList<String> values;
-    private int index;
+    private final ExcelNode node;
+    private final ArrayList<String> values;
+    private final int index;
+    // TODO Can index be removed ?
 
     public ExcelRow(ExcelNode node, int index) {
         this.node = node;
         this.index = index;
-        this.values = new ArrayList<String>();
+        this.values = new ArrayList<>();
     }
 
     /**

@@ -23,17 +23,17 @@ public class Player implements Comparable {
         this.listener = new IPlayerListener() {
             @Override
             public void onWaitingPlaceTile() {
-
+                // ignored
             }
 
             @Override
             public void onWaitingMeeplePlacement() {
-
+                // ignored
             }
 
             @Override
             public void onWaitingDragonMove() {
-
+                // ignored
             }
         };
     }
@@ -46,17 +46,17 @@ public class Player implements Comparable {
         this.listener = new IPlayerListener() {
             @Override
             public void onWaitingPlaceTile() {
-
+                // ignored
             }
 
             @Override
             public void onWaitingMeeplePlacement() {
-
+                // ignored
             }
 
             @Override
             public void onWaitingDragonMove() {
-
+                // ignored
             }
         };
     }

@@ -21,7 +21,6 @@ import stream.ByteOutputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * The Game class is the main class of the game. It contains all the logic of the game.
@@ -78,82 +77,82 @@ public class Game {
         this.listener = new IGameListener() {
             @Override
             public void onTurnStarted(int turn, Tile tileDrawn) {
-
+                // ignored
             }
 
             @Override
             public void onTurnEnded(int turn) {
-
+                // ignored
             }
 
             @Override
             public void onGameStarted() {
-
+                // ignored
             }
 
             @Override
             public void onGameEnded() {
-
+                // ignored
             }
 
             @Override
             public void onStateChanged(GameState state) {
-
+                // ignored
             }
 
             @Override
             public void onTilePlaced(Tile tile) {
-
+                // ignored
             }
 
             @Override
             public void onTileRotated(Tile tile) {
-
+                // ignored
             }
 
             @Override
             public void onMeeplePlaced(Chunk chunk, Meeple meeple) {
-
+                // ignored
             }
 
             @Override
             public void onMeepleRemoved(Chunk chunk, Meeple meeple) {
-
+                // ignored
             }
 
             @Override
             public void onFairySpawned(Fairy fairy) {
-
+                // ignored
             }
 
             @Override
             public void onFairyDeath(Fairy fairy) {
-
+                // ignored
             }
 
             @Override
             public void onDragonSpawned(Dragon dragon) {
-
+                // ignored
             }
 
             @Override
             public void onDragonDeath(Dragon dragon) {
-
+                // ignored
             }
 
             @Override
             public void onDragonMove(Dragon dragon) {
-
+                // ignored
             }
 
             @Override
             public void onCommandExecuted(ICommand command) {
-
+                // ignored
             }
 
             @Override
             public void onCommandFailed(ICommand command, int errorCode) {
-
+                // ignored
             }
         };
     }
@@ -249,7 +248,7 @@ public class Game {
 
         // As a state can be a transition-state, we need to check
         // if the state passed by parameter is still the current state.
-        if (this.state == state) {
+        if (this.state == state) { // TODO ALWAYS TRUE
             listener.onStateChanged(state);
         }
     }
@@ -462,6 +461,7 @@ public class Game {
 
         this.master = master;
 
+        assert state != null;
         if (state.getType() == GameStateType.START) {
             state.init();
         }
@@ -474,7 +474,7 @@ public class Game {
      */
     public Game clone() {
         ByteOutputStream encodeStream = new ByteOutputStream(1000);
-        Game game = new Game(config);
+        Game game = new Game(config); // TODO Useless
         encode(encodeStream, master);
         Game gameNew = new Game(config);
         ByteInputStream decodeStream = new ByteInputStream(encodeStream.getBytes(), encodeStream.getLength());

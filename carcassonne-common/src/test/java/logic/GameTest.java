@@ -19,6 +19,7 @@ class GameTest {
 
     @Test
     void testInitialState() {
+        assertNotNull(config);
         Game game = new Game(config);
 
         assertEquals(config, game.getConfig());
@@ -29,6 +30,7 @@ class GameTest {
 
     @Test
     void testAddPlayer() {
+        assertNotNull(config);
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, 7);
 
         assertNotNull(gameConfig);
@@ -54,6 +56,7 @@ class GameTest {
 
     @Test
     void testPlayerList() {
+        assertNotNull(config);
         Game game = new Game(config);
 
         Player player1 = new Player(501);
@@ -72,6 +75,7 @@ class GameTest {
 
     @Test
     void testIsGameFinished() {
+        assertNotNull(config);
         GameConfig gameConfig = new GameConfig(config.tiles, 1, 3, config.startingMeepleCount);
         Game game = new Game(gameConfig);
 
@@ -89,11 +93,10 @@ class GameTest {
 
     @Test
     void testIfThrowExceptionWhenNotEnoughPlayers() {
+        assertNotNull(config);
         Game game = new Game(new GameConfig(config.tiles, 1, 1, config.startingMeepleCount));
 
-        assertThrows(NotEnoughPlayerException.class, () -> {
-            game.start();
-        });
+        assertThrows(NotEnoughPlayerException.class, game::start);
         assertDoesNotThrow(() -> {
             game.addPlayer(new Player(1));
             game.start();
@@ -101,7 +104,8 @@ class GameTest {
     }
 
     @Test
-    public void testPreventStartingForSlave() {
+    void testPreventStartingForSlave() {
+        assertNotNull(config);
         Game game = new Game(config);
 
         game.addPlayer(new Player(501));
@@ -112,7 +116,7 @@ class GameTest {
     }
 
     @Test
-    public void testCloning() {
+    void testCloning() {
         Game game = TestUtils.initGameEnv(5, true, true);
         Game clonedGame = game.clone();
 
@@ -154,7 +158,8 @@ class GameTest {
     }
 
     @Test
-    public void testSlaveStackNonEncoding() {
+    void testSlaveStackNonEncoding() {
+        assertNotNull(config);
         Game game = new Game(config);
 
         game.addPlayer(new Player(501));
@@ -177,7 +182,8 @@ class GameTest {
     }
 
     @Test
-    public void testGetTurnExecutor() {
+    void testGetTurnExecutor() {
+        assertNotNull(config);
         Game game = new Game(config);
 
         game.addPlayer(new Player(501));

@@ -31,7 +31,7 @@ public class GameTurnEndingState extends GameState {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-
+        // TODO
     }
 
     /**
@@ -41,7 +41,7 @@ public class GameTurnEndingState extends GameState {
      */
     @Override
     public void decode(ByteInputStream stream) {
-
+        // TODO
     }
 
     /**

@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Crc32Util {
+class Crc32UtilTest {
     @Test
     void testCrc32() {
         /* CRC32 calculated from a website CRC32 calculator (https://emn178.github.io/online-tools/crc32.html) */

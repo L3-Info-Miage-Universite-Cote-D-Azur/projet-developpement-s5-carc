@@ -19,6 +19,7 @@ import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestUtils {
     public static Game initGameEnv(int numPlayers, boolean attachFakeAI, boolean startGame) {
-        Game game = new Game(GameConfig.loadFromResources());
+        Game game = new Game(Objects.requireNonNull(GameConfig.loadFromResources()));
         FakeAI fakeAI = new FakeAI(game);
 
         for (int i = 0; i < numPlayers; i++) {

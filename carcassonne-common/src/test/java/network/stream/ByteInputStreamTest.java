@@ -5,13 +5,13 @@ import stream.ByteInputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ByteInputStreamTest {
+class ByteInputStreamTest {
     @Test
     void testReadBoolean() {
         ByteInputStream inputStream = new ByteInputStream(new byte[]{1, 0}, 2);
 
-        assertEquals(true, inputStream.readBoolean());
-        assertEquals(false, inputStream.readBoolean());
+        assertTrue(inputStream.readBoolean());
+        assertFalse(inputStream.readBoolean());
         assertTrue(inputStream.isAtEnd());
     }
 
@@ -46,7 +46,7 @@ public class ByteInputStreamTest {
     void testReadString() {
         ByteInputStream inputStream = new ByteInputStream(new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x05, (byte) 0x30, (byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x34}, 13);
 
-        assertEquals(null, inputStream.readString());
+        assertNull(inputStream.readString());
         assertEquals("01234", inputStream.readString());
         assertTrue(inputStream.isAtEnd());
     }

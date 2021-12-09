@@ -12,12 +12,11 @@ import java.util.List;
  * Represents an excel file.
  */
 public class ExcelNode {
-    private static String CELL_SEPARATOR = "\t";
-
+    private static final String CELL_SEPARATOR = "\t";
+    private final ArrayList<ExcelNode> children;
+    private final ArrayList<String> columns;
+    private final ArrayList<ExcelRow> rows;
     private String name;
-    private ArrayList<ExcelNode> children;
-    private ArrayList<String> columns;
-    private ArrayList<ExcelRow> rows;
 
     public ExcelNode() {
         children = new ArrayList<>();
@@ -235,10 +234,10 @@ public class ExcelNode {
                 return rowIndex - 1;
             }
 
+            // TODO Can be replaced by by a If ?
             switch (state) {
-                case LOADING_COLUMNS:
+                case LOADING_COLUMNS -> {
                     String firstCell = cells[columnIndex];
-
                     if (!firstCell.equalsIgnoreCase("Name")) {
                         ExcelNode child = new ExcelNode();
                         child.name = cells[columnIndex];
@@ -248,11 +247,8 @@ public class ExcelNode {
                         loadColumns(cells, columnIndex);
                         state = State.LOADING_ROWS;
                     }
-
-                    break;
-                case LOADING_ROWS:
-                    loadRow(cells, rowIndex, columnIndex);
-                    break;
+                }
+                case LOADING_ROWS -> loadRow(cells, rowIndex, columnIndex);
             }
 
             rowIndex++;
@@ -314,9 +310,7 @@ public class ExcelNode {
      * @param builder
      */
     private void appendBegin(StringBuilder builder, int childIndex) {
-        for (int i = 0; i < childIndex; i++) {
-            builder.append(CELL_SEPARATOR);
-        }
+        builder.append(CELL_SEPARATOR.repeat(Math.max(0, childIndex)));
     }
 
     /**
@@ -332,7 +326,7 @@ public class ExcelNode {
             child.writeToStringBuilder(builder, childIndex + 1);
         }
 
-        if (columns.size() != 0) {
+        if (!columns.isEmpty()) {
             appendBegin(builder, childIndex);
 
             for (int i = 0; i < columns.size(); i++) {

@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PlaceMeepleCommandTest {
+class PlaceMeepleCommandTest {
     @Test
-    public void testPlacement() {
+    void testPlacement() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
@@ -22,7 +22,7 @@ public class PlaceMeepleCommandTest {
     }
 
     @Test
-    public void testPlacementOnOccupiedTile() {
+    void testPlacementOnOccupiedTile() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));
@@ -37,7 +37,7 @@ public class PlaceMeepleCommandTest {
     }
 
     @Test
-    public void testPlacementOnOtherTileEvenWithoutPortal() {
+    void testPlacementOnOtherTileEvenWithoutPortal() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         TestUtils.placeTileRandomly(game);
@@ -53,7 +53,7 @@ public class PlaceMeepleCommandTest {
     }
 
     @Test
-    public void testPlacementOnOtherTileWithPortal() {
+    void testPlacementOnOtherTileWithPortal() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         while (!((GameTurnPlaceTileState) game.getState()).getTileDrawn().hasPortal()) {
@@ -68,7 +68,7 @@ public class PlaceMeepleCommandTest {
     }
 
     @Test
-    public void testMultiplePlacementsOnSameTurn() {
+    void testMultiplePlacementsOnSameTurn() {
         Game game = TestUtils.initGameEnv(5, false, true);
 
         assertTrue(game.executeCommand(new PlaceTileDrawnCommand(GameBoard.STARTING_TILE_POSITION)));

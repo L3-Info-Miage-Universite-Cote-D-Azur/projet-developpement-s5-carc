@@ -5,14 +5,7 @@ import java.util.Objects;
 /**
  * Represents a 2D vector (x,y).
  */
-public final class Vector2 {
-    private final int x;
-    private final int y;
-
-    public Vector2(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+public record Vector2(int x, int y) {
 
     public int getX() {
         return x;

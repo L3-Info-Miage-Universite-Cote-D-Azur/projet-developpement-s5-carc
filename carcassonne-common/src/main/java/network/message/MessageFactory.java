@@ -4,6 +4,10 @@ package network.message;
  * The MessageFactory class is used to create messages.
  */
 public class MessageFactory {
+    private MessageFactory() {
+        // ignored
+    }
+
     /**
      * Creates a message instance from the given message type.
      *

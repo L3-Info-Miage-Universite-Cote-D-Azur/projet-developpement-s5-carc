@@ -8,9 +8,11 @@ class ExcelNodeTest {
 
     @Test
     void testLoadExcel() {
-        ExcelNode node = ExcelNode.load("Name\tColumn1\tColumn2\n" +
-                "Row1\tA\tB\n" +
-                "Row2\tC\tD\n");
+        ExcelNode node = ExcelNode.load("""
+                Name\tColumn1\tColumn2
+                Row1\tA\tB
+                Row2\tC\tD
+                """);
         ExcelRow r1 = node.getRow("Row1");
         ExcelRow r2 = node.getRow("Row2");
         String resultR1C1 = r1.getValue("Column1");
@@ -42,9 +44,11 @@ class ExcelNodeTest {
         r2.add("Column2", "D");
 
         String result = node.toString();
-        assertEquals("Name\tColumn1\tColumn2\n" +
-                "Row1\tA\tB\n" +
-                "Row2\tC\tD\n", result);
+        assertEquals("""
+                Name\tColumn1\tColumn2
+                Row1\tA\tB
+                Row2\tC\tD
+                """, result);
     }
 
     @Test
@@ -79,13 +83,15 @@ class ExcelNodeTest {
 
         String result = root.toString();
 
-        assertEquals("Child1\n" +
-                "\tName\tColumn1\tColumn2\n" +
-                "\tRow1\tA\tB\n" +
-                "\tRow2\tC\tD\n" +
-                "Child2\n" +
-                "\tName\tColumn3\tColumn4\n" +
-                "\tRow3\tE\tF\n" +
-                "\tRow4\tG\tH\n", result);
+        assertEquals("""
+                Child1
+                \tName\tColumn1\tColumn2
+                \tRow1\tA\tB
+                \tRow2\tC\tD
+                Child2
+                \tName\tColumn3\tColumn4
+                \tRow3\tE\tF
+                \tRow4\tG\tH
+                """, result);
     }
 }

@@ -15,6 +15,7 @@ public class GameCommandRequestMessage extends Message {
     private ICommand command;
 
     public GameCommandRequestMessage() {
+        // ignored
     }
 
     public GameCommandRequestMessage(ICommand command) {

@@ -8,6 +8,10 @@ import logic.tile.Tile;
  * Helper class for byte-streams classes.
  */
 public class ByteStreamHelper {
+    private ByteStreamHelper(){
+        // ignored
+    }
+
     /**
      * Encodes a tile into a byte-stream.
      *

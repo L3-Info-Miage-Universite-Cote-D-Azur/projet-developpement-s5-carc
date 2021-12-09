@@ -2,8 +2,7 @@ package logic.math;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class VectorTest {
     @Test
@@ -24,7 +23,7 @@ class VectorTest {
         assertNotEquals(vector0, vector1);
         assertEquals(vector0, vector0);
         assertEquals(vector0, vector2);
-        assertNotEquals(vector0, null);
+        assertNotNull(vector0);
     }
 
     @Test

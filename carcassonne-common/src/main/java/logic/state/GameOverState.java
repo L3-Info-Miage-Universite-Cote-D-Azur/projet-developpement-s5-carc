@@ -19,12 +19,12 @@ public class GameOverState extends GameState {
 
     @Override
     public void encode(ByteOutputStream stream) {
-
+        // TODO
     }
 
     @Override
     public void decode(ByteInputStream stream) {
-
+        // TODO
     }
 
     @Override

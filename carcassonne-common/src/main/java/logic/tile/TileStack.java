@@ -7,9 +7,9 @@ import stream.ByteInputStream;
 import stream.ByteOutputStream;
 import stream.ByteStreamHelper;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents a stack of tiles.
@@ -35,7 +35,7 @@ public class TileStack {
      *
      * @param tiles Tiles to fill the stack with.
      */
-    public void fill(ArrayList<Tile> tiles) {
+    public void fill(List<Tile> tiles) {
         this.tiles.addAll(tiles);
     }
 

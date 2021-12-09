@@ -6,7 +6,7 @@ import stream.ByteOutputStream;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ByteOutputStreamTest {
+class ByteOutputStreamTest {
     @Test
     void testWriteBoolean() {
         ByteOutputStream out = new ByteOutputStream(0);

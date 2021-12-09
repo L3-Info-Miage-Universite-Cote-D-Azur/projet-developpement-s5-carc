@@ -13,6 +13,7 @@ public class GameResultMessage extends Message {
     private byte[] data;
 
     public GameResultMessage() {
+        // ignored
     }
 
     public GameResultMessage(byte[] data) {

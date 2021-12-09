@@ -12,6 +12,7 @@ public class JoinMatchmakingMessage extends Message {
     private int matchCapacity;
 
     public JoinMatchmakingMessage() {
+        // ignored
     }
 
     public JoinMatchmakingMessage(int matchCapacity) {

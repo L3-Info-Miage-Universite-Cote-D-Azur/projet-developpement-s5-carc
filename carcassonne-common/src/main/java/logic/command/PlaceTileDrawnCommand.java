@@ -110,7 +110,6 @@ public class PlaceTileDrawnCommand implements ICommand {
      * Executes the command.
      *
      * @param game The game context
-     * @return True if the tile was placed, false otherwise
      */
     @Override
     public void execute(Game game) {

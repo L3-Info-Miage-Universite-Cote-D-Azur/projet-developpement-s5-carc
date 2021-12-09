@@ -26,6 +26,7 @@ public class LeaveMatchmakingMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
+        // TODO
     }
 
     /**
@@ -35,6 +36,7 @@ public class LeaveMatchmakingMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
+        // TODO
     }
 
     @Override

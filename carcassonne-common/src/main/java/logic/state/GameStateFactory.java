@@ -4,6 +4,10 @@ import logic.Game;
 import logic.state.turn.*;
 
 public class GameStateFactory {
+    private GameStateFactory() {
+        // ignored
+    }
+
     public static GameState createByType(GameStateType type, Game game) {
         return switch (type) {
             case START -> new GameStartState(game);

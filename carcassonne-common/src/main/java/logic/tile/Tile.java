@@ -22,7 +22,7 @@ public class Tile {
     private final Game game;
 
     private Vector2 position;
-    private Chunk[] chunks;
+    private final Chunk[] chunks;
     private TileRotation rotation;
 
     public Tile(TileConfig config, Game game) {

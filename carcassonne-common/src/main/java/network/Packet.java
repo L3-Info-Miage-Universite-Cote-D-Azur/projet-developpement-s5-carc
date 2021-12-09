@@ -15,15 +15,15 @@ public class Packet {
      * The packet header length.
      * If the incoming packet is smaller than this, we assume that all the data is not yet received.
      */
-    public static int HEADER_SIZE = 20;
+    public static final int HEADER_SIZE = 20;
     /**
      * Magic number used to verify the packet transmission.
      */
-    private static int HEADER_MAGIC = 0xA0B0C0D0;
+    private static final int HEADER_MAGIC = 0xA0B0C0D0;
     /**
      * Magic number used to verify the packet transmission.
      */
-    private static int TRAILER_MAGIC = 0xF0C0B0A0;
+    private static final int TRAILER_MAGIC = 0xF0C0B0A0;
     /**
      * The message type.
      */
@@ -115,7 +115,6 @@ public class Packet {
      * Encodes the packet to the given stream
      *
      * @param stream the stream to write to
-     * @return the number of bytes written.
      */
     public void encode(ByteOutputStream stream) {
         stream.writeInt(HEADER_MAGIC);
@@ -142,6 +141,7 @@ public class Packet {
      */
     public Message getMessage() {
         Message message = MessageFactory.create(type);
+        assert message != null;
         message.decode(new ByteInputStream(messageData, messageLength));
         return message;
     }

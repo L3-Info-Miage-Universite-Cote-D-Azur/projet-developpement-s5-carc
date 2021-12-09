@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class GameStateFactoryTest {
+class GameStateFactoryTest {
     @Test
     void testCreateFromType() {
         for (GameStateType type : GameStateType.values()) {

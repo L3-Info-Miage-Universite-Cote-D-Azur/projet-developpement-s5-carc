@@ -43,6 +43,6 @@ public class RoadArea extends Area {
      */
     @Override
     public int getClosingPoints() {
-        return 1 * getNumTiles();
-    }
+        return getNumTiles();
+    } // getNumTiles() * 1
 }

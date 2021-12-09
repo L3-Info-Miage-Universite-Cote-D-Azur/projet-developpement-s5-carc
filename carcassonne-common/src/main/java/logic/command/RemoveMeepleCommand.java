@@ -135,7 +135,6 @@ public class RemoveMeepleCommand implements ICommand {
      * Executes the command.
      *
      * @param game the game context
-     * @return true if the meeple was removed, false otherwise
      */
     @Override
     public void execute(Game game) {

@@ -10,14 +10,14 @@ import logic.tile.Tile;
 import logic.tile.chunk.ChunkId;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RemoveMeepleCommandTest {
 
     @Test
-    public void testRemoveOnOccupiedTile() {
+    void testRemoveOnOccupiedTile() {
         GameConfig config = GameConfig.loadFromResources();
+        assertNotNull(config);
         Game game = new Game(config);
 
         game.addPlayer(new Player(1));

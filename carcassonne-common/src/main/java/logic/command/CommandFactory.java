@@ -4,6 +4,11 @@ package logic.command;
  * Class that creates commands from the given command type.
  */
 public class CommandFactory {
+
+    private CommandFactory(){
+        // ignored
+    }
+
     /**
      * Creates a command from the given command type.
      *

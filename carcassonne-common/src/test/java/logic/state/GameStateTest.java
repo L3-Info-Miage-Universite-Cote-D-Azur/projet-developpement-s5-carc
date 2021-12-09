@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameStateTest {
+class GameStateTest {
     @Test
     void testInitialGameStateTransition() {
         Game game = TestUtils.initGameEnv(5, false, false);

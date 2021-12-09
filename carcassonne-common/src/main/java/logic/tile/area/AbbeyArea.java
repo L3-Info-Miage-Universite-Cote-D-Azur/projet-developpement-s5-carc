@@ -13,7 +13,7 @@ public class AbbeyArea extends Area {
     /**
      * Number of neighbours required to complete the area.
      */
-    public static int NUM_NEIGHBORS_REQUIRED = 9;
+    public static final int NUM_NEIGHBORS_REQUIRED = 9;
 
     /**
      * Constructor for the area.
@@ -53,7 +53,7 @@ public class AbbeyArea extends Area {
     @Override
     public int getClosingPoints() {
         // Abbey area is 9 tiles.
-        return 1 * NUM_NEIGHBORS_REQUIRED;
+        return NUM_NEIGHBORS_REQUIRED; // NUM_NEIGHBORS_REQUIRED * 1
     }
 
     /**

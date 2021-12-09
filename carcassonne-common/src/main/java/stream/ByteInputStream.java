@@ -6,9 +6,9 @@ import java.nio.charset.StandardCharsets;
  * Stream for reading primitive types from a byte array.
  */
 public class ByteInputStream {
-    private byte[] buf;
+    private final byte[] buf;
     private int pos;
-    private int length;
+    private final int length;
 
     public ByteInputStream(byte[] buf, int length) {
         this.buf = buf;

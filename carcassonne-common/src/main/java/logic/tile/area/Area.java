@@ -31,7 +31,7 @@ public abstract class Area {
     /**
      * Constructor for the area.
      */
-    public Area(List<Chunk> chunks) {
+    protected Area(List<Chunk> chunks) {
         Chunk firstChunk = chunks.get(0);
 
         this.chunks = new HashSet<>(chunks);
@@ -53,7 +53,7 @@ public abstract class Area {
      *
      * @return The list of chunks.
      */
-    public HashSet<Chunk> getChunks() {
+    public Set<Chunk> getChunks() {
         return chunks;
     }
 
@@ -191,13 +191,13 @@ public abstract class Area {
      * @return The remaining tile edges.
      */
     public int getFreeEdges(Area simulatedMergingArea) {
-        Set<Tile> tiles = new HashSet<>(this.tiles);
-        Set<Chunk> chunks = new HashSet<>(this.chunks);
+        Set<Tile> tilesTmp = new HashSet<>(this.tiles);
+        Set<Chunk> chunksTmp = new HashSet<>(this.chunks);
 
-        tiles.addAll(simulatedMergingArea.tiles);
-        chunks.addAll(simulatedMergingArea.chunks);
+        tilesTmp.addAll(simulatedMergingArea.tiles);
+        chunksTmp.addAll(simulatedMergingArea.chunks);
 
-        return getFreeEdges(tiles, chunks);
+        return getFreeEdges(tilesTmp, chunksTmp);
     }
 
     /**
@@ -248,7 +248,7 @@ public abstract class Area {
         }
 
         /* Map the number of meeples by the player instance */
-        Map<Player, Integer> numMeeplesPerPlayer = meeples.stream().collect(Collectors.groupingBy(m -> m.getOwner(), Collectors.summingInt(c -> 1)));
+        Map<Player, Integer> numMeeplesPerPlayer = meeples.stream().collect(Collectors.groupingBy(Meeple::getOwner, Collectors.summingInt(c -> 1)));
 
         /* Get the highest number of meeples */
         int highestNumMeeples = numMeeplesPerPlayer.values().stream().max(Integer::compareTo).orElse(0);
@@ -263,7 +263,7 @@ public abstract class Area {
      * @return The list of meeples.
      */
     public List<Meeple> getMeeples() {
-        return chunks.stream().filter(c -> c.hasMeeple()).map(c -> c.getMeeple()).toList();
+        return chunks.stream().filter(Chunk::hasMeeple).map(Chunk::getMeeple).toList();
     }
 
     /**
@@ -273,7 +273,7 @@ public abstract class Area {
      * @return The list of meeples.
      */
     public List<Meeple> getMeeples(Player player) {
-        return chunks.stream().filter(c -> c.hasMeeple() && c.getMeeple().getOwner() == player).map(c -> c.getMeeple()).toList();
+        return chunks.stream().filter(c -> c.hasMeeple() && c.getMeeple().getOwner() == player).map(Chunk::getMeeple).toList();
     }
 
     /**

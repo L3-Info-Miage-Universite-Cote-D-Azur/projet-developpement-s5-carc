@@ -108,7 +108,6 @@ public class PlaceMeepleCommand implements ICommand {
      * Executes the command.
      *
      * @param game the game context
-     * @return true if the meeple was placed, false otherwise
      */
     @Override
     public void execute(Game game) {

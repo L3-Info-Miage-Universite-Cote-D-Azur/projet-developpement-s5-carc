@@ -8,19 +8,17 @@ import logic.tile.area.AreaFactory;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Represents a tile excel configuration.
  */
 public class TileConfig {
+    // TODO Make static final constant or non-public and provide accessors if needed.
     public TileChunkConfig[] chunks;
     public String model;
     public String expansion;
-    public EnumSet<TileFlags> flags;
+    public Set<TileFlags> flags;
     public int count;
 
     /**
@@ -32,7 +30,7 @@ public class TileConfig {
      * @param flags     The flags of tile.
      * @param count     The count of tile in the stack.
      */
-    public TileConfig(TileChunkConfig[] chunks, String model, String expansion, EnumSet<TileFlags> flags, int count) {
+    public TileConfig(TileChunkConfig[] chunks, String model, String expansion, Set<TileFlags> flags, int count) {
         this.chunks = chunks;
         this.model = model;
         this.expansion = expansion;
@@ -60,60 +58,59 @@ public class TileConfig {
         int column;
 
         switch (chunkId) {
-            case NORTH_LEFT:
+            case NORTH_LEFT -> {
                 row = 0;
                 column = 1;
-                break;
-            case NORTH_MIDDLE:
+            }
+            case NORTH_MIDDLE -> {
                 row = 0;
                 column = 2;
-                break;
-            case NORTH_RIGHT:
+            }
+            case NORTH_RIGHT -> {
                 row = 0;
                 column = 3;
-                break;
-            case EAST_TOP:
+            }
+            case EAST_TOP -> {
                 row = 1;
                 column = 4;
-                break;
-            case EAST_MIDDLE:
+            }
+            case EAST_MIDDLE -> {
                 row = 2;
                 column = 4;
-                break;
-            case EAST_BOTTOM:
+            }
+            case EAST_BOTTOM -> {
                 row = 3;
                 column = 4;
-                break;
-            case SOUTH_LEFT:
+            }
+            case SOUTH_LEFT -> {
                 row = 4;
                 column = 1;
-                break;
-            case SOUTH_MIDDLE:
+            }
+            case SOUTH_MIDDLE -> {
                 row = 4;
                 column = 2;
-                break;
-            case SOUTH_RIGHT:
+            }
+            case SOUTH_RIGHT -> {
                 row = 4;
                 column = 3;
-                break;
-            case WEST_TOP:
+            }
+            case WEST_TOP -> {
                 row = 1;
                 column = 0;
-                break;
-            case WEST_MIDDLE:
+            }
+            case WEST_MIDDLE -> {
                 row = 2;
                 column = 0;
-                break;
-            case WEST_BOTTOM:
+            }
+            case WEST_BOTTOM -> {
                 row = 3;
                 column = 0;
-                break;
-            case CENTER_MIDDLE:
+            }
+            case CENTER_MIDDLE -> {
                 row = 2;
                 column = 2;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid chunk id: " + chunkId);
+            }
+            default -> throw new IllegalArgumentException("Invalid chunk id: " + chunkId);
         }
 
         return node.getRowAt(row).getValueAt(column);
@@ -145,6 +142,7 @@ public class TileConfig {
         for (ChunkId chunkId : ChunkId.values()) {
             String referenceId = getCellValue(referenceNode, chunkId);
 
+            // TODO USE ? zones.computeIfAbsent(referenceId, k -> new ArrayList<>());
             if (!zones.containsKey(referenceId)) {
                 zones.put(referenceId, new ArrayList<>());
             }
@@ -167,18 +165,19 @@ public class TileConfig {
      * @param node The excel node.
      */
     private void loadData(ExcelNode node) {
-        model = node.getRow("Model").getValue("Value");
-        expansion = node.getRow("Expansion").getValue("Value");
+        String value = "Value";
+        model = node.getRow("Model").getValue(value);
+        expansion = node.getRow("Expansion").getValue(value);
         flags = EnumSet.noneOf(TileFlags.class);
 
 
-        for (String flag : node.getRow("Flags").getValue("Value").split(",")) {
+        for (String flag : node.getRow("Flags").getValue(value).split(",")) {
             if (flag.length() != 0) {
                 flags.add(TileFlags.valueOf(flag));
             }
         }
 
-        count = Integer.parseInt(node.getRow("Count").getValue("Value"));
+        count = Integer.parseInt(node.getRow("Count").getValue(value));
     }
 
     /**
@@ -193,8 +192,8 @@ public class TileConfig {
             tile.setChunk(chunkId, chunks[chunkId.ordinal()].createChunk(tile));
         }
 
-        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(c -> c.getArea()).distinct().toList()) {
-            AreaFactory.create((areaConfig.getChunkIds().stream().map(c -> tile.getChunk(c)).toList()));
+        for (TileChunkAreaConfig areaConfig : Arrays.stream(chunks).map(TileChunkConfig::getArea).distinct().toList()) {
+            AreaFactory.create((areaConfig.getChunkIds().stream().map(tile::getChunk).toList()));
         }
 
         return tile;

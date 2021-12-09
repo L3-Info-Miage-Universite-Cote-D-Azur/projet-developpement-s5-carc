@@ -8,17 +8,19 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the game configuration.
  */
 public class GameConfig {
-    public ArrayList<TileConfig> tiles;
+    // TODO Make static final constant or non-public and provide accessors if needed.
+    public List<TileConfig> tiles;
     public int minPlayers;
     public int maxPlayers;
     public int startingMeepleCount;
 
-    public GameConfig(ArrayList<TileConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
+    public GameConfig(List<TileConfig> tiles, int minPlayers, int maxPlayers, int startingMeepleCount) {
         this.tiles = tiles;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
@@ -37,10 +39,11 @@ public class GameConfig {
             ArrayList<TileConfig> tiles = loadTilesFromDirectory(Paths.get(resourcePath, "tiles").toString());
             ExcelNode gameConfigDocument = ExcelNode.load(Paths.get(resourcePath, "game.txt"));
 
+            String value = "Value";
             return new GameConfig(tiles,
-                    Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue("Value")),
-                    Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue("Value")),
-                    Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue("Value")));
+                    Integer.parseInt(gameConfigDocument.getRow("MinPlayers").getValue(value)),
+                    Integer.parseInt(gameConfigDocument.getRow("MaxPlayers").getValue(value)),
+                    Integer.parseInt(gameConfigDocument.getRow("StartingMeepleCount").getValue(value)));
         } catch (URISyntaxException e) {
             return null;
         }
@@ -84,10 +87,6 @@ public class GameConfig {
             return false;
         }
 
-        if (startingMeepleCount < 1) {
-            return false;
-        }
-
-        return true;
+        return startingMeepleCount >= 1;
     }
 }

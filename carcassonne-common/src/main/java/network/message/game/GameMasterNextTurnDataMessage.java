@@ -12,6 +12,7 @@ public class GameMasterNextTurnDataMessage extends Message {
     private int tileConfigIndex;
 
     public GameMasterNextTurnDataMessage() {
+        // ignored
     }
 
     public GameMasterNextTurnDataMessage(int tileConfigIndex) {

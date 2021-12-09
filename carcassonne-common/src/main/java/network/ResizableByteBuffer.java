@@ -6,7 +6,7 @@ package network;
 public class ResizableByteBuffer {
     private byte[] buffer;
     private int index;
-    private int maxSize;
+    private final int maxSize;
 
     public ResizableByteBuffer(int size, int maxSize) {
         this.buffer = new byte[size];

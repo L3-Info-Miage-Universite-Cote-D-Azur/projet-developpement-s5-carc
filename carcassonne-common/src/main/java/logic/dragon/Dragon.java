@@ -74,6 +74,7 @@ public final class Dragon {
 
     /**
      * Gets the path of the dragon.
+     *
      * @return the path of the dragon
      */
     public List<Vector2> getPath() {

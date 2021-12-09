@@ -15,7 +15,7 @@ public class MatchmakingDataMessage extends Message {
     private int requiredPlayers;
 
     public MatchmakingDataMessage() {
-
+        // ignored
     }
 
     public MatchmakingDataMessage(int numPlayers, int requiredPlayers) {

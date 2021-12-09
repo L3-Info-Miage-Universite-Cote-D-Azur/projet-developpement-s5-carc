@@ -26,7 +26,7 @@ public class MatchmakingFailedMessage extends Message {
      */
     @Override
     public void encode(ByteOutputStream stream) {
-
+        // TODO
     }
 
     /**
@@ -36,6 +36,6 @@ public class MatchmakingFailedMessage extends Message {
      */
     @Override
     public void decode(ByteInputStream stream) {
-
+        //TODO
     }
 }

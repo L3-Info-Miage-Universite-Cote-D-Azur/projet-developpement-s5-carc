@@ -12,10 +12,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AreaTest {
+class AreaTest {
     @Test
     void testClosure() {
         GameConfig config = GameConfig.loadFromResources();
+        assertNotNull(config);
         Game game = new Game(config);
 
         Tile tile1 = config.tiles.stream().filter(t -> t.model.equals("H")).findFirst().get().createTile(game);
@@ -38,6 +39,7 @@ public class AreaTest {
     @Test
     void testBadMerging() {
         GameConfig config = GameConfig.loadFromResources();
+        assertNotNull(config);
         Game game = new Game(config);
 
         Tile tile = config.tiles.stream().filter(t -> t.model.equals("H")).findFirst().get().createTile(game);

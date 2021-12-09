@@ -212,6 +212,7 @@ public class GameBoard {
      * @param tileToPlace the tile to place
      * @return a list of free places for the specified tile
      */
+    // TODO Can LinkedList be replaced by a simple List ?
     public LinkedList<Vector2> findFreePlacesForTile(Tile tileToPlace) {
         if (tileToPlace == null) {
             throw new IllegalArgumentException("Tile must be not null.");
@@ -286,7 +287,7 @@ public class GameBoard {
      * @return the list of areas
      */
     public List<Area> getAreas() {
-        return tilesList.stream().flatMap(t -> Arrays.stream(ChunkId.values()).map(id -> t.getChunk(id)).map(c -> c.getArea())).distinct().toList();
+        return tilesList.stream().flatMap(t -> Arrays.stream(ChunkId.values()).map(t::getChunk).map(Chunk::getArea)).distinct().toList();
     }
 
     /**
@@ -313,7 +314,7 @@ public class GameBoard {
      * @return true if the board has a volcano, false otherwise
      */
     public boolean hasVolcano() {
-        return tilesList.stream().anyMatch(t -> t.hasVolcano());
+        return tilesList.stream().anyMatch(Tile::hasVolcano);
     }
 
     /**

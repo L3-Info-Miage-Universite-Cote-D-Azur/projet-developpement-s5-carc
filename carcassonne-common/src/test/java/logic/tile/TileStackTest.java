@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TileStackTest {
     private static final GameConfig config = GameConfig.loadFromResources();
@@ -18,6 +17,7 @@ class TileStackTest {
     void testRemove() {
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack tileStack = game.getStack();
+        assertNotNull(config);
         Tile testTile = config.tiles.get(0).createTile(game);
 
         tileStack.fill(new ArrayList<>() {{
@@ -30,18 +30,17 @@ class TileStackTest {
 
     @Test
     void testFill() {
+        assertNotNull(config);
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack stack = game.getStack();
         stack.fill(config);
-        assertEquals(config.tiles.stream().map(t -> t.count).reduce((t1, t2) -> t1 + t2).get(), stack.getNumTiles());
+        assertEquals(config.tiles.stream().map(t -> t.count).reduce(Integer::sum).get(), stack.getNumTiles());
     }
 
     @Test
     void testShuffle() { // If the shuffle works properly
-        GameConfig newConfig = new GameConfig(config.tiles.stream().map(e -> {
-            e.count = 100;
-            return e;
-        }).collect(Collectors.toCollection(ArrayList::new)), config.minPlayers, config.maxPlayers, config.startingMeepleCount);
+        assertNotNull(config);
+        GameConfig newConfig = new GameConfig(config.tiles.stream().peek(e -> e.count = 100).collect(Collectors.toCollection(ArrayList::new)), config.minPlayers, config.maxPlayers, config.startingMeepleCount);
 
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack stack = game.getStack();
@@ -81,6 +80,7 @@ class TileStackTest {
     void testIsFirstTileIsStartTile() { // If the first tile is the starting tile
         Game game = TestUtils.initGameEnv(2, false, false);
         TileStack stack = new TileStack(game);
+        assertNotNull(config);
         stack.fill(config);
         stack.shuffle();
 

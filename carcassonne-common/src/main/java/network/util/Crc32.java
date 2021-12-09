@@ -4,15 +4,19 @@ package network.util;
  * CRC32 checksum calculator.
  */
 public class Crc32 {
+    private Crc32(){
+        // ignored
+    }
+
     private static final int[] crcTable = new int[256];
-    private static final int crcPoly = 0xEDB88320;
+    private static final int CRC_POLY = 0xEDB88320;
 
     static {
         for (int i = 0; i < 256; ++i) {
             int crc = i;
             for (int j = 0; j < 8; ++j) {
                 if ((crc & 0x00000001) != 0) {
-                    crc = crc >>> 1 ^ crcPoly;
+                    crc = crc >>> 1 ^ CRC_POLY;
                 } else {
                     crc >>>= 1;
                 }
@@ -29,10 +33,10 @@ public class Crc32 {
      */
     public static int getCrc(byte[] data) {
         int crc = 0xFFFFFFFF;
-        for (int i = 0; i < data.length; i++) {
-            crc = (crc >>> 8) ^ crcTable[(crc ^ data[i]) & 0xFF];
+        for (byte datum : data) {
+            crc = (crc >>> 8) ^ crcTable[(crc ^ datum) & 0xFF];
         }
-        return crc ^ 0xFFFFFFFF;
+        return ~crc;
     }
 
     /**
@@ -48,6 +52,6 @@ public class Crc32 {
         for (int i = offset; i < offset + length; i++) {
             crc = (crc >>> 8) ^ crcTable[(crc ^ data[i]) & 0xFF];
         }
-        return crc ^ 0xFFFFFFFF;
+        return ~crc;
     }
 }

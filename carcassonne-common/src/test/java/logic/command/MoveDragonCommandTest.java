@@ -8,9 +8,10 @@ import logic.tile.Direction;
 import logic.tile.TileFlags;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MoveDragonCommandTest {
+class MoveDragonCommandTest {
     @Test
     void testExecution() {
         Game game = TestUtils.initGameEnv(2, false, true);

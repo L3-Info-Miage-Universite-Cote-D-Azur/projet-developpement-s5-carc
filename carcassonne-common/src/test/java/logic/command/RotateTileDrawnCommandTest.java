@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RotateTileDrawnCommandTest {
+class RotateTileDrawnCommandTest {
     @Test
     void testRotate() {
         Game game = TestUtils.initGameEnv(5, false, true);
@@ -18,12 +18,12 @@ public class RotateTileDrawnCommandTest {
         Tile tileDrawn = placeTileState.getTileDrawn();
 
         game.executeCommand(new RotateTileDrawnCommand(TileRotation.UP));
-        assertEquals(tileDrawn.getRotation(), TileRotation.UP);
+        assertEquals(TileRotation.UP, tileDrawn.getRotation());
         game.executeCommand(new RotateTileDrawnCommand(TileRotation.RIGHT));
-        assertEquals(tileDrawn.getRotation(), TileRotation.RIGHT);
+        assertEquals(TileRotation.RIGHT, tileDrawn.getRotation());
         game.executeCommand(new RotateTileDrawnCommand(TileRotation.LEFT));
-        assertEquals(tileDrawn.getRotation(), TileRotation.LEFT);
+        assertEquals(TileRotation.LEFT, tileDrawn.getRotation());
         game.executeCommand(new RotateTileDrawnCommand(TileRotation.DOWN));
-        assertEquals(tileDrawn.getRotation(), TileRotation.DOWN);
+        assertEquals(TileRotation.DOWN, tileDrawn.getRotation());
     }
 }
