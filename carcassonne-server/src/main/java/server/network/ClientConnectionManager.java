@@ -42,12 +42,11 @@ public class ClientConnectionManager {
         }
 
         running = false;
+        connectionChecker.cancel();
 
         for (ClientConnection connection : connections.values()) {
             connection.close();
         }
-
-        connectionChecker.cancel();
     }
 
     /**

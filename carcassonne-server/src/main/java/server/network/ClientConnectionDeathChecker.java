@@ -13,6 +13,9 @@ public class ClientConnectionDeathChecker extends TimerTask {
         this.connections = connections;
     }
 
+    /**
+     * Routines that checks if the client connections are still alive.
+     */
     @Override
     public void run() {
         for (ClientConnection connection : connections.values()) {
