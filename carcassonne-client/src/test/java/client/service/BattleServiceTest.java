@@ -23,10 +23,10 @@ import network.message.game.GameDataMessage;
 import network.message.game.GameMasterNextTurnDataMessage;
 import network.message.game.GameResultMessage;
 import org.junit.jupiter.api.Test;
+import reflection.ReflectionUtils;
 import stream.ByteOutputStream;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -195,13 +195,11 @@ class BattleServiceTest {
     }
 
     @Test
-    void testGameResult() throws IOException, NoSuchFieldException, IllegalAccessException {
+    void testGameResult() throws Exception {
         Client client = ClientTestUtils.createMockClient(null, 1);
         BattleService battleService = client.getBattleService();
 
-        Field servicesField = Client.class.getDeclaredField("services");
-        servicesField.setAccessible(true);
-        Map<Class<? extends ServiceBase>, ServiceBase> services = (Map<Class<? extends ServiceBase>, ServiceBase>) servicesField.get(client);
+        Map<Class<? extends ServiceBase>, ServiceBase> services = (Map<Class<? extends ServiceBase>, ServiceBase>) ReflectionUtils.getField(client, "services");
 
         final boolean[] battleOverCalled = {false};
         services.put(GameStatisticsService.class, new GameStatisticsService(client) {

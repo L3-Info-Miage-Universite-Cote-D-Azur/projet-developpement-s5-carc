@@ -6,9 +6,9 @@ import network.message.IMessage;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
 import org.junit.jupiter.api.Test;
+import reflection.ReflectionUtils;
 import stream.ByteOutputStream;
 
-import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,18 +19,6 @@ public class ServerConnectionTest {
         ByteOutputStream stream = new ByteOutputStream(64);
         packet.encode(stream);
         return stream.toByteArray();
-    }
-
-    private static Object getPrivateField(Object obj, String fieldName) throws Exception {
-        Field field = ServerConnection.class.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        return field.get(obj);
-    }
-
-    private static void setPrivateField(Object obj, String fieldName, Object value) throws Exception {
-        Field field = ServerConnection.class.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(obj, value);
     }
 
     @Test
@@ -47,14 +35,14 @@ public class ServerConnectionTest {
             }
         };
 
-        setPrivateField(serverConnection, "messageDispatcher", new MessageDispatcher() {
+        ReflectionUtils.setField(serverConnection, "messageDispatcher", new MessageDispatcher() {
             @Override
             public void handle(IMessage message) {
                 hasReceivedMessage[receivedMessageCount[0]++] = true;
             }
         });
 
-        ByteBuffer readBuffer = (ByteBuffer) getPrivateField(serverConnection, "readBuffer");
+        ByteBuffer readBuffer = (ByteBuffer) ReflectionUtils.getField(serverConnection, "readBuffer");
 
         readBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
         readBuffer.put(getPacketBytes(Packet.create(new ServerHelloMessage())));
