@@ -19,7 +19,7 @@ import java.util.Objects;
 public class GameStatisticsService extends ServiceBase {
     private static final String SAVE_DIRECTORY = "stats";
     private static final String DETAILS_FILENAME = "game_details_%d.txt";
-    private static final String VIEW_FILENAME = "game_view_%d_client_%d.jpg";
+    private static final String VIEW_FILENAME = "game_view_%d.jpg";
 
     private final ArrayList<GameStatistics> statistics;
 
@@ -46,8 +46,9 @@ public class GameStatisticsService extends ServiceBase {
         File saveDirectory = new File(SAVE_DIRECTORY);
 
         if (!saveDirectory.exists()) {
-            if (!saveDirectory.mkdir())
+            if (!saveDirectory.mkdir()) {
                 Logger.warn(LoggerCategory.SERVICE, "Cannot create a folder", saveDirectory);
+            }
         } else {
             for (File file : Objects.requireNonNull(saveDirectory.listFiles())) {
                 try {
@@ -68,8 +69,7 @@ public class GameStatisticsService extends ServiceBase {
         Logger.info(LoggerCategory.SERVICE, "Saving statistics...");
 
         for (int i = 0; i < statistics.size(); i++) {
-            statistics.get(i).save(Paths.get(SAVE_DIRECTORY, String.format(DETAILS_FILENAME, i)).toFile(), Paths.get(SAVE_DIRECTORY, String.format(VIEW_FILENAME, i,
-                    client.getAuthenticationService().getUserId())).toFile());
+            statistics.get(i).save(Paths.get(SAVE_DIRECTORY, String.format(DETAILS_FILENAME, i + 1)).toFile(), Paths.get(SAVE_DIRECTORY, String.format(VIEW_FILENAME, i + 1)).toFile());
         }
     }
 }

@@ -1,5 +1,7 @@
 package client.stats;
 
+import client.logger.Logger;
+import client.logger.LoggerCategory;
 import client.utils.GameDrawUtils;
 import excel.ExcelNode;
 import excel.ExcelRow;
@@ -9,14 +11,15 @@ import logic.player.Player;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 
 /**
  * Represents the statistics of the game.
  */
 public class GameStatistics {
-    private static final Object writeLock = new Object();
-
     private final ArrayList<GameStatisticsPlayer> players;
     private final BufferedImage boardView;
 
@@ -81,17 +84,25 @@ public class GameStatistics {
     /**
      * Saves the excel file with the details statistics.
      *
-     * @param detailsFile the excel file with the details statistics.
+     * @param detailsFile the excel file with the details of statistics.
      * @param viewFile    the excel file with the board view.
      */
     public void save(File detailsFile, File viewFile) {
-        synchronized (writeLock) {
-            try {
-                createDetailsExcel().saveToFile(detailsFile);
-                ImageIO.write(boardView, "jpg", viewFile);
-            } catch (Exception e) {
-                e.printStackTrace();
+        try {
+            createDetailsExcel().saveToFile(detailsFile);
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(viewFile)) {
+                FileChannel channel = fileOutputStream.getChannel();
+                FileLock lock = channel.lock();
+
+                try {
+                    ImageIO.write(boardView, "jpg", fileOutputStream);
+                } finally {
+                    lock.release();
+                }
             }
+        } catch (Exception e) {
+            Logger.error(LoggerCategory.SERVICE, "Failed to save the game statistics. %s", e);
         }
     }
 }
