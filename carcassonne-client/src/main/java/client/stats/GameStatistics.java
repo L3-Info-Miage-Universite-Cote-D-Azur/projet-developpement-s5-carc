@@ -2,22 +2,15 @@ package client.stats;
 
 import client.logger.Logger;
 import client.logger.LoggerCategory;
-import client.utils.GameDrawUtils;
 import excel.ExcelNode;
 import excel.ExcelRow;
 import logic.Game;
 import logic.player.Player;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Represents the statistics of the game.

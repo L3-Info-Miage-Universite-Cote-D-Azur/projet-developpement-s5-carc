@@ -1,4 +1,4 @@
-package client.utils;
+package client.view;
 
 import logic.Game;
 import logic.board.GameBoard;
@@ -21,12 +21,12 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-import static client.utils.ChunkPositionConstant.*;
+import static client.view.ChunkPositionConstants.*;
 
 /**
- * Class for drawing the game.
+ * Class used to build a view of the game board.
  */
-public class GameDrawUtils {
+public class GameBoardViewBuilder {
     private static final int TILE_WIDTH = 160;
     private static final int TILE_HEIGHT = 160;
     private static final int MEEPLE_WIDTH = 27;
@@ -77,7 +77,8 @@ public class GameDrawUtils {
         chunksGeo.put(ChunkId.EAST_BOTTOM, new Polygon(K, L, P)); // KLP
         chunksGeo.put(ChunkId.CENTER_MIDDLE, new Polygon(F, G, K, J)); // FGKJ
     }
-    private GameDrawUtils() {
+
+    private GameBoardViewBuilder() {
         // ignored
     }
 

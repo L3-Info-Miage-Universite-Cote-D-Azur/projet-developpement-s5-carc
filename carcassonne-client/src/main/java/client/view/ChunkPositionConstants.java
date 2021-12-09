@@ -1,4 +1,4 @@
-package client.utils;
+package client.view;
 
 import logic.math.Vector2;
 
@@ -6,7 +6,7 @@ import logic.math.Vector2;
 /**
  * Contains all chunk position
  */
-public abstract class ChunkPositionConstant {
+public abstract class ChunkPositionConstants {
     // A--B--C--D
     // E--F--G--H
     // I--J--K--L
@@ -28,7 +28,8 @@ public abstract class ChunkPositionConstant {
     public static final Vector2 N = new Vector2(53, 160);
     public static final Vector2 O = new Vector2(107, 160);
     public static final Vector2 P = new Vector2(160, 160);
-    private ChunkPositionConstant() {
+
+    private ChunkPositionConstants() {
         // ignored
     }
 }

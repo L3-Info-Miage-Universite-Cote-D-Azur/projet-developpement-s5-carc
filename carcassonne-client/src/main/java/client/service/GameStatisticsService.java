@@ -3,7 +3,7 @@ package client.service;
 import client.Client;
 import client.config.StatsConfig;
 import client.message.IMessageHandler;
-import client.stats.GameBoardView;
+import client.view.GameBoardView;
 import client.stats.GameStatistics;
 import logic.Game;
 import network.message.IMessage;
@@ -105,7 +105,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
      */
     @Override
     public void onDisconnect() {
-        // Check if we have already done matchs.
+        // Check if we have already done matches.
         if (userId != 0) {
             if (config.isCreateGlobalStatistics()) {
                 saveStatisticsInBackground(globalStatistics, "global");

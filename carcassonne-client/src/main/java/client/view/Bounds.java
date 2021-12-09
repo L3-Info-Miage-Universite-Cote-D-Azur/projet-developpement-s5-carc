@@ -1,4 +1,4 @@
-package client.utils;
+package client.view;
 
 import logic.math.Vector2;
 

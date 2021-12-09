@@ -1,5 +1,6 @@
 package client.utils;
 
+import client.view.Polygon;
 import logic.math.Vector2;
 import org.junit.jupiter.api.Test;
 

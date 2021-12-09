@@ -1,4 +1,4 @@
-package client.utils;
+package client.view;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
