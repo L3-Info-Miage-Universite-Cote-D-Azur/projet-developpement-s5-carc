@@ -68,12 +68,15 @@ public class ClientSession {
     }
 
     public synchronized void setMatch(Match currentMatch) {
+        // To make sonarlint happy
+        this.currentMatch = currentMatch;
+
         if (destroyed) {
-            synchronized (currentMatch) {
+            synchronized (this.currentMatch) {
                 currentMatch.onPlayerDisconnected(this);
             }
-        } else {
-            this.currentMatch = currentMatch;
+
+            this.currentMatch = null;
         }
     }
 }
