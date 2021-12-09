@@ -151,7 +151,6 @@ public class ClientConnection {
         try {
             return channel.getRemoteAddress().toString();
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
     }
