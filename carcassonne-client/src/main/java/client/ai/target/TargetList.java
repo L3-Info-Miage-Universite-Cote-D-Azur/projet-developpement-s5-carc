@@ -21,12 +21,11 @@ public class TargetList<E> {
      *
      * @param entry The position to add.
      */
-    public void add(E entry, int cost) {
-        this.entries.add(new TargetEntry<>(entry, cost));
+    public void add(E entry, int score) {
+        this.entries.add(new TargetEntry<>(entry, score));
 
-        /* As the added entry can be the most costly,
-         * we need to throw away after the insertion.
-         */
+        /* As the added entry can be the less scored,
+         * we need to throw away after the insertion. */
         if (this.entries.size() > this.capacity) {
             throwEntry();
         }
@@ -63,12 +62,12 @@ public class TargetList<E> {
      */
     public void throwEntry() {
         int index = 0;
-        int max = -1;
+        int min = Integer.MAX_VALUE;
         int i = 0;
 
         for (TargetEntry<E> entry : entries) {
-            if (entry.score() < max) {
-                max = entry.score();
+            if (entry.score() < min) {
+                min = entry.score();
                 index = i;
             }
 
