@@ -63,7 +63,7 @@ public class AbbeyArea extends Area {
      */
     @Override
     public int getOpenPoints() {
-        return 0;
+        return NUM_NEIGHBORS_REQUIRED - getFreeEdges();
     }
 
     /**
