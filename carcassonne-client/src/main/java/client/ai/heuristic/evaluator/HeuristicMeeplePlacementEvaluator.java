@@ -1,6 +1,5 @@
 package client.ai.heuristic.evaluator;
 
-import logic.Game;
 import logic.player.Player;
 import logic.tile.area.AbbeyArea;
 import logic.tile.area.Area;

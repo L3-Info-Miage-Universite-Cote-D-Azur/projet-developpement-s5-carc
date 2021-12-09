@@ -81,7 +81,7 @@ public class Match {
                     case TURN_PLACE_TILE -> player.getListener().onWaitingPlaceTile();
                     case TURN_PLACE_MEEPLE -> player.getListener().onWaitingMeeplePlacement();
                     case TURN_MOVE_DRAGON -> player.getListener().onWaitingDragonMove();
-                    default -> { }
+                    default -> { /* do nothing */ }
                 }
             }
         }

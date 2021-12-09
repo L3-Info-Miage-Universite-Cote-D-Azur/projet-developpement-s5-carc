@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AuthenticationServiceTest {
+class AuthenticationServiceTest {
     @Test
     void testAuthenticateSendClientHello() throws IOException {
         final boolean[] called = {false};

@@ -31,7 +31,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BattleServiceTest {
+class BattleServiceTest {
     @Test
     void testGameDataInitGameViewAndAttachAI() throws IOException {
         Client client = ClientTestUtils.createMockClient(null, 1);
