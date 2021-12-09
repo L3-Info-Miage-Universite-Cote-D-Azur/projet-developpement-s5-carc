@@ -3,6 +3,7 @@ package server.network;
 import server.logger.Logger;
 
 import java.nio.channels.AsynchronousSocketChannel;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,25 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ClientConnectionManager {
     private final ConcurrentHashMap<Integer, ClientConnection> connections;
-    private final Thread connectionCheckerThread;
+    private final Timer connectionChecker;
     private int nextConnectionId;
 
     private boolean running;
 
     public ClientConnectionManager() {
         connections = new ConcurrentHashMap<>();
-        connectionCheckerThread = new Thread(() -> {
-            while (running) {
-                // TODO Can I use yield instead ?
-                Thread.yield();
-
-                for (ClientConnection connection : connections.values()) {
-                    if (!connection.isConnected()) {
-                        connection.close();
-                    }
-                }
-            }
-        });
+        connectionChecker = new Timer();
     }
 
     /**
@@ -40,7 +30,7 @@ public class ClientConnectionManager {
         }
 
         running = true;
-        connectionCheckerThread.start();
+        connectionChecker.schedule(new ClientConnectionDeathChecker(connections), 0, 500);
     }
 
     /**
@@ -57,12 +47,7 @@ public class ClientConnectionManager {
             connection.close();
         }
 
-        try {
-            connectionCheckerThread.join();
-        } catch (InterruptedException e) {
-            Logger.error("Interrupted!", e);
-            Thread.currentThread().interrupt();
-        }
+        connectionChecker.cancel();
     }
 
     /**
