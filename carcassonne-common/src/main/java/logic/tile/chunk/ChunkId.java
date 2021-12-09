@@ -2,6 +2,8 @@ package logic.tile.chunk;
 
 import logic.tile.Direction;
 
+import java.util.Arrays;
+
 /**
  * A chunk id is a unique identifier for a chunk. It contains the chunk's position in the tile grid.
  */
@@ -84,5 +86,16 @@ public enum ChunkId {
      */
     public Direction getEdge() {
         return edge;
+    }
+
+    /**
+     * Returns the chunk ids for chunks around the current chunk.
+     * @return Chunk ids for chunks around the current chunk.
+     */
+    public ChunkId[] getNeighbours() {
+        return this == CENTER_MIDDLE ? Arrays.stream(ChunkId.values()).filter(v -> v != CENTER_MIDDLE).toArray(ChunkId[]::new) : new ChunkId[] {
+                values()[Math.floorMod((this.ordinal() - 1), (ChunkId.values().length - 1))],
+                values()[(ordinal() + 1) % (values().length - 1)],
+        };
     }
 }

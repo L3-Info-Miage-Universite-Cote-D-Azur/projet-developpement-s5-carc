@@ -23,6 +23,11 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
     public static final int TOWN_TILE_COUNT_SCORE = 15;
 
     /**
+     * Score earned when a meeple is placed on a closing town.
+     */
+    public static final int TOWN_CLOSED_SCORE = 50;
+
+    /**
      * Score earned for each tiles in the town area.
      */
     public static final int ROAD_TILE_COUNT_SCORE = 3;
@@ -40,17 +45,17 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
     /**
      * Number of open edges need to trigger the penalty for too open town area.
      */
-    public static final int TOWN_TOO_OPEN_THRESHOLD = 3;
+    public static final int TOWN_TOO_OPEN_THRESHOLD = 6;
 
     /**
      * Number of tiles needed to trigger the penalty for too open town area.
      */
-    public static final int TOWN_TOO_OPEN_TILES_THRESHOLD = 2;
+    public static final int TOWN_TOO_OPEN_TILES_THRESHOLD = 3;
 
     /**
      * Penalty received when the town area is too open.
      */
-    public static final int TOWN_TOO_OPEN_PENALTY = 20;
+    public static final int TOWN_TOO_OPEN_PENALTY = 10;
 
     /**
      * Threshold to penalize the placement of a meeple when the remaining meeples
@@ -149,6 +154,10 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
             if (freeEdges >= TOWN_TOO_OPEN_THRESHOLD) {
                 addPenalty(TOWN_TOO_OPEN_PENALTY * (TOWN_TOO_OPEN_THRESHOLD - freeEdges + 1));
             }
+        }
+
+        if (area.isClosed() && area.isWaitingClosingEvaluation() && area.getEvaluationWinners().isEmpty()) {
+            addScore(TOWN_CLOSED_SCORE);
         }
     }
 

@@ -20,7 +20,9 @@ public class GameOverState extends GameState {
         GameBoard board = game.getBoard();
 
         for (Area area : board.getAreas()) {
-            area.evaluateOpenPoints();
+            if (area.isWaitingOpeningEvaluation()) {
+                area.evaluateOpening();
+            }
         }
 
         game.getListener().onGameEnded();

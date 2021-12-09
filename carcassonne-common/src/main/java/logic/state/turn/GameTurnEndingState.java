@@ -1,8 +1,11 @@
 package logic.state.turn;
 
 import logic.Game;
+import logic.board.GameBoard;
+import logic.dragon.Fairy;
 import logic.state.GameState;
 import logic.state.GameStateType;
+import logic.tile.area.Area;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
 
@@ -19,7 +22,20 @@ public class GameTurnEndingState extends GameState {
      */
     @Override
     public void init() {
-        game.getBoard().checkAreaClosures();
+        GameBoard board = game.getBoard();
+
+        for (Area area : board.getAreas()) {
+            if (area.isWaitingClosingEvaluation()) {
+                area.evaluateClosing();
+            }
+        }
+
+        Fairy fairy = board.getFairy();
+
+        if (fairy != null) {
+            fairy.evaluate();
+        }
+
         game.getListener().onTurnEnded(game.getTurnCount());
         game.setState(game.isMaster() ? new GameTurnInitState(game) : new GameWaitingMasterDataState(game));
     }

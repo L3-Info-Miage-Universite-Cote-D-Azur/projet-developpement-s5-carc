@@ -27,6 +27,7 @@ public abstract class Area {
     private final int id;
 
     private boolean closed;
+    private boolean waitingClosingEvaluation;
 
     /**
      * Constructor for the area.
@@ -111,6 +112,22 @@ public abstract class Area {
      */
     public boolean isClosed() {
         return closed;
+    }
+
+    /**
+     * Returns whether the area is waiting for the closing evaluation.
+     * @return True if the area is waiting for the closing evaluation, false otherwise.
+     */
+    public boolean isWaitingClosingEvaluation() {
+        return waitingClosingEvaluation;
+    }
+
+    /**
+     * Returns whether the area is waiting for the opening evaluation.
+     * @return True if the area is waiting for the opening evaluation, false otherwise.
+     */
+    public boolean isWaitingOpeningEvaluation() {
+        return !closed;
     }
 
     /**
@@ -230,6 +247,29 @@ public abstract class Area {
      */
     protected void onClosed() {
         closed = true;
+        waitingClosingEvaluation = true;
+    }
+
+    /**
+     * Evalutes the area opening.
+     */
+    public void evaluateOpening() {
+        if (closed) {
+            throw new IllegalStateException("Cannot evaluate opening of a closed area.");
+        }
+
+        evaluateOpenPoints();
+    }
+
+    /**
+     * Evaluates the area closure.
+     */
+    public void evaluateClosing() {
+        if (!waitingClosingEvaluation) {
+            throw new IllegalStateException("Cannot evaluate the area closing points if the area is not waiting for the closing evaluation.");
+        }
+
+        waitingClosingEvaluation = false;
         evaluateClosePoints();
     }
 
@@ -256,7 +296,7 @@ public abstract class Area {
     /**
      * Evaluates the area open points.
      */
-    public void evaluateOpenPoints() {
+    protected void evaluateOpenPoints() {
         int points = getOpenPoints();
 
         if (points >= 1) {
@@ -271,7 +311,7 @@ public abstract class Area {
      *
      * @return The player list.
      */
-    private List<Player> getEvaluationWinners() {
+    public List<Player> getEvaluationWinners() {
         /* Get all meeples from chunks */
         List<Meeple> meeples = getMeeples();
 

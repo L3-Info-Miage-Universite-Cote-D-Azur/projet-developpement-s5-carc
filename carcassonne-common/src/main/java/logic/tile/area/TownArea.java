@@ -44,7 +44,10 @@ public class TownArea extends Area {
      */
     @Override
     public int getClosingPoints() {
-        return 2 * getNumTiles() + 2 * getNumTiles(TileFlags.SHIELD);
+        int numTiles = getNumTiles();
+        int numShields = getNumTiles(TileFlags.SHIELD);
+
+        return numTiles + 2 * numShields;
     }
 
     /**

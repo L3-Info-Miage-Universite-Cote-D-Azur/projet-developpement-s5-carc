@@ -16,5 +16,5 @@ Match
 	NumPlayers	2
 Stats
 	Name	Value
-	CreateBoardView	False
+	CreateBoardView	True
 	CreateGlobalStatistics	True

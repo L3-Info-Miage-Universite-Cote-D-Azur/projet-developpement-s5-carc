@@ -91,6 +91,8 @@ public class GameBoard {
         tilesList.add(tile);
 
         tile.onBoard();
+
+        updateAreaClosures();
     }
 
     /**
@@ -261,13 +263,9 @@ public class GameBoard {
     /**
      * Updates the area closure states.
      */
-    public void checkAreaClosures() {
+    protected void updateAreaClosures() {
         for (Area area : getAreas()) {
             area.updateClosure();
-        }
-
-        if (fairy != null) {
-            fairy.evaluate();
         }
     }
 

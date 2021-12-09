@@ -1,5 +1,6 @@
 package logic.tile.area;
 
+import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
@@ -62,12 +63,17 @@ public class FieldArea extends Area {
         for (Tile tile : getTiles()) {
             for (ChunkId chunkId : ChunkId.values()) {
                 Chunk chunk = tile.getChunk(chunkId);
+                Area area = chunk.getArea();
 
-                if (chunk.getArea().getType() == ChunkType.TOWN) {
-                    TownArea area = (TownArea) chunk.getArea();
+                if (area.getType() == ChunkType.TOWN) {
+                    /* Now we found a town in the tile, we need to check if the town is in contact with this area. */
+                    for (ChunkId neighborChunkId : chunk.getCurrentId().getNeighbours()) {
+                        Chunk neighborChunk = tile.getChunk(neighborChunkId);
 
-                    if (area.isClosed()) {
-                        closedTownAreas.add(area);
+                        if (neighborChunk.getArea() == this) {
+                            closedTownAreas.add(neighborChunk.getArea());
+                            break;
+                        }
                     }
                 }
             }
