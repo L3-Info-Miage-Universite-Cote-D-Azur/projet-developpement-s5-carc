@@ -9,7 +9,7 @@ public class HeuristicEvaluator {
     /**
      * Current multiplier when score is earned.
      */
-    private int multiplier;
+    private int multiplier = 1;
 
     /**
      * Adds the given score to the current score.
@@ -32,7 +32,7 @@ public class HeuristicEvaluator {
     /**
      * Multiplies the current score by the given multiplier.
      *
-     * @param multiplier
+     * @param multiplier The multiplier to multiply the score to add by.
      */
     protected void multiplyScore(int multiplier) {
         this.score *= multiplier;
