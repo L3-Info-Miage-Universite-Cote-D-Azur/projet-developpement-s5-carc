@@ -26,8 +26,10 @@ class HeuristicDragonEvaluatorTest {
         game = new Game(config);
         Player player0 = new Player();
         Player player1 = new Player();
+        Player player2 = new Player();
         game.addPlayer(player0);
         game.addPlayer(player1);
+        game.addPlayer(player2);
         heuristicDragonEvaluator = new HeuristicDragonEvaluator(game, player0);
 
         Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
@@ -64,8 +66,10 @@ class HeuristicDragonEvaluatorTest {
         tile11.setRotation(TileRotation.DOWN);
         tile12.setRotation(TileRotation.UP);
 
+        tile8.getChunk(ChunkId.CENTER_MIDDLE).setMeeple(new Meeple(player2));
         tile3.getChunk(ChunkId.CENTER_MIDDLE).setMeeple(new Meeple(player1));
         tile9.getChunk(ChunkId.CENTER_MIDDLE).setMeeple(new Meeple(player0));
+        game.getBoard().spawnFairy(tile8.getChunk(ChunkId.EAST_TOP));
 
         game.getBoard().place(tile1);
         game.getBoard().place(tile2);
@@ -92,12 +96,9 @@ class HeuristicDragonEvaluatorTest {
         Vector2 right = new Vector2(2, 2);
 
         assertTrue(game.getBoard().getDragon().canMoveTo(up));
-
         assertTrue(game.getBoard().getDragon().canMoveTo(down));
-
         assertTrue(game.getBoard().getDragon().canMoveTo(left));
-
-        assertTrue(game.getBoard().getDragon().canMoveTo(right));
+        assertFalse(game.getBoard().getDragon().canMoveTo(right));
 
         Vector2[] vector2s = {up, down, left, right};
 
@@ -130,9 +131,10 @@ class HeuristicDragonEvaluatorTest {
 
         Vector2 left = new Vector2(0, 3);
         Vector2 right = new Vector2(2, 3);
+        Vector2 down = new Vector2(1, 2);
 
+        assertFalse(game.getBoard().getDragon().canMoveTo(down));
         assertTrue(game.getBoard().getDragon().canMoveTo(left));
-
         assertTrue(game.getBoard().getDragon().canMoveTo(right));
 
         Vector2[] vector2s = {left, right};
