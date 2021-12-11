@@ -3,6 +3,7 @@ package client.view;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.dragon.Dragon;
+import logic.dragon.Fairy;
 import logic.math.Vector2;
 import logic.meeple.Meeple;
 import logic.tile.Tile;
@@ -408,6 +409,13 @@ public class GameBoardViewBuilder {
             BufferedImage dragonImage = dragonDatabase.get("dragon");
             graphics.setColor(Color.blue);
             graphics.drawImage(dragonImage, dragonImagePosition.x(), dragonImagePosition.y(), null);
+        }
+
+        if (gameBoard.hasFairy()) {
+            Fairy fairy = gameBoard.getFairy();
+            Vector2 fairyImagePosition = getMeeplePosition(getTilePosition(fairy.getTilePosition()).reverseY().subtract(layerBounds.start), fairy.getChunk().getCurrentId());
+            BufferedImage fairyImage = meepleDatabase.get("fairy");
+            graphics.drawImage(fairyImage, fairyImagePosition.x(), fairyImagePosition.y(), null);
         }
     }
 }
