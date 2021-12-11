@@ -16,6 +16,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns the hash code for this vector.
+     *
      * @return the hash code for this vector.
      */
     @Override
@@ -25,6 +26,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the addition of the given values.
+     *
      * @param x the x value to add.
      * @param y the y value to add.
      * @return the new vector.
@@ -35,6 +37,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the addition of the given vector.
+     *
      * @param vector the vector to add.
      * @return the new vector.
      */
@@ -44,6 +47,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the subtraction of the given values.
+     *
      * @param x the x value to subtract.
      * @param y the y value to subtract.
      * @return the new vector.
@@ -54,6 +58,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the subtraction of the given vector.
+     *
      * @param vector the vector to subtract.
      * @return the new vector.
      */
@@ -63,6 +68,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the multiplication of the given values.
+     *
      * @param x the x value to multiply.
      * @param y the y value to multiply.
      * @return the new vector.
@@ -73,6 +79,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Creates a new vector with the multiplication of the given vector.
+     *
      * @param vector the vector to multiply.
      * @return the new vector.
      */
@@ -82,6 +89,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns a new vector with the reversed values.
+     *
      * @return the new vector.
      */
     public Vector2 reverse() {
@@ -90,6 +98,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns a new vector with the reversed x value.
+     *
      * @return the new vector.
      */
     public Vector2 reverseX() {
@@ -98,6 +107,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns a new vector with the reversed y value.
+     *
      * @return the new vector.
      */
     public Vector2 reverseY() {
@@ -107,6 +117,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns the squared magnitude of this vector.
+     *
      * @return the squared magnitude of this vector.
      */
     public int sqrMagnitude() {
@@ -115,6 +126,7 @@ public record Vector2(int x, int y) {
 
     /**
      * Returns the magnitude of this vector.
+     *
      * @return the magnitude of this vector.
      */
     public int magnitude() {
@@ -122,7 +134,20 @@ public record Vector2(int x, int y) {
     }
 
     /**
+     * Get the distance between two vector using manhattan method
+     *
+     * @param a The origin the vector
+     * @param b The destination vector
+     * @return the distance between two vector
+     */
+    public static int manhattan(Vector2 a, Vector2 b) {
+        Vector2 vector2 = a.subtract(b);
+        return Math.abs(vector2.x) + Math.abs(vector2.y);
+    }
+
+    /**
      * Converts this vector to string.
+     *
      * @return the string representation of this vector.
      */
     @Override
