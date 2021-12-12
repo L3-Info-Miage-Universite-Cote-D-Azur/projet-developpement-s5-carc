@@ -6,24 +6,31 @@ import logic.math.Vector2;
 import logic.player.Player;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HeuristicTileEvaluatorTest {
+    private GameConfig config;
+    private Game game;
+    private HeuristicTileEvaluator heuristicTileEvaluator;
 
-    @Test
-    void evaluateRoad() {
-        GameConfig config = GameConfig.loadFromResources();
-        Game game = new Game(config);
+    @BeforeEach
+    void setup() {
+        config = GameConfig.loadFromResources();
+        game = new Game(config);
         Player player0 = new Player();
         Player player1 = new Player();
         Player player2 = new Player();
         game.addPlayer(player0);
         game.addPlayer(player1);
         game.addPlayer(player2);
-        HeuristicTileEvaluator heuristicTileEvaluator = new HeuristicTileEvaluator(game);
+        heuristicTileEvaluator = new HeuristicTileEvaluator(game);
+    }
 
+    @Test
+    void evaluateRoad() {
         Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("D")).findFirst().get().createTile(game);
         Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("U")).findFirst().get().createTile(game);
         Tile tile3 = config.getTiles().stream().filter(t -> t.getModel().equals("U")).findFirst().get().createTile(game);
@@ -42,16 +49,6 @@ class HeuristicTileEvaluatorTest {
 
     @Test
     void evaluateTown() {
-        GameConfig config = GameConfig.loadFromResources();
-        Game game = new Game(config);
-        Player player0 = new Player();
-        Player player1 = new Player();
-        Player player2 = new Player();
-        game.addPlayer(player0);
-        game.addPlayer(player1);
-        game.addPlayer(player2);
-        HeuristicTileEvaluator heuristicTileEvaluator = new HeuristicTileEvaluator(game);
-
         Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("E")).findFirst().get().createTile(game);
         Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("E")).findFirst().get().createTile(game);
 

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TargetListTest {
     @Test
-    void test() {
+    void testOrdering() {
         Random r = new Random();
         TargetList list = new TargetList(5);
 

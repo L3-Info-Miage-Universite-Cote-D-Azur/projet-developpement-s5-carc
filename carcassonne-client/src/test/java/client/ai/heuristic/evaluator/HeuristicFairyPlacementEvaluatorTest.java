@@ -25,7 +25,7 @@ class HeuristicFairyPlacementEvaluatorTest {
     void setUp() {
         GameConfig config = GameConfig.loadFromResources();
         assertNotNull(config);
-        Game game = new Game(config);
+        game = new Game(config);
         Player player0 = new Player();
         Player player1 = new Player();
         Player player2 = new Player();

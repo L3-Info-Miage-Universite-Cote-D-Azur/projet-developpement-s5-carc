@@ -1,13 +1,20 @@
 package client.ai.heuristic.evaluator;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HeuristicEvaluatorTest {
+    private HeuristicEvaluator heuristicEvaluator;
+
+    @BeforeEach
+    void setup() {
+        heuristicEvaluator = new HeuristicEvaluator();
+    }
+
     @Test
     void testAddScore() {
-        HeuristicEvaluator heuristicEvaluator = new HeuristicEvaluator();
         heuristicEvaluator.addScore(10);
         heuristicEvaluator.addScore(10);
         assertEquals(20, heuristicEvaluator.finalizeScore());
@@ -15,7 +22,6 @@ public class HeuristicEvaluatorTest {
 
     @Test
     void testAddPenalty() {
-        HeuristicEvaluator heuristicEvaluator = new HeuristicEvaluator();
         heuristicEvaluator.addPenalty(10);
         heuristicEvaluator.addPenalty(10);
         assertEquals(-20, heuristicEvaluator.finalizeScore());
@@ -23,7 +29,6 @@ public class HeuristicEvaluatorTest {
 
     @Test
     void testAddScoreAndPenalty() {
-        HeuristicEvaluator heuristicEvaluator = new HeuristicEvaluator();
         heuristicEvaluator.addScore(100);
         heuristicEvaluator.addPenalty(10);
         assertEquals(90, heuristicEvaluator.finalizeScore());
@@ -31,7 +36,6 @@ public class HeuristicEvaluatorTest {
 
     @Test
     void testMultiplyScore() {
-        HeuristicEvaluator heuristicEvaluator = new HeuristicEvaluator();
         heuristicEvaluator.addScore(10);
         heuristicEvaluator.multiplyScore(10);
         heuristicEvaluator.addScore(20);
@@ -40,7 +44,6 @@ public class HeuristicEvaluatorTest {
 
     @Test
     void testSetMultiplier() {
-        HeuristicEvaluator heuristicEvaluator = new HeuristicEvaluator();
         heuristicEvaluator.addScore(10);
         heuristicEvaluator.setMultiplier(10);
         heuristicEvaluator.addScore(50);

@@ -9,14 +9,17 @@ import logic.state.turn.GameTurnPlaceTileState;
 import logic.tile.Direction;
 import logic.tile.TileFlags;
 import logic.tile.TileRotation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reflection.ReflectionUtils;
 
 public class AITest {
-    @Test
-    void testWaitingPlaceTile() throws Exception {
-        Game game = Mockito.spy(new Game(GameConfig.loadFromResources()) {
+    private Game game;
+
+    @BeforeEach
+    void setup() {
+        game = Mockito.spy(new Game(GameConfig.loadFromResources()) {
             @Override
             public boolean executeCommand(ICommand command) {
                 return true;
@@ -26,7 +29,10 @@ public class AITest {
         game.addPlayer(new Player(1));
         game.addPlayer(new Player(2));
         game.start();
+    }
 
+    @Test
+    void testWaitingPlaceTile() throws Exception {
         AI ai = Mockito.mock(AI.class);
         ReflectionUtils.setField(ai, "player", game.getPlayer(0));
         Mockito.doCallRealMethod().when(ai).onWaitingPlaceTile();
@@ -44,17 +50,6 @@ public class AITest {
 
     @Test
     void testWaitingPlaceMeeple() throws Exception {
-        Game game = Mockito.spy(new Game(GameConfig.loadFromResources()) {
-            @Override
-            public boolean executeCommand(ICommand command) {
-                return true;
-            }
-        });
-
-        game.addPlayer(new Player(1));
-        game.addPlayer(new Player(2));
-        game.start();
-
         AI ai = Mockito.mock(AI.class);
         ReflectionUtils.setField(ai, "player", game.getPlayer(0));
         Mockito.doCallRealMethod().when(ai).onWaitingMeeplePlacement();
@@ -81,17 +76,6 @@ public class AITest {
 
     @Test
     void testWaitingDragonMove() throws Exception {
-        Game game = Mockito.spy(new Game(GameConfig.loadFromResources()) {
-            @Override
-            public boolean executeCommand(ICommand command) {
-                return true;
-            }
-        });
-
-        game.addPlayer(new Player(1));
-        game.addPlayer(new Player(2));
-        game.start();
-
         AI ai = Mockito.mock(AI.class);
         ReflectionUtils.setField(ai, "player", game.getPlayer(0));
         Mockito.doCallRealMethod().when(ai).onWaitingDragonMove();
