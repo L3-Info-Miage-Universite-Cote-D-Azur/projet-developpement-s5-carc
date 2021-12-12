@@ -70,11 +70,11 @@ public class GameStatistics {
     }
 
     /**
-     * Creates the excel file with the details of statistics.
+     * Creates an Excel node with the details of statistics.
      *
-     * @return the excel file with the details of statistics.
+     * @return an Excel node with the details of statistics.
      */
-    private ExcelNode createDetailsExcel() {
+    public ExcelNode createDetailsExcel() {
         ExcelNode excelNode = new ExcelNode();
 
         excelNode.addColumn("Name");
@@ -110,9 +110,9 @@ public class GameStatistics {
     }
 
     /**
-     * Saves the excel file with the details of statistics.
+     * Saves the Excel file with the details of statistics.
      *
-     * @param file the excel file with the details of statistics.
+     * @param file the Excel file with the details of statistics.
      */
     public void save(File file) {
         try {
