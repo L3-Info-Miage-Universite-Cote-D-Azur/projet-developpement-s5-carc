@@ -56,7 +56,6 @@ public class ServerConnectionTest {
 
     @Test
     void testCloseOnBadChecksum() {
-        // Put wrong checksum to check if the connection is closed
         receiveBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
         receiveBuffer.array()[8] = (byte) 0xFF;
         receiveBuffer.array()[9] = (byte) 0xFF;
@@ -70,7 +69,6 @@ public class ServerConnectionTest {
 
     @Test
     void testCloseOnBadHeader() {
-        // Put wrong data to check if the connection is closed
         receiveBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
         receiveBuffer.array()[0] = (byte) 0xFF;
         receiveBuffer.array()[1] = (byte) 0xFF;
@@ -84,7 +82,6 @@ public class ServerConnectionTest {
 
     @Test
     void testCloseOnTooBigMessage() {
-        // Put wrong data to check if the connection is closed
         byte[] data = getPacketBytes(Packet.create(new GameResultMessage(new byte[100000])));
 
         // No need to write the whole message, just write the header
@@ -96,7 +93,6 @@ public class ServerConnectionTest {
 
     @Test
     void testDontHandleWhenMessageNotCompletelyReceived() {
-        // Put wrong data to check if the connection is closed
         receiveBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
 
         serverConnection.onReceive(receiveBuffer.position() - 1);
@@ -107,7 +103,6 @@ public class ServerConnectionTest {
 
     @Test
     void testHandleFirstMessageWhenSecondNotCompletelyReceived() {
-        // Put wrong data to check if the connection is closed
         receiveBuffer.put(getPacketBytes(Packet.create(new ClientHelloMessage())));
         receiveBuffer.put(getPacketBytes(Packet.create(new ServerHelloMessage())));
 
