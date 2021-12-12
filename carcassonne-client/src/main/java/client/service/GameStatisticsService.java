@@ -17,6 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 /**
  * Game statistics service that makes statistics about the match.
@@ -63,9 +64,11 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
         try {
             Files.createDirectories(saveDirectory);
 
-            for (File file : Files.list(saveDirectory).map(p -> p.toFile()).toList()) {
-                if (file.isFile()) {
-                    Files.delete(file.toPath());
+            try (Stream<Path> files = Files.list(saveDirectory)) {
+                for (File file : files.map(p -> p.toFile()).toList()) {
+                    if (file.isFile()) {
+                        Files.delete(file.toPath());
+                    }
                 }
             }
         } catch (IOException e) {
@@ -109,10 +112,8 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
     @Override
     public void onDisconnect() {
         // Check if we have already done matches.
-        if (userId != 0) {
-            if (config.isCreateGlobalStatistics()) {
-                saveStatisticsInBackground(globalStatistics, "global");
-            }
+        if (userId != 0 && config.isCreateGlobalStatistics()) {
+            saveStatisticsInBackground(globalStatistics, "global");
         }
 
         backgroundExecutor.shutdown();
