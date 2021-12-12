@@ -65,7 +65,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
             Files.createDirectories(saveDirectory);
 
             try (Stream<Path> files = Files.list(saveDirectory)) {
-                for (File file : files.map(p -> p.toFile()).toList()) {
+                for (File file : files.map(Path::toFile).toList()) {
                     if (file.isFile()) {
                         Files.delete(file.toPath());
                     }
