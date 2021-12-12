@@ -1,5 +1,7 @@
 package client.view;
 
+import client.logger.Logger;
+import client.logger.LoggerCategory;
 import logic.Game;
 import logic.board.GameBoard;
 import logic.dragon.Dragon;
@@ -107,7 +109,7 @@ public class GameBoardViewBuilder {
                             tileDatabase.cache(String.format("%s_%d", name, i * TileRotation.ANGLE_ROTATION), rotateImage(image, i * TileRotation.ANGLE_ROTATION));
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
                     }
                 }
             }
@@ -123,7 +125,7 @@ public class GameBoardViewBuilder {
                     try {
                         meepleDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
                     }
                 }
             }
@@ -139,7 +141,7 @@ public class GameBoardViewBuilder {
                     try {
                         dragonDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
                     }
                 }
             }
@@ -155,7 +157,7 @@ public class GameBoardViewBuilder {
                     try {
                         extraDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
                     }
                 }
             }

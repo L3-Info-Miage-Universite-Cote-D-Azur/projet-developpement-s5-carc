@@ -167,12 +167,8 @@ public class ClientConnection {
             destroyed = true;
         }
 
-        try {
-            if (session != null) {
-                session.destroy();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (session != null) {
+            session.destroy();
         }
 
         try {
@@ -180,9 +176,8 @@ public class ClientConnection {
             receiveStream.clear();
             receiveBuffer.clear();
         } catch (Exception e) {
-            e.printStackTrace();
+            // Ignore
         } finally {
-            Logger.debug("Connection %d closed.", id);
             Server.getInstance().getConnectionManager().removeConnection(this);
         }
     }

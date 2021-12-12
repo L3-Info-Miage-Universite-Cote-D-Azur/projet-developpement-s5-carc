@@ -34,7 +34,7 @@ public class TcpClientSocket {
         try {
             socketChannel.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            // Ignore
         }
     }
 

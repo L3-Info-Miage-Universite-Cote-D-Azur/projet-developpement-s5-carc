@@ -18,7 +18,6 @@ public class MessageFactory {
         try {
             return type.getMessageClass().getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

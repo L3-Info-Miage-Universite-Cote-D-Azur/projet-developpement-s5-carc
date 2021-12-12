@@ -83,6 +83,7 @@ public class ClientConnectionManager {
      */
     public void removeConnection(ClientConnection connection) {
         connections.remove(connection.getId());
+        Logger.debug("Connection %d closed.", connection.getId());
     }
 
     /**

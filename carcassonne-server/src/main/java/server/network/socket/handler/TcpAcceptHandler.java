@@ -32,7 +32,7 @@ public class TcpAcceptHandler implements CompletionHandler<AsynchronousSocketCha
                 connectionManager.createConnection(clientSocketChannel);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.warn("Error accepting new connection: %s", e.getMessage());
         }
 
         if (channel.isOpen()) {
