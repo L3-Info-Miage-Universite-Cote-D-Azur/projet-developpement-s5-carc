@@ -48,13 +48,8 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     private static final int MAX_SEND_BUFFER_SIZE = 1024 * 1024;
 
-    /**
-     * Number of retries to connect to the server.
-     */
-    private static final int NUM_CONNECTION_RETRIES = 5;
-
     private final TcpClientSocket clientSocket;
-    private final ByteBuffer readBuffer;
+    private final ByteBuffer receiveBuffer;
     private final ResizableByteBuffer receiveStream;
     private final ResizableByteBuffer sendStream;
     private final MessageDispatcher messageDispatcher;
@@ -62,7 +57,7 @@ public class ServerConnection implements ITcpClientSocketListener {
     public ServerConnection() throws IOException {
         clientSocket = new TcpClientSocket();
         clientSocket.setListener(this);
-        readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
+        receiveBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
         sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
         messageDispatcher = new MessageDispatcher();
@@ -91,7 +86,7 @@ public class ServerConnection implements ITcpClientSocketListener {
     @Override
     public void onConnected() {
         Logger.info(LoggerCategory.NETWORK, "Connected to the server.");
-        clientSocket.read(readBuffer);
+        clientSocket.read(receiveBuffer);
     }
 
     /**
@@ -117,10 +112,10 @@ public class ServerConnection implements ITcpClientSocketListener {
      */
     @Override
     public void onReceive(int length) {
-        readBuffer.position(length);
-        readBuffer.flip();
-        receiveStream.put(readBuffer.array(), 0, length);
-        readBuffer.clear();
+        receiveBuffer.position(length);
+        receiveBuffer.flip();
+        receiveStream.put(receiveBuffer.array(), 0, length);
+        receiveBuffer.clear();
 
         ByteInputStream stream = new ByteInputStream(receiveStream.getBuffer(), receiveStream.size());
         int bytesRead = 0;

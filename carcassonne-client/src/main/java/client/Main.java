@@ -11,7 +11,6 @@ import java.util.Objects;
  * Creates, starts and waits for the game to end.
  */
 public class Main {
-
     public static void main(String[] args) throws IOException, InterruptedException {
         Client client = new Client(Objects.requireNonNull(ClientConfig.loadFromResources()), GameConfig.loadFromResources());
         client.start();

@@ -68,7 +68,7 @@ public class ClientConnection {
     /**
      * The buffer used to store data received from the socket.
      */
-    private final ByteBuffer readBuffer;
+    private final ByteBuffer receiveBuffer;
 
     /**
      * The stream used to store data to be handled.
@@ -105,14 +105,14 @@ public class ClientConnection {
         this.channel = channel;
         this.id = id;
         this.messageHandler = new MessageHandler(this);
-        this.readBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
+        this.receiveBuffer = ByteBuffer.allocate(READ_BUFFER_SIZE);
         this.receiveStream = new ResizableByteBuffer(INITIAL_RECEIVE_STREAM_SIZE, MAX_RECEIVE_BUFFER_SIZE);
         this.sendStream = new ResizableByteBuffer(INITIAL_SEND_STREAM_SIZE, MAX_SEND_BUFFER_SIZE);
         this.lastRead = LocalDateTime.now();
     }
 
     public void startIO() {
-        this.channel.read(readBuffer, this, new TcpReadHandler(this.channel, this.readBuffer));
+        this.channel.read(receiveBuffer, this, new TcpReadHandler(this.channel, this.receiveBuffer));
     }
 
     /**
@@ -178,7 +178,7 @@ public class ClientConnection {
         try {
             channel.close();
             receiveStream.clear();
-            readBuffer.clear();
+            receiveBuffer.clear();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -193,10 +193,10 @@ public class ClientConnection {
      * @param length The length of the data received.
      */
     public void onReceive(int length) {
-        readBuffer.position(length);
-        readBuffer.flip();
-        receiveStream.put(readBuffer.array(), 0, length);
-        readBuffer.clear();
+        receiveBuffer.position(length);
+        receiveBuffer.flip();
+        receiveStream.put(receiveBuffer.array(), 0, length);
+        receiveBuffer.clear();
 
         ByteInputStream stream = new ByteInputStream(receiveStream.getBuffer(), receiveStream.size());
         int bytesRead = 0;
