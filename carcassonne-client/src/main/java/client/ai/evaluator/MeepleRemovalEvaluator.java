@@ -1,11 +1,11 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.meeple.Meeple;
 import logic.player.Player;
 import logic.tile.area.Area;
 import logic.tile.chunk.Chunk;
 
-public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
+public class MeepleRemovalEvaluator extends HeuristicEvaluator {
     /**
      * Score earned if the area contains an enemy meeple and
      * if the number of meeples in the area is greater than mine.
@@ -35,7 +35,7 @@ public class HeuristicMeepleRemovalEvaluator extends HeuristicEvaluator {
 
     private final Player player;
 
-    public HeuristicMeepleRemovalEvaluator(Player player) {
+    public MeepleRemovalEvaluator(Player player) {
         this.player = player;
     }
 

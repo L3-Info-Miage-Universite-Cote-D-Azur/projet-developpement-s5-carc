@@ -1,8 +1,6 @@
-package client.ai.heuristic;
+package client.ai;
 
-import client.ai.AI;
-import client.ai.TilePosition;
-import client.ai.heuristic.evaluator.*;
+import client.ai.evaluator.*;
 import client.ai.target.TargetList;
 import logic.Game;
 import logic.board.GameBoard;
@@ -40,11 +38,30 @@ public class HeuristicAI extends AI {
      */
     private static final int FAIRY_PLACEMENT_MIN_SCORE = 10;
 
-    private final HeuristicTileEvaluator tileEvaluator;
-    private final HeuristicMeeplePlacementEvaluator meeplePlacementEvaluator;
-    private final HeuristicMeepleRemovalEvaluator meepleRemovalEvaluator;
-    private final HeuristicFairyPlacementEvaluator fairyPlacementEvaluator;
-    private final HeuristicDragonEvaluator dragonEvaluator;
+    /**
+     * Evaluator used to evaluate the position of the tile to place.
+     */
+    private final TilePositionEvaluator tilePositionEvaluator;
+
+    /**
+     * Evaluator used to evaluate the placement of the meeple on the specified chunk.
+     */
+    private final MeeplePlacementEvaluator meeplePlacementEvaluator;
+
+    /**
+     * Evaluator used to evaluate the removal of the meeple on the specified chunk.
+     */
+    private final MeepleRemovalEvaluator meepleRemovalEvaluator;
+
+    /**
+     * Evaluator used to evaluate the placement of the fairy on the specified chunk.
+     */
+    private final FairyPlacementEvaluator fairyPlacementEvaluator;
+
+    /**
+     * Evaluator used to evaluate the moving of the dragon on the specified tile.
+     */
+    private final DragonMovementEvaluator dragonMovementEvaluator;
 
     public HeuristicAI(Player player) {
         super(player);
@@ -55,11 +72,11 @@ public class HeuristicAI extends AI {
             throw new IllegalArgumentException("Player must be in a game.");
         }
 
-        this.tileEvaluator = new HeuristicTileEvaluator(game);
-        this.meeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(player);
-        this.meepleRemovalEvaluator = new HeuristicMeepleRemovalEvaluator(player);
-        this.fairyPlacementEvaluator = new HeuristicFairyPlacementEvaluator(game, player);
-        this.dragonEvaluator = new HeuristicDragonEvaluator(game, player);
+        this.tilePositionEvaluator = new TilePositionEvaluator(game);
+        this.meeplePlacementEvaluator = new MeeplePlacementEvaluator(player);
+        this.meepleRemovalEvaluator = new MeepleRemovalEvaluator(player);
+        this.fairyPlacementEvaluator = new FairyPlacementEvaluator(game, player);
+        this.dragonMovementEvaluator = new DragonMovementEvaluator(game, player);
     }
 
     /**
@@ -77,7 +94,7 @@ public class HeuristicAI extends AI {
             TileRotation rotation = tile.getRotation();
 
             for (Vector2 freePlace : getGame().getBoard().findFreePlacesForTile(tile)) {
-                targetList.add(new TilePosition(freePlace, rotation), tileEvaluator.evaluate(tile, freePlace));
+                targetList.add(new TilePosition(freePlace, rotation), tilePositionEvaluator.evaluate(tile, freePlace));
             }
         }
 
@@ -198,7 +215,7 @@ public class HeuristicAI extends AI {
             Vector2 position = dragon.getPosition().add(direction.value());
 
             if (dragon.canMoveTo(position)) {
-                targetList.add(direction, dragonEvaluator.evaluate(position));
+                targetList.add(direction, dragonMovementEvaluator.evaluate(position));
             }
         }
 

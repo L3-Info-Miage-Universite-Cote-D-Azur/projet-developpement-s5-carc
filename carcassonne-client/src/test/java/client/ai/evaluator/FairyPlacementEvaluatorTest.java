@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.config.GameConfig;
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HeuristicFairyPlacementEvaluatorTest {
-    private HeuristicFairyPlacementEvaluator heuristicFairyPlacementEvaluator;
+class FairyPlacementEvaluatorTest {
+    private FairyPlacementEvaluator fairyPlacementEvaluator;
     private Tile tile3;
     private Tile tile8;
     private Tile tile9;
@@ -32,7 +32,7 @@ class HeuristicFairyPlacementEvaluatorTest {
         game.addPlayer(player0);
         game.addPlayer(player1);
         game.addPlayer(player2);
-        heuristicFairyPlacementEvaluator = new HeuristicFairyPlacementEvaluator(game, player0);
+        fairyPlacementEvaluator = new FairyPlacementEvaluator(game, player0);
 
         Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
         Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
@@ -92,9 +92,9 @@ class HeuristicFairyPlacementEvaluatorTest {
 
     @Test
     void evaluateWithFairyNotSpawned() {
-        int tile3Evaluated = heuristicFairyPlacementEvaluator.evaluate(tile3.getChunk(ChunkId.CENTER_MIDDLE));
-        int tile9Evaluated = heuristicFairyPlacementEvaluator.evaluate(tile9.getChunk(ChunkId.CENTER_MIDDLE));
-        int tile8Evaluated = heuristicFairyPlacementEvaluator.evaluate(tile8.getChunk(ChunkId.CENTER_MIDDLE));
+        int tile3Evaluated = fairyPlacementEvaluator.evaluate(tile3.getChunk(ChunkId.CENTER_MIDDLE));
+        int tile9Evaluated = fairyPlacementEvaluator.evaluate(tile9.getChunk(ChunkId.CENTER_MIDDLE));
+        int tile8Evaluated = fairyPlacementEvaluator.evaluate(tile8.getChunk(ChunkId.CENTER_MIDDLE));
         assertEquals(tile3Evaluated, tile8Evaluated);
         assertTrue(tile3Evaluated > tile9Evaluated);
         assertTrue(tile8Evaluated > tile9Evaluated);

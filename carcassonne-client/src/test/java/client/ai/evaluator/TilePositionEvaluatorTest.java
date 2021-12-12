@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.config.GameConfig;
@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HeuristicTileEvaluatorTest {
+class TilePositionEvaluatorTest {
     private GameConfig config;
     private Game game;
-    private HeuristicTileEvaluator heuristicTileEvaluator;
+    private TilePositionEvaluator tilePositionEvaluator;
 
     @BeforeEach
     void setup() {
@@ -26,7 +26,7 @@ class HeuristicTileEvaluatorTest {
         game.addPlayer(player0);
         game.addPlayer(player1);
         game.addPlayer(player2);
-        heuristicTileEvaluator = new HeuristicTileEvaluator(game);
+        tilePositionEvaluator = new TilePositionEvaluator(game);
     }
 
     @Test
@@ -44,7 +44,7 @@ class HeuristicTileEvaluatorTest {
 
         game.getBoard().place(tile1);
 
-        assertTrue(heuristicTileEvaluator.evaluate(tile2) > heuristicTileEvaluator.evaluate(tile3));
+        assertTrue(tilePositionEvaluator.evaluate(tile2) > tilePositionEvaluator.evaluate(tile3));
     }
 
     @Test
@@ -61,7 +61,7 @@ class HeuristicTileEvaluatorTest {
         int maxScore = Integer.MIN_VALUE;
         for (TileRotation tileRotation : TileRotation.values()) {
             tile2.setRotation(tileRotation);
-            int score = heuristicTileEvaluator.evaluate(tile2);
+            int score = tilePositionEvaluator.evaluate(tile2);
             if (maxScore < score){
                 maxScore = score;
                 bestRotation = tileRotation;

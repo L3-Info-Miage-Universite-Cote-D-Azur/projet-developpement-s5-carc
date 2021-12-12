@@ -2,7 +2,7 @@ package client.service;
 
 import client.Client;
 import client.ClientTestUtils;
-import client.ai.heuristic.HeuristicAI;
+import client.ai.HeuristicAI;
 import logic.Game;
 import logic.IGameListener;
 import logic.board.GameBoard;

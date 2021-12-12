@@ -1,7 +1,7 @@
 package client.service;
 
 import client.Client;
-import client.ai.heuristic.HeuristicAI;
+import client.ai.HeuristicAI;
 import client.listener.ClientGameListener;
 import client.logger.Logger;
 import client.logger.LoggerCategory;

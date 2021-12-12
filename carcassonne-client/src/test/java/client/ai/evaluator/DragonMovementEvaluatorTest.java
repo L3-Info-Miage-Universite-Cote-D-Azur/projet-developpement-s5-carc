@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.config.GameConfig;
@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HeuristicDragonEvaluatorTest {
-    private static HeuristicDragonEvaluator heuristicDragonEvaluator;
+class DragonMovementEvaluatorTest {
+    private static DragonMovementEvaluator dragonMovementEvaluator;
     private static Game game;
     private static Tile tile3;
     private static Tile tile9;
@@ -30,7 +30,7 @@ class HeuristicDragonEvaluatorTest {
         game.addPlayer(player0);
         game.addPlayer(player1);
         game.addPlayer(player2);
-        heuristicDragonEvaluator = new HeuristicDragonEvaluator(game, player0);
+        dragonMovementEvaluator = new DragonMovementEvaluator(game, player0);
 
         Tile tile1 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
         Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
@@ -105,7 +105,7 @@ class HeuristicDragonEvaluatorTest {
         Vector2 minVec = vector2s[0];
         int minscore = Integer.MIN_VALUE;
         for (Vector2 vector2 : vector2s) {
-            int score = heuristicDragonEvaluator.evaluate(vector2);
+            int score = dragonMovementEvaluator.evaluate(vector2);
             if (score > minscore) {
                 minscore = score;
                 minVec = vector2;
@@ -142,7 +142,7 @@ class HeuristicDragonEvaluatorTest {
         Vector2 minVec = vector2s[0];
         int minscore = Integer.MIN_VALUE;
         for (Vector2 vector2 : vector2s) {
-            int score = heuristicDragonEvaluator.evaluate(vector2);
+            int score = dragonMovementEvaluator.evaluate(vector2);
             if (score > minscore) {
                 minscore = score;
                 minVec = vector2;

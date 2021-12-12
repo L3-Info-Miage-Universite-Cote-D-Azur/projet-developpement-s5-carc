@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.board.GameBoard;
@@ -24,7 +24,7 @@ import java.util.Map;
  * The evaluator does not favour the following:
  * - positions that area in contact with an area that are too many open edges.
  */
-public class HeuristicTileEvaluator extends HeuristicEvaluator {
+public class TilePositionEvaluator extends HeuristicEvaluator {
     /**
      * Multiplier for the heuristic score gained by the area type.
      */
@@ -59,7 +59,7 @@ public class HeuristicTileEvaluator extends HeuristicEvaluator {
 
     private final GameBoard board;
 
-    public HeuristicTileEvaluator(Game game) {
+    public TilePositionEvaluator(Game game) {
         this.board = game.getBoard();
     }
 

@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.player.Player;
 import logic.tile.area.*;
@@ -11,7 +11,7 @@ import logic.tile.chunk.Chunk;
  * The evaluator favours the placement of a meeple on an abbey, town
  * or road.
  */
-public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
+public class MeeplePlacementEvaluator extends HeuristicEvaluator {
     /**
      * Score earned for each abbey edge completed.
      */
@@ -70,7 +70,7 @@ public class HeuristicMeeplePlacementEvaluator extends HeuristicEvaluator {
 
     private final Player player;
 
-    public HeuristicMeeplePlacementEvaluator(Player player) {
+    public MeeplePlacementEvaluator(Player player) {
         this.player = player;
     }
 

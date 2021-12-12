@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.config.GameConfig;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HeuristicMeeplePlacementEvaluatorTest {
-    private HeuristicMeeplePlacementEvaluator heuristicMeeplePlacementEvaluator;
+class MeeplePlacementEvaluatorTest {
+    private MeeplePlacementEvaluator meeplePlacementEvaluator;
     private Tile tile9;
     private Tile tile11;
 
@@ -27,7 +27,7 @@ class HeuristicMeeplePlacementEvaluatorTest {
         game.addPlayer(player0);
         game.addPlayer(player1);
         game.addPlayer(player2);
-        heuristicMeeplePlacementEvaluator = new HeuristicMeeplePlacementEvaluator(player0);
+        meeplePlacementEvaluator = new MeeplePlacementEvaluator(player0);
 
         Tile tile2 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
         Tile tile3 = config.getTiles().stream().filter(t -> t.getModel().equals("V")).findFirst().get().createTile(game);
@@ -71,9 +71,9 @@ class HeuristicMeeplePlacementEvaluatorTest {
 
     @Test
     void evaluate() {
-        int meeplePlacement9Evaluator = heuristicMeeplePlacementEvaluator.evaluate(tile9.getChunk(ChunkId.CENTER_MIDDLE));
-        int meeplePlacement11CMEvaluator = heuristicMeeplePlacementEvaluator.evaluate(tile11.getChunk(ChunkId.CENTER_MIDDLE));
-        int meeplePlacement11SMEvaluator = heuristicMeeplePlacementEvaluator.evaluate(tile11.getChunk(ChunkId.SOUTH_MIDDLE));
+        int meeplePlacement9Evaluator = meeplePlacementEvaluator.evaluate(tile9.getChunk(ChunkId.CENTER_MIDDLE));
+        int meeplePlacement11CMEvaluator = meeplePlacementEvaluator.evaluate(tile11.getChunk(ChunkId.CENTER_MIDDLE));
+        int meeplePlacement11SMEvaluator = meeplePlacementEvaluator.evaluate(tile11.getChunk(ChunkId.SOUTH_MIDDLE));
 
         assertTrue(meeplePlacement11SMEvaluator < meeplePlacement9Evaluator);
         assertTrue(meeplePlacement9Evaluator < meeplePlacement11CMEvaluator);

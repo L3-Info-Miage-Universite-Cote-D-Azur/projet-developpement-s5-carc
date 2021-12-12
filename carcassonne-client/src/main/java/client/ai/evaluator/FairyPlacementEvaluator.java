@@ -1,11 +1,11 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.board.GameBoard;
 import logic.player.Player;
 import logic.tile.chunk.Chunk;
 
-public class HeuristicFairyPlacementEvaluator extends HeuristicEvaluator {
+public class FairyPlacementEvaluator extends HeuristicEvaluator {
     /**
      * Score earned when the fairy is on the current chunk.
      */
@@ -24,7 +24,7 @@ public class HeuristicFairyPlacementEvaluator extends HeuristicEvaluator {
     private final Game game;
     private final Player player;
 
-    public HeuristicFairyPlacementEvaluator(Game game, Player player) {
+    public FairyPlacementEvaluator(Game game, Player player) {
         this.game = game;
         this.player = player;
     }

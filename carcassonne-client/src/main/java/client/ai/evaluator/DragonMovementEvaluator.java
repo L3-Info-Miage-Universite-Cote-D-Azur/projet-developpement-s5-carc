@@ -1,4 +1,4 @@
-package client.ai.heuristic.evaluator;
+package client.ai.evaluator;
 
 import logic.Game;
 import logic.math.Vector2;
@@ -15,7 +15,7 @@ import logic.tile.chunk.ChunkId;
  * - positions that are far away from the own tiles.
  * - positions that are close to the enemy tiles.
  */
-public class HeuristicDragonEvaluator extends HeuristicEvaluator {
+public class DragonMovementEvaluator extends HeuristicEvaluator {
     /**
      * Maximum distance fo the dragon to be considered in proximity with a tile.
      */
@@ -59,7 +59,7 @@ public class HeuristicDragonEvaluator extends HeuristicEvaluator {
     private final Game game;
     private final Player player;
 
-    public HeuristicDragonEvaluator(Game game, Player player) {
+    public DragonMovementEvaluator(Game game, Player player) {
         this.game = game;
         this.player = player;
     }
