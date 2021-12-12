@@ -1,9 +1,10 @@
-# Instructions pour le lancement du jeu Carcassonne
+# Projet Carcassonne
 
-## 1. Installer Maven
+## Instructions pour le lancement du jeu Carcassonne
 
-Si maven est déjà installé sur votre machine, il n'est pas nécessaire de faire cette étape. Passez à la suivante (étape
-2) !
+### 1. Installer Maven
+
+Si maven est déjà installé sur votre machine, il n'est pas nécessaire de faire cette étape. Passez à la suivante (étape deux)!
 
 Cette étape consiste à installer [Maven](https://maven.apache.org/download.cgi#Files) qui est un outil de gestion et de
 compréhension de projet.
@@ -25,18 +26,30 @@ compréhension de projet.
 12. Entrer 'C:\Program Files\Maven\3.8.2\bin'
 13. Valider
 
-## 2. Compiler le projet
+### 2. Construire le projet
 
-Pour prendre en compte les nouvelles modifications du projet, il est nécessaire de compiler avant de lancer le projet.
+Pour prendre en compte les nouvelles modifications du projet, il est nécessaire de construire avant de lancer le projet.
 
-1. Pour compiler le projet, executer 'Construction de carcassonne.bat'
+1. Pour construire le projet, executer 'Construction de carcassonne.bat'
 
-## 3. Lancer le projet
+### 3. Lancer le projet
 
 1. Pour lancer le projet, executer le serveur 'Serveur carcassonne.bat' (Le serveur supporte plus partie les apres les
    autres).
 2. Ensuite, executer 'Client carcassonne.bat' autant de fois que vous le souhaiter (entre 2 et 5)
 
 * Actuellement, 2 clients sous supporter.
-* Le serveur ne s'arrete pas à la fin de la partie
-* Les clients s'arrete à la fin de la partie
+* Le serveur ne s'arrête pas à la fin de la partie
+* Les clients s'arrêtent à la fin de la partie
+
+## Configuration de Carcassonne
+Il est possible de modifier la configuration de Carcassonne dans "carcassonne-client\src\main\resources\client\config\config.txt"
+
+## Acceder aux statistiques et aux visualisations du jeu
+Pour acceder aux statistiques, il faut :
+1. Aller dans le dossier "stats" qui se trouve a la racine du projet
+2. Vous trouverez un dossier par client
+   1. game_details_X.txt contient toutes les stats d'une partie. Si vous lancez 10 parties, il y aura 10 game_details
+   2. game_view_X.jpg contient une representation visuel d'une partie. Si vous lancez 10 parties, il y aura 10 game_view
+
+* Les statistiques et les images sont généré à chaque fin de partie

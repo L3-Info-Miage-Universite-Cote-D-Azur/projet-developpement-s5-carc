@@ -1,1 +1,2 @@
+mvn install
 mvn compile
