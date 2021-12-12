@@ -9,11 +9,6 @@ public class StatsConfig {
     private final boolean createBoardView;
     private final boolean createGlobalStatistics;
 
-    public StatsConfig(boolean createBoardView, boolean createGlobalStatistics) {
-        this.createBoardView = createBoardView;
-        this.createGlobalStatistics = createGlobalStatistics;
-    }
-
     public StatsConfig(ExcelNode node) {
         this.createBoardView = Boolean.parseBoolean(node.getRow("CreateBoardView").getValue("Value"));
         this.createGlobalStatistics = Boolean.parseBoolean(node.getRow("CreateGlobalStatistics").getValue("Value"));

@@ -17,11 +17,6 @@ public class MatchConfig {
      */
     private final int numPlayers;
 
-    public MatchConfig(int numMatches, int numPlayers) {
-        this.numMatches = numMatches;
-        this.numPlayers = numPlayers;
-    }
-
     public MatchConfig(ExcelNode node) {
         this.numMatches = Integer.parseInt(node.getRow("NumMatches").getValue("Value"));
         this.numPlayers = Integer.parseInt(node.getRow("NumPlayers").getValue("Value"));
