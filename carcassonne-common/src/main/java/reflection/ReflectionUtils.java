@@ -56,7 +56,7 @@ public class ReflectionUtils {
         return true;
     }
 
-    private static Field findField(Class<?> clazz, String name) {
+    private static Field findField(Class<?> clazz, String name) throws Exception {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getName().equals(name)) {
                 return field;
@@ -67,6 +67,6 @@ public class ReflectionUtils {
             return findField(clazz.getSuperclass(), name);
         }
 
-        return null;
+        throw new Exception("Field not found");
     }
 }
