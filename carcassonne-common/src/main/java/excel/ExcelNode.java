@@ -38,19 +38,19 @@ public class ExcelNode {
     }
 
     /**
-     * Loads the specified excel file.
+     * Loads the specified Excel file.
      *
      * @param filePath The file path.
-     * @return The root node.
+     * @return The root node or null if the file was not found.
      */
     public static ExcelNode load(Path filePath) {
-        ExcelNode root = new ExcelNode();
         try {
+            ExcelNode root = new ExcelNode();
             root.load(Files.readAllLines(filePath), 0, 0);
+            return root;
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return root;
     }
 
     /**
@@ -143,15 +143,6 @@ public class ExcelNode {
      */
     public int getRowCount() {
         return rows.size();
-    }
-
-    /**
-     * Creates a new row.
-     */
-    public ExcelRow createRow() {
-        ExcelRow row = new ExcelRow(this);
-        rows.add(row);
-        return row;
     }
 
     /**

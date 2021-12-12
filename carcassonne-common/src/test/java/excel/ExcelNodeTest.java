@@ -3,8 +3,24 @@ package excel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ExcelNodeTest {
+    @Test
+    void testThrowWhenCreatingDuplicateChild() {
+        ExcelNode root = new ExcelNode();
+
+        root.createChild("Child1");
+        assertThrows(IllegalArgumentException.class, () -> root.createChild("Child1"));
+    }
+
+    @Test
+    void testThrowWhenAddingDuplicateColumn() {
+        ExcelNode root = new ExcelNode();
+
+        root.addColumn("Name");
+        assertThrows(IllegalArgumentException.class, () -> root.addColumn("Name"));
+    }
 
     @Test
     void testLoadExcel() {
