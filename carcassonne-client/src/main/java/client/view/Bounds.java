@@ -16,7 +16,6 @@ public final class Bounds {
      */
     public final Vector2 end;
 
-
     public Bounds(int startX, int startY, int endX, int endY) {
         this.start = new Vector2(startX, startY);
         this.end = new Vector2(endX, endY);

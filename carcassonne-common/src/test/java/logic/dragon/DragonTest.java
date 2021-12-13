@@ -9,7 +9,6 @@ import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
-import network.message.connection.ServerHelloMessage;
 import org.junit.jupiter.api.Test;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;

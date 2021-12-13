@@ -60,7 +60,7 @@ public class MatchmakingService extends ServiceBase implements IMessageHandler {
     /**
      * Handles the matchmaking data message.
      *
-     * @param message
+     * @param message The message to handle.
      */
     private void onMatchmakingData(MatchmakingDataMessage message) {
         if (isInMatchmaking) {

@@ -6,7 +6,6 @@ import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
 import logic.state.GameOverState;
-import logic.state.GameStartState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
