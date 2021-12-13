@@ -95,13 +95,14 @@ class DragonMovementEvaluatorTest {
         Vector2 left = new Vector2(0, 2);
         Vector2 right = new Vector2(2, 2);
 
-        assertTrue(game.getBoard().getDragon().canMoveTo(up));
-        assertTrue(game.getBoard().getDragon().canMoveTo(down));
-        assertTrue(game.getBoard().getDragon().canMoveTo(left));
-        assertFalse(game.getBoard().getDragon().canMoveTo(right));
+        assertTrue(game.getBoard().getDragon().canMoveTo(up)); // Verification if the dragon can go up
+        assertTrue(game.getBoard().getDragon().canMoveTo(down)); // Verification if the dragon can go down
+        assertTrue(game.getBoard().getDragon().canMoveTo(left)); // Verification if the dragon can go left
+        assertFalse(game.getBoard().getDragon().canMoveTo(right)); // The dragon can't go to the right
 
         Vector2[] vector2s = {up, down, left, right};
 
+        // Getting the best score
         Vector2 minVec = vector2s[0];
         int minscore = Integer.MIN_VALUE;
         for (Vector2 vector2 : vector2s) {
@@ -115,13 +116,13 @@ class DragonMovementEvaluatorTest {
         int distanceDragonPlayer0Before = Vector2.manhattan(tile9.getPosition(), game.getBoard().getDragon().getPosition()); // Yellow
         int distanceDragonPlayer1Before = Vector2.manhattan(tile3.getPosition(), game.getBoard().getDragon().getPosition()); // Purple
 
-        game.getBoard().getDragon().moveTo(minVec);
+        game.getBoard().getDragon().moveTo(minVec); // Dragon move to the best tile score evaluated
 
         int distanceDragonPlayer0After = Vector2.manhattan(tile9.getPosition(), game.getBoard().getDragon().getPosition()); // Yellow
         int distanceDragonPlayer1After = Vector2.manhattan(tile3.getPosition(), game.getBoard().getDragon().getPosition()); // Purple
 
-        assertTrue(distanceDragonPlayer0Before < distanceDragonPlayer0After);
-        assertTrue(distanceDragonPlayer1Before > distanceDragonPlayer1After);
+        assertTrue(distanceDragonPlayer0Before < distanceDragonPlayer0After); // Test if the dragon go away from the player 0
+        assertTrue(distanceDragonPlayer1Before > distanceDragonPlayer1After); // Test if the dragon get closer to the player 1 (Avoid passing on player 2 that have a fairy)
     }
 
     @Test
@@ -133,12 +134,13 @@ class DragonMovementEvaluatorTest {
         Vector2 right = new Vector2(2, 3);
         Vector2 down = new Vector2(1, 2);
 
-        assertFalse(game.getBoard().getDragon().canMoveTo(down));
-        assertTrue(game.getBoard().getDragon().canMoveTo(left));
-        assertTrue(game.getBoard().getDragon().canMoveTo(right));
+        assertFalse(game.getBoard().getDragon().canMoveTo(down)); // The dragon can't go down
+        assertTrue(game.getBoard().getDragon().canMoveTo(left)); // Verification if the dragon can go left
+        assertTrue(game.getBoard().getDragon().canMoveTo(right)); // Verification if the dragon can go right
 
         Vector2[] vector2s = {left, right};
 
+        // Getting the best score
         Vector2 minVec = vector2s[0];
         int minscore = Integer.MIN_VALUE;
         for (Vector2 vector2 : vector2s) {
@@ -157,7 +159,7 @@ class DragonMovementEvaluatorTest {
         int distanceDragonPlayer0After = Vector2.manhattan(tile9.getPosition(), game.getBoard().getDragon().getPosition()); // Yellow
         int distanceDragonPlayer1After = Vector2.manhattan(tile3.getPosition(), game.getBoard().getDragon().getPosition()); // Purple
 
-        assertTrue(distanceDragonPlayer0Before < distanceDragonPlayer0After);
-        assertTrue(distanceDragonPlayer1Before > distanceDragonPlayer1After);
+        assertTrue(distanceDragonPlayer0Before < distanceDragonPlayer0After); // Test if the dragon go away from the player 0
+        assertTrue(distanceDragonPlayer1Before > distanceDragonPlayer1After); // Test if the dragon get closer to the player 1 (Avoid passing on player 2 that have a fairy)
     }
 }
