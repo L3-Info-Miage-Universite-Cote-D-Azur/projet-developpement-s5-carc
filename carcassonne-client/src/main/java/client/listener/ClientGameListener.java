@@ -15,8 +15,6 @@ import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import network.message.game.GameCommandRequestMessage;
 
-import java.util.Collections;
-
 public class ClientGameListener implements IGameListener {
     private final Client client;
     private final Game game;

@@ -6,4 +6,5 @@ import logic.tile.TileRotation;
 /**
  * Represents a tile position.
  */
-public record TilePosition(Vector2 position, TileRotation rotation) { }
+public record TilePosition(Vector2 position, TileRotation rotation) {
+}

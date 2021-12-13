@@ -6,11 +6,11 @@ import static java.lang.System.out;
  * Logger class that logs messages to the console with different levels of importance.
  */
 public class Logger {
-    private Logger(){
+    private static final LogLevel DEFAULT_LEVEL = LogLevel.INFO;
+
+    private Logger() {
         // ignored
     }
-
-    private static final LogLevel DEFAULT_LEVEL = LogLevel.INFO;
 
     /**
      * Logs a message to the console with the DEBUG level.

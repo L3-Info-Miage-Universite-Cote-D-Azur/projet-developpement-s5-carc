@@ -9,7 +9,8 @@ import logic.tile.TileRotation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TilePositionEvaluatorTest {
     private GameConfig config;
@@ -62,7 +63,7 @@ class TilePositionEvaluatorTest {
         for (TileRotation tileRotation : TileRotation.values()) {
             tile2.setRotation(tileRotation);
             int score = tilePositionEvaluator.evaluate(tile2);
-            if (maxScore < score){
+            if (maxScore < score) {
                 maxScore = score;
                 bestRotation = tileRotation;
             }

@@ -21,6 +21,7 @@ public class GameStatisticsPlayer implements Comparable<GameStatisticsPlayer> {
 
     /**
      * Appends the player's statistics.
+     *
      * @param player the player to append.
      */
     public void append(Player player) {

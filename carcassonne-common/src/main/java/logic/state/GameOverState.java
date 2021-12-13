@@ -2,7 +2,6 @@ package logic.state;
 
 import logic.Game;
 import logic.board.GameBoard;
-import logic.tile.Tile;
 import logic.tile.area.Area;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;

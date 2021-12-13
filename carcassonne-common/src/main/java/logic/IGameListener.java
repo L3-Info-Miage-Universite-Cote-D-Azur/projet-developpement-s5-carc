@@ -113,8 +113,9 @@ public interface IGameListener {
 
     /**
      * Called when a player has been earned points.
+     *
      * @param player The player that earned the points.
-     * @param score The score that was earned.
+     * @param score  The score that was earned.
      */
     void onScoreEarned(Player player, int score);
 

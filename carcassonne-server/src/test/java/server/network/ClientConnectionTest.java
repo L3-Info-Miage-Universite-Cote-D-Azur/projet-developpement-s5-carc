@@ -14,7 +14,6 @@ import stream.ByteOutputStream;
 import java.nio.ByteBuffer;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClientConnectionTest {
     private ClientConnection clientConnection;
@@ -22,6 +21,12 @@ class ClientConnectionTest {
 
     private boolean isClosedCalled;
     private int receivedMessageCount;
+
+    private static byte[] getPacketBytes(Packet packet) {
+        ByteOutputStream stream = new ByteOutputStream(64);
+        packet.encode(stream);
+        return stream.toByteArray();
+    }
 
     @BeforeEach
     void setup() throws Exception {
@@ -108,11 +113,5 @@ class ClientConnectionTest {
 
         assertEquals(1, receivedMessageCount);
         assertFalse(isClosedCalled);
-    }
-
-    private static byte[] getPacketBytes(Packet packet) {
-        ByteOutputStream stream = new ByteOutputStream(64);
-        packet.encode(stream);
-        return stream.toByteArray();
     }
 }

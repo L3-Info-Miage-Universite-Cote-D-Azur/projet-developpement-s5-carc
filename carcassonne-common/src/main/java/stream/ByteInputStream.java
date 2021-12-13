@@ -7,8 +7,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class ByteInputStream {
     private final byte[] buf;
-    private int pos;
     private final int length;
+    private int pos;
 
     public ByteInputStream(byte[] buf, int length) {
         this.buf = buf;

@@ -1,12 +1,10 @@
 package logic.tile.area;
 
-import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
 import logic.tile.chunk.ChunkType;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 

@@ -16,6 +16,7 @@ public class StatsConfig {
 
     /**
      * Returns whether the board view should be created.
+     *
      * @return whether the board view should be created
      */
     public boolean isCreateBoardView() {
@@ -24,6 +25,7 @@ public class StatsConfig {
 
     /**
      * Returns whether the global statistics should be created.
+     *
      * @return whether the global statistics should be created
      */
     public boolean isCreateGlobalStatistics() {

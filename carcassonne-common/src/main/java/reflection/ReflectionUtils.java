@@ -4,6 +4,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ReflectionUtils {
+    private ReflectionUtils() {
+        // ignored
+    }
+
     public static Object getField(Object obj, String fieldName) throws Exception {
         Field field = findField(obj.getClass(), fieldName);
         field.setAccessible(true);

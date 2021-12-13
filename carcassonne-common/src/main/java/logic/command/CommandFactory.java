@@ -5,7 +5,7 @@ package logic.command;
  */
 public class CommandFactory {
 
-    private CommandFactory(){
+    private CommandFactory() {
         // ignored
     }
 

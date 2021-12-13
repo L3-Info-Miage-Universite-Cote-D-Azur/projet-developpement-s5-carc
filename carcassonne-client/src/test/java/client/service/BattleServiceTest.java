@@ -32,6 +32,20 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BattleServiceTest {
+    private static Game createGame(Client client) {
+        Game game = new Game(client.getGameConfig());
+
+        game.addPlayer(new Player(3));
+        game.addPlayer(new Player(1));
+        game.addPlayer(new Player(2));
+        game.start();
+
+        ByteOutputStream stream = new ByteOutputStream(1000);
+        game.encode(stream, false);
+
+        return game;
+    }
+
     @Test
     void testGameDataInitGameViewAndAttachAI() throws IOException {
         Client client = ClientTestUtils.createMockClient(null, 1);
@@ -228,19 +242,5 @@ class BattleServiceTest {
 
         assertEquals(null, battleService.getGameView());
         assertTrue(battleOverCalled[0]);
-    }
-
-    private static Game createGame(Client client) {
-        Game game = new Game(client.getGameConfig());
-
-        game.addPlayer(new Player(3));
-        game.addPlayer(new Player(1));
-        game.addPlayer(new Player(2));
-        game.start();
-
-        ByteOutputStream stream = new ByteOutputStream(1000);
-        game.encode(stream, false);
-
-        return game;
     }
 }

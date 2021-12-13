@@ -8,7 +8,7 @@ import logic.tile.Tile;
  * Helper class for byte-streams classes.
  */
 public class ByteStreamHelper {
-    private ByteStreamHelper(){
+    private ByteStreamHelper() {
         // ignored
     }
 

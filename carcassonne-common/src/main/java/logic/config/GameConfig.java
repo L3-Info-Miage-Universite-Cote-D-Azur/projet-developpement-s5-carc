@@ -27,56 +27,6 @@ public class GameConfig {
     }
 
     /**
-     * Gets the tile configurations.
-     * @return
-     */
-    public List<TileConfig> getTiles() {
-        return tiles;
-    }
-
-    /**
-     * Gets the tile configuration at the given index.
-     * @param index the index of the tile
-     * @return the tile configuration
-     */
-    public TileConfig getTile(int index) {
-        return tiles.get(index);
-    }
-
-    /**
-     * Gets the index of the given tile in the configuration list.
-     * @param tile the tile to search for
-     * @return the index of the tile in the configuration list
-     */
-    public int getTileIndex(TileConfig tile) {
-        return tiles.indexOf(tile);
-    }
-
-    /**
-     * Gets the number of minimum players.
-     * @return the number of minimum players
-     */
-    public int getMinPlayers() {
-        return minPlayers;
-    }
-
-    /**
-     * Gets the number of maximum players.
-     * @return the number of maximum players
-     */
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    /**
-     * Gets the number of starting meeple count.
-     * @return the number of starting meeple count
-     */
-    public int getStartingMeepleCount() {
-        return startingMeepleCount;
-    }
-
-    /**
      * Loads the game configuration from the given path.
      *
      * @return the game configuration
@@ -120,5 +70,61 @@ public class GameConfig {
         }
 
         return tiles;
+    }
+
+    /**
+     * Gets the tile configurations.
+     *
+     * @return
+     */
+    public List<TileConfig> getTiles() {
+        return tiles;
+    }
+
+    /**
+     * Gets the tile configuration at the given index.
+     *
+     * @param index the index of the tile
+     * @return the tile configuration
+     */
+    public TileConfig getTile(int index) {
+        return tiles.get(index);
+    }
+
+    /**
+     * Gets the index of the given tile in the configuration list.
+     *
+     * @param tile the tile to search for
+     * @return the index of the tile in the configuration list
+     */
+    public int getTileIndex(TileConfig tile) {
+        return tiles.indexOf(tile);
+    }
+
+    /**
+     * Gets the number of minimum players.
+     *
+     * @return the number of minimum players
+     */
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    /**
+     * Gets the number of maximum players.
+     *
+     * @return the number of maximum players
+     */
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    /**
+     * Gets the number of starting meeple count.
+     *
+     * @return the number of starting meeple count
+     */
+    public int getStartingMeepleCount() {
+        return startingMeepleCount;
     }
 }

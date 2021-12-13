@@ -8,7 +8,7 @@ import java.util.List;
  * Factory for creating areas.
  */
 public class AreaFactory {
-    private AreaFactory(){
+    private AreaFactory() {
         // ignored
     }
 

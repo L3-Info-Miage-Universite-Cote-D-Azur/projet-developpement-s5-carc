@@ -38,47 +38,6 @@ public class TileConfig {
     }
 
     /**
-     * Returns whether the tile has the given flag.
-     * @param flag The flag.
-     * @return Whether the tile has the given flag.
-     */
-    public boolean hasFlag(TileFlags flag) {
-        return flags.contains(flag);
-    }
-
-    /**
-     * Gets the flags of the tile.
-     * @return The flags of the tile.
-     */
-    public Set<TileFlags> getFlags() {
-        return flags;
-    }
-
-    /**
-     * Gets the sprite model of the tile.
-     * @return The sprite model of the tile.
-     */
-    public String getModel() {
-        return model;
-    }
-
-    /**
-     * Gets the number of this tile in the stack.
-     * @return The number of this tile in the stack.
-     */
-    public int getCount() {
-        return count;
-    }
-
-    /**
-     * Sets the number of this tile in the stack.
-     * @param count The number of this tile in the stack.
-     */
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    /**
      * Creates a tile excel configuration from the given excel node.
      *
      * @param node The excel node.
@@ -154,6 +113,52 @@ public class TileConfig {
         }
 
         return node.getRowAt(row).getValueAt(column);
+    }
+
+    /**
+     * Returns whether the tile has the given flag.
+     *
+     * @param flag The flag.
+     * @return Whether the tile has the given flag.
+     */
+    public boolean hasFlag(TileFlags flag) {
+        return flags.contains(flag);
+    }
+
+    /**
+     * Gets the flags of the tile.
+     *
+     * @return The flags of the tile.
+     */
+    public Set<TileFlags> getFlags() {
+        return flags;
+    }
+
+    /**
+     * Gets the sprite model of the tile.
+     *
+     * @return The sprite model of the tile.
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * Gets the number of this tile in the stack.
+     *
+     * @return The number of this tile in the stack.
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
+     * Sets the number of this tile in the stack.
+     *
+     * @param count The number of this tile in the stack.
+     */
+    public void setCount(int count) {
+        this.count = count;
     }
 
     /**

@@ -2,7 +2,6 @@ package client.network;
 
 import client.message.MessageDispatcher;
 import network.Packet;
-import network.ResizableByteBuffer;
 import network.message.IMessage;
 import network.message.connection.ClientHelloMessage;
 import network.message.connection.ServerHelloMessage;
@@ -12,18 +11,22 @@ import org.junit.jupiter.api.Test;
 import reflection.ReflectionUtils;
 import stream.ByteOutputStream;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ServerConnectionTest {
+class ServerConnectionTest {
     private ServerConnection serverConnection;
     private ByteBuffer receiveBuffer;
 
     private boolean isClosedCalled;
     private int receivedMessageCount;
+
+    private static byte[] getPacketBytes(Packet packet) {
+        ByteOutputStream stream = new ByteOutputStream(64);
+        packet.encode(stream);
+        return stream.toByteArray();
+    }
 
     @BeforeEach
     void setup() throws Exception {
@@ -110,11 +113,5 @@ public class ServerConnectionTest {
 
         assertEquals(1, receivedMessageCount);
         assertFalse(isClosedCalled);
-    }
-
-    private static byte[] getPacketBytes(Packet packet) {
-        ByteOutputStream stream = new ByteOutputStream(64);
-        packet.encode(stream);
-        return stream.toByteArray();
     }
 }

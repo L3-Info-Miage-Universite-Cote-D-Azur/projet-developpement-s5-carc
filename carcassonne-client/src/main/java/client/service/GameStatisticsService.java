@@ -5,8 +5,8 @@ import client.config.StatsConfig;
 import client.logger.Logger;
 import client.logger.LoggerCategory;
 import client.message.IMessageHandler;
-import client.view.GameBoardView;
 import client.stats.GameStatistics;
+import client.view.GameBoardView;
 import logic.Game;
 import network.message.IMessage;
 
@@ -121,8 +121,9 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
 
     /**
      * Stores the statistics in the statistics directory using a thread pool.
+     *
      * @param statistics The statistics of the game.
-     * @param name The name of the match.
+     * @param name       The name of the match.
      */
     private void saveStatisticsInBackground(GameStatistics statistics, String name) {
         backgroundExecutor.submit(() -> saveStatistics(statistics, name));
@@ -130,8 +131,9 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
 
     /**
      * Stores the statistics in the statistics directory.
+     *
      * @param statistics The board of the game.
-     * @param name The name of the match.
+     * @param name       The name of the match.
      */
     private void saveStatistics(GameStatistics statistics, String name) {
         statistics.save(Paths.get(getSaveDirectory(), DETAILS_FILENAME.formatted(name)).toFile());
@@ -139,6 +141,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
 
     /**
      * Stores the board view in the statistics directory using a thread pool.
+     *
      * @param view The board of the game.
      * @param name The name of the match.
      */
@@ -148,6 +151,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
 
     /**
      * Stores the board view in the statistics directory.
+     *
      * @param view The board of the game.
      * @param name The name of the match.
      */
@@ -157,6 +161,7 @@ public class GameStatisticsService extends ServiceBase implements IMessageHandle
 
     /**
      * Gets the save directory.
+     *
      * @return The save directory.
      */
     private String getSaveDirectory() {

@@ -29,6 +29,7 @@ public class GameStatistics {
 
     /**
      * Appends the stat
+     *
      * @param game the game
      */
     public void append(Game game) {
@@ -49,6 +50,7 @@ public class GameStatistics {
 
     /**
      * Gets the player by id.
+     *
      * @param id the id
      * @return the player.
      */
@@ -63,6 +65,7 @@ public class GameStatistics {
 
     /**
      * Gets the winner.
+     *
      * @return the winner.
      */
     public GameStatisticsPlayer getWinner() {

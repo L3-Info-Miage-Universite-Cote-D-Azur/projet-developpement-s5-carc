@@ -6,6 +6,18 @@ import java.util.Objects;
  * Represents a 2D vector (x,y).
  */
 public record Vector2(int x, int y) {
+    /**
+     * Get the distance between two vector using manhattan method
+     *
+     * @param a The origin the vector
+     * @param b The destination vector
+     * @return the distance between two vector
+     */
+    public static int manhattan(Vector2 a, Vector2 b) {
+        Vector2 vector2 = a.subtract(b);
+        return Math.abs(vector2.x) + Math.abs(vector2.y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -114,7 +126,6 @@ public record Vector2(int x, int y) {
         return new Vector2(x, -y);
     }
 
-
     /**
      * Returns the squared magnitude of this vector.
      *
@@ -131,18 +142,6 @@ public record Vector2(int x, int y) {
      */
     public int magnitude() {
         return (int) Math.sqrt(sqrMagnitude());
-    }
-
-    /**
-     * Get the distance between two vector using manhattan method
-     *
-     * @param a The origin the vector
-     * @param b The destination vector
-     * @return the distance between two vector
-     */
-    public static int manhattan(Vector2 a, Vector2 b) {
-        Vector2 vector2 = a.subtract(b);
-        return Math.abs(vector2.x) + Math.abs(vector2.y);
     }
 
     /**

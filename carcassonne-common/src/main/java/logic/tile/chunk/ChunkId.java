@@ -90,10 +90,11 @@ public enum ChunkId {
 
     /**
      * Returns the chunk ids for chunks around the current chunk.
+     *
      * @return Chunk ids for chunks around the current chunk.
      */
     public ChunkId[] getNeighbours() {
-        return this == CENTER_MIDDLE ? Arrays.stream(ChunkId.values()).filter(v -> v != CENTER_MIDDLE).toArray(ChunkId[]::new) : new ChunkId[] {
+        return this == CENTER_MIDDLE ? Arrays.stream(ChunkId.values()).filter(v -> v != CENTER_MIDDLE).toArray(ChunkId[]::new) : new ChunkId[]{
                 values()[Math.floorMod((this.ordinal() - 1), (ChunkId.values().length - 1))],
                 values()[(ordinal() + 1) % (values().length - 1)],
         };

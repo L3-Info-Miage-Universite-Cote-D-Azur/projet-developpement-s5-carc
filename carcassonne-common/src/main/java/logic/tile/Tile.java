@@ -20,9 +20,8 @@ import java.util.List;
 public class Tile {
     private final TileConfig config;
     private final Game game;
-
-    private Vector2 position;
     private final Chunk[] chunks;
+    private Vector2 position;
     private TileRotation rotation;
 
     public Tile(TileConfig config, Game game) {

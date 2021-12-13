@@ -12,7 +12,6 @@ import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkType;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
-import stream.ByteStreamHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -106,6 +105,7 @@ public abstract class Area {
 
     /**
      * Returns whether the area is waiting for the closing evaluation.
+     *
      * @return True if the area is waiting for the closing evaluation, false otherwise.
      */
     public boolean isWaitingClosingEvaluation() {
@@ -114,6 +114,7 @@ public abstract class Area {
 
     /**
      * Returns whether the area is waiting for the opening evaluation.
+     *
      * @return True if the area is waiting for the opening evaluation, false otherwise.
      */
     public boolean isWaitingOpeningEvaluation() {
@@ -322,6 +323,7 @@ public abstract class Area {
 
     /**
      * Encodes the area into the given stream.
+     *
      * @param stream The stream to encode the area into.
      */
     public void encode(ByteOutputStream stream) {
@@ -331,6 +333,7 @@ public abstract class Area {
 
     /**
      * Decodes the area from the given stream.
+     *
      * @param stream The stream to decode the area from.
      */
     public void decode(ByteInputStream stream) {

@@ -2,7 +2,6 @@ package client.view;
 
 import client.logger.Logger;
 import client.logger.LoggerCategory;
-import client.view.GameBoardViewBuilder;
 import logic.Game;
 
 import javax.imageio.ImageIO;
@@ -28,6 +27,7 @@ public class GameBoardView {
 
     /**
      * Saves the board view to a file.
+     *
      * @param file The file to save the board view to.
      */
     public void save(File file) {

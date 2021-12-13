@@ -4,9 +4,9 @@ package network;
  * A resizable byte buffer with an initial size and a maximum size.
  */
 public class ResizableByteBuffer {
+    private final int maxSize;
     private byte[] buffer;
     private int index;
-    private final int maxSize;
 
     public ResizableByteBuffer(int size, int maxSize) {
         this.buffer = new byte[size];

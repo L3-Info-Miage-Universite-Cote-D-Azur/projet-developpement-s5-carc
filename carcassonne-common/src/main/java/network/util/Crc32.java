@@ -4,10 +4,6 @@ package network.util;
  * CRC32 checksum calculator.
  */
 public class Crc32 {
-    private Crc32(){
-        // ignored
-    }
-
     private static final int[] crcTable = new int[256];
     private static final int CRC_POLY = 0xEDB88320;
 
@@ -23,6 +19,10 @@ public class Crc32 {
             }
             crcTable[i] = crc;
         }
+    }
+
+    private Crc32() {
+        // ignored
     }
 
     /**
