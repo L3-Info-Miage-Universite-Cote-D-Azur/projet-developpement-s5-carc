@@ -4,6 +4,7 @@ import logic.Game;
 import logic.TestUtils;
 import logic.board.GameBoard;
 import logic.command.PlaceTileDrawnCommand;
+import logic.math.Vector2;
 import logic.state.turn.GameTurnEndingState;
 import logic.state.turn.GameTurnInitState;
 import org.junit.jupiter.api.Test;
@@ -102,17 +103,33 @@ class GameStateTest {
 
     @Test
     void testUncompleteableState() {
-        assertThrows(IllegalStateException.class, () -> {
+        try {
             new GameStartState(TestUtils.initGameEnv(2, false, false)).complete();
-        });
-        assertThrows(IllegalStateException.class, () -> {
+            fail("Expected IllegalStateException to be thrown");
+        }
+        catch (IllegalStateException e){
+            // Test exception message...
+        }
+        try {
             new GameOverState(TestUtils.initGameEnv(2, false, false)).complete();
-        });
-        assertThrows(IllegalStateException.class, () -> {
+            fail("Expected IllegalStateException to be thrown");
+        }
+        catch (IllegalStateException e){
+            // Test exception message...
+        }
+        try {
             new GameTurnInitState(TestUtils.initGameEnv(2, false, false)).complete();
-        });
-        assertThrows(IllegalStateException.class, () -> {
+            fail("Expected IllegalStateException to be thrown");
+        }
+        catch (IllegalStateException e){
+            // Test exception message...
+        }
+        try {
             new GameTurnEndingState(TestUtils.initGameEnv(2, false, false)).complete();
-        });
+            fail("Expected IllegalStateException to be thrown");
+        }
+        catch (IllegalStateException e){
+            // Test exception message...
+        }
     }
 }

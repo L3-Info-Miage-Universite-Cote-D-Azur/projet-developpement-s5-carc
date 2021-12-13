@@ -1,16 +1,14 @@
 package client.ai;
 
 import logic.Game;
-import logic.board.GameBoard;
 import logic.config.GameConfig;
 import logic.player.Player;
-import logic.tile.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class HeuristicAITest {
+class HeuristicAITest {
     private Game game;
 
     @BeforeEach

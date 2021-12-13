@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MessageDispatcherTest {
+class MessageDispatcherTest {
     @Test
     void testDispatchToHandler() {
         MessageDispatcher dispatcher = new MessageDispatcher();
 
-        final boolean[] handled = {false,false,false};
+        final boolean[] handled = {false, false, false};
 
         dispatcher.addHandler(new IMessageHandler() {
             @Override

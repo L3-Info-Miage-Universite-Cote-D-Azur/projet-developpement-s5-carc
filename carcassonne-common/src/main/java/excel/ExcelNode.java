@@ -240,6 +240,9 @@ public class ExcelNode {
                     }
                 }
                 case LOADING_ROWS -> loadRow(cells, columnIndex);
+                default -> {
+                    // Do nothing
+                }
             }
 
             rowIndex++;

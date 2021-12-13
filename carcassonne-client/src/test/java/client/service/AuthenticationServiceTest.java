@@ -48,6 +48,12 @@ class AuthenticationServiceTest {
         authenticationService.handleMessage(new ServerHelloMessage());
         assertTrue(authenticationService.isAuthenticated());
 
-        assertThrows(IllegalStateException.class, () -> authenticationService.handleMessage(new ServerHelloMessage()));
+        try {
+            authenticationService.handleMessage(new ServerHelloMessage());
+            fail("Expected IllegalStateException to be thrown");
+        }
+        catch (IllegalStateException e){
+            // Test exception message...
+        }
     }
 }

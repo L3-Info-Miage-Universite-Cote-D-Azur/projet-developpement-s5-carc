@@ -50,6 +50,12 @@ public class BattleService extends ServiceBase implements IMessageHandler {
             case GAME_COMMAND -> onGameCommand((GameCommandMessage) message);
             case GAME_MASTER_NEXT_TURN_DATA -> onGameMasterNextTurnData((GameMasterNextTurnDataMessage) message);
             case GAME_RESULT -> onGameResult((GameResultMessage) message);
+            case CLIENT_HELLO, SERVER_HELLO, JOIN_MATCHMAKING, MATCHMAKING_DATA, LEAVE_MATCHMAKING, MATCHMAKING_LEFT, MATCHMAKING_FAILED, GAME_COMMAND_REQUEST -> {
+                // ignored
+            }
+            default -> {
+                // Do nothing
+            }
         }
     }
 
@@ -85,6 +91,12 @@ public class BattleService extends ServiceBase implements IMessageHandler {
                 case TURN_PLACE_TILE -> gameView.getTurnExecutor().getListener().onWaitingPlaceTile();
                 case TURN_PLACE_MEEPLE -> gameView.getTurnExecutor().getListener().onWaitingMeeplePlacement();
                 case TURN_MOVE_DRAGON -> gameView.getTurnExecutor().getListener().onWaitingDragonMove();
+                case START, TURN_INIT, TURN_WAITING_MASTER_DATA, TURN_ENDING, OVER -> {
+                    // ignored
+                }
+                default -> {
+                    // Do nothing
+                }
             }
         }
     }
@@ -150,6 +162,7 @@ public class BattleService extends ServiceBase implements IMessageHandler {
 
     /**
      * Gets the game view.
+     *
      * @return The game view.
      */
     public Game getGameView() {

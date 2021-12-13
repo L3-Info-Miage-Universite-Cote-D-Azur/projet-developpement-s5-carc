@@ -125,7 +125,7 @@ public class GameBoardViewBuilder {
                     try {
                         meepleDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load meeple image: " + file.getName());
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class GameBoardViewBuilder {
                     try {
                         dragonDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load dragon image: " + file.getName());
                     }
                 }
             }
@@ -157,7 +157,7 @@ public class GameBoardViewBuilder {
                     try {
                         extraDatabase.cache(file.getName().replace(".png", ""), ImageIO.read(file));
                     } catch (IOException e) {
-                        Logger.warn(LoggerCategory.SERVICE, "Failed to load tile image: " + file.getName());
+                        Logger.warn(LoggerCategory.SERVICE, "Failed to load extra image: " + file.getName());
                     }
                 }
             }

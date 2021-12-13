@@ -11,7 +11,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TcpClientSocketTest {
+class TcpClientSocketTest {
     private static final int ECHO_SERVER_PORT = new Random().nextInt(10000) + 40000;
 
     @Test

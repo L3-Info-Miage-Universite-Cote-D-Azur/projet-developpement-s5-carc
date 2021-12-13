@@ -9,6 +9,7 @@ import logic.tile.Direction;
 import logic.tile.Tile;
 import logic.tile.TileRotation;
 import logic.tile.chunk.ChunkId;
+import network.message.connection.ServerHelloMessage;
 import org.junit.jupiter.api.Test;
 import stream.ByteInputStream;
 import stream.ByteOutputStream;
@@ -90,7 +91,14 @@ class DragonTest {
     @Test
     void testMoveToThrowIfMoveOnPathPosition() {
         Dragon dragon = new Dragon(null, new Vector2(0, 0));
-        assertThrows(IllegalArgumentException.class, () -> dragon.moveTo(new Vector2(0, 0)));
+
+        try {
+            dragon.moveTo(new Vector2(0, 0));
+            fail("Expected IllegalArgumentException to be thrown");
+        }
+        catch (IllegalArgumentException e){
+            // Test exception message...
+        }
     }
 
     @Test

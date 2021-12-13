@@ -14,12 +14,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reflection.ReflectionUtils;
 
-public class AITest {
+import java.util.Objects;
+
+class AITest {
     private Game game;
 
     @BeforeEach
     void setup() {
-        game = Mockito.spy(new Game(GameConfig.loadFromResources()) {
+        game = Mockito.spy(new Game(Objects.requireNonNull(GameConfig.loadFromResources())) {
             @Override
             public boolean executeCommand(ICommand command) {
                 return true;

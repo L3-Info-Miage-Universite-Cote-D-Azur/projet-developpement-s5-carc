@@ -99,9 +99,4 @@ class FairyPlacementEvaluatorTest {
         assertTrue(tile3Evaluated > tile9Evaluated);
         assertTrue(tile8Evaluated > tile9Evaluated);
     }
-
-    @Test
-    void evaluateWithFairySpawned() {
-        //game.getBoard().spawnFairy(tile);
-    }
 }

@@ -110,6 +110,6 @@ public class Server {
         if (matchCapacity > gameConfig.getMaxPlayers())
             return null;
 
-        return matchmaking.computeIfAbsent(matchCapacity, k -> new Matchmaking(k));
+        return matchmaking.computeIfAbsent(matchCapacity, Matchmaking::new);
     }
 }

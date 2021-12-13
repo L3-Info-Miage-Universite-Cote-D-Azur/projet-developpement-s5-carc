@@ -6,6 +6,7 @@ import logic.exception.NotEnoughPlayerException;
 import logic.exception.TooManyPlayerException;
 import logic.player.Player;
 import logic.state.GameOverState;
+import logic.state.GameStartState;
 import logic.tile.Tile;
 import logic.tile.chunk.Chunk;
 import logic.tile.chunk.ChunkId;
@@ -49,9 +50,13 @@ class GameTest {
         assertNotNull(game.getPlayer(1));
         assertNotNull(game.getPlayer(2));
 
-        assertThrows(TooManyPlayerException.class, () -> {
+        try {
             game.addPlayer(new Player(4));
-        });
+            fail("Expected TooManyPlayerException to be thrown");
+        }
+        catch (TooManyPlayerException e){
+            // Test exception message...
+        }
     }
 
     @Test

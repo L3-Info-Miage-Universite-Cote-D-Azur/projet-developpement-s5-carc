@@ -8,9 +8,9 @@ import stream.ByteOutputStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PacketTest {
+class PacketTest {
     @Test
-    public void testEncodeDecode() {
+    void testEncodeDecode() {
         Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
@@ -27,7 +27,7 @@ public class PacketTest {
     }
 
     @Test
-    public void testDetectCorruptedMessageData() {
+    void testDetectCorruptedMessageData() {
         Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
@@ -38,7 +38,7 @@ public class PacketTest {
     }
 
     @Test
-    public void testDetectInvalidHeader() {
+    void testDetectInvalidHeader() {
         Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
@@ -49,7 +49,7 @@ public class PacketTest {
     }
 
     @Test
-    public void testDetectInvalidTrailer() {
+    void testDetectInvalidTrailer() {
         Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);
@@ -60,7 +60,7 @@ public class PacketTest {
     }
 
     @Test
-    public void testDeserializeMessageFromStream() {
+    void testDeserializeMessageFromStream() {
         Packet originalPacket = Packet.create(new GameResultMessage(new byte[]{1, 2, 3, 4, 5}));
         ByteOutputStream outputStream = new ByteOutputStream(50);
         originalPacket.encode(outputStream);

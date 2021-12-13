@@ -6,23 +6,23 @@ import logic.config.GameConfig;
 import logic.player.Player;
 import logic.state.GameOverState;
 import logic.tile.chunk.ChunkType;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reflection.ReflectionUtils;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class GameStatisticsTest {
+class GameStatisticsTest {
     @Test
     void appendTest() {
         GameStatistics gameStatistics = new GameStatistics();
 
-        Game game1 = new Game(GameConfig.loadFromResources());
-        Game game2 = new Game(GameConfig.loadFromResources());
+        Game game1 = new Game(Objects.requireNonNull(GameConfig.loadFromResources()));
+        Game game2 = new Game(Objects.requireNonNull(GameConfig.loadFromResources()));
 
         game1.setState(new GameOverState(game1));
         game2.setState(new GameOverState(game2));

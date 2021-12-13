@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TilePositionTest {
+class TilePositionTest {
     @Test
     void testJVMIntegrity() {
         TilePosition tp = new TilePosition(new Vector2(1, 2), TileRotation.DOWN);
