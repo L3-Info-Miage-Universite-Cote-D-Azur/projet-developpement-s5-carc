@@ -24,4 +24,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: net.bytebuddy:byte-buddy-agent:1.11.13" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.objenesis:objenesis:3.2" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="idePathPrefix" value="report" />
+  </component>
 </module>
