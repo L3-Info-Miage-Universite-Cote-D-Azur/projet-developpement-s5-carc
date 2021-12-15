@@ -158,7 +158,7 @@ public class ClientConnection {
     /**
      * Closes the connection.
      */
-    public void close() {
+    public synchronized void close() {
         synchronized (this) {
             if (destroyed) {
                 return;
@@ -187,7 +187,7 @@ public class ClientConnection {
      *
      * @param length The length of the data received.
      */
-    public void onReceive(int length) {
+    public synchronized void onReceive(int length) {
         receiveBuffer.position(length);
         receiveBuffer.flip();
         receiveStream.put(receiveBuffer.array(), 0, length);
